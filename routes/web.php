@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\Automovil;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,4 +29,20 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+
+
+Route::middleware(['prefix', 'dashboard', 'middleware'])->group(function () {
+    Route::get('/', function () {
+        return view('dashboard');
+    })->name("dashboard");
+
+    //rutas resource libres
+
+});
+
+Route::resource('Automoviles', Automovil::class);
+
+
+
+
+require __DIR__ . '/auth.php';
