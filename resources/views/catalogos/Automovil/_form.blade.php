@@ -1,28 +1,9 @@
 {{-- este es un toquen crea una proteccion en el formulario csrf tipo segridad --}}
 @csrf
 
-<div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
-    {{-- Marca --}}
-    <div class="">
-        <label class="text-gray-700" for="Marca">Marca</label>
-        <select name="Marca" class="w-full mt-2 rounded-md form-input focus:border-indigo-600">
-            <option value="yes">Sellecciona una opcion </option>
-            <option value="not">no</option>
-        </select>
-    </div>
-    {{-- Submarca --}}
-    <div class="">
-        <label class="text-gray-700" for="Marca">Submarca</label>
-        <select name="Marca" class="w-full mt-2 rounded-md form-input focus:border-indigo-600">
-            <option value="yes">Sellecciona una opcion </option>
-            <option value="not">no</option>
-        </select>
-    </div>
-    {{-- Modelo --}}
-    <div>
-        <label class="text-gray-700" for="username">Modelo</label>
-        <input class="w-full mt-2 rounded-md form-input focus:border-indigo-600" type="text">
-    </div>
+<div class="grid grid-cols-3 gap-6 mt-4 sm:grid-cols-2">
+
+
     {{--No.serie--}}
     <div>
         <label class="text-gray-700" for="NoSerie">No.Serie</label>

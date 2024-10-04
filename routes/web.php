@@ -37,10 +37,11 @@ Route::middleware(['prefix', 'dashboard', 'middleware'])->group(function () {
     })->name("dashboard");
 
     //rutas resource libres
+    Route::resource('Automoviles', Automovil::class);
+
 
 });
 
-Route::resource('Automoviles', Automovil::class);
 
 
 
