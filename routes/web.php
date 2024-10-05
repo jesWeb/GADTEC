@@ -1,7 +1,11 @@
 <?php
 
-use App\Http\Controllers\admin\Automovil;
+use App\Http\Controllers\AutomovilController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReservacionController;
+use App\Http\Controllers\SegurosController;
+use App\Http\Controllers\SiniestrosController;
+use App\Http\Controllers\VerificacionesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,20 +34,11 @@ Route::middleware('auth')->group(function () {
 });
 
 
-
-Route::middleware(['prefix', 'dashboard', 'middleware'])->group(function () {
-    Route::get('/', function () {
-        return view('dashboard');
-    })->name("dashboard");
-
-    //rutas resource libres
-    Route::resource('Automoviles', Automovil::class);
-
-
-});
-
-
-
+Route::resource('Automovil',AutomovilController::class);
+Route::resource('Reservaciones',ReservacionController::class);
+Route::resource('Seguros',SegurosController::class);
+Route::resource('Siniestros',SiniestrosController::class);
+Route::resource('Verificaciones',VerificacionesController::class);
 
 
 require __DIR__ . '/auth.php';

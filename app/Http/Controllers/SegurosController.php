@@ -1,13 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\Automovil as ModelsAutomovil;
-use App\Models\r;
 use Illuminate\Http\Request;
 
-class Automovil extends Controller
+class SegurosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +12,7 @@ class Automovil extends Controller
     public function index()
     {
         //
-        return view('dashboard.admin.Automovil.index');
+        return view('catalogos.seguros.index');
     }
 
     /**
@@ -24,7 +21,7 @@ class Automovil extends Controller
     public function create()
     {
         //
-        return view('dashboard.admin.Automovil.create');
+        return view('catalogos.seguros.create');
     }
 
     /**
@@ -38,16 +35,15 @@ class Automovil extends Controller
     /**
      * Display the specified resource.
      */
-    public function show( Automovil $r)
+    public function show(string $id)
     {
         //
-        // return view('dashboard.admin.Automovil');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit( Automovil $r)
+    public function edit(string $id)
     {
         //
     }
@@ -55,7 +51,7 @@ class Automovil extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,  Automovil $r)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -63,7 +59,7 @@ class Automovil extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy( Automovil $r)
+    public function destroy(string $id)
     {
         //
     }
