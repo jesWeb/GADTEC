@@ -1,104 +1,105 @@
 {{-- este es un toquen crea una proteccion en el formulario csrf tipo segridad --}}
 @csrf
-<div class="">
-
-    <div class="grid grid-cols-3 gap-6 m-5 sm:grid-cols-2">
-        {{-- Marca --}}
-        <div class="">
-            <label class="text-gray-700" for="combustible">Marca</label>
-            <select name="Marca" class="w-full mt-2 rounded-md form-input focus:border-indigo-600" required>
-                <option disabled selected>Selecciona una opción </option>
-                <option value="Gasolina">carros</option>
-
-            </select>
-        </div>
-        {{-- subMarca --}}
-        <div class="">
-            <label class="text-gray-700" for="combustible">SubMarca</label>
-            <select name="Marca" class="w-full mt-2 rounded-md form-input focus:border-indigo-600" required>
-                <option disabled selected>Selecciona una opción </option>
-                <option value="Gasolina">carros</option>
-
-            </select>
-        </div>
-        {{-- Modelo --}}
-        <div class="">
-            <label class="text-gray-700" for="combustible">Modelo</label>
-            <select name="Marca" class="w-full mt-2 rounded-md form-input focus:border-indigo-600" required>
-                <option disabled selected>Selecciona una opción </option>
-                <option value="Gasolina">carros</option>
-
-            </select>
-        </div>
-        {{-- No.serie --}}
-        <div>
-            <label class="text-gray-700" for="serie">No.Serie</label>
-            <input class="w-full mt-2 rounded-md form-input focus:border-indigo-600" type="text">
-        </div>
-        {{-- No.Motor --}}
-        <div>
-            <label class="text-gray-700" for="motor">No.Motor</label>
-            <input class="w-full mt-2 rounded-md form-input focus:border-indigo-600" type="text">
-        </div>
-        {{-- Combustible --}}
-        <div class="">
-            <label class="text-gray-700" for="combustible">Tipo de combustible</label>
-            <select name="Marca" class="w-full mt-2 rounded-md form-input focus:border-indigo-600" required>
-                <option disabled selected>Selecciona una opcion </option>
-                <option value="Gasolina">Gasolina</option>
-                <option value="Diesel">Diesel</option>
-                <option value="Electrico">Electrico</option>
-            </select>
-        </div>
-        {{-- Kilometraje --}}
-        <div>
-            <label class="text-gray-700" for="kilometraje">Kilometraje</label>
-            <input class="w-full mt-2 rounded-md form-input focus:border-indigo-600" type="number"
-                placeholder="Introduce el kilometraje" pattern="^\d*\.?\d+$" min="0" required>
-        </div>
-        {{-- Placas --}}
-        <div>
-            <label class="text-gray-700" for="placas">Placas</label>
-            <input class="w-full mt-2 rounded-md form-input focus:border-indigo-600" type="text"
-                placeholder="Introduce Placas" required>
-        </div>
-        {{-- Num_NSI --}}
-        <div>
-            <label class="text-gray-700" for="NSI">NSI/Repube</label>
-            <input class="w-full mt-2 rounded-md form-input focus:border-indigo-600" type="text"
-                placeholder="Introduce NSI" required>
-        </div>
-        {{-- uso --}}
-        <div class="">
-            <label class="text-gray-700" for="uso">Tipo de uso</label>
-            <select name="Marca" class="w-full mt-2 rounded-md form-input focus:border-indigo-600" required>
-                <option disabled selected>Selecciona una opción </option>
-                <option value="not">Carga</option>
-                <option value="comisiones ">Comisiones</option>
-            </select>
+<div class="m-4 xl:p-10">
+    {{-- 1 row de info --}}
+    <div class="flex flex-col gap-5.5 xl:flex-row">
+        {{-- vehiculo --}}
+        <div class="w-full px-3 xl:w-1/2">
+            <div class="mb-5">
+                <label class="mb-3 block text-base font-medium text-[#07074D]" for="vehiculo">Automovil</label>
+                <select name="Marca"
+                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                    required>
+                    <option disabled selected>Selecciona una opción </option>
+                    <option value="Gasolina">carros</option>
+                </select>
+            </div>
         </div>
         {{-- responsable --}}
-        <div class="">
-            <label class="text-gray-700" for="responsable">Responsable</label>
-            <select name="Marca" class="w-full mt-2 rounded-md form-input focus:border-indigo-600" required>
-                <option disabled selected>Selecciona una opción </option>
-                <option value="usuario">Usuario</option>
-            </select>
+        <div class="w-full px-3 xl:w-1/2">
+            <div class="mb-5">
+                <label class="mb-3 block text-base font-medium text-[#07074D]" for="usuario">Solicitante</label>
+                <select name="Marca"
+                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                    required>
+                    <option disabled selected>Selecciona una opción </option>
+                    <option value="">persona 1</option>
+                </select>
+            </div>
         </div>
-        {{-- Observacines  --}}
-        <div class="">
-            <label for="observaciones">Observaciones del vehiculo</label>
-            <textarea placeholder="Observaciones ..." class="block w-full bg-blue-500 rounded-sm shadow-sm" name="observaciones"
-                id=""></textarea>
-        </div>
-        {{-- foto --}}
-        <div class="">
-
+        {{-- fecha asiganacion --}}
+        <div class="w-full px-3 xl:w-1/2">
+            <div class="mb-5">
+                <label for="date" class="mb-3 block text-base font-medium text-[#07074D]">
+                    Fecha Reservación
+                </label>
+                <input type="date" name="date"
+                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+            </div>
         </div>
     </div>
-</div>
+    {{-- 2 row de informacion --}}
+    <div class="flex flex-col gap-5.5 mt-3  xl:flex-row">
+        {{-- hora de salida  --}}
+        <div class="w-full px-3 xl:w-1/2">
+            <div class="mb-5">
+                <label class="mb-3 block text-base font-medium text-[#07074D]" for="hora">Hora de salida </label>
+                <input
+                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                    type="time" name="hora" id="" required>
+            </div>
+        </div>
+        {{-- destino --}}
+        <div class="w-full px-3 xl:w-1/2">
+            <div class="mb-5">
+                <label class="mb-3 block text-base font-medium text-[#07074D]" for="destino">Destino</label>
+                <input
+                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                    type="text" name="destino" required placeholder="Ej. Santa fe, CDMX">
+            </div>
+        </div>
+        {{-- Motivo --}}
+        <div class="w-full px-3 xl:w-1/2">
+            <div class="mb-5">
+                <label class="mb-3 block text-base font-medium text-[#07074D]" for="motivo">Motivo</label>
+                <input
+                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                    type="text" name="motivo" required placeholder="Ej. Salida">
+            </div>
+        </div>
+    </div>
+    {{-- 3 row de info  --}}
+    <div class="flex flex-col gap-5 mt-3 mb-5 xl:flex-row">
+        {{-- Motivo --}}
+        <div class="w-full px-3 xl:w-1/3">
+            <div class="mb-5">
+                <label for="date" class="mb-3 block text-base font-medium text-[#07074D]">
+                    Fecha Reingreso
+                </label>
+                <input type="date" name="date"
+                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+            </div>
+        </div>
+        {{-- Asignante --}}
 
-<div class="flex justify-end mt-4">
+        <div class="w-full px-3 xl:w-1/3">
+            <div class="mb-5">
+                <label class="mb-3 block text-base font-medium text-[#07074D]" for="motivo">Asignador</label>
+                <input
+                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                    type="text" name="motivo" required placeholder="Ej. Nombre">
+            </div>
+        </div>
+
+    </div>
+    
+</div>
+{{--BTN--}}
+<div class="flex justify-end gap-4 mt-4">
+    <button class="px-6 py-2 font-semibold bg-gray-200 rounded-md hover:bg-red-200 focus:outline-none focus:bg-red-700">
+        Cancelar
+    </button>
     <button type="submit"
-        class="px-4 py-2 text-gray-200 bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">Registrar</button>
+        class="px-6 py-2 text-gray-200 bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">Registrar</button>
+
 </div>

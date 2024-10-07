@@ -3,7 +3,7 @@
 <div class="">
 
     <div class="grid grid-cols-3 gap-6 m-5 sm:grid-cols-2">
-        {{-- Marca --}}
+        {{-- vehiculo--}}
         <div class="">
             <label class="text-gray-700" for="combustible">Marca</label>
             <select name="Marca" class="w-full mt-2 rounded-md form-input focus:border-indigo-600" required>
@@ -12,7 +12,7 @@
 
             </select>
         </div>
-        {{-- subMarca --}}
+        {{-- seguro--}}
         <div class="">
             <label class="text-gray-700" for="combustible">SubMarca</label>
             <select name="Marca" class="w-full mt-2 rounded-md form-input focus:border-indigo-600" required>
@@ -21,7 +21,7 @@
 
             </select>
         </div>
-        {{-- Modelo --}}
+        {{-- Fecha de siniestro--}}
         <div class="">
             <label class="text-gray-700" for="combustible">Modelo</label>
             <select name="Marca" class="w-full mt-2 rounded-md form-input focus:border-indigo-600" required>
@@ -30,17 +30,19 @@
 
             </select>
         </div>
-        {{-- No.serie --}}
+        {{-- estatus --}}
         <div>
             <label class="text-gray-700" for="serie">No.Serie</label>
             <input class="w-full mt-2 rounded-md form-input focus:border-indigo-600" type="text">
         </div>
-        {{-- No.Motor --}}
-        <div>
-            <label class="text-gray-700" for="motor">No.Motor</label>
-            <input class="w-full mt-2 rounded-md form-input focus:border-indigo-600" type="text">
+        {{-- descipcion --}}
+
+        <div class="">
+            <label for="observaciones">Observaciones del vehiculo</label>
+            <textarea placeholder="Observaciones ..." class="block w-full bg-blue-500 rounded-sm shadow-sm" name="observaciones"
+                id=""></textarea>
         </div>
-        {{-- Combustible --}}
+        {{-- costo danos estimados--}}
         <div class="">
             <label class="text-gray-700" for="combustible">Tipo de combustible</label>
             <select name="Marca" class="w-full mt-2 rounded-md form-input focus:border-indigo-600" required>
@@ -50,32 +52,11 @@
                 <option value="Electrico">Electrico</option>
             </select>
         </div>
-        {{-- Kilometraje --}}
+        {{--costo real dano --}}
         <div>
             <label class="text-gray-700" for="kilometraje">Kilometraje</label>
             <input class="w-full mt-2 rounded-md form-input focus:border-indigo-600" type="number"
                 placeholder="Introduce el kilometraje" pattern="^\d*\.?\d+$" min="0" required>
-        </div>
-        {{-- Placas --}}
-        <div>
-            <label class="text-gray-700" for="placas">Placas</label>
-            <input class="w-full mt-2 rounded-md form-input focus:border-indigo-600" type="text"
-                placeholder="Introduce Placas" required>
-        </div>
-        {{-- Num_NSI --}}
-        <div>
-            <label class="text-gray-700" for="NSI">NSI/Repube</label>
-            <input class="w-full mt-2 rounded-md form-input focus:border-indigo-600" type="text"
-                placeholder="Introduce NSI" required>
-        </div>
-        {{-- uso --}}
-        <div class="">
-            <label class="text-gray-700" for="uso">Tipo de uso</label>
-            <select name="Marca" class="w-full mt-2 rounded-md form-input focus:border-indigo-600" required>
-                <option disabled selected>Selecciona una opción </option>
-                <option value="not">Carga</option>
-                <option value="comisiones ">Comisiones</option>
-            </select>
         </div>
         {{-- responsable --}}
         <div class="">
@@ -91,13 +72,9 @@
             <textarea placeholder="Observaciones ..." class="block w-full bg-blue-500 rounded-sm shadow-sm" name="observaciones"
                 id=""></textarea>
         </div>
-        {{-- foto --}}
-        <div class="">
-
-        </div>
     </div>
 </div>
-
+{{-- btn --}}
 <div class="flex justify-end mt-4">
     <button type="submit"
         class="px-4 py-2 text-gray-200 bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">Registrar</button>

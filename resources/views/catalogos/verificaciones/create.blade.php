@@ -2,16 +2,20 @@
 
 @section('body')
 
-<div class="mt-4">
-    <div class="p-6 bg-white rounded-md shadow-md">
-        <h2 class="text-xl font-semibold text-gray-700">Registro Automovil</h2>
-        {{--  --}}
-        <form action="" >
-            @include('catalogos.Automovil._form')
+
+<div class="flex flex-col mt-5 gap-9">
+
+    <div class="p-6 bg-white border rounded-md shadow-md">
+        {{-- titulo --}}
+        <h2 class="mb-5 text-xl font-semibold text-gray-700">
+            <h2 class="text-xl font-semibold text-gray-700">Registro Verificaciones</h2>
+
+        </h2>
+        {{-- formulario --}}
+        <form action="">
+            @include('catalogos.verificaciones._form')
         </form>
     </div>
 </div>
-
-
 
 @endsection

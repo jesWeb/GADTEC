@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AutomovilController;
+use App\Http\Controllers\CatalogosController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReservacionController;
 use App\Http\Controllers\SegurosController;
@@ -35,10 +36,10 @@ Route::middleware('auth')->group(function () {
 
 
 Route::resource('Automovil',AutomovilController::class);
-Route::resource('Reservaciones',ReservacionController::class);
-Route::resource('Seguros',SegurosController::class);
-Route::resource('Siniestros',SiniestrosController::class);
-Route::resource('Verificaciones',VerificacionesController::class);
-
+Route::resource('reservaciones',ReservacionController::class);
+Route::resource('seguros',SegurosController::class);
+Route::resource('siniestros',SiniestrosController::class);
+Route::resource('verificaciones',VerificacionesController::class);
+Route::resource('catalogos',CatalogosController::class);
 
 require __DIR__ . '/auth.php';

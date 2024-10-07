@@ -21,7 +21,7 @@ class SiniestrosController extends Controller
     public function create()
     {
         //
-        return view('catalogos.siniestros.index');
+        return view('catalogos.siniestros.create');
     }
 
     /**
