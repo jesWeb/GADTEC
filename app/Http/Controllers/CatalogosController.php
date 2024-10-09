@@ -12,19 +12,37 @@ class CatalogosController extends Controller
     public function index()
     {
         //
-        return view('catalogos.index');
+        $catalogosCardsData = [
+            [
+                'titulo' => 'Automoviles',
+                // 'label' => 'salas cirugia',
+                'href' => route('Automovil.index'),
+            ],
+            [
+                'titulo' => 'Reservacion',
+                //  'label' => 'reservaciones Automovil',
+                'href' => route('reservaciones.index'),
+            ],
+            [
+                'titulo' => 'Seguros',
+                //  'label' => 'cirugiaprocedimiento',
+                'href' => route('seguros.index')
+            ],
+            [
+                'titulo' => 'Siniestros',
+                //  'label' => 'areas de usuario',
+                'href' => route('siniestros.index'),
+
+            ],
+            [
+                'titulo' => 'Verficaciones',
+                //  'label' => 'areas de usuario',
+                'href' => route('verificaciones.index'),
+
+            ],
+        ];
+
+
+        return view('catalogos.index', compact('catalogosCardsData'));
     }
-
-
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-
-
 }
