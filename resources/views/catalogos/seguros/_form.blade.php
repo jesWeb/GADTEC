@@ -22,7 +22,7 @@
                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                 type="text" placeholder="Nombre">
         </div>
-
+        {{-- fecha vigencia--}}
         <div class="w-full px-3 xl:w-1/2">
             <div class="mb-5">
                 <label for="date" class="mb-3 block text-base font-medium text-[#07074D]">
@@ -57,8 +57,6 @@
                 </select>
             </div>
         </div>
-        {{--  --}}
-
     </div>
     {{-- 3row info  --}}
     <div class="flex flex-col gap-5.5 xl:flex-row mt-4">
@@ -84,14 +82,13 @@
             </div>
         </div>
     </div>
-
     {{-- foto --}}
     <div class="pt-4 mb-6">
         <label class="mb-5 block text-xl font-semibold text-[#07074D]">
             Subir Archivos
         </label>
         <div class="mb-8">
-            <input type="file" name="file" id="file" class="sr-only" />
+            <input type="file" name="file"  class="sr-only" />
             <label for="file"
                 class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
                 <div>

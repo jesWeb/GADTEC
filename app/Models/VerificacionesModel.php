@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class VerificacionesModel extends Model
 {
     use HasFactory;
+     protected $fillable = [
+        'vehiculo',
+        'holograma',
+        'engomado',
+        'fechaV',
+        'fechaP',
+        'observaciones',
+        'image',
+
+    ];
+
 }

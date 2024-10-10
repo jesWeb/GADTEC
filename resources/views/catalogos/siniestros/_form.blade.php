@@ -1,12 +1,9 @@
 {{-- este es un toquen crea una proteccion en el formulario csrf tipo segridad --}}
 @csrf
-
-
 <div class="m-3 xl:p-10">
-
-    {{--1 row de info  --}}
+    {{-- 1 row de info  --}}
     <div class="flex flex-col gap-5.5 xl:flex-row">
-        {{-- vehiculo--}}
+        {{-- vehiculo --}}
         <div class="w-full px-3 xl:w-1/2">
 
             <label class="mb-3 block text-base font-medium text-[#07074D]" for="automovil">Automovil</label>
@@ -19,7 +16,7 @@
             </select>
 
         </div>
-        {{-- seguro--}}
+        {{-- seguro --}}
         <div class="w-full px-3 xl:w-1/2">
             <div class="mb-5">
                 <label class="mb-3 block text-base font-medium text-[#07074D]" for="combustible">SubMarca</label>
@@ -31,7 +28,7 @@
                 </select>
             </div>
         </div>
-        {{-- Fecha de siniestro--}}
+        {{-- Fecha de siniestro --}}
         <div class="w-full px-3 xl:w-1/2">
 
             <label class="mb-3 block text-base font-medium text-[#07074D]" for="combustible">Modelo</label>
@@ -66,7 +63,7 @@
                 <option value="usuario">Usuario</option>
             </select>
         </div>
-        {{-- costo danos estimados--}}
+        {{-- costo danos estimados --}}
         <div class="w-full px-3 xl:w-1/2">
             <label class="mb-3 block text-base font-medium text-[#07074D]" for="combustible">Tipo de combustible</label>
             <select name="Marca"
@@ -80,28 +77,28 @@
         </div>
     </div>
 
-    {{--costo real dano --}}
-    {{-- <div>
+    {{-- costo real dano --}}
+    <div>
         <label class="text-gray-700" for="kilometraje">Kilometraje</label>
         <input class="w-full mt-2 rounded-md form-input focus:border-indigo-600" type="number"
             placeholder="Introduce el kilometraje" pattern="^\d*\.?\d+$" min="0" required>
-    </div> --}}
+    </div>
 
     {{-- descipcion --}}
-    {{-- <div class="">
+    <div class="">
         <div class="mb-5">
             <label for="observaciones">Observaciones del vehiculo</label>
             <textarea placeholder="Observaciones ..." class="block w-full bg-blue-500 rounded-sm shadow-sm"
                 name="observaciones" id=""></textarea>
         </div>
-    </div> --}}
+    </div>
 
     {{-- Observacines  --}}
-    {{-- <div class="">
+    <div class="">
         <label for="observaciones">Observaciones del vehiculo</label>
         <textarea placeholder="Observaciones ..." class="block w-full bg-blue-500 rounded-sm shadow-sm"
             name="observaciones" id=""></textarea>
-    </div> --}}
+    </div>
 
 </div>
 

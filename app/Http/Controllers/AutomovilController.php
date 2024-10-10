@@ -23,7 +23,7 @@ class AutomovilController extends Controller
         //
 
         $auto = new Automovil();
-        // dd($auto);
+    // dd($auto);
         return view('catalogos.Automovil.create', compact('auto'));
     }
 
@@ -33,6 +33,7 @@ class AutomovilController extends Controller
     public function store(Request $request)
     {
         //
+
 
         $validacion = $request->validate([
             'marca' => 'required',
@@ -91,10 +92,10 @@ class AutomovilController extends Controller
 
         ]);
 
-        return back()->withErrors(['success' => 'Se han guardado correctamente los datos'])->withInput();
+        return redirect()->route('Automovil.index')->with('success', 'Se han guardado correctamente los datos');
 
 
-        // return to_route('Automovil.index');
+
     }
 
     /**
