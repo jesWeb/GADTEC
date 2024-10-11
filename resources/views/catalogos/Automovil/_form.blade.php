@@ -63,7 +63,7 @@
                 <label class="mb-3 block text-base font-medium text-[#07074D]" for="motor">No.Motor</label>
                 <input
                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                    type="text" name="motor" required >
+                    type="text" name="motor" required>
             </div>
         </div>
         {{-- Combustible --}}
@@ -75,10 +75,9 @@
                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                     required>
                     <option disabled selected>Selecciona una opcion </option>
-                    <option {{ old($auto->combustible) == 'gasolina' ? 'selected' : '' }}value="Gasolina">Gasolina
-                    </option>
-                    <option {{ old($auto->combustible) == 'diesel' ? 'selected' : '' }} value="Diesel">Diesel</option>
-                    {{-- <option {{old($auto->combustible) y== "electrico" ? 'selected' : '' }} value="Electrico">Electrico</option> --}}
+                    <option value="Gasolina">Gasolina</option>
+                    <option value="Diesel">Diesel</option>
+                    <option value="Electrico">Electrico</option>
                 </select>
             </div>
 
@@ -122,18 +121,23 @@
     <div class="flex flex-col gap-5.5 xl:flex-row ">
         {{-- uso --}}
         <div class="w-full px-3 xl:w-1/4">
-            <div class="xl:mb-5">
+            {{-- <div class="xl:mb-5">
                 <label class="mb-3 block text-base font-medium text-[#07074D]" for="uso">Tipo de uso</label>
                 <select name="uso"
                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                     required>
                     <option disabled selected>Selecciona una opción </option>
                     <option value="ninguno">ninguno</option>
-                    <option value="comisiones ">Comisiones</option>
+                    <option value="comisiones">Comisiones</option>
                     <option value="transporte">transporte</option>
                 </select>
+            </div> --}}
+            <div class="xl:mb-5">
+                <label class="mb-3 block text-base font-medium text-[#07074D]" for="uso">Tipo de uso</label>
+                <input type="text" name="uso"
+                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                    placeholder="Ingresa el tipo de uso" required>
             </div>
-
         </div>
         {{-- responsable --}}
         <div class="w-full px-3 xl:w-1/4">

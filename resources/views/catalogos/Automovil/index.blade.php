@@ -17,29 +17,27 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white">
-                    @foreach ($autos as $auto)
+                    @foreach ($cars as $car)
                         <tr>
-                            <td class="px-6 py-4 border-b border-gray-200">{{$auto->marca}}</td>
-                            <td class="px-6 py-4 truncate border-b border-gray-200">{{$auto->placas}}</td>
-                            <td class="px-6 py-4 border-b border-gray-200">{{$auto->NSI}}</td>
+                            <td class="px-6 py-4 border-b border-gray-200">{{$car->marca}}</td>
+                            <td class="px-6 py-4 truncate border-b border-gray-200">{{$car->placas}}</td>
+                            <td class="px-6 py-4 border-b border-gray-200">{{$car->NSI}}</td>
                             <td class="px-6 py-4 border-b border-gray-200">
                                 <span class="px-2 py-1 text-xs text-white bg-green-500 rounded-full">Active</span>
                             </td>
                         </tr>
                         {{-- acciones --}}
                         <td>
-                            <a href="{{ route('Automovil.edit', $auto->id) }}">Editar</a>
-                            <a href="{{ route('Automovil.show', $auto->id) }}">Ver</a>
+                            <a href="{{ route('Automovil.edit', $car->id) }}">Editar</a>
+                            <a href="{{ route('Automovil.show', $car->id) }}">Ver</a>
                         </td>
                     @endforeach
-
-
                     <!-- Add more rows here -->
                 </tbody>
             </table>
         </div>
 `  <!-- Navegación de paginación -->
-{{ $autos->links() }}
+{{-- {{ $cars->links() }} --}}
     </div>
 
 

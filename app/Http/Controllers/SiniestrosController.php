@@ -12,6 +12,7 @@ class SiniestrosController extends Controller
     public function index()
     {
         //
+
         return view('catalogos.siniestros.index');
     }
 

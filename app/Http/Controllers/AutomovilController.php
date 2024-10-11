@@ -13,18 +13,17 @@ class AutomovilController extends Controller
     public function index()
     {
         //
-        $autos = Automovil::paginate(10);
+        // $cars = Automovil::paginate(10);
+        $cars = Automovil::all();
 
-        return view('catalogos.Automovil.index', compact('autos'));
+        return view('catalogos.Automovil.index', compact('cars'));
     }
 
     public function create()
     {
-        //
-
-        $auto = new Automovil();
+        $AutoC = Automovil::all();
     // dd($auto);
-        return view('catalogos.Automovil.create', compact('auto'));
+        return view('catalogos.Automovil.create',compact('AutoC'));
     }
 
     /**
@@ -34,65 +33,24 @@ class AutomovilController extends Controller
     {
         //
 
+        $Newauto = new Automovil();
+        $Newauto -> marca = $request->input('marca') ;
+        $Newauto -> submarca = $request->input('submarca') ;
+        $Newauto -> modelo = $request->input('modelo') ;
+        $Newauto -> motor = $request->input('motor') ;
+        $Newauto -> combustible = $request->input('combustible') ;
+        $Newauto -> Kilometraje = $request->input('kilometraje') ;
+        $Newauto -> placas = $request->input('placas') ;
+        $Newauto -> NSI = $request->input('NSI') ;
+        $Newauto -> uso = $request->input('uso') ;
+        $Newauto -> responsable= $request->input('responsable') ;
+        $Newauto -> serie= $request->input('serie') ;
+        // $Newauto ->  = $request->input('marca') ;
 
-        $validacion = $request->validate([
-            'marca' => 'required',
-            'submarca' => 'required',
-            'modelo' => 'required',
-            'motor' => 'required',
-            'combustible' => 'required',
-            'kilometraje' => 'required|min:10',
-            'placas' => 'required',
-            'NSI' => 'required',
-            'uso' => 'required',
-            'responsable' => 'required',
-            // 'imagenU' => 'required',
-        ], [
-            'marca.required' => 'Es necesario el campo',
-            'submarca.required' => 'Es necesario el campo de fecha',
-            'modelo.required' => 'Es necesario el campo de sexo no lo dejes vacio ',
-            'motor.required' => 'Es necesario el campo de peso no lo dejes vacio ',
-            'combustible.required' => 'Es necesario el campo de telefono no lo dejes vacio ',
-            'kilometraje.required' => 'Es necesario el campoenfermedades de  no lo dejes vacio ',
-            'placas' => 'Es necesario el campo de imagen no lo dejes vacio ',
-            'NSI' => 'Es necesario el campo de imagen no lo dejes vacio ',
-            'uso' => 'Es necesario el campo de imagen no lo dejes vacio ',
-            'responsable' => 'Es necesario el campo de imagen no lo dejes vacio ',
-        ]);
 
-        //guardar base de datos
-
-        $marca = $request->marca;
-        $submarca = $request->submarca;
-        $modelo = $request->modelo;
-        $serie = $request->serie;
-        $motor = $request->motor;
-        $combustible = $request->combustible;
-        $kilomettraje = $request->kilomettraje;
-        $placas = $request->placas;
-        $NSI = $request->NSI;
-        $uso = $request->uso;
-        $responsable = $request->responsable;
-
-        Automovil::create([
-
-            'marca' => $marca,
-            'submarca' => $submarca,
-            'modelo' => $modelo,
-            'serie' => $serie,
-            'motor' => $motor,
-            'combustible' => $combustible,
-            'kilometraje' => $kilomettraje,
-            'placas' => $placas,
-            'NSI' => $NSI,
-            'uso' => $uso,
-            'responsable' => $responsable,
-
-            //  'idTratamiento' => $idTratamiento,
-
-        ]);
-
-        return redirect()->route('Automovil.index')->with('success', 'Se han guardado correctamente los datos');
+        $Newauto -> save();
+        // dd($Newauto);
+         return to_route('Automovil.index');
 
 
 

@@ -20,9 +20,7 @@ class ReservacionModel extends Model
         'Motivo',
         'fechaI',
         'placas',
-        'NSI',
-        'uso',
-        'responsable',
+
         // 'observaciones',
         // 'image',
     ];

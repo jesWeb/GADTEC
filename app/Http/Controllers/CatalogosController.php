@@ -40,6 +40,13 @@ class CatalogosController extends Controller
                 'href' => route('verificaciones.index'),
 
             ],
+            [
+                'titulo' => 'Verficaciones',
+                //  'label' => 'areas de usuario',   //utilitario y personal
+                'href' => route('verificaciones.index'),
+
+            ],
+
         ];
 
 

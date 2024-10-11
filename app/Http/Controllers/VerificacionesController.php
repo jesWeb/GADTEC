@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\verificacion;
 use Illuminate\Http\Request;
 
 class VerificacionesController extends Controller
@@ -12,7 +13,8 @@ class VerificacionesController extends Controller
     public function index()
     {
         //
-        return view('catalogos.verificaciones.index');
+        $verificado = verificacion::all();
+        return view('catalogos.verificaciones.index', compact('verificado'));
     }
 
     /**
@@ -21,7 +23,8 @@ class VerificacionesController extends Controller
     public function create()
     {
         //
-        return view('catalogos.verificaciones.create');
+        // $verificacion = ;
+        return view('catalogos.verificaciones.create', compact('verifiacion'));
     }
 
     /**

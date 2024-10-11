@@ -13,29 +13,26 @@ return new class extends Migration
     {
         //
 
-        Schema::create('automovils',function(Blueprint $table){
+        //     if (!Schema::hasTable('automovils')) {
+
+        // }
+
+        Schema::create('automovils', function (Blueprint $table) {
             $table->id();
-            $table->string('marca');
-            $table->string('submarca');
-            $table->string('modelo'); // O `text()` si es necesario
-            $table->string('serie');
-            $table->string('motor');
+            $table->string('marca')->nullable();
+            $table->string('submarca')->nullable();
+            $table->string('modelo')->nullable();
+            $table->string('serie')->nullable();
+            $table->string('motor')->nullable();
             $table->enum('combustible', ['gasolina', 'diesel', 'electrico'])->default('gasolina');
-            $table->unsignedInteger('kilometraje')->nullable(); // Cambiado a entero
+            $table->unsignedInteger('kilometraje')->nullable();
             $table->string('placas')->nullable();
             $table->string('NSI')->nullable();
-            $table->enum('uso', ['transporte', 'comision', 'ninguno'])->default('ninguno'); // "comision" corregido
-            $table->string('responsable')->nullable(); // O `text()` si es necesario
-            // $table->text('observaciones')->nullable(); // Descomentar si es necesario
-            // $table->string('image')->nullable(); // Descomentar si es necesario
-            // $table->enum('posted', ['yes', 'not'])->default('not'); // Descomentar si es necesario
+            $table->string('uso');
+            $table->string('responsable')->nullable();
             $table->timestamps();
-            // $table->unsignedBigInteger('car_id')->nullable(); // Descomentar y corregir el nombre
-            // $table->foreign('car_id')->references('id')->on('cars'); // Ajustar según la tabla de referencia
-            $table->softDeletes();
+            $table->softDeletes(); // Si deseas manejar eliminaciones suaves
         });
-
-
     }
 
     /**
@@ -44,5 +41,6 @@ return new class extends Migration
     public function down(): void
     {
         //
+        Schema::dropIfExists('automovils');
     }
 };

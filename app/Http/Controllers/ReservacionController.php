@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ReservacionModel;
 use Illuminate\Http\Request;
 
 class ReservacionController extends Controller
@@ -12,7 +13,8 @@ class ReservacionController extends Controller
     public function index()
     {
         //
-        return view('catalogos.reservacion.index');
+        $seguros = ReservacionModel::paginate(10);
+        return view('catalogos.reservacion.index',compact('seguro'));
     }
 
     /**
@@ -21,7 +23,8 @@ class ReservacionController extends Controller
     public function create()
     {
         //
-        return view('catalogos.reservacion.create');
+
+        return view('catalogos.reservacion.create',compact('seguro'));
     }
 
     /**
@@ -30,6 +33,21 @@ class ReservacionController extends Controller
     public function store(Request $request)
     {
         //
+        $Newseguro = new ReservacionModel();
+        $Newseguro -> marca = $request->input('marca') ;
+        $Newseguro -> submarca = $request->input('submarca') ;
+        $Newseguro -> modelo = $request->input('modelo') ;
+        $Newseguro -> motor = $request->input('motor') ;
+        $Newseguro -> combustible = $request->input('combustible') ;
+        $Newseguro -> Kilometraje = $request->input('kilometraje') ;
+        $Newseguro -> placas = $request->input('placas') ;
+        $Newseguro -> NSI = $request->input('NSI') ;
+        $Newseguro -> uso = $request->input('uso') ;
+        $Newseguro -> responsable= $request->input('responsable') ;
+        $Newseguro -> serie= $request->input('serie') ;
+        // $Newauto ->  = $request->input('marca') ;
+        $Newseguro -> save();
+        return to_route('reservaciones.index');
     }
 
     /**

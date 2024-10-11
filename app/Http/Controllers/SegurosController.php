@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SegurosModel;
 use Illuminate\Http\Request;
 
 class SegurosController extends Controller
@@ -12,7 +13,8 @@ class SegurosController extends Controller
     public function index()
     {
         //
-        return view('catalogos.seguros.index');
+        $seguro = SegurosModel::paginate(10);
+        return view('catalogos.seguros.index',compact('seguro'));
     }
 
     /**
@@ -21,7 +23,8 @@ class SegurosController extends Controller
     public function create()
     {
         //
-        return view('catalogos.seguros.create');
+        $seguros = new SegurosModel();
+        return view('catalogos.seguros.create',compact('seguros'));
     }
 
     /**
