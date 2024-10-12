@@ -10,7 +10,7 @@ class Automovil extends Model
 {
     use HasFactory, SoftDeletes ;
 
-    // protected $primarykey = 'id';
+     protected $primarykey = 'id';
 
     protected $fillable = [
         'marca',
@@ -24,8 +24,8 @@ class Automovil extends Model
         'NSI',
         'uso',
         'responsable',
-        // 'observaciones',
-        // 'image',
+        'observaciones',
+        'image',
     ];
 
 

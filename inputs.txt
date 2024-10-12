@@ -1,0 +1,207 @@
+  {{-- 1 row de info --}}
+    <div class="flex flex-col gap-5.5 xl:flex-row mb-3">
+        {{-- Marca --}}
+        <div class="w-full px-3 xl:w-1/2">
+            <div class="xl:mb-5">
+                <label class="mb-3 block text-base font-medium text-[#07074D]" for="marca">Marca</label>
+                <select name="marca"
+                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                    required>
+                    <option disabled selected>Selecciona una opción </option>
+                    <option value="BMW">BMW</option>
+                    <option value="Mercedes">Mercedes</option>
+
+                </select>
+            </div>
+        </div>
+        {{-- subMarca --}}
+        <div class="w-full px-3 xl:w-1/2">
+            <div class="xl:mb-5">
+                <label class="mb-3 block text-base font-medium text-[#07074D]" for="submarca">Submarca</label>
+                <select name="submarca"
+                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                    required>
+                    <option disabled selected>Selecciona una opción </option>
+                    <option value="A1">A1</option>
+                    <option value="L6">L6</option>
+
+                </select>
+            </div>
+
+        </div>
+        {{-- Modelo --}}
+        <div class="w-full px-3 xl:w-1/2">
+            <div class="xl:mb-5">
+                <label class="mb-3 block text-base font-medium text-[#07074D]" for="modelo">Modelo</label>
+                <select name="modelo"
+                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                    required>
+                    <option disabled selected>Selecciona una opción </option>
+                    <option value="2015">2015</option>
+                    <option value="2015">2015</option>
+                    <option value="2015">2015</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        //
+        $multas = Multas::with('automovil')->get();
+        return view('multas.index', compact('multas'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create(){
+        //
+        $automoviles = Automoviles::all();
+        return view('multas.add', compact('automoviles'));
+    }
+    /**
+     * Store a newly created resource in storage.
+     */
+
+    public function store(Request $request)
+    {
+        $rules = [
+            'tipo_multa' => 'required|string|max:100',
+            'monto' =>'required|numeric',
+            'fecha_multa' =>'required|date',
+            'lugar' =>'required|string|max:100',
+            'estatus' =>'required|in:Pendiente,Pagada',
+            'comprobante' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
+            'observaciones' => 'nullable|string|max:255',
+            'id_automovil' => 'nullable|exists:automoviles,id_automovil'
+        ];
+
+        $messages = [
+            'tipo_multa.required' => 'El campo tipo de multa es requerido',
+            'monto.required' => 'El campo monto es requerido',
+            'fecha_multa.required' => 'La fecha de multa es requerida',
+            'lugar.required' => 'El campo lugar es requerido',
+            'estatus.required' => 'El campo estatus es requerido',
+            'comprobante.nullable' => 'El campo comprobante es opcional',
+            'observaciones.nullable' => 'El campo observaciones es opcional',
+            'id_automovil.exists' => 'El campo automóvil no existe'
+        ];
+
+        $request->validate($rules, $messages);
+
+        $input = $request->all();
+
+        // Guardar comprobante
+        if ($request->hasFile('comprobante')) {
+            $file = $request->file('comprobante');
+            $comprobante =  $file->getClientOriginalName();
+            $ldate = date('Ymd_His_');
+            $comprobante = $ldate . $comprobante;
+
+            $file->move(public_path('img'), $comprobante);
+            $input['comprobante'] = $comprobante;
+        }
+
+        Multas::create($input);
+
+        return redirect('multas')->with('message', 'Se ha creado correctamente el registro');
+
+/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/
+ public function up(): void
+    {
+
+        Schema::create('automovils', function (Blueprint $table) {
+            $table->id();
+            $table->string('marca')->nullable();
+            $table->string('submarca')->nullable();
+            $table->string('modelo')->nullable();
+            $table->string('serie')->nullable();
+            $table->string('motor')->nullable();
+            $table->enum('combustible', ['gasolina', 'diesel', 'electrico'])->default('gasolina');
+            $table->unsignedInteger('kilometraje')->nullable();
+            $table->string('placas')->nullable();
+            $table->string('NSI');
+            $table->string('uso');
+            $table->string('responsable');
+            $table->text('observaciones')->nullable();
+            $table->string('image')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        //
+        Schema::dropIfExists('automovils');
+    }
+
+    /*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*
+      public function up(): void
+    {
+        Schema::create('reservaciones', function (Blueprint $table) {
+            $table->id();
+            $table->string('automovil');
+            $table->string('responsable');
+            $table->date('fechaR');
+            $table->time('salida'); // Puedes usar `dateTime` si necesitas fecha y hora
+            $table->string('destino');
+            $table->string('motivo'); // Asegúrate de que el nombre sea consistente
+            $table->date('fechaI');
+            $table->string('placas');
+            $table->timestamps();
+            $table->softDeletes(); // Agrega esta línea
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('reservaciones');
+    }
+    */*/*/*/*/*/*/*/*/*
+    return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        //
+        Schema::create('seguros', function (Blueprint $table) {
+            $table->id();
+            $table->string('automovil');
+            $table->string('aseguradora');
+            $table->date('fechaSiniestro');
+            $table->string('estatus');
+            $table->string('responsable');
+            $table->decimal('CostoEstimado', 10, 2)->nullable();
+            $table->decimal('CostoFinal', 10, 2)->nullable();
+            $table->text('descripcion')->nullable();
+            $table->text('observaciones')->nullable();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        //
+        Schema::dropIfExists('seguros');
+    }
+};
+*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*
+

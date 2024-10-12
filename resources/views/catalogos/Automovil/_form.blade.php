@@ -5,45 +5,32 @@
         <div class="w-full px-3 xl:w-1/2">
             <div class="xl:mb-5">
                 <label class="mb-3 block text-base font-medium text-[#07074D]" for="marca">Marca</label>
-                <select name="marca"
+                <input type="text" name="marca" id="marca" placeholder="Ingresa la marca"
                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                     required>
-                    <option disabled selected>Selecciona una opción </option>
-                    <option value="BMW">BMW</option>
-                    <option value="Mercedes">Mercedes</option>
-
-                </select>
             </div>
         </div>
-        {{-- subMarca --}}
+
+        {{-- Submarca --}}
         <div class="w-full px-3 xl:w-1/2">
             <div class="xl:mb-5">
                 <label class="mb-3 block text-base font-medium text-[#07074D]" for="submarca">Submarca</label>
-                <select name="submarca"
+                <input type="text" name="submarca" id="submarca" placeholder="Ingresa la submarca"
                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                     required>
-                    <option disabled selected>Selecciona una opción </option>
-                    <option value="A1">A1</option>
-                    <option value="L6">L6</option>
-
-                </select>
             </div>
-
         </div>
+
         {{-- Modelo --}}
         <div class="w-full px-3 xl:w-1/2">
             <div class="xl:mb-5">
                 <label class="mb-3 block text-base font-medium text-[#07074D]" for="modelo">Modelo</label>
-                <select name="modelo"
+                <input type="text" name="modelo" id="modelo" placeholder="Ingresa el modelo"
                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                     required>
-                    <option disabled selected>Selecciona una opción </option>
-                    <option value="2015">2015</option>
-                    <option value="2015">2015</option>
-                    <option value="2015">2015</option>
-                </select>
             </div>
         </div>
+
     </div>
     {{-- 2 row info  --}}
     <div class="flex flex-col gap-5.5 xl:flex-row mb-3">

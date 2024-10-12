@@ -6,16 +6,8 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        //
-
-        //     if (!Schema::hasTable('automovils')) {
-
-        // }
 
         Schema::create('automovils', function (Blueprint $table) {
             $table->id();
@@ -27,11 +19,13 @@ return new class extends Migration
             $table->enum('combustible', ['gasolina', 'diesel', 'electrico'])->default('gasolina');
             $table->unsignedInteger('kilometraje')->nullable();
             $table->string('placas')->nullable();
-            $table->string('NSI')->nullable();
+            $table->string('NSI');
             $table->string('uso');
-            $table->string('responsable')->nullable();
+            $table->string('responsable');
+            $table->text('observaciones')->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
-            $table->softDeletes(); // Si deseas manejar eliminaciones suaves
+            $table->softDeletes();
         });
     }
 

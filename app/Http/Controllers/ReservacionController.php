@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ReservacionModel;
+use App\Models\reservaciones;
 use Illuminate\Http\Request;
 
 class ReservacionController extends Controller
@@ -13,7 +13,7 @@ class ReservacionController extends Controller
     public function index()
     {
         //
-        $seguros = ReservacionModel::paginate(10);
+        $seguros =reservaciones ::paginate(10);
         return view('catalogos.reservacion.index',compact('seguro'));
     }
 
@@ -33,7 +33,7 @@ class ReservacionController extends Controller
     public function store(Request $request)
     {
         //
-        $Newseguro = new ReservacionModel();
+        $Newseguro = new reservaciones();
         $Newseguro -> marca = $request->input('marca') ;
         $Newseguro -> submarca = $request->input('submarca') ;
         $Newseguro -> modelo = $request->input('modelo') ;

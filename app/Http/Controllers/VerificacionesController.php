@@ -13,8 +13,8 @@ class VerificacionesController extends Controller
     public function index()
     {
         //
-        $verificado = verificacion::all();
-        return view('catalogos.verificaciones.index', compact('verificado'));
+        $verificacion = verificacion::all();
+        return view('catalogos.verificaciones.index', compact('verificacion'));
     }
 
     /**
@@ -23,8 +23,8 @@ class VerificacionesController extends Controller
     public function create()
     {
         //
-        // $verificacion = ;
-        return view('catalogos.verificaciones.create', compact('verifiacion'));
+         $verificar = verificacion::all() ;
+        return view('catalogos.verificaciones.create',compact('verificar'));
     }
 
     /**
@@ -38,7 +38,7 @@ class VerificacionesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(verificacion $id)
     {
         //
     }
@@ -46,7 +46,7 @@ class VerificacionesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(verificacion $id)
     {
         //
     }
@@ -54,7 +54,7 @@ class VerificacionesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, verificacion $id)
     {
         //
     }
@@ -62,7 +62,7 @@ class VerificacionesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(verificacion $id)
     {
         //
     }

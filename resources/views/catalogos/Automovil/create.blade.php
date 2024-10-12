@@ -5,7 +5,7 @@
         <div class="p-6 bg-white rounded-md shadow-md">
             <h2 class="text-xl font-semibold text-gray-700">Registro Automovil</h2>
             {{--  --}}
-            <form action="{{ route('Automovil.store') }}" method="POST">
+            <form action="{{ route('Automovil.store') }}" enctype="multipart/form-data"  method="POST">
                 {{-- este es un toquen crea una proteccion en el formulario csrf tipo segridad --}}
                 @csrf
                 {{-- @include('catalogos.Automovil._form') --}}
@@ -16,46 +16,34 @@
                         <div class="w-full px-3 xl:w-1/2">
                             <div class="xl:mb-5">
                                 <label class="mb-3 block text-base font-medium text-[#07074D]" for="marca">Marca</label>
-                                <select name="marca"
+                                <input type="text" name="marca" id="marca" placeholder="Ingresa la marca"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                     required>
-                                    <option disabled selected>Selecciona una opción </option>
-                                    <option value="BMW">BMW</option>
-                                    <option value="Mercedes">Mercedes</option>
-
-                                </select>
                             </div>
                         </div>
-                        {{-- subMarca --}}
+
+                        {{-- Submarca --}}
                         <div class="w-full px-3 xl:w-1/2">
                             <div class="xl:mb-5">
                                 <label class="mb-3 block text-base font-medium text-[#07074D]"
                                     for="submarca">Submarca</label>
-                                <select name="submarca"
+                                <input type="text" name="submarca" id="submarca" placeholder="Ingresa la submarca"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                     required>
-                                    <option disabled selected>Selecciona una opción </option>
-                                    <option value="A1">A1</option>
-                                    <option value="L6">L6</option>
-
-                                </select>
                             </div>
-
                         </div>
+
                         {{-- Modelo --}}
                         <div class="w-full px-3 xl:w-1/2">
                             <div class="xl:mb-5">
                                 <label class="mb-3 block text-base font-medium text-[#07074D]" for="modelo">Modelo</label>
-                                <select name="modelo"
+                                <input type="number" name="modelo" id="ano" placeholder="Ingresa el año"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                    required>
-                                    <option disabled selected>Selecciona una opción </option>
-                                    <option value="2015">2015</option>
-                                    <option value="2023">2023</option>
-                                    <option value="2008">2008</option>
-                                </select>
+                                    min="1900" max="2100" required>
                             </div>
+
                         </div>
+
                     </div>
                     {{-- 2 row info  --}}
                     <div class="flex flex-col gap-5.5 xl:flex-row mb-3">
@@ -169,40 +157,64 @@
                         </div>
                     </div>
                     {{-- Observacines  --}}
-                    {{-- <div class="w-full xl:m-5 xl:w-2/4 xl:mt-4 xl:mb-4">
-                    <label class="mb-3 block text-base font-medium text-[#07074D]" for="observaciones">Observaciones del
-                        vehiculo</label>
-                    <textarea placeholder="Observaciones ..."
-                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                        name="observaciones" id=""></textarea>
-                </div> --}}
-                    {{-- fotos --}}
-                    {{-- <div class="pt-4 mb-6">
-                    <label class="mb-5 block text-xl font-semibold text-[#07074D]">
-                        Subir Archivos
-                    </label>
-                    <div class="mb-8">
-                        <input type="file" name="file" id="file" class="sr-only" />
-                        <label for="file"
-                            class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
-                            <div>
-                                <span class="mb-2 block text-xl font-semibold text-[#07074D]">
-                                    Drop files here
-                                </span>
-                                <span class="mb-2 block text-base font-medium text-[#6B7280]">
-                                    Or
-                                </span>
-                                <span
-                                    class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
-                                    Browse
-                                </span>
-                            </div>
+                    <div class="w-full xl:m-5 xl:w-2/4 xl:mt-4 xl:mb-4">
+                        <label class="mb-3 block text-base font-medium text-[#07074D]" for="observaciones">Observaciones
+                            del
+                            vehiculo</label>
+                        <textarea placeholder="Observaciones ..."
+                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                            name="observaciones" id=""></textarea>
+                    </div>
+                    {{-- foto --}}
+                    <div class="pt-4 mb-6">
+                        <label class="mb-5 block text-xl font-semibold text-[#07074D]">
+                            Subir Archivos
                         </label>
+                        <div class="mb-8">
+                            <input type="file" name="image[]" id="image" class="sr-only" multiple />
+                            <label for="image"
+                                class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
+                                <div>
+                                    <span class="mb-2 block text-xl font-semibold text-[#07074D]">
+                                        Drop files here
+                                    </span>
+                                    <span class="mb-2 block text-base font-medium text-[#6B7280]">
+                                        Or
+                                    </span>
+                                    <span
+                                        class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
+                                        Browse
+                                    </span>
+                                    <div id="file-info" class="mt-4">
+                                        <span id="file-count">0 archivos seleccionados..</span>
+                                        <ul id="file-names" class="pl-5 list-disc"></ul>
+                                    </div>
+                                </div>
+
+                            </label>
+                        </div>
                     </div>
 
-                </div> --}}
-
                 </div>
+
+                <script>
+                    const fileInput = document.getElementById('image');
+                    const fileCountDisplay = document.getElementById('file-count');
+                    const fileNamesDisplay = document.getElementById('file-names');
+
+                    fileInput.addEventListener('change', function() {
+                        const files = fileInput.files;
+                        const fileCount = files.length;
+                        fileCountDisplay.textContent = `${fileCount} archivos seleccionados`;
+                        fileNamesDisplay.innerHTML = '';
+
+                        for (let i = 0; i < fileCount; i++) {
+                            const listItem = document.createElement('li');
+                            listItem.textContent = files[i].name; // Muestra el nombre del archivo
+                            fileNamesDisplay.appendChild(listItem);
+                        }
+                    });
+                </script>
 
                 {{-- BTN --}}
                 <div class="flex justify-end gap-4 mt-4">
