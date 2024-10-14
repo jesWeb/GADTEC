@@ -9,7 +9,7 @@
        {{-- titulo --}}
        <h2 class="mb-5 text-xl font-semibold text-gray-700">Registro de Seguros</h2>
         {{-- formulario --}}
-        <form action="" >
+        <form action="{{route('seguros.store')}}" method="POST" >
             @include('catalogos.seguros._form')
         </form>
     </div>

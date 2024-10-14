@@ -49,6 +49,6 @@
         </table>
     </div>
     <!-- Navegación de paginación -->
-    {{ $cars->links() }}
+    {{-- {{ $cars->links() }} --}}
 
 @endsection

@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SegurosModel extends Model
+class seguros extends Model
 {
     use HasFactory;
-    protected $fillable = [
+      protected $fillable = [
         'automovil',
         'aseguradora',
         'fechaSiniestro',
@@ -19,5 +19,4 @@ class SegurosModel extends Model
         'descripcion',
         'observaciones'
     ];
-
 }

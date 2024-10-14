@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->string('vehiculo')->nullable();
             $table->string('holograma')->nullable();
-            $table->string('engomado')->nullable();
+            $table->enum('engomado', ['Amarillo', 'azul', 'rojo', 'ninguno'])->default('ninguno');
             $table->date('fechaV')->nullable();
             $table->date('fechaP')->nullable();
             $table->text('observaciones')->nullable();

@@ -6,11 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class verificacion extends Model
+class asignacion extends Model
 {
+
     use HasFactory;
     use SoftDeletes;
 
+    protected $primarykey = 'id';
 
     protected $fillable = [
         'vehiculo',
@@ -19,9 +21,6 @@ class verificacion extends Model
         'fechaV',
         'fechaP',
         'observaciones',
-        'image',
-
+       'image'
     ];
-
-
 }

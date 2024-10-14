@@ -205,3 +205,40 @@
 };
 */*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*
 
+public function update(Request $request, string $id)
+{
+    $rules = [
+        'tipo_multa' =>'required|string|max:100',
+        'monto' =>'required|numeric',
+        'fecha_multa' =>'required|date',
+
+    ];
+
+    $messages = [
+        'tipo_multa.required' => 'El campo tipo de multa es requerido',
+        'monto.required' => 'El campo monto es requerido',
+
+    ];
+
+    $request->validate($rules, $messages);
+    $multa = Multas::findOrFail($id);
+
+    $input = $request->all();
+
+    if ($request->hasFile('comprobante')) {
+        $file = $request->file('comprobante');
+        $comprobante = date('Ymd_His_') . $file->getClientOriginalName();
+        $file->move(public_path('img'), $comprobante);
+        $input['comprobante'] = $comprobante;
+    }
+
+    $multa->update($input);
+
+    return redirect('multas')->with('message', 'Se ha modificado correctamente el registro');
+}
+
+public function edit(string $id){
+    $multa = Multas::findOrFail($id);
+    $automoviles = Automoviles::all();
+    return view('multas', compact('multa', 'automoviles'));
+}

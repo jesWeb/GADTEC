@@ -2,120 +2,94 @@
 @csrf
 
 <div class="m-3 xl:p-10">
-    {{-- 1ra row  --}}
+    {{-- 1ra row --}}
     <div class="flex flex-col gap-5.5 xl:flex-row">
-        {{-- vehiculo --}}
+        {{-- Automóvil --}}
         <div class="w-full px-3 xl:w-1/2">
-            <label class="mb-3 block text-base font-medium text-[#07074D]" for="vehiculo">Vehiculo</label>
-            <select name="Marca"
+            <label class="mb-3 block text-base font-medium text-[#07074D]" for="automovil">Automóvil</label>
+            <input
                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                required>
-                <option disabled selected>Selecciona una opción </option>
-                <option value="">carros</option>
-
-            </select>
+                type="text" name="automovil" placeholder="Marca y modelo" required>
         </div>
         {{-- Aseguradora --}}
         <div class="w-full px-3 xl:w-1/2">
             <label class="mb-3 block text-base font-medium text-[#07074D]" for="aseguradora">Aseguradora</label>
             <input
                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                type="text" placeholder="Nombre">
-        </div>
-        {{-- fecha vigencia--}}
-        <div class="w-full px-3 xl:w-1/2">
-            <div class="mb-5">
-                <label for="date" class="mb-3 block text-base font-medium text-[#07074D]">
-                    Fecha de Vigencia
-                </label>
-                <input type="date" name="date"
-                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-            </div>
+                type="text" name="aseguradora" placeholder="Nombre de la aseguradora" required>
         </div>
     </div>
-    {{-- 2ra row --}}
+    {{-- 2da row --}}
     <div class="flex flex-col gap-5.5 xl:flex-row mt-4">
-        {{-- Cobertura --}}
+        {{-- Fecha de Siniestro --}}
         <div class="w-full px-3 xl:w-1/2">
-            <label class="mb-3 block text-base font-medium text-[#07074D]" for="cobertura">Cobertura</label>
-            <select name="Marca"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                required>
-                <option disabled selected>Selecciona una opción </option>
-                <option value="">carros</option>
+            <label class="mb-3 block text-base font-medium text-[#07074D]" for="fechaSiniestro">Fecha de Siniestro</label>
+            <input type="date" name="fechaSiniestro"
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required />
+        </div>
+        {{-- Estatus --}}
+        <div class="w-full px-3 xl:w-1/2">
+            <label class="mb-3 block text-base font-medium text-[#07074D]" for="estatus">Estatus</label>
+            <select name="estatus"
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
+                <option disabled selected>Selecciona una opción</option>
+                <option value="pendiente">Pendiente</option>
+                <option value="resuelto">Resuelto</option>
             </select>
         </div>
-        {{-- estatus --}}
-        <div class="w-full px-3 xl:w-1/2">
-            <div class="">
-                <label class="mb-3 block text-base font-medium text-[#07074D]" for="uso">Estatus</label>
-                <select name="Marca"
-                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                    required>
-                    <option disabled selected>Selecciona una opción </option>
-                    <option value="">Disponible</option>
-                </select>
-            </div>
-        </div>
     </div>
-    {{-- 3row info  --}}
+    {{-- 3ra row --}}
     <div class="flex flex-col gap-5.5 xl:flex-row mt-4">
-        {{-- Monto --}}
+        {{-- Responsable --}}
         <div class="w-full px-3 xl:w-1/2">
-            <div class="mb-5">
-                <label class="mb-3 block text-base font-medium text-[#07074D]" for="monto">Monto</label>
-                <input
-                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                   name="monto" min="0" step="0.01"  type="number" placeholder="$0.00 MXN">
-            </div>
+            <label class="mb-3 block text-base font-medium text-[#07074D]" for="responsable">Responsable</label>
+            <input
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                type="text" name="responsable" placeholder="Nombre del responsable" required>
         </div>
-        {{-- Afiliacion --}}
+        {{-- Costo Estimado --}}
         <div class="w-full px-3 xl:w-1/2">
-            <div class="mb-5">
-                <label class="mb-3 block text-base font-medium text-[#07074D]" for="afiliacion">Afilicion</label>
-                <select name="Marca"
-                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                    required>
-                    <option disabled selected>Selecciona una opción </option>
-                    <option value="usuario">Usuario</option>
-                </select>
-            </div>
+            <label class="mb-3 block text-base font-medium text-[#07074D]" for="costoEstimado">Costo Estimado</label>
+            <input
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                name="costoEstimado" min="0" step="0.01" type="number" placeholder="$0.00 MXN" required>
         </div>
     </div>
-    {{-- foto --}}
-    <div class="pt-4 mb-6">
-        <label class="mb-5 block text-xl font-semibold text-[#07074D]">
-            Subir Archivos
-        </label>
-        <div class="mb-8">
-            <input type="file" name="file"  class="sr-only" />
-            <label for="file"
-                class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
-                <div>
-                    <span class="mb-2 block text-xl font-semibold text-[#07074D]">
-                        Drop files here
-                    </span>
-                    <span class="mb-2 block text-base font-medium text-[#6B7280]">
-                        Or
-                    </span>
-                    <span
-                        class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
-                        Browse
-                    </span>
-                </div>
-            </label>
+    {{-- 4ta row --}}
+    <div class="flex flex-col gap-5.5 xl:flex-row mt-4">
+        {{-- Costo Final --}}
+        <div class="w-full px-3 xl:w-1/2">
+            <label class="mb-3 block text-base font-medium text-[#07074D]" for="costoFinal">Costo Final</label>
+            <input
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                name="costoFinal" min="0" step="0.01" type="number" placeholder="$0.00 MXN" required>
         </div>
-
+        {{-- Descripción --}}
+        <div class="w-full px-3 xl:w-1/2">
+            <label class="mb-3 block text-base font-medium text-[#07074D]" for="descripcion">Descripción</label>
+            <textarea
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                name="descripcion" placeholder="Descripción del siniestro" required></textarea>
+        </div>
     </div>
-
+    {{-- Observaciones --}}
+    <div class="flex flex-col mt-4">
+        <div class="w-full px-3">
+            <label class="mb-3 block text-base font-medium text-[#07074D]" for="observaciones">Observaciones</label>
+            <textarea
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                name="observaciones" placeholder="Observaciones adicionales"></textarea>
+        </div>
+    </div>
 </div>
+
 
 
 {{-- BTN --}}
 <div class="flex justify-end gap-4 mt-4">
-    <button class="px-6 py-2 font-semibold bg-gray-200 rounded-md hover:bg-red-200 focus:outline-none focus:bg-red-700">
+    {{-- <button class="px-6 py-2 font-semibold bg-gray-200 rounded-md hover:bg-red-200 focus:outline-none focus:bg-red-700">
         Cancelar
-    </button>
+    </button> --}}
     <button type="submit"
         class="px-6 py-2 text-gray-200 bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">Registrar</button>
 

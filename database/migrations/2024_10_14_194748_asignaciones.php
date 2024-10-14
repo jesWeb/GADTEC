@@ -6,30 +6,29 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up(): void
+
+    public function up()
     {
-        Schema::create('solicitudes', function (Blueprint $table) {
+        Schema::create('asignaciones', function (Blueprint $table) {
             $table->id();
             $table->string('solicitante');
             $table->string('telefono');
-            $table->enum('requierechofer', ['sí', 'no']); // Cambiado a enum
+            $table->enum('requierechofer', ['sí', 'no']);
             $table->string('nombre_chofer')->nullable();
             $table->string('vehiculo');
             $table->string('lugar');
-            $table->time('hora_salida'); // O dateTime si necesitas fecha y hora
+            $table->time('hora_salida');
             $table->string('no_licencia');
-            $table->text('condiciones')->nullable(); // Opcional
-            $table->text('observaciones')->nullable(); // Opcional
+            $table->text('condiciones')->nullable();
+            $table->text('observaciones')->nullable();
             $table->string('autorizante');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('solicitudes');
+        Schema::dropIfExists('asignaciones');
     }
 };

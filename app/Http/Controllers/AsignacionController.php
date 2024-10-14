@@ -2,29 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\seguros;
+use App\Models\asignacion;
 use Illuminate\Http\Request;
 
-class SegurosController extends Controller
+class AsignacionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         //
-        $seguro = seguros::all();
-        return view('catalogos.seguros.index', compact('seguro'));
+         $reservacion = asignacion::all();
+        // $cars = Automovil::all();
+
+        return view('catalogos.reservaciones.index', compact('reservacion'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
-        $seguros = new seguros();
-        return view('catalogos.seguros.create', compact('seguros'));
+         $reservC = asignacion::all() ;
+        // dd($auto);
+        return view('catalogos.reservaciones.create', compact('reservC'));
     }
 
     /**
@@ -33,18 +30,19 @@ class SegurosController extends Controller
     public function store(Request $request)
     {
         //
+
         $rules = [
             'marca' => 'required|string|max:20',
             'submarca' => 'required|string|max:20',
-            'modelo' => 'required|integer|min:1|max:9999', // Asegurando que sea un número entero válido
+            'modelo' => 'required|string|max:4',
             'motor' => 'required|string|max:50',
-            'kilometraje' => 'required|integer|min:0', // Evitando kilometraje negativo
+            'kilometraje' => 'required|integer',
             'placas' => 'nullable|string|max:255',
             'NSI' => 'nullable|string|max:20',
             'observaciones' => 'nullable|string|max:255',
             'uso' => 'nullable|string',
-            'responsable' => 'required|string|max:100', // Limitando el tamaño
-            'image' => 'nullable|file|mimes:jpeg,png,jpg|max:2048', // Limitando el tamaño del archivo
+            'responsable' => 'required|string',
+            'image' => 'nullable|file|mimes:jpeg,png,jpg',
         ];
 
         $messages = [
@@ -53,7 +51,6 @@ class SegurosController extends Controller
             'modelo.required' => 'El campo modelo es requerido.',
             'modelo.integer' => 'El campo modelo debe ser un número entero.',
             'modelo.min' => 'El campo modelo debe ser al menos 1.',
-            'modelo.max' => 'El campo modelo no puede exceder 9999.',
             'motor.required' => 'El campo motor es requerido.',
             'motor.string' => 'El campo motor debe ser una cadena de texto.',
             'motor.max' => 'El campo motor no puede exceder los 50 caracteres.',
@@ -66,59 +63,63 @@ class SegurosController extends Controller
             'NSI.max' => 'El campo NSI no puede exceder los 20 caracteres.',
             'observaciones.string' => 'El campo observaciones debe ser una cadena de texto.',
             'observaciones.max' => 'El campo observaciones no puede exceder los 255 caracteres.',
-            'uso.string' => 'El campo uso debe ser una cadena de texto.',
+            'uso.exists' => 'El campo uso debe ser un valor válido.',
             'responsable.required' => 'El campo responsable es requerido.',
             'responsable.string' => 'El campo responsable debe ser una cadena de texto.',
             'responsable.max' => 'El campo responsable no puede exceder los 100 caracteres.',
             'image.file' => 'El campo imagen debe ser un archivo.',
             'image.mimes' => 'El campo imagen debe ser de tipo: jpeg, png, jpg.',
             'image.max' => 'El campo imagen no puede exceder los 2048 kilobytes.',
-        ];
 
+        ];
 
         $request->validate($rules, $messages);
         $input = $request->all();
 
 
-        seguros::create($input);
 
-        return to_route('seguros.index');
+        asignacion::create($input);
+
+        // dd($Newauto);
+
+        // return redirect('Automovil.index')->with('message', 'Se ha creado correctamente el registro');
+        return to_route('Automovil.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(seguros $id)
+    public function show(asignacion $id)
     {
         //
-        $seguroS = seguros::find($id);
 
-        return view('catalogos.seguros.show', compact('seguroS'));
+        $automovil = asignacion::findOrFail($id);
+
+        return view('catalogos.reservaciones.show', compact('automovil'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(seguros $id)
+    public function edit(asignacion $id)
     {
         //
-        $SeguroEdit = seguros::find($id);
-        return view('catalogos.seguros.edit', compact('SeguroEdit'));
+        $reservEdit = asignacion::find($id);
+        return view('catalogos.reservaciones.edit', compact('reservEdit'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, seguros $id)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(seguros $id)
+
+    public function update(Request $request, asignacion $id)
     {
         //
+}
+
+    public function destroy(asignacion $id)
+    {
+        //
+
+
     }
 }
+
