@@ -3,7 +3,7 @@
 <div class="container mt-5">
     <div class="">
         <a class="mr-5 bg-green-700 flex items-center gap-2 rounded  bg-primary px-4.5 py-2 font-medium text-white transition hover:bg-green-900"
-            href="{{ route('Automovil.create') }}">Crear nuevo</a>
+            href="{{ route('siniestros.create') }}">Crear nuevo</a>
     </div>
     <div class="mx-4 overflow-hidden rounded-lg shadow-lg md:mx-10">
 
@@ -18,20 +18,20 @@
                 </tr>
             </thead>
             <tbody class="bg-white">
-                @foreach ($cars as $car)
+                @foreach ($siniestros as $siniestro)
                     <tr>
-                        <td class="px-6 py-4 border-b border-gray-200">{{ $car->marca }}</td>
-                        <td class="px-6 py-4 truncate border-b border-gray-200">{{ $car->placas }}</td>
-                        <td class="px-6 py-4 border-b border-gray-200">{{ $car->NSI }}</td>
+                        <td class="px-6 py-4 border-b border-gray-200"></td>
+                        <td class="px-6 py-4 truncate border-b border-gray-200"></td>
+                        <td class="px-6 py-4 border-b border-gray-200"></td>
                         <td class="px-6 py-4 border-b border-gray-200">
                             <span class="px-2 py-1 text-xs text-white bg-green-500 rounded-full">Active</span>
                         </td>
                         {{-- acciones --}}
                         <td>
-                            <a href="{{ route('Automovil.edit', $car->id) }}">Editar</a>
-                            <a href="{{ route('Automovil.show', $car->id) }}">Ver</a>
+                            <a href="{{ route('Automovil.edit', ) }}">Editar</a>
+                            <a href="{{ route('Automovil.show',) }}">Ver</a>
                             {{-- eliminar --}}
-                            <form action="{{ route('Automovil.destroy', $car) }}" method="post">
+                            <form action="{{ route('Automovil.destroy', ) }}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <button
