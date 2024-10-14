@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AsignacionController;
 use App\Http\Controllers\AutomovilController;
 use App\Http\Controllers\CatalogosController;
 use App\Http\Controllers\ProfileController;
@@ -40,7 +41,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     })->name("dashboard");
 
     Route::resource('Automovil', AutomovilController::class);
-    Route::resource('reservaciones', ReservacionController::class);
+    Route::resource('asignacion', AsignacionController::class);
     Route::resource('seguros', SegurosController::class);
     Route::resource('siniestros', SiniestrosController::class);
     Route::resource('verificaciones', VerificacionesController::class);

@@ -19,26 +19,18 @@ class CatalogosController extends Controller
                 'href' => route('Automovil.index'),
             ],
             [
-                'titulo' => 'Reservacion',
-                //  'label' => 'reservaciones Automovil',
-                'href' => route('reservaciones.index'),
-            ],
-            [
                 'titulo' => 'Seguros',
-                //  'label' => 'cirugiaprocedimiento',
                 'href' => route('seguros.index')
             ],
             [
                 'titulo' => 'Siniestros',
                 //  'label' => 'areas de usuario',
                 'href' => route('siniestros.index'),
-
             ],
             [
                 'titulo' => 'Verficaciones',
                 //  'label' => 'areas de usuario',
                 'href' => route('verificaciones.index'),
-
             ],
 
 

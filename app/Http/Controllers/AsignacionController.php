@@ -14,14 +14,14 @@ class AsignacionController extends Controller
          $reservacion = asignacion::all();
         // $cars = Automovil::all();
 
-        return view('catalogos.reservaciones.index', compact('reservacion'));
+        return view('catalogos.asignacion.index', compact('reservacion'));
     }
 
     public function create()
     {
          $reservC = asignacion::all() ;
         // dd($auto);
-        return view('catalogos.reservaciones.create', compact('reservC'));
+        return view('catalogos.asignacion.create', compact('reservC'));
     }
 
     /**
@@ -83,7 +83,7 @@ class AsignacionController extends Controller
         // dd($Newauto);
 
         // return redirect('Automovil.index')->with('message', 'Se ha creado correctamente el registro');
-        return to_route('Automovil.index');
+        return to_route('asignacion.index');
     }
 
     /**
@@ -95,7 +95,7 @@ class AsignacionController extends Controller
 
         $automovil = asignacion::findOrFail($id);
 
-        return view('catalogos.reservaciones.show', compact('automovil'));
+        return view('catalogos.asignacion.show', compact('automovil'));
     }
 
     /**
@@ -105,7 +105,7 @@ class AsignacionController extends Controller
     {
         //
         $reservEdit = asignacion::find($id);
-        return view('catalogos.reservaciones.edit', compact('reservEdit'));
+        return view('catalogos.asignacion.edit', compact('reservEdit'));
     }
 
 
