@@ -28,10 +28,17 @@
                         </td>
                         {{-- acciones --}}
                         <td>
+<<<<<<< HEAD
                             <a href="{{ route('siniestros.edit', ) }}">Editar</a>
                             <a href="{{ route('siniestros.show',) }}">Ver</a>
                             {{-- eliminar --}}
                             <form action="{{ route('siniestros.destroy', ) }}" method="post">
+=======
+                            <a href="{{ route('Automovil.edit', ) }}">Editar</a>
+                            <a href="{{ route('Automovil.show',) }}">Ver</a>
+                            {{-- eliminar --}}
+                            <form action="{{ route('Automovil.destroy', ) }}" method="post">
+>>>>>>> b34e15a (modificamos la estructura de todos los formularios)
                                 @csrf
                                 @method('DELETE')
                                 <button

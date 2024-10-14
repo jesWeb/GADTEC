@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+<<<<<<< HEAD
 @section('body')
     <div class="flex flex-col gap-9">
 
@@ -119,4 +120,10 @@
             </form>
         </div>
     </div>
+=======
+
+@section('body')
+
+
+>>>>>>> b34e15a (modificamos la estructura de todos los formularios)
 @endsection
