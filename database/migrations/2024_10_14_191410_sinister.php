@@ -21,7 +21,7 @@ return new class extends Migration
             $table->decimal('costo_real_danos', 10, 2)->nullable();
             $table->string('responsable')->nullable();
             $table->text('observaciones')->nullable();
-            $table->timestamps(); // Timestamps para created_at y updated_at
+            $table->timestamps();
             $table->softDeletes();
         });
     }

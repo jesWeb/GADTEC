@@ -10,7 +10,6 @@ class VerificacionesController extends Controller
 
     public function index()
     {
-
         $verificacion = verificacion::all();
         return view('catalogos.verificaciones.index', compact('verificacion'));
     }

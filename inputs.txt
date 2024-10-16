@@ -205,6 +205,7 @@
 };
 */*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*
 
+<<<<<<< HEAD
 public function update(Request $request, string $id)
 {
     $rules = [
@@ -242,3 +243,5 @@ public function edit(string $id){
     $automoviles = Automoviles::all();
     return view('multas', compact('multa', 'automoviles'));
 }
+=======
+>>>>>>> 2510427 (correccion general de migraciones y controlladorde automovils)

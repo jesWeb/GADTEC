@@ -49,6 +49,10 @@
         </table>
     </div>
     <!-- Navegación de paginación -->
+<<<<<<< HEAD
     {{-- {{ $cars->links() }} --}}
+=======
+    {{ $cars->links() }}
+>>>>>>> 2510427 (correccion general de migraciones y controlladorde automovils)
 
 @endsection

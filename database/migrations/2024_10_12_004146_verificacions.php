@@ -8,6 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
+
         Schema::create('verificacions', function (Blueprint $table) {
             $table->id();
             $table->string('vehiculo')->nullable();
@@ -24,6 +25,7 @@ return new class extends Migration
 
     public function down(): void
     {
+
         Schema::dropIfExists('verificacions');
     }
 };
