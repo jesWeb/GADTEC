@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 
-[x-cloak] { display: none !important; }
+/* [x-cloak] { display: none !important; } */
 
 ::-webkit-scrollbar {
   width: 7px;
