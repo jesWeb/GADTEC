@@ -32,17 +32,7 @@ class SegurosController extends Controller
      */
     public function store(Request $request)
     {
-        // $validated = $request->validate([
-        //     'cobertura' => 'required|string|max:255',
-        //     'fecha_vigencia' => 'required|date',
-        //     'monto' => 'required|string|max:255',
-        //     'poliza' => 'nullable|image',
-        //     'estatus' => 'required',
-        // ]);
 
-
-
-        // seguros::create($validated);
 
          $newSeg = new seguros();
          $newSeg->vehiculo = $request->input('vehiculo');

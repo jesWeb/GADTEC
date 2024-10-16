@@ -26,42 +26,6 @@ class AsignacionController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request);
-
-        // $rules = [
-        //     'solicitante' => 'required|string',
-        //     'telefono' => 'required',
-        //     'requierechofer' => 'required|boolean',
-        //     'nombre_chofer' => 'nullable|string',
-        //     'vehiculo' => 'required',
-        //     'lugar' => 'required',
-        //     'hora_salida' => 'required ',
-        //     'no_licencia' => 'required',
-        //     'condiciones' => 'nullable',
-        //     'observaciones' => 'nullable',
-        //     'autorizante' => 'required',
-        // ];
-        // $messages = [
-        //     'solicitante.required' => 'El campo tipo de multa es requerido',
-        //     'telefono.required' => 'El campo monto es requerido',
-        //     'requierechofer.required' => 'La fecha de multa es requerida',
-        //     'nombre_chofer.required' => 'El campo lugar es requerido',
-        //     'vehiculo' => 'El campo estatus es requerido',
-        //     'hora_salida' => 'El campo comprobante es opcional',
-        //     'no_licencia' => 'El campo observaciones es opcional',
-        //     'condiciones' => 'El campo automóvil no existe',
-        //     'observaciones' => 'El campo automóvil no existe',
-        //     'autorizante' => 'El campo automóvil no existe'
-        // ];
-
-        // $input = $request->validate($rules,$messages);
-
-        // $input = $request->all();
-
-        // $input = new asignacion();
-
-
-        // asignacion::create($input);
 
         $newAsig = new asignacion();
         $newAsig->solicitante = $request->input('solicitante');
