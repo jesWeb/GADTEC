@@ -33,7 +33,7 @@
                             <a href="{{ route('seguros.edit', $seg->id) }}">Editar</a>
                             <a href="{{ route('seguros.show', $seg->id) }}">Ver</a>
                             {{-- eliminar --}}
-                            <form action="{{ route('Automovil.destroy', $seg) }}" method="post">
+                            <form action="{{ route('seguros.destroy', $seg) }}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <button

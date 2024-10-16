@@ -37,8 +37,8 @@
 
                         {{-- engomado --}}
                         <div class="w-full px-3 xl:w-1/2">
-                            <label class="mb-3 block text-base font-medium text-[#07074D]" for="engomado">engomado</label>
-                            <select naengomado
+                            <label class="mb-3 block text-base font-medium text-[#07074D]" for="engomado">Engomado</label>
+                            <select name="engomado"
                                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                 required>
                                 <option disabled selected>Selecciona una opción </option>
@@ -48,10 +48,10 @@
 
                             </select>
                         </div>
-                        {{-- engomado --}}
+                        {{-- Holograma --}}
                         <div class="w-full px-3 xl:w-1/2">
                             <label class="text-gray-700" for="holograma">holograma</label>
-                            <input type="text" name="holograma" id="modelo"
+                            <input type="text" name="holograma"
                                 class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                 placeholder="Ingresa el Holograma" required>
                         </div>

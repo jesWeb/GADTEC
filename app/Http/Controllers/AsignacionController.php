@@ -11,105 +11,103 @@ class AsignacionController extends Controller
     public function index()
     {
         //
-         $reservacion = asignacion::all();
-        // $cars = Automovil::all();
-
+        // $reservacion = asignacion::paginate(10);
+        $reservacion = asignacion::all();
         return view('catalogos.asignacion.index', compact('reservacion'));
     }
 
     public function create()
     {
-         $reservC = asignacion::all() ;
+        $reservC = asignacion::all();
+
         // dd($auto);
-        return view('catalogos.asignacion.create', compact('reservC'));
+        return view('catalogos.asignacion.create', compact('reservC',));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        // dd($request);
 
-        $rules = [
-            'vehiculo' => 'required|string|max:50',
-            'holograma' => 'required|string|max:20',
-            'engomado' => 'required|string|max:20',
-            'fechaV' => 'required|date',
-            'fechaP' => 'required|date|after_or_equal:fechaV',
-            'observaciones' => 'nullable|string|max:255',
-            'image' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
-        ];
+        // $rules = [
+        //     'solicitante' => 'required|string',
+        //     'telefono' => 'required',
+        //     'requierechofer' => 'required|boolean',
+        //     'nombre_chofer' => 'nullable|string',
+        //     'vehiculo' => 'required',
+        //     'lugar' => 'required',
+        //     'hora_salida' => 'required ',
+        //     'no_licencia' => 'required',
+        //     'condiciones' => 'nullable',
+        //     'observaciones' => 'nullable',
+        //     'autorizante' => 'required',
+        // ];
+        // $messages = [
+        //     'solicitante.required' => 'El campo tipo de multa es requerido',
+        //     'telefono.required' => 'El campo monto es requerido',
+        //     'requierechofer.required' => 'La fecha de multa es requerida',
+        //     'nombre_chofer.required' => 'El campo lugar es requerido',
+        //     'vehiculo' => 'El campo estatus es requerido',
+        //     'hora_salida' => 'El campo comprobante es opcional',
+        //     'no_licencia' => 'El campo observaciones es opcional',
+        //     'condiciones' => 'El campo automóvil no existe',
+        //     'observaciones' => 'El campo automóvil no existe',
+        //     'autorizante' => 'El campo automóvil no existe'
+        // ];
 
-        $messages = [
-            'vehiculo.required' => 'El campo vehículo es requerido.',
-            'vehiculo.string' => 'El campo vehículo debe ser una cadena de texto.',
-            'vehiculo.max' => 'El campo vehículo no puede exceder los 50 caracteres.',
-            'holograma.required' => 'El campo holograma es requerido.',
-            'holograma.string' => 'El campo holograma debe ser una cadena de texto.',
-            'holograma.max' => 'El campo holograma no puede exceder los 20 caracteres.',
-            'engomado.required' => 'El campo engomado es requerido.',
-            'engomado.string' => 'El campo engomado debe ser una cadena de texto.',
-            'engomado.max' => 'El campo engomado no puede exceder los 20 caracteres.',
-            'fechaV.required' => 'El campo fecha de vigencia es requerido.',
-            'fechaV.date' => 'El campo fecha de vigencia debe ser una fecha válida.',
-            'fechaP.required' => 'El campo fecha de pago es requerido.',
-            'fechaP.date' => 'El campo fecha de pago debe ser una fecha válida.',
-            'fechaP.after_or_equal' => 'La fecha de pago debe ser igual o posterior a la fecha de vigencia.',
-            'observaciones.string' => 'El campo observaciones debe ser una cadena de texto.',
-            'observaciones.max' => 'El campo observaciones no puede exceder los 255 caracteres.',
-            'image.file' => 'El campo imagen debe ser un archivo.',
-            'image.mimes' => 'El campo imagen debe ser de tipo: jpeg, png, jpg.',
-            'image.max' => 'El campo imagen no puede exceder los 2048 kilobytes.',
-        ];
+        // $input = $request->validate($rules,$messages);
 
-        $request->validate($rules, $messages);
-        $input = $request->all();
+        // $input = $request->all();
+
+        // $input = new asignacion();
 
 
+        // asignacion::create($input);
 
-        asignacion::create($input);
+        $newAsig = new asignacion();
+        $newAsig->solicitante = $request->input('solicitante');
+        $newAsig->telefono = $request->input('telefono');
+        $newAsig->requierechofer = $request->input('requierechofer');
+        $newAsig->nombre_chofer = $request->input('nombre_chofer');
+        $newAsig->vehiculo = $request->input('vehiculo');
+        $newAsig->lugar = $request->input('lugar');
+        $newAsig->hora_salida = $request->input('hora_salida');
+        $newAsig->no_licencia = $request->input('no_licencia');
+        $newAsig->condiciones = $request->input('condiciones');
+        $newAsig->observaciones = $request->input('observaciones');
+        $newAsig->autorizante = $request->input('autorizante');
 
-        // dd($Newauto);
+         //guardamos datos en BD
+         $newAsig ->save();
 
-        // return redirect('Automovil.index')->with('message', 'Se ha creado correctamente el registro');
         return to_route('asignacion.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(asignacion $id)
+
+    public function show($id)
     {
-        //
-
-        $automovil = asignacion::findOrFail($id);
-
-        return view('catalogos.asignacion.show', compact('automovil'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(asignacion $id)
-    {
-        //
-        $reservEdit = asignacion::find($id);
-        return view('catalogos.asignacion.edit', compact('reservEdit'));
+        $MostrarAsig = asignacion::find($id);
+        return view('catalogos.asignacion.show', compact('MostrarAsig'));
     }
 
 
-
-    public function update(Request $request, asignacion $id)
+    public function edit($id)
     {
-        //
-}
+        $EddtAsig = asignacion::findOrFail($id);
+        return view('catalogos.asignacion.edit', compact('EddtAsig'));
+    }
 
-    public function destroy(asignacion $id)
-    {
-        //
+    public function update(Request $request, $id) {
 
+        $EddtAsig = asignacion::findOrFail($id);
+        $input=$request->all();
+        $EddtAsig->update($input);
 
+        return to_route('asignacion.index');
+    }
+
+    public function destroy($id) {
+        $DelAsg = asignacion::findOrFail($id);
+        $DelAsg ->delete();
+        return to_route('asignacion.index');
     }
 }
-

@@ -12,7 +12,7 @@ class asignacion extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $primarykey = 'id';
+     protected $primarykey = 'id';
 
     protected $fillable = [
         'solicitante',

@@ -6,7 +6,8 @@
         <div class="gap-5 md:flex md:justify-center md:items-center ">
             {{-- Image --}}
             <div class="md:flex-shrink-0">
-                <img class="object-cover w-full h-48 md:w-48" src="{{asset('img/carros/' . $automovil ->image) }}" style="width: 200px;" alt="">
+                <img class="object-cover w-full h-48 md:w-48" src="{{ asset('img/carros/' . $automovil->image) }}"
+                    style="width: 200px;" alt="">
             </div>
             {{--  --}}
             <div class="p-8">
@@ -38,8 +39,8 @@
                 </div>
                 {{--  --}}
                 <p class="mt-2 ">
-                 observaciones : <br>
-                 <span class="text-gray-500"> {{ $automovil->observaciones }}</span>
+                    observaciones : <br>
+                    <span class="text-gray-500"> {{ $automovil->observaciones }}</span>
                 </p>
 
                 <div class="mt-4">

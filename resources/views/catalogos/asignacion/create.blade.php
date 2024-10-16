@@ -7,7 +7,7 @@
             {{-- titulo --}}
             <h2 class="mb-5 text-xl font-semibold text-gray-700">Solicitud de Vehiculo</h2>
             {{-- formulario --}}
-            <form action="{{ route('asignacion.store') }}" method="POST">
+            <form action="{{ route('asignacion.store') }}" enctype="multipart/form-data" method="POST">
                 @csrf
                 <div class="m-4 xl:p-10">
                     {{-- 1 row de info --}}
@@ -15,7 +15,8 @@
                         {{-- Solicitante --}}
                         <div class="w-full px-3 xl:w-1/2">
                             <div class="mb-5">
-                                <label class="mb-3 block text-base font-medium text-[#07074D]" for="solicitante">Solicitante</label>
+                                <label class="mb-3 block text-base font-medium text-[#07074D]"
+                                    for="solicitante">Solicitante</label>
                                 <input type="text" name="solicitante"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                     required />
@@ -24,7 +25,8 @@
                         {{-- Teléfono --}}
                         <div class="w-full px-3 xl:w-1/2">
                             <div class="mb-5">
-                                <label class="mb-3 block text-base font-medium text-[#07074D]" for="telefono">Teléfono</label>
+                                <label class="mb-3 block text-base font-medium text-[#07074D]"
+                                    for="telefono">Teléfono</label>
                                 <input type="text" name="telefono"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                     required />
@@ -37,10 +39,12 @@
                         {{-- Requiere Chofer --}}
                         <div class="w-full px-3 xl:w-1/2">
                             <div class="mb-5">
-                                <label class="mb-3 block text-base font-medium text-[#07074D]" for="requierechofer">Requiere Chofer</label>
+                                <label class="mb-3 block text-base font-medium text-[#07074D]" for="requierechofer">Requiere
+                                    Chofer</label>
                                 <select name="requierechofer"
-                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
-                                    <option value="" disabled selected>Selecciona una opción</option>
+                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                    required>
+                                    <option value="ninguno" disabled selected>Selecciona una opción</option>
                                     <option value="sí">Sí</option>
                                     <option value="no">No</option>
                                 </select>
@@ -49,7 +53,8 @@
                         {{-- Nombre del Chofer --}}
                         <div class="w-full px-3 xl:w-1/2">
                             <div class="mb-5">
-                                <label class="mb-3 block text-base font-medium text-[#07074D]" for="nombre_chofer">Nombre del Chofer</label>
+                                <label class="mb-3 block text-base font-medium text-[#07074D]" for="nombre_chofer">Nombre
+                                    del Chofer</label>
                                 <input type="text" name="nombre_chofer"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                             </div>
@@ -61,9 +66,11 @@
                         {{-- Vehículo --}}
                         <div class="w-full px-3 xl:w-1/2">
                             <div class="mb-5">
-                                <label class="mb-3 block text-base font-medium text-[#07074D]" for="vehiculo">Vehículo</label>
+                                <label class="mb-3 block text-base font-medium text-[#07074D]"
+                                    for="vehiculo">Vehículo</label>
                                 <input type="text" name="vehiculo"
-                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required />
+                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                    required />
                             </div>
                         </div>
                         {{-- Lugar --}}
@@ -71,7 +78,8 @@
                             <div class="mb-5">
                                 <label class="mb-3 block text-base font-medium text-[#07074D]" for="lugar">Lugar</label>
                                 <input type="text" name="lugar"
-                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required />
+                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                    required />
                             </div>
                         </div>
                     </div>
@@ -81,17 +89,21 @@
                         {{-- Hora de Salida --}}
                         <div class="w-full px-3 xl:w-1/2">
                             <div class="mb-5">
-                                <label class="mb-3 block text-base font-medium text-[#07074D]" for="hora_salida">Hora de Salida</label>
+                                <label class="mb-3 block text-base font-medium text-[#07074D]" for="hora_salida">Hora de
+                                    Salida</label>
                                 <input type="time" name="hora_salida"
-                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required />
+                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                    required />
                             </div>
                         </div>
                         {{-- No. de Licencia --}}
                         <div class="w-full px-3 xl:w-1/2">
                             <div class="mb-5">
-                                <label class="mb-3 block text-base font-medium text-[#07074D]" for="no_licencia">No. de Licencia</label>
+                                <label class="mb-3 block text-base font-medium text-[#07074D]" for="no_licencia">No. de
+                                    Licencia</label>
                                 <input type="text" name="no_licencia"
-                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required />
+                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                    required />
                             </div>
                         </div>
                     </div>
@@ -101,17 +113,21 @@
                         {{-- Condiciones --}}
                         <div class="w-full px-3 xl:w-1/2">
                             <div class="mb-5">
-                                <label class="mb-3 block text-base font-medium text-[#07074D]" for="condiciones">Condiciones</label>
+                                <label class="mb-3 block text-base font-medium text-[#07074D]"
+                                    for="condiciones">Condiciones</label>
                                 <textarea name="condiciones"
-                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" rows="4"></textarea>
+                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                    rows="4"></textarea>
                             </div>
                         </div>
                         {{-- Observaciones --}}
                         <div class="w-full px-3 xl:w-1/2">
                             <div class="mb-5">
-                                <label class="mb-3 block text-base font-medium text-[#07074D]" for="observaciones">Observaciones</label>
+                                <label class="mb-3 block text-base font-medium text-[#07074D]"
+                                    for="observaciones">Observaciones</label>
                                 <textarea name="observaciones"
-                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" rows="4"></textarea>
+                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                    rows="4"></textarea>
                             </div>
                         </div>
                     </div>
@@ -119,9 +135,11 @@
                     {{-- Autorizante --}}
                     <div class="w-full px-3 mt-3">
                         <div class="mb-5">
-                            <label class="mb-3 block text-base font-medium text-[#07074D]" for="autorizante">Autorizante</label>
+                            <label class="mb-3 block text-base font-medium text-[#07074D]"
+                                for="autorizante">Autorizante</label>
                             <input type="text" name="autorizante"
-                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required />
+                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                required />
                         </div>
                     </div>
                 </div>
@@ -129,10 +147,8 @@
                 <div class="flex justify-end gap-4 mt-4">
                     <button type="submit"
                         class="px-6 py-2 text-gray-200 bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">Registrar</button>
-                </div>
+                </div
             </form>
-
-
         </div>
     </div>
 @endsection

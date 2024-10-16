@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('sinister', function (Blueprint $table) {
             $table->id();
-            $table->string('vehiculo');
-            $table->date('fecha_siniestro');
-            $table->string('descripcion');
+            $table->string('vehiculo')->nullable();
+            $table->date('fecha_siniestro')->nullable();
+            $table->string('descripcion')->nullable();
             $table->enum('estatus', ['activo', 'vencido']);
-            $table->decimal('costo_danos_estimados', 10, 2);
-            $table->decimal('costo_real_danos', 10, 2);
-            $table->string('responsable');
+            $table->decimal('costo_danos_estimados', 10, 2)->nullable();
+            $table->decimal('costo_real_danos', 10, 2)->nullable();
+            $table->string('responsable')->nullable();
             $table->text('observaciones')->nullable();
             $table->timestamps(); // Timestamps para created_at y updated_at
             $table->softDeletes();

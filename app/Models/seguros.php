@@ -9,14 +9,12 @@ class seguros extends Model
 {
     use HasFactory;
       protected $fillable = [
-        'automovil',
+        'vehiculo',
         'aseguradora',
-        'fechaSiniestro',
+        'cobertura',
+        'fecha_vigencia',
+        'monto',
+        'poliza',
         'estatus',
-        'responsable',
-        'CostoEstimado',
-        'CostoFinal',
-        'descripcion',
-        'observaciones'
     ];
 }

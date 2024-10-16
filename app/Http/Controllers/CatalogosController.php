@@ -32,6 +32,21 @@ class CatalogosController extends Controller
                 //  'label' => 'areas de usuario',
                 'href' => route('verificaciones.index'),
             ],
+            [
+                'titulo' => '',
+                //  'label' => 'areas de usuario',
+                'href' => route('verificaciones.index'),
+            ],
+            [
+                'titulo' => 'Verficaciones',
+                //  'label' => 'areas de usuario',
+                'href' => route('verificaciones.index'),
+            ],
+            [
+                'titulo' => 'Verficaciones',
+                //  'label' => 'areas de usuario',
+                'href' => route('verificaciones.index'),
+            ],
 
 
         ];

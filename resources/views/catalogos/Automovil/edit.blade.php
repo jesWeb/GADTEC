@@ -1,25 +1,28 @@
 @extends('layouts.app')
-
-
 @section('body')
     <div class="mt-4">
         <div class="p-6 bg-white rounded-md shadow-md">
             <h2 class="text-xl font-semibold text-gray-700">Editar Automovil </h2>
             {{--  --}}
-            <form action="{{ route('Automovil.update',$automovil->id) }}" method="POST" enctype="multipart/form-data">
-                {{-- este es un toquen crea una proteccion en el formulario csrf tipo segridad --}}
+            <form action="{{route('Automovil.update',$EddCar->id)}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PATCH')
                 <div class="m-3 xl:p-10">
-                    {{-- 1 row de info --}}
+
+                    {{-- 1st row of info --}}
                     <div class="flex flex-col gap-5.5 xl:flex-row mb-3">
+
                         {{-- Marca --}}
                         <div class="w-full px-3 xl:w-1/2">
                             <div class="xl:mb-5">
                                 <label class="mb-3 block text-base font-medium text-[#07074D]" for="marca">Marca</label>
-                                <input type="text" name="marca" id="marca" placeholder="Ingresa la marca"
-                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                    required>
+                                <input
+                                type="text"
+                                name="marca"
+                                value="{{$EddCar->marca}}"
+                                placeholder="Ingresa la marca"
+                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                >
                             </div>
                         </div>
 
@@ -28,9 +31,14 @@
                             <div class="xl:mb-5">
                                 <label class="mb-3 block text-base font-medium text-[#07074D]"
                                     for="submarca">Submarca</label>
-                                <input type="text" name="submarca" id="submarca" placeholder="Ingresa la submarca"
-                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                    required>
+                                <input
+                                 type="text"
+                                  name="submarca"
+                                  id="submarca"
+                                  value="{{$EddCar->submarca}}"
+                                  placeholder="Ingresa la submarca"
+                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+
                             </div>
                         </div>
 
@@ -38,195 +46,153 @@
                         <div class="w-full px-3 xl:w-1/2">
                             <div class="xl:mb-5">
                                 <label class="mb-3 block text-base font-medium text-[#07074D]" for="modelo">Modelo</label>
-                                <input type="number" name="modelo" id="ano" placeholder="Ingresa el año"
+                                <input type="number" name="modelo" id="modelo" placeholder="Ingresa el año"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                    min="1900" max="2100" required>
+                                  value="{{$EddCar->modelo}}"
                             </div>
-
                         </div>
-
                     </div>
-                    {{-- 2 row info  --}}
+
+                    {{-- 2nd row of info --}}
                     <div class="flex flex-col gap-5.5 xl:flex-row mb-3">
+
                         {{-- No.serie --}}
                         <div class="w-full px-3 xl:w-1/2">
                             <div class="xl:mb-5">
-                                <label class="mb-3 block text-base font-medium text-[#07074D]"
-                                    for="serie">No.Serie</label>
-                                <input
+                                <label class="mb-3 block text-base font-medium text-[#07074D]" for="serie">No.
+                                    Serie</label>
+                                <input type="text" name="serie" id="serie"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                    type="text" name="serie" required>
+                                    value="{{ old('serie', $EddCar->serie) }}">
                             </div>
-
                         </div>
+
                         {{-- No.Motor --}}
                         <div class="w-full px-3 xl:w-1/2">
                             <div class="xl:mb-5">
-                                <label class="mb-3 block text-base font-medium text-[#07074D]"
-                                    for="motor">No.Motor</label>
-                                <input
+                                <label class="mb-3 block text-base font-medium text-[#07074D]" for="motor">No.
+                                    Motor</label>
+                                <input type="text" name="motor" id="motor" required
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                    type="text" name="motor" required>
+                                    value="{{ old('motor',$EddCar->motor) }}">
                             </div>
                         </div>
+
                         {{-- Combustible --}}
                         <div class="w-full px-3 xl:w-1/2">
-                            <div class="xl:mb-5">
+                            {{-- <div class="xl:mb-5">
                                 <label class="mb-3 block text-base font-medium text-[#07074D]" for="combustible">Tipo de
                                     combustible</label>
                                 <select name="combustible"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                     required>
-                                    <option disabled selected>Selecciona una opcion </option>
-                                    <option value="Gasolina">Gasolina</option>
-                                    <option value="Diesel">Diesel</option>
-                                    <option value="Electrico">Electrico</option>
+                                    <option disabled selected>Selecciona una opción</option>
+                                    <option value="Gasolina"
+                                        {{ old('combustible', $$EddCar->combustible) == 'Gasolina' ? 'selected' : '' }}>
+                                        Gasolina</option>
+                                    <option value="Diesel"
+                                        {{ old('combustible', $$EddCar->combustible) == 'Diesel' ? 'selected' : '' }}>Diesel
+                                    </option>
+                                    <option value="Electrico"
+                                        {{ old('combustible', $$EddCar->combustible) == 'Electrico' ? 'selected' : '' }}>
+                                        Eléctrico</option>
                                 </select>
-                            </div>
-
+                            </div> --}}
                         </div>
+
                     </div>
-                    {{-- 3 row nfo --}}
-                    <div class="flex flex-col gap-5.5 xl:flex-row mb-5">
+                    {{-- 3 row --}}
+                    <div class="flex flex-col gap-5.5 xl:flex-row mb-3">
                         {{-- Kilometraje --}}
                         <div class="w-full px-3 xl:w-1/2">
                             <div class="xl:mb-5">
                                 <label class="mb-3 block text-base font-medium text-[#07074D]"
                                     for="kilometraje">Kilometraje</label>
-                                <input
+                                <input type="number" placeholder="Introduce el kilometraje" min="0" required
+                                    name="kilometraje"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                    type="number" placeholder="Introduce el kilometraje" pattern="^\d*\.?\d+$"
-                                    min="0" required name="kilometraje">
+                                    value="{{ old('kilometraje', $EddCar->kilometraje) }}">
                             </div>
-
                         </div>
+
                         {{-- Placas --}}
                         <div class="w-full px-3 xl:w-1/2">
                             <div class="xl:mb-5">
                                 <label class="mb-3 block text-base font-medium text-[#07074D]" for="placas">Placas</label>
-                                <input
+                                <input type="text" placeholder="Introduce Placas" required name="placas"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                    type="text" placeholder="Introduce Placas" required name="placas">
+                                    value="{{ old('placas', $EddCar->placas) }}">
                             </div>
-
                         </div>
+
                         {{-- Num_NSI --}}
                         <div class="w-full px-3 xl:w-1/2">
                             <div class="xl:mb-5">
                                 <label class="mb-3 block text-base font-medium text-[#07074D]"
                                     for="NSI">NSI/Repube</label>
-                                <input
+                                <input type="text" placeholder="Introduce NSI" name="NSI" required
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                    type="text" placeholder="Introduce NSI" name="NSI" required>
+                                    value="{{ old('NSI', $EddCar->NSI) }}">
                             </div>
-
                         </div>
                     </div>
-                    {{-- 4 row info --}}
-                    <div class="flex flex-col gap-5.5 xl:flex-row ">
-                        {{-- uso --}}
+                    {{-- 4 row  --}}
+                    <div class="flex flex-col gap-5.5 xl:flex-row mb-3">
+                        {{-- Uso --}}
                         <div class="w-full px-3 xl:w-1/4">
-                            {{-- <div class="xl:mb-5">
-                                <label class="mb-3 block text-base font-medium text-[#07074D]" for="uso">Tipo de uso</label>
-                                <select name="uso"
-                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                    required>
-                                    <option disabled selected>Selecciona una opción </option>
-                                    <option value="ninguno">ninguno</option>
-                                    <option value="comisiones">Comisiones</option>
-                                    <option value="transporte">transporte</option>
-                                </select>
-                            </div> --}}
                             <div class="xl:mb-5">
                                 <label class="mb-3 block text-base font-medium text-[#07074D]" for="uso">Tipo de
                                     uso</label>
-                                <input type="text" name="uso"
+                                <input type="text" name="uso" required
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                    placeholder="Ingresa el tipo de uso" required>
+                                    placeholder="Ingresa el tipo de uso" >
                             </div>
                         </div>
-                        {{-- responsable --}}
+
+                        {{-- Responsable --}}
                         <div class="w-full px-3 xl:w-1/4">
                             <div class="xl:mb-5">
                                 <label class="mb-3 block text-base font-medium text-[#07074D]"
                                     for="responsable">Responsable</label>
-                                <input type="text" name="responsable"
+                                <input type="text" name="responsable" required
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                    required placeholder="Ingresa el nombre del responsable" />
+                                    placeholder="Ingresa el nombre del responsable"
+                                    value="{{ old('responsable', $EddCar->responsable) }}" />
                             </div>
-
                         </div>
                     </div>
-                    {{-- Observacines  --}}
+
+
+                    {{-- Observaciones --}}
                     <div class="w-full xl:m-5 xl:w-2/4 xl:mt-4 xl:mb-4">
                         <label class="mb-3 block text-base font-medium text-[#07074D]" for="observaciones">Observaciones
-                            del
-                            vehiculo</label>
+                            del vehículo</label>
                         <textarea placeholder="Observaciones ..."
                             class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                            name="observaciones" id=""></textarea>
+                            name="observaciones">{{ old('observaciones', $EddCar->observaciones) }}</textarea>
                     </div>
-                    {{-- foto --}}
-                    <div class="pt-4 mb-6">
-                        <label class="mb-5 block text-xl font-semibold text-[#07074D]">
-                            Subir Archivos
-                        </label>
-                        <div class="mb-8">
-                            <input type="file" name="image" id="image" class="sr-only" multiple />
-                            <label for="image"
-                                class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
-                                <div>
-                                    <span class="mb-2 block text-xl font-semibold text-[#07074D]">
-                                        Drop files here
-                                    </span>
-                                    <span class="mb-2 block text-base font-medium text-[#6B7280]">
-                                        Or
-                                    </span>
-                                    <span
-                                        class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
-                                        Browse
-                                    </span>
-                                    <div id="file-info" class="mt-4">
-                                        <span id="file-count">0 archivos seleccionados..</span>
-                                        <ul id="file-names" class="pl-5 list-disc"></ul>
-                                    </div>
+
+                    {{-- File Upload --}}
+                    <div class="mb-8">
+                        <input type="file" name="image" id="image" class="sr-only" multiple />
+                        <label for="image"
+                            class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
+                            <div>
+                                <span class="mb-2 block text-xl font-semibold text-[#07074D]">Drop files here</span>
+                                <span class="mb-2 block text-base font-medium text-[#6B7280]">Or</span>
+                                <span
+                                    class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">Browse</span>
+                                <div id="file-info" class="mt-4">
+                                    <span id="file-count">0 archivos seleccionados.</span>
+                                    <ul id="file-names" class="pl-5 list-disc"></ul>
                                 </div>
-
-                            </label>
-                        </div>
+                            </div>
+                        </label>
                     </div>
 
-                </div>
-
-                <script>
-                    const fileInput = document.getElementById('image');
-                    const fileCountDisplay = document.getElementById('file-count');
-                    const fileNamesDisplay = document.getElementById('file-names');
-
-                    fileInput.addEventListener('change', function() {
-                        const files = fileInput.files;
-                        const fileCount = files.length;
-                        fileCountDisplay.textContent = `${fileCount} archivos seleccionados`;
-                        fileNamesDisplay.innerHTML = '';
-
-                        for (let i = 0; i < fileCount; i++) {
-                            const listItem = document.createElement('li');
-                            listItem.textContent = files[i].name; // Muestra el nombre del archivo
-                            fileNamesDisplay.appendChild(listItem);
-                        }
-                    });
-                </script>
-
-                {{-- BTN --}}
-                <div class="flex justify-end gap-4 mt-4">
-                    {{-- <button type="button"
-                            class="px-6 py-2 font-semibold bg-gray-200 rounded-md hover:bg-red-200 focus:outline-none focus:bg-red-700">
-                            Cancelar
-                        </button> --}}
-                    <button type="submit"
-                        class="px-6 py-2 text-gray-200 bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">Registrar</button>
                 </div>
             </form>
+
         </div>
     </div>
 @endsection

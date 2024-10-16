@@ -10,11 +10,11 @@
         <table class="w-full table-fixed">
             <thead>
                 <tr class="bg-gray-100">
-                    <th class="w-1/4 px-6 py-4 font-bold text-left text-gray-600 uppercase">Marca</th>
-                    <th class="w-1/4 px-6 py-4 font-bold text-left text-gray-600 uppercase">placas</th>
-                    <th class="w-1/4 px-6 py-4 font-bold text-left text-gray-600 uppercase">Nsi</th>
+                    <th class="w-1/4 px-6 py-4 font-bold text-left text-gray-600 uppercase">Automovil</th>
+                    <th class="w-1/4 px-6 py-4 font-bold text-left text-gray-600 uppercase">Siniestro</th>
+                    <th class="w-1/4 px-6 py-4 font-bold text-left text-gray-600 uppercase">fecha</th>
                     <th class="w-1/4 px-6 py-4 font-bold text-left text-gray-600 uppercase">Status</th>
-                    <th class="w-1/4 px-6 py-4 font-bold text-left text-gray-600 uppercase">Aciiones</th>
+                    <th class="w-1/4 px-6 py-4 font-bold text-left text-gray-600 uppercase">Acciones</th>
                 </tr>
             </thead>
             <tbody class="bg-white">
@@ -28,10 +28,10 @@
                         </td>
                         {{-- acciones --}}
                         <td>
-                            <a href="{{ route('Automovil.edit', ) }}">Editar</a>
-                            <a href="{{ route('Automovil.show',) }}">Ver</a>
+                            <a href="{{ route('siniestros.edit', ) }}">Editar</a>
+                            <a href="{{ route('siniestros.show',) }}">Ver</a>
                             {{-- eliminar --}}
-                            <form action="{{ route('Automovil.destroy', ) }}" method="post">
+                            <form action="{{ route('siniestros.destroy', ) }}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <button

@@ -28,8 +28,18 @@
                         </td>
                         {{-- acciones --}}
                         <td>
-                            <a href="{{ route('Automovil.edit', $car->id) }}">Editar</a>
-                            <a href="{{ route('Automovil.show', $car->id) }}">Ver</a>
+
+                            <a href="{{ route('Automovil.edit', $car->id) }}">
+                                <button class="px-4 py-2 font-bold text-white bg-green-500 rounded hover:bg-green-700">
+                                 editar
+                                </button>
+                            </a>
+                            <a href="{{ route('Automovil.show', $car->id) }}">
+                                <button class="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
+                                    Ver
+                                </button>
+
+                            </a>
                             {{-- eliminar --}}
                             <form action="{{ route('Automovil.destroy', $car) }}" method="post">
                                 @csrf

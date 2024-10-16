@@ -11,17 +11,17 @@ return new class extends Migration
     {
         Schema::create('asignacions', function (Blueprint $table) {
             $table->id();
-            $table->string('solicitante');
-            $table->string('telefono');
+            $table->string('solicitante')->nullable();
+            $table->string('telefono')->nullable();
             $table->enum('requierechofer', ['sí', 'no']);
             $table->string('nombre_chofer')->nullable();
-            $table->string('vehiculo');
-            $table->string('lugar');
-            $table->time('hora_salida');
-            $table->string('no_licencia');
+            $table->string('vehiculo')->nullable();
+            $table->string('lugar')->nullable();
+            $table->time('hora_salida')->nullable();
+            $table->string('no_licencia')->nullable();
             $table->text('condiciones')->nullable();
             $table->text('observaciones')->nullable();
-            $table->string('autorizante');
+            $table->string('autorizante')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

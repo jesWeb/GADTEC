@@ -32,93 +32,58 @@ class SegurosController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $rules = [
-            'marca' => 'required|string|max:20',
-            'submarca' => 'required|string|max:20',
-            'modelo' => 'required|integer|min:1|max:9999', // Asegurando que sea un número entero válido
-            'motor' => 'required|string|max:50',
-            'kilometraje' => 'required|integer|min:0', // Evitando kilometraje negativo
-            'placas' => 'nullable|string|max:255',
-            'NSI' => 'nullable|string|max:20',
-            'observaciones' => 'nullable|string|max:255',
-            'uso' => 'nullable|string',
-            'responsable' => 'required|string|max:100', // Limitando el tamaño
-            'image' => 'nullable|file|mimes:jpeg,png,jpg|max:2048', // Limitando el tamaño del archivo
-        ];
-
-        $messages = [
-            'marca.required' => 'El campo marca es requerido.',
-            'submarca.required' => 'El campo submarca es requerido.',
-            'modelo.required' => 'El campo modelo es requerido.',
-            'modelo.integer' => 'El campo modelo debe ser un número entero.',
-            'modelo.min' => 'El campo modelo debe ser al menos 1.',
-            'modelo.max' => 'El campo modelo no puede exceder 9999.',
-            'motor.required' => 'El campo motor es requerido.',
-            'motor.string' => 'El campo motor debe ser una cadena de texto.',
-            'motor.max' => 'El campo motor no puede exceder los 50 caracteres.',
-            'kilometraje.required' => 'El campo kilometraje es requerido.',
-            'kilometraje.integer' => 'El campo kilometraje debe ser un número entero.',
-            'kilometraje.min' => 'El campo kilometraje no puede ser negativo.',
-            'placas.string' => 'El campo placas debe ser una cadena de texto.',
-            'placas.max' => 'El campo placas no puede exceder los 255 caracteres.',
-            'NSI.string' => 'El campo NSI debe ser una cadena de texto.',
-            'NSI.max' => 'El campo NSI no puede exceder los 20 caracteres.',
-            'observaciones.string' => 'El campo observaciones debe ser una cadena de texto.',
-            'observaciones.max' => 'El campo observaciones no puede exceder los 255 caracteres.',
-            'uso.string' => 'El campo uso debe ser una cadena de texto.',
-            'responsable.required' => 'El campo responsable es requerido.',
-            'responsable.string' => 'El campo responsable debe ser una cadena de texto.',
-            'responsable.max' => 'El campo responsable no puede exceder los 100 caracteres.',
-            'image.file' => 'El campo imagen debe ser un archivo.',
-            'image.mimes' => 'El campo imagen debe ser de tipo: jpeg, png, jpg.',
-            'image.max' => 'El campo imagen no puede exceder los 2048 kilobytes.',
-        ];
+        // $validated = $request->validate([
+        //     'cobertura' => 'required|string|max:255',
+        //     'fecha_vigencia' => 'required|date',
+        //     'monto' => 'required|string|max:255',
+        //     'poliza' => 'nullable|image',
+        //     'estatus' => 'required',
+        // ]);
 
 
-        $request->validate($rules, $messages);
-        $input = $request->all();
 
+        // seguros::create($validated);
 
-        seguros::create($input);
+         $newSeg = new seguros();
+         $newSeg->vehiculo = $request->input('vehiculo');
+         $newSeg->aseguradora = $request->input('aseguradora');
+         $newSeg->cobertura = $request->input('cobertura');
+         $newSeg->fecha_vigencia = $request->input('fecha_vigencia');
+         $newSeg->estatus = $request->input('estatus');
+         $newSeg->monto = $request->input('monto');
+
+        //guardamos datos en BD
+         $newSeg->save();
 
         return to_route('seguros.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(seguros $id)
+    public function show($id)
     {
-        //
         $seguroS = seguros::find($id);
 
         return view('catalogos.seguros.show', compact('seguroS'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(seguros $id)
+    public function edit($id)
     {
         //
-        $SeguroEdit = seguros::find($id);
-        return view('catalogos.seguros.edit', compact('SeguroEdit'));
+        $EddSeg = seguros::find($id);
+        return view('catalogos.seguros.edit', compact('EddSeg'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, seguros $id)
+    public function update(Request $request,  $id)
     {
-        //
+        $EddSeg = seguros::findOrFail($id);
+        $input = $request->all();
+        $EddSeg->update($input);
+        return to_route('seguros.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(seguros $id)
+    public function destroy($id)
     {
-        //
+        $DelSeg = seguros::findOrFail($id);
+        $DelSeg->delete();
+        return to_route('seguros.index');
     }
 }
