@@ -1,8 +1,15 @@
 <?php
-
 use App\Http\Controllers\admin\Automovil;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RolesController;
+use App\Http\Controllers\UsuariosController;
+use App\Http\Controllers\TarjetaCirculacionController;
+use App\Http\Controllers\TeneciasRefrendosController;
+use App\Http\Controllers\MultasController;
+use App\Http\Controllers\ServiciosController;
+use App\Http\Controllers\JsController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -29,21 +36,19 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
-
-Route::middleware(['prefix', 'dashboard', 'middleware'])->group(function () {
+// Usa 'prefix' como parte de la configuración de grupo de rutas, no como middleware.
+Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::get('/', function () {
         return view('dashboard');
-    })->name("dashboard");
-
-    //rutas resource libres
-    Route::resource('Automoviles', Automovil::class);
-
+    })->name('dashboard');
 
 });
 
-
-
-
+Route::resource('roles', RolesController::class);
+Route::resource('usuarios', UsuariosController::class);
+Route::resource('tarjetas', TarjetaCirculacionController::class);
+Route::resource('tenencias', TeneciasRefrendosController::class);
+Route::resource('multas', MultasController::class);
+Route::resource('servicios', ServiciosController::class);
 
 require __DIR__ . '/auth.php';
