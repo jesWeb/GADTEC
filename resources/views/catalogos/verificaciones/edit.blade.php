@@ -2,7 +2,6 @@
 
 
 @section('body')
-<<<<<<< HEAD
 <div class="flex flex-col mt-5 gap-9">
 
     <div class="p-6 bg-white border rounded-md shadow-md">
@@ -170,8 +169,6 @@
         </form>
     </div>
 </div>
-=======
->>>>>>> b34e15a (modificamos la estructura de todos los formularios)
 
 
 @endsection
