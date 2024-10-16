@@ -1,6 +1,15 @@
 <?php
-
+use App\Http\Controllers\admin\Automovil;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RolesController;
+use App\Http\Controllers\UsuariosController;
+use App\Http\Controllers\TarjetaCirculacionController;
+use App\Http\Controllers\TeneciasRefrendosController;
+use App\Http\Controllers\MultasController;
+use App\Http\Controllers\ServiciosController;
+use App\Http\Controllers\JsController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +25,30 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+// Usa 'prefix' como parte de la configuración de grupo de rutas, no como middleware.
+Route::prefix('dashboard')->middleware(['auth'])->group(function () {
+    Route::get('/', function () {
+        return view('dashboard');
+    })->name('dashboard');
+
+});
+
+Route::resource('roles', RolesController::class);
+Route::resource('usuarios', UsuariosController::class);
+Route::resource('tarjetas', TarjetaCirculacionController::class);
+Route::resource('tenencias', TeneciasRefrendosController::class);
+Route::resource('multas', MultasController::class);
+Route::resource('servicios', ServiciosController::class);
+
+require __DIR__ . '/auth.php';
