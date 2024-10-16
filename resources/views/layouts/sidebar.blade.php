@@ -39,24 +39,7 @@
             <span class="mx-3">Gestion</span>
         </a>
         {{-- link --}}
-        
-
-        {{-- link --}}
-        <a class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" href="/multas">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 13.5h7.5m-7.5 0a1.5 1.5 0 100-3h7.5a1.5 1.5 0 100 3m-7.5 0v3m7.5-3v3M6.75 21h10.5M4.5 4.5l3.75 3.75M16.5 4.5l-3.75 3.75M7.5 10.5L3 7.5M16.5 10.5L21 7.5" />
-        </svg>
-
-            <span class="mx-3">Multas </span>
-        </a>
-
-        {{-- link --}}
-        <a class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" href="/servicios">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 19.5h10.5M4.5 7.5l1.5-3h12l1.5 3M5.25 7.5h13.5v9.75H5.25V7.5zM8.25 16.5h7.5M9.75 16.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm4.5 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
-            </svg>
-            <span class="mx-3">Servicios </span>
-        </a>
+    
 
         
        
@@ -87,6 +70,23 @@
                 {{ __('Catalogos') }}
             </x-nav-link>
         </div>
+
+        {{-- link --}}
+        <a class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" href="/multas">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 13.5h7.5m-7.5 0a1.5 1.5 0 100-3h7.5a1.5 1.5 0 100 3m-7.5 0v3m7.5-3v3M6.75 21h10.5M4.5 4.5l3.75 3.75M16.5 4.5l-3.75 3.75M7.5 10.5L3 7.5M16.5 10.5L21 7.5" />
+        </svg>
+
+            <span class="mx-3">Multas </span>
+        </a>
+
+        {{-- link --}}
+        <a class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" href="/servicios">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 19.5h10.5M4.5 7.5l1.5-3h12l1.5 3M5.25 7.5h13.5v9.75H5.25V7.5zM8.25 16.5h7.5M9.75 16.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm4.5 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
+            </svg>
+            <span class="mx-3">Servicios </span>
+        </a>
         {{-- link --}}
         {{-- <a class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
             href="/forms">
