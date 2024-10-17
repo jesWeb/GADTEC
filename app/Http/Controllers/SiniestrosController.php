@@ -28,7 +28,6 @@ class SiniestrosController extends Controller
     public function store(Request $request)
     {
 
-
         $newVer = new verificacion();
         $newVer->fecha_siniestro = $request->input('fecha_siniestro');
         $newVer->telefono = $request->input('telefono');

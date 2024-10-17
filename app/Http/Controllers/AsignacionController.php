@@ -14,6 +14,10 @@ class AsignacionController extends Controller
         // $reservacion = asignacion::paginate(10);
         $reservacion = asignacion::all();
         return view('catalogos.asignacion.index', compact('reservacion'));
+         $reservacion = asignacion::all();
+        // $cars = Automovil::all();
+
+        return view('catalogos.asignacion.index', compact('reservacion'));
     }
 
     public function create()
@@ -49,16 +53,22 @@ class AsignacionController extends Controller
 
     public function show($id)
     {
-        $MostrarAsig = asignacion::find($id);
-        return view('catalogos.asignacion.show', compact('MostrarAsig'));
+        //
+
+        $automovil = asignacion::findOrFail($id);
+
+        return view('catalogos.reservaciones.show', compact('automovil'));
     }
 
 
     public function edit($id)
     {
-        $EddtAsig = asignacion::findOrFail($id);
-        return view('catalogos.asignacion.edit', compact('EddtAsig'));
+        //
+        $reservEdit = asignacion::find($id);
+        return view('catalogos.reservaciones.edit', compact('reservEdit'));
     }
+
+
 
     public function update(Request $request, $id) {
 
