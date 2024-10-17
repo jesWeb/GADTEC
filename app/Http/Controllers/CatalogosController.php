@@ -14,6 +14,16 @@ class CatalogosController extends Controller
         //
         $catalogosCardsData = [
             [
+                'titulo' => 'Roles',
+                //  'label' => 'areas de usuario',
+                'href' => route('roles.index'),
+            ],
+            [
+                'titulo' => 'Usuarios',
+                //  'label' => 'areas de usuario',
+                'href' => route('usuarios.index'),
+            ],
+            [
                 'titulo' => 'Automoviles',
                 // 'label' => 'salas cirugia',
                 'href' => route('Automovil.index'),
@@ -33,19 +43,14 @@ class CatalogosController extends Controller
                 'href' => route('verificaciones.index'),
             ],
             [
-                'titulo' => '',
+                'titulo' => 'Tarjetas de Circulación',
                 //  'label' => 'areas de usuario',
-                'href' => route('verificaciones.index'),
+                'href' => route('tarjetas.index'),
             ],
             [
-                'titulo' => 'Verficaciones',
+                'titulo' => 'Tenencias/Refrendos',
                 //  'label' => 'areas de usuario',
-                'href' => route('verificaciones.index'),
-            ],
-            [
-                'titulo' => 'Verficaciones',
-                //  'label' => 'areas de usuario',
-                'href' => route('verificaciones.index'),
+                'href' => route('tenencias.index'),
             ],
 
 
