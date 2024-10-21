@@ -46,13 +46,6 @@
                                     </svg>
                                 </a>
 
-                                <!-- Editar -->
-                                <a href="servicios/{{ $servicio->id_servicio }}/edit" class="inline-flex items-center justify-center w-8 h-8 text-yellow-600 border border-yellow-600 rounded hover:bg-yellow-600 hover:text-white">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 3l5 5-1.5 1.5-5-5M3 21h18M3 21l8-8 5 5-8 8H3z" />
-                                    </svg>
-                                </a>
-
                                 <!-- Eliminar -->
                                 <form action="servicios/{{ $servicio->id_servicio }}" method="POST" class="inline">
                                     {!! csrf_field() !!}

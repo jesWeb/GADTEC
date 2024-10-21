@@ -23,7 +23,6 @@ class ServiciosController extends Controller
      */
     public function create()
     {
-        //
         $automoviles = Automoviles::all();
         return view('modulos.servicios.add', compact('automoviles'));
     }
