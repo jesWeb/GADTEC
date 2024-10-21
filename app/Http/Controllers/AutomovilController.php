@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Automovil;
+use App\Models\Automoviles;
 use Illuminate\Http\Request;
 
 class AutomovilController extends Controller
@@ -10,14 +10,14 @@ class AutomovilController extends Controller
     public function index()
     {
         //
-        $cars = Automovil::paginate(10);
-        // $cars = Automovil::all();
+        // $cars = Automovil::paginate(10);
+        $cars = Automoviles::all();
 
         return view('catalogos.Automovil.index', compact('cars'));
     }
     public function create()
     {
-        $AutoC = Automovil::all();
+        $AutoC = Automoviles::all();
         // dd($auto);
         return view('catalogos.Automovil.create', compact('AutoC'));
     }
@@ -28,52 +28,33 @@ class AutomovilController extends Controller
         $rules = [
             'marca' => 'required|string|max:20',
             'submarca' => 'required|string|max:20',
-            'modelo' => 'required|string|max:4',
-            'motor' => 'required|string|max:50',
-            'kilometraje' => 'required|integer',
-            'placas' => 'nullable|string|max:255',
-            'NSI' => 'nullable|string|max:20',
+            'modelo' => 'required|integer|between:2000,' . date('Y'),
+            'num_serie' => 'required|string|max:20',
+            'num_motor' => 'required|string|max:20',
+            'capacidad_combustible' => 'nullable|integer',
+            'tipo_combustible' => 'required|in:Gasolina,Diésel,Eléctrico',
+            'tipo_automovil' => 'required|in:Automovil,Camioneta,Motocicleta',
+            'kilometraje' => 'nullable|numeric|min:0',
+            'placas' => 'nullable|string|max:10',
+            'num_nsi' => 'nullable|string|max:20',
+            'uso' => 'nullable|in:Personal,Empresarial',
+            'color' => 'nullable|string|max:20',
+            'num_puertas' => 'nullable|integer|max:5',
+            'estatus' => 'nullable|in:Nuevo,Usado',
+            'fecha_registro' => 'nullable|date',
+            'responsable' => 'nullable|string|max:50',
             'observaciones' => 'nullable|string|max:255',
-            'uso' => 'nullable|string',
-            'responsable' => 'required|string',
-            'image' => 'nullable|file|mimes:jpeg,png,jpg',
+            'fotografias' => 'nullable|file|mimes:jpeg,png,jpg,pdf',
         ];
 
-        $messages = [
-            'marca.required' => 'El campo marca es requerido.',
-            'submarca.required' => 'El campo submarca es requerido.',
-            'modelo.required' => 'El campo modelo es requerido.',
-            'modelo.integer' => 'El campo modelo debe ser un número entero.',
-            'modelo.min' => 'El campo modelo debe ser al menos 1.',
-            'motor.required' => 'El campo motor es requerido.',
-            'motor.string' => 'El campo motor debe ser una cadena de texto.',
-            'motor.max' => 'El campo motor no puede exceder los 50 caracteres.',
-            'kilometraje.required' => 'El campo kilometraje es requerido.',
-            'kilometraje.integer' => 'El campo kilometraje debe ser un número entero.',
-            'kilometraje.min' => 'El campo kilometraje no puede ser negativo.',
-            'placas.string' => 'El campo placas debe ser una cadena de texto.',
-            'placas.max' => 'El campo placas no puede exceder los 255 caracteres.',
-            'NSI.string' => 'El campo NSI debe ser una cadena de texto.',
-            'NSI.max' => 'El campo NSI no puede exceder los 20 caracteres.',
-            'observaciones.string' => 'El campo observaciones debe ser una cadena de texto.',
-            'observaciones.max' => 'El campo observaciones no puede exceder los 255 caracteres.',
-            'uso.exists' => 'El campo uso debe ser un valor válido.',
-            'responsable.required' => 'El campo responsable es requerido.',
-            'responsable.string' => 'El campo responsable debe ser una cadena de texto.',
-            'responsable.max' => 'El campo responsable no puede exceder los 100 caracteres.',
-            'image.file' => 'El campo imagen debe ser un archivo.',
-            'image.mimes' => 'El campo imagen debe ser de tipo: jpeg, png, jpg.',
-            'image.max' => 'El campo imagen no puede exceder los 2048 kilobytes.',
 
-        ];
-
-        $request->validate($rules, $messages);
+        $request->validate($rules);
         $input = $request->all();
 
-        if ($request->file('image') != '') {
+        if ($request->file('fotografias') != '') {
 
             // obtener el campo file definido en el formulario
-            $file = $request->file('image');
+            $file = $request->file('fotografias');
             // obtener el nombre dek archivo
             $img = $file->getClientOriginalName();
             //obtener fecha y hora
@@ -82,16 +63,13 @@ class AutomovilController extends Controller
             $img2 = $ldate . $img;
             //idicamos el nombre  y la ruta donde se almacena el archivo (img)
             $file->move(public_path('img/carros'), $img2);
-            $input['carros'] = $img2;
+            $input['fotografias'] = $img2;
         } else {
-            $img2 = "CarroNull.jpg";
+            $input['fotografias'] = "CarroNull.jpg";
         }
 
-        Automovil::create($input);
+        Automoviles::create($input);
 
-        // dd($Newauto);
-
-        // return redirect('Automovil.index')->with('message', 'Se ha creado correctamente el registro');
         return to_route('Automovil.index');
     }
 
@@ -101,7 +79,7 @@ class AutomovilController extends Controller
     public function show($id)
     {
         //
-        $automovil = Automovil::find($id);
+        $automovil = Automoviles::find($id);
         return view('catalogos.Automovil.show', compact('automovil'));
     }
 
@@ -111,7 +89,7 @@ class AutomovilController extends Controller
     public function edit($id)
     {
         //
-        $EddCar=Automovil::findOrFail($id);
+        $EddCar = Automoviles::findOrFail($id);
         return view('catalogos.Automovil.edit', compact('EddCar'));
     }
 
@@ -120,21 +98,17 @@ class AutomovilController extends Controller
 
     public function update(Request $request, $id)
     {
-        //
 
-        $EddCar = Automovil::findOrFail($id);
-
+        $EddCar = Automoviles::findOrFail($id);
         $input = $request->all();
-
-
-        // dd($post);
         $EddCar->update($input);
         return redirect('Automovil')->with('message', 'Se ha modificado correctamente el registro');
     }
 
     public function destroy($id)
-    {   $cars = Automovil::findOrFail($id);
-        $cars ->delete();
+    {
+        $cars = Automoviles::findOrFail($id);
+        $cars->delete();
         return to_route('Automovil.index');
     }
 }

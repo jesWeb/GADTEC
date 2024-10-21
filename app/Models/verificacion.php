@@ -20,6 +20,6 @@ class verificacion extends Model
         'fechaV',
         'fechaP',
         'observaciones',
-       'image'
+        'image'
     ];
 }

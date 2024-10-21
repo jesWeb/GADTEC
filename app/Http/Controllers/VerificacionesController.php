@@ -56,7 +56,6 @@ class VerificacionesController extends Controller
 
     public function edit($id)
     {
-        //
         $EddVer = verificacion::find($id);
         return view('catalogos.verificaciones.edit', compact('EddVer'));
     }

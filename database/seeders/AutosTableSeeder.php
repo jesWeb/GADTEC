@@ -2,7 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Automovil;
+
+use App\Models\Automoviles;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -15,12 +16,12 @@ class AutosTableSeeder extends Seeder
 
     {
 
-        Automovil::truncate();
+        Automoviles::truncate();
 
 
 
 
-       Automovil::cretate(
+       Automoviles::cretate(
             [
                 'marca' => 'Toyota',
                 'submarca' => 'Corolla',

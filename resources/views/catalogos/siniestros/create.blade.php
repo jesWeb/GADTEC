@@ -2,12 +2,11 @@
 
 @section('body')
     <div class="flex flex-col gap-9">
-
         <div class="p-6 bg-white border rounded-md shadow-md">
             {{-- titulo --}}
             <h2 class="mb-5 text-xl font-semibold text-gray-700">Registro Siniestros</h2>
             {{-- formulario --}}
-            <form action="{{route('asignacion.store')}} " method="POST">
+            <form action="{{route('siniestros.store')}} " method="POST">
                 {{-- Token CSRF --}}
                 @csrf
                 <div class="m-3 xl:p-10">
@@ -35,7 +34,8 @@
                         {{-- Estatus --}}
                         <div class="w-full px-3 xl:w-1/2">
                             <label class="mb-3 block text-base font-medium text-[#07074D]" for="estatus">Estatus</label>
-                            <select name="estatus"
+                            <select
+                                name="estatus"
                                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                 required>
                                 <option disabled selected>Selecciona una opción</option>
