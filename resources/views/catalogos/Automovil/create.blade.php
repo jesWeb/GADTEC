@@ -19,7 +19,6 @@
                                     required>
                             </div>
                         </div>
-
                         {{-- Submarca --}}
                         <div class="w-full px-3 xl:w-1/2">
                             <div class="xl:mb-5">
@@ -30,7 +29,6 @@
                                     required>
                             </div>
                         </div>
-
                         {{-- Modelo --}}
                         <div class="w-full px-3 xl:w-1/2">
                             <div class="xl:mb-5">

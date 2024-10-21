@@ -6,30 +6,34 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+
+
+
     public function up(): void
     {
         Schema::create('automoviles', function (Blueprint $table) {
-            $table->bigIncrements('id_automovil'); 
-            $table->string('num_serie', 30)->nullable(); 
-            $table->string('marca', 50); 
-            $table->string('submarca', 50); 
-            $table->string('modelo', 50); 
-            $table->string('num_motor', 50); 
-            $table->enum('tipo_combustible', ['Gasolina', 'Diésel', 'Eléctrico'])->nullable(); 
-            $table->integer('kilometraje')->nullable(); 
-            $table->string('placas', 20)->nullable(); 
-            $table->string('num_nsi', 50)->nullable();
-            $table->string('uso', 70)->nullable(); 
-            $table->text('estatus')->nullable(); 
+            $table->bigIncrements('id_automovil');
+            $table->string('marca', 20)->nullable();
+            $table->string('submarca', 25)->nullable();
+            $table->integer('modelo')->nullable();
+            $table->string('num_serie', 20)->nullable();
+            $table->string('num_motor', 20)->nullable();
+            $table->integer('capacidad_combustible')->nullable();
+            $table->enum('tipo_combustible', ['Gasolina', 'Diésel', 'Eléctrico'])->default('Gasolina');
+            $table->enum('tipo_automovil', ['Automovil', 'Camioneta', 'Motocicleta'])->default('Automovil');
+            $table->decimal('kilometraje', 8, 2)->unsigned()->nullable();
+            $table->string('placas', 10)->nullable();
+            $table->string('num_nsi', 20)->nullable();
+            $table->enum('uso', ['Personal', 'Empresarial'])->default('Empresarial');
+            $table->enum('estatus', ['Nuevo', 'Usado'])->default('Nuevo');
+            $table->string('color', 20)->nullable();
+            $table->integer('num_puertas')->nullable();
             $table->date('fecha_registro')->nullable();
-            $table->string('responsable', 50)->nullable(); 
-            $table->text('fotografias')->nullable(); 
+            $table->string('responsable', 50)->nullable();
+            $table->string('fotografias')->nullable();
             $table->text('observaciones')->nullable();
-            $table->boolean('activo')->default(0); 
-            $table->timestamps(); 
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -38,6 +42,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('automoviles');
+        // Schema::dropIfExists('automoviles');
     }
 };

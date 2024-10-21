@@ -11,7 +11,7 @@ class VerificacionesController extends Controller
     public function index()
     {
 
-        $verificacion = verificacion::all();
+        $verificacion =verificacion::all();
         return view('catalogos.verificaciones.index', compact('verificacion'));
     }
 
@@ -56,7 +56,6 @@ class VerificacionesController extends Controller
 
     public function edit($id)
     {
-        //
         $EddVer = verificacion::find($id);
         return view('catalogos.verificaciones.edit', compact('EddVer'));
     }

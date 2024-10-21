@@ -3,52 +3,86 @@
 
 @section('body')
 
-<div class="container mt-5">
-    <div class="">
-        <a class="mr-5 bg-green-700 flex items-center gap-2 rounded  bg-primary px-4.5 py-2 font-medium text-white transition hover:bg-green-900"
-            href="{{ route('verificaciones.create') }}">Crear nuevo</a>
-    </div>
-    <div class="mx-4 overflow-hidden rounded-lg shadow-lg md:mx-10">
+    <div class="px-4 py-6">
+        <div class="p-6 bg-white rounded-md shadow-md">
+            <h2 class="text-lg font-semibold text-gray-700 capitalize">Verificaciones vehiculares</h2>
+            <div class="mb-4 text-right">
+                <a  href="{{ route('verificaciones.create') }}" class="inline-block px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Nuevo registro</a>
+            </div>
+            <div class="overflow-x-auto rounded-lg shadow">
+                <table class="min-w-full bg-white border border-gray-200 divide-y divide-gray-200">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="px-4 py-2 text-left text-gray-600">#</th>
+                            <th class="px-4 py-2 text-left text-gray-600">Vehículo</th>
+                            <th class="px-4 py-2 text-left text-gray-600">Fecha verificación</th>
+                            <th class="px-4 py-2 text-left text-gray-600">Fecha próxima verificación</th>
+                            <th class="px-4 py-2 text-left text-gray-600">Acciones</th>
+                            {{-- <th class="px-4 py-2 text-left text-gray-600">Fecha de Expedición</th>
+                            <th class="px-4 py-2 text-left text-gray-600">Fecha de Vigencia</th>
+                            <th class="px-4 py-2 text-left text-gray-600">Estatus</th>
+                            <th class="px-4 py-2 text-left text-gray-600">Fotografía</th> --}}
 
-        <table class="w-full table-fixed">
-            <thead>
-                <tr class="bg-gray-100">
-                    <th class="w-1/4 px-6 py-4 font-bold text-left text-gray-600 uppercase">Marca</th>
-                    <th class="w-1/4 px-6 py-4 font-bold text-left text-gray-600 uppercase">placas</th>
-                    <th class="w-1/4 px-6 py-4 font-bold text-left text-gray-600 uppercase">Nsi</th>
-                    <th class="w-1/4 px-6 py-4 font-bold text-left text-gray-600 uppercase">Status</th>
-                    <th class="w-1/4 px-6 py-4 font-bold text-left text-gray-600 uppercase">Aciiones</th>
-                </tr>
-            </thead>
-            <tbody class="bg-white">
-                @foreach ($verificacion as $vr)
-                    <tr>
-                        <td class="px-6 py-4 border-b border-gray-200">{{ $vr->marca }}</td>
-                        <td class="px-6 py-4 truncate border-b border-gray-200">{{ $vr->placas }}</td>
-                        <td class="px-6 py-4 border-b border-gray-200">{{ $vr->NSI }}</td>
-                        <td class="px-6 py-4 border-b border-gray-200">
-                            <span class="px-2 py-1 text-xs text-white bg-green-500 rounded-full">Active</span>
-                        </td>
-                        {{-- acciones --}}
-                        <td>
-                            <a href="{{ route('verificaciones.edit', $vr->id) }}">Editar</a>
-                            <a href="{{ route('verificaciones.show', $vr->id) }}">Ver</a>
-                            {{-- eliminar --}}
-                            <form action="{{ route('verificaciones.destroy', $vr) }}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                <button
-                                    class="px-3 py-2 font-bold bg-red-400 border border-red-500 rounded text-dark hover:bg-red-700"
-                                    type="submit">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
-                <!-- Add more rows here -->
-            </tbody>
-        </table>
-    </div>
-    <!-- Navegación de paginación -->
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        @foreach($verificacion as $key => $vr)
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-4 py-2 border">{{ $key + 1 }}</td>
+                                {{-- <td class="px-4 py-2 border">
+                                    {{ $tarjeta->automovil->submarca }} {{ $tarjeta->automovil->modelo }}
+                                </td> --}}
+                                <td class="px-4 py-2 border">{{ $vr->vehiculo }}</td>
+                                <td class="px-4 py-2 border">{{ $vr->fechaV }}</td>
+                                <td class="px-4 py-2 border">{{ $vr->fechaP }}</td>
+                                {{-- <td class="px-4 py-2 border">{{ $rserv->fecha_expedicion }}</td>
+                                <td class="px-4 py-2 border">{{ $rserv->fecha_vigencia }}</td>
+                                <td class="px-4 py-2 border">{{ $rserv->estatus }}</td> --}}
+                                {{-- <td class="px-4 py-2 border">
+                                    @if($tarjeta->fotografia_frontal)
+                                    <img src="{{ asset('img/' . $tarjeta->fotografia_frontal) }}" alt="Fotografía Frontal" class="object-cover w-16 h-16">
+
+                                    @else
+                                        N/A
+                                    @endif
+                                </td> --}}
+                                {{-- acciones --}}
+                                <td class="px-4 py-2 border">
+                                    <div class="flex items-center space-x-2">
+                                        <!-- Ver -->
+                                        <a  href="{{ route('verificaciones.show', $vr->id) }}" class="inline-flex items-center justify-center w-8 h-8 text-green-600 border border-green-600 rounded hover:bg-green-600 hover:text-white">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3C6.48 3 2 12 2 12s4.48 9 10 9 10-9 10-9-4.48-9-10-9zm0 12c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z" />
+                                            </svg>
+                                        </a>
+
+                                        <!-- Editar -->
+                                        <a  href="{{ route('verificaciones.edit', $vr->id) }}"  class="inline-flex items-center justify-center w-8 h-8 text-yellow-600 border border-yellow-600 rounded hover:bg-yellow-600 hover:text-white">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 3l5 5-1.5 1.5-5-5M3 21h18M3 21l8-8 5 5-8 8H3z" />
+                                            </svg>
+                                        </a>
+
+                                        <!-- Eliminar -->
+                                        <form  action="{{ route('verificaciones.destroy', $vr) }}"  method="POST" class="inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="inline-flex items-center justify-center w-8 h-8 text-red-600 border border-red-600 rounded hover:bg-red-600 hover:text-white" onclick="return confirm('¿Está seguro que desea borrar el registro?')">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7H5M10 11v6m4-6v6M7 7h10l-1-1H8l-1 1z" />
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+             <!-- Navegación de paginación -->
     {{-- {{ $cars->links() }} --}}
+        </div>
+    </div>
 
 @endsection

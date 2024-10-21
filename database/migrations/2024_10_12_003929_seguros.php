@@ -10,7 +10,7 @@ return new class extends Migration
     {
         //
         Schema::create('seguros', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id_seguro');
             $table->string('vehiculo');
             $table->string('aseguradora');
             $table->string('cobertura');
