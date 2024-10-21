@@ -33,7 +33,7 @@
                             <td class="px-4 py-2 border">{{ $usuario->num_empleado }}</td>
                             <td class="px-4 py-2 border">{{ $usuario->nombre }} {{ $usuario->app }} {{ $usuario->apm }}</td>
                             <td class="px-4 py-2 border">{{ $usuario->empresa }}</td>
-                            <td class="px-4 py-2 border">{{ $usuario->roles->nombre }}</td>
+                            <td class="px-4 py-2 border">{{ $usuario->rol }}</td>
                             <td class="px-4 py-2 border">{{ $usuario->usuario }}</td>
                             <td class="px-4 py-2 border">
                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium 

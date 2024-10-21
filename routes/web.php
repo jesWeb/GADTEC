@@ -2,7 +2,6 @@
 use App\Http\Controllers\admin\Automovil;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\TarjetaCirculacionController;
 use App\Http\Controllers\TeneciasRefrendosController;
@@ -44,7 +43,7 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
 
 });
 
-Route::resource('roles', RolesController::class);
+
 Route::resource('usuarios', UsuariosController::class);
 Route::resource('tarjetas', TarjetaCirculacionController::class);
 Route::resource('tenencias', TeneciasRefrendosController::class);

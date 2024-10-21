@@ -40,14 +40,7 @@
                 </svg>
             </button>
             <div id="dropdown-menu" class="w-full dropdown_branding">
-                <a class="flex items-center px-6 py-2 mt-4 ml-5 {{ Route::currentRouteNamed('admin.roles.index') ? 'text-gray-100' : 'text-gray-500' }} hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" href="/roles">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 8.25v-.75a3 3 0 10-6 0v.75m8.25 0h2.25m-18 0h2.25M17.25 8.25v9A2.25 2.25 0 0115 19.5h-6a2.25 2.25 0 01-2.25-2.25v-9m2.25 0v-.75a3 3 0 116 0v.75" />
-</svg>
-
-
-                    <span class="mx-3">Roles</span>
-                </a>
+            
                 <a class="flex items-center px-6 py-2 mt-4 ml-5 {{ Route::currentRouteNamed('admin.users.index') ? 'text-gray-100' : 'text-gray-500' }} hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" href="/usuarios">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
   <path stroke-linecap="round" stroke-linejoin="round" d="M3 12c2.5 0 4.5 1 6 3.5m9-3.5c-2.5 0-4.5 1-6 3.5m-6-6a3 3 0 116 0 3 3 0 01-6 0zm0 0a7.5 7.5 0 0115 0M3 12a7.5 7.5 0 0115 0" />
