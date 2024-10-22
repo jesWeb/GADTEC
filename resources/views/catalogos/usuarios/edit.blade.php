@@ -64,6 +64,16 @@
                         </select>
                     </div>
 
+                    <!-- Selección de Rol -->
+                    <div>
+                        <label for="rol" class="block text-base font-medium text-gray-700">Selección de Rol</label>
+                        <select name="rol" id="rol" class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                            <option value="Administrador" {{ $usuario->rol == 'Administrador' ? 'selected' : '' }}>Administrador</option>
+                            <option value="Moderador" {{ $usuario->rol == 'Moderador' ? 'selected' : '' }}>Moderador</option>
+                            <option value="Vigilante" {{ $usuario->rol == 'Vigilante' ? 'selected' : '' }}>Vigilante</option>
+                        </select>
+                    </div>
+
                      <!-- E-Mail -->
                      <div>
                         <label for="email" class="block text-base font-medium text-gray-700">E-Mail</label>
@@ -81,7 +91,7 @@
                     <!-- Contraseña -->
                     <div class="col-span-1 md:col-span-2">
                         <label for="pass" class="block text-base font-medium text-gray-700">Contraseña</label>
-                        <input type="password" name="pass" id="pass" placeholder="Contraseña" class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        <input type="password" name="pass" id="pass" placeholder="Contraseña"  value="{{ old('usuario', $usuario->pass) }}" class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
                         @error('pass') <span class="text-sm text-red-600">{{ $message }}</span> @enderror
                     </div>
 
@@ -113,15 +123,8 @@
                         </select>
                     </div>
 
-                    <!-- Selección de Rol -->
-                    <div class="col-span-1 md:col-span-2">
-                        <label for="id_rol" class="block text-base font-medium text-gray-700">Selección de Rol</label>
-                        <select name="id_rol" id="id_rol" class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
-                            @foreach($roles as $rol)
-                                <option value="{{ $rol->id_rol }}">{{ $rol->nombre }}</option>
-                            @endforeach
-                        </select>
-                    </div>
+                    
+                    
                 </div>
 
                 <hr class="my-6">
