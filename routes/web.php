@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\admin\Automovil;
 
 use App\Http\Controllers\AsignacionController;
@@ -48,16 +49,10 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::get('/', function () {
         return view('dashboard');
     })->name('dashboard');
-
 });
 
 
-Route::resource('usuarios', UsuariosController::class);
-Route::resource('tarjetas', TarjetaCirculacionController::class);
-Route::resource('tenencias', TeneciasRefrendosController::class);
-Route::resource('multas', MultasController::class);
-Route::resource('servicios', ServiciosController::class);
-Route::get('js_tipo_servicio',[JsController::class, 'js_tipo_servicio'])->name('js_tipo_servicio');
+
 
 Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     Route::get('/', function () {
@@ -70,6 +65,13 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     Route::resource('siniestros', SiniestrosController::class);
     Route::resource('verificaciones', VerificacionesController::class);
     Route::get('/catalogos', [CatalogosController::class, 'index'])->name('catalogos.index');
+
+    Route::resource('usuarios', UsuariosController::class);
+    Route::resource('tarjetas', TarjetaCirculacionController::class);
+    Route::resource('tenencias', TeneciasRefrendosController::class);
+    Route::resource('multas', MultasController::class);
+    Route::resource('servicios', ServiciosController::class);
+    Route::get('js_tipo_servicio', [JsController::class, 'js_tipo_servicio'])->name('js_tipo_servicio');
 });
 
 

@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('verificacions', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id_verificacion');
             $table->string('vehiculo')->nullable();
             $table->string('holograma')->nullable();
             $table->enum('engomado', ['Amarillo', 'azul', 'rojo', 'ninguno'])->default('ninguno');

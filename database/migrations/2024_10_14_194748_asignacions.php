@@ -10,7 +10,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('asignacions', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id_asignacion');
             $table->string('solicitante')->nullable();
             $table->string('telefono')->nullable();
             $table->enum('requierechofer', ['sí', 'no']);

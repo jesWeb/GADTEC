@@ -10,14 +10,11 @@ class AsignacionController extends Controller
 
     public function index()
     {
-        //
+
         // $reservacion = asignacion::paginate(10);
         $reservacion = asignacion::all();
         return view('catalogos.asignacion.index', compact('reservacion'));
-         $reservacion = asignacion::all();
-        // $cars = Automovil::all();
 
-        return view('catalogos.asignacion.index', compact('reservacion'));
     }
 
     public function create()
@@ -50,25 +47,18 @@ class AsignacionController extends Controller
         return to_route('asignacion.index');
     }
 
-
     public function show($id)
     {
-        //
-
-        $automovil = asignacion::findOrFail($id);
-
-        return view('catalogos.reservaciones.show', compact('automovil'));
+        $reseSh = asignacion::findOrFail($id);
+        return view('catalogos.asignacion.show', compact('reseSh'));
     }
-
 
     public function edit($id)
     {
         //
-        $reservEdit = asignacion::find($id);
-        return view('catalogos.reservaciones.edit', compact('reservEdit'));
+        $EddtAsig = asignacion::find($id);
+        return view('catalogos.asignacion.edit', compact('EddtAsig'));
     }
-
-
 
     public function update(Request $request, $id) {
 

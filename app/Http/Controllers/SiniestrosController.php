@@ -28,22 +28,17 @@ class SiniestrosController extends Controller
     public function store(Request $request)
     {
 
-
-        $newVer = new verificacion();
-        $newVer->fecha_siniestro = $request->input('fecha_siniestro');
-        $newVer->telefono = $request->input('telefono');
-        $newVer->requierechofer = $request->input('requierechofer');
-        $newVer->nombre_chofer = $request->input('nombre_chofer');
-        $newVer->vehiculo = $request->input('vehiculo');
-        $newVer->lugar = $request->input('lugar');
-        $newVer->hora_salida = $request->input('hora_salida');
-        $newVer->no_licencia = $request->input('no_licencia');
-        $newVer->condiciones = $request->input('condiciones');
-        $newVer->observaciones = $request->input('observaciones');
-        $newVer->autorizante = $request->input('autorizante');
+        $newSin = new siniestros();
+        $newSin->fecha_siniestro = $request->input('fecha_siniestro');
+        $newSin->descripcion = $request->input('descripcion');
+        $newSin->estatus = $request->input('estatus');
+        $newSin->costo_danos_estimados = $request->input('costo_danos_estimados');
+        $newSin->costo_real_danos = $request->input('costo_real_danos');
+        $newSin->responsable = $request->input('responsable');
+        $newSin->observaciones = $request->input('observaciones');
 
          //guardamos datos en BD
-         $newVer ->save();
+         $newSin ->save();
 
         return to_route('siniestro.index');
     }
@@ -59,20 +54,20 @@ class SiniestrosController extends Controller
 
     public function edit($id)
     {
-        //
-        $SinEdit = siniestros::find($id);
-        return view('catalogos.siniestro.edit', compact('SinEdit'));
+
+        $EddSin = siniestros::find($id);
+        return view('catalogos.siniestro.edit', compact('EddSin'));
     }
 
 
     public function update(Request $request,  $id)
     {
-        //
+
     }
 
 
     public function destroy( $id)
     {
-        //
+
     }
 }
