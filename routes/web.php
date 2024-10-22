@@ -69,11 +69,11 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     Route::resource('usuarios', UsuariosController::class);
     Route::resource('tarjetas', TarjetaCirculacionController::class);
     Route::resource('tenencias', TeneciasRefrendosController::class);
-    Route::resource('multas', MultasController::class);
-    Route::resource('servicios', ServiciosController::class);
     Route::get('js_tipo_servicio', [JsController::class, 'js_tipo_servicio'])->name('js_tipo_servicio');
 });
 
+    Route::resource('multas', MultasController::class);
+    Route::resource('servicios', ServiciosController::class);
 
 
 require __DIR__ . '/auth.php';
