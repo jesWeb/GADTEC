@@ -102,7 +102,7 @@ class AutomovilController extends Controller
         $EddCar = Automoviles::findOrFail($id);
         $input = $request->all();
         $EddCar->update($input);
-        return redirect('Automovil')->with('message', 'Se ha modificado correctamente el registro');
+        return to_route('Automovil.index')->with('message', 'Se ha modificado correctamente el registro');
     }
 
     public function destroy($id)
