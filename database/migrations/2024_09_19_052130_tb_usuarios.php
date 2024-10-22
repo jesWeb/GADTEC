@@ -20,6 +20,7 @@ return new class extends Migration
             $table->set('empresa', ['GÄTSIMED', 'DYDETEC', 'Empresa 3'])->default('GÄTSIMED');    // no recomiendo tenerlo aqui por si hay mas empresas tabla aparte
             $table->date('fn');
             $table->set('sex', ['Femenino', 'Masculino'])->default('Femenino');
+            $table->set('rol', ['Administrador', 'Moderador', 'Vigilante'])->default('Administrador');
             $table->string('gen', 50);  
             $table->text('foto'); 
             $table->string('email')->unique(); // Cambia de text a string
@@ -27,9 +28,7 @@ return new class extends Migration
             $table->text('pass');
             $table->text('estatus')->nullable();    // registro => activo|inactivo 
             $table->boolean('activo')->default(0);  // borrado logico del sistema
-            $table->integer('id_rol');
             $table->timestamps();
-            //$table->foreign('id_rol')->references('id_rol')->on('roles')->onDelete('cascade');
         });
     }
 

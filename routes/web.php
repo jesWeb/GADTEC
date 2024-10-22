@@ -10,7 +10,6 @@ use App\Http\Controllers\SegurosController;
 use App\Http\Controllers\SiniestrosController;
 use App\Http\Controllers\VerificacionesController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\TarjetaCirculacionController;
 use App\Http\Controllers\TeneciasRefrendosController;
@@ -52,12 +51,13 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
 
 });
 
-Route::resource('roles', RolesController::class);
+
 Route::resource('usuarios', UsuariosController::class);
 Route::resource('tarjetas', TarjetaCirculacionController::class);
 Route::resource('tenencias', TeneciasRefrendosController::class);
 Route::resource('multas', MultasController::class);
 Route::resource('servicios', ServiciosController::class);
+Route::get('js_tipo_servicio',[JsController::class, 'js_tipo_servicio'])->name('js_tipo_servicio');
 
 Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     Route::get('/', function () {

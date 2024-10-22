@@ -40,8 +40,6 @@
         </a>
         {{-- link --}}
     
-
-        
        
         <div
             class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Roles;
 use App\Models\Usuarios;
 
 class UsuariosController extends Controller
@@ -12,7 +11,7 @@ class UsuariosController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
-        $usuarios = Usuarios::with('roles')->get();
+        $usuarios = Usuarios::all();
         return view('catalogos.usuarios.index', compact('usuarios'));
     }
 
@@ -20,8 +19,7 @@ class UsuariosController extends Controller
      * Show the form for creating a new resource.
      */
     public function create() {
-        $roles = Roles::all();
-        return view('catalogos.usuarios.add', compact('roles'));
+        return view('catalogos.usuarios.add');
     }
 
     /**
@@ -32,6 +30,7 @@ class UsuariosController extends Controller
             'nombre' => 'required',
             'app' => 'required',
             'fn' => 'required',
+            'rol'=> 'required',
             'email' => 'required|email',
             'usuario' => 'required',
             'pass' => 'required',
@@ -42,6 +41,7 @@ class UsuariosController extends Controller
             'nombre.required' => 'El campo nombre es requerido',
             'app.required' => 'El campo apellido paterno es requerido',
             'fn.required' => 'El campo fecha de nacimiento es requerido',
+            'rol.required' => 'El campo rol es requerido',
             'email.required' => 'El campo e-mail es requerido',
             'email.email' => 'El formato del e-mail es incorrecto',
             'usuario.required' => 'El campo usuario es requerido',
@@ -86,8 +86,7 @@ class UsuariosController extends Controller
      */
     public function edit(string $id) {
         $usuario = Usuarios::findOrFail($id);
-        $roles = Roles::all();
-        return view('catalogos.usuarios.edit', compact('usuario', 'roles'));
+        return view('catalogos.usuarios.edit', compact('usuario'));
     }
 
     /**
@@ -98,6 +97,7 @@ class UsuariosController extends Controller
             'nombre' => 'required',
             'app' => 'required',
             'fn' => 'required',
+            'rol'=> 'required',
             'email' => 'required|email',
             'usuario' => 'required',
             'pass' => 'required',
@@ -108,6 +108,7 @@ class UsuariosController extends Controller
             'nombre.required' => 'El campo nombre es requerido',
             'app.required' => 'El campo apellido paterno es requerido',
             'fn.required' => 'El campo fecha de nacimiento es requerido',
+            'rol.required' => 'El campo rol es requerido',
             'email.required' => 'El campo e-mail es requerido',
             'email.email' => 'El formato del e-mail es incorrecto',
             'usuario.required' => 'El campo usuario es requerido',

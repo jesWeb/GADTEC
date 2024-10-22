@@ -19,6 +19,7 @@ class Usuarios extends Model
             'empresa',
             'fn',
             'sex',
+            'rol',
             'gen',
             'foto',
             'email',
@@ -29,8 +30,5 @@ class Usuarios extends Model
             'id_rol'
         ];
 
-        public function roles(){ 
-            return $this->belongsTo(Roles::class,'id_rol'); 
-        }
 
 }
