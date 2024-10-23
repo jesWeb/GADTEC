@@ -5,10 +5,12 @@
     <div class="mx-auto overflow-hidden bg-white shadow-md rounded-xl md:max-w-2xl">
         <div class="gap-5 md:flex md:justify-center md:items-center ">
             {{-- Image --}}
+           <div class="">
             <div class="md:flex-shrink-0">
-                <img class="object-cover w-full h-48 md:w-48" src="{{ asset('img/carros/' . $automovil->image) }}"
-                    style="width: 200px;" alt="">
+                <img class="object-cover w-full h-48 md:w-48" src="{{asset('img/carros/'.$automovil->fotografias)}}"
+                    style="width: 50%; height:150px" alt="">
             </div>
+           </div>
             {{--  --}}
             <div class="p-8">
                 {{-- info main --}}
@@ -26,13 +28,13 @@
                     </div>
                     {{-- 2 info --}}
                     <div class="inline-flex items-center gap-5 mt-5">
-                        <p>No.Serie : <br> <span>{{ $automovil->serie }}</span> </p>
-                        <p>No.Motor : <br> <span>{{ $automovil->motor }}</span> </p>
-                        <p>NSI : <br> <span>{{ $automovil->NSI }}</span> </p>
+                        <p>No.Serie : <br> <span>{{ $automovil->num_serie}}</span> </p>
+                        <p>No.Motor : <br> <span>{{ $automovil->num_motor}}</span> </p>
+                        <p>NSI : <br> <span>{{ $automovil->num_nsi }}</span> </p>
                     </div>
 
                     <div class="inline-flex items-center mt-5">
-                        <p>Kilometraje: <br> <span>{{ $automovil->kilometraje }}</span> Km</p>
+                        <p>Kilometraje: <br> <span>{{ $automovil->kilometraje }}</span> Kms</p>
                         <p>Responsable: <span></span> <br> <span>{{ $automovil->responsable }}</span></p>
                     </div>
 

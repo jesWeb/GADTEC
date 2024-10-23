@@ -20,6 +20,7 @@ class asignacion extends Model
         'requierechofer',
         'nombre_chofer',
         'vehiculo',
+        'dia_salida',
         'lugar',
         'hora_salida',
         'no_licencia',

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class Automoviles extends Model
 {
@@ -46,5 +47,11 @@ class Automoviles extends Model
     public function servicios() {
         return $this->hasMany(Servicios::class, 'id_automovil');
     }
+    //accesor virtual de los files
+    // public function getFotografiasUrlAttribute(): string
+    // {
+    //     return Storage::disk('carros')->url($this->fotografias);
+    // }
+
 
 }

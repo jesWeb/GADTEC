@@ -13,11 +13,7 @@ class CatalogosController extends Controller
     {
         //
         $catalogosCardsData = [
-            [
-                'titulo' => 'Roles',
-                //  'label' => 'areas de usuario',
-                'href' => route('roles.index'),
-            ],
+
             [
                 'titulo' => 'Usuarios',
                 //  'label' => 'areas de usuario',

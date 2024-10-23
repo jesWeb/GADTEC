@@ -55,7 +55,7 @@ class AsignacionController extends Controller
 
     public function edit($id)
     {
-        //
+
         $EddtAsig = asignacion::find($id);
         return view('catalogos.asignacion.edit', compact('EddtAsig'));
     }
