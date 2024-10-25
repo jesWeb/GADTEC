@@ -60,21 +60,25 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     })->name("dashboard");
 
     Route::resource('Automovil', AutomovilController::class);
+    Route::get('/automoviles-pdf', [AutomovilController::class,'generateReport'])->name('automoviles-pdf');
     Route::resource('asignacion', AsignacionController::class);
     Route::resource('seguros', SegurosController::class);
     Route::resource('siniestros', SiniestrosController::class);
     Route::resource('verificaciones', VerificacionesController::class);
     Route::get('/catalogos', [CatalogosController::class, 'index'])->name('catalogos.index');
 
-    Route::resource('usuarios', UsuariosController::class);
+    
+  
+});
     Route::resource('tarjetas', TarjetaCirculacionController::class);
     Route::resource('tenencias', TeneciasRefrendosController::class);
-});
-
+    Route::resource('usuarios', UsuariosController::class);
     Route::resource('multas', MultasController::class);
     Route::resource('servicios', ServiciosController::class);
     Route::get('js_tipo_servicio', [JsController::class, 'js_tipo_servicio'])->name('js_tipo_servicio');
-
+    Route::get('/multas-pdf', [MultasController::class,'generateReport'])->name('multas-pdf');
+    Route::get('/servicios-pdf', [ServiciosController::class,'generateReport'])->name('servicios-pdf');
+    Route::get('/usuarios-pdf', [UsuariosController::class,'generateReport'])->name('usuarios-pdf');
 
 
 require __DIR__ . '/auth.php';

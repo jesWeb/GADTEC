@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Multas;
 use App\Models\Automoviles;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 
 class MultasController extends Controller
 {
@@ -155,5 +156,17 @@ class MultasController extends Controller
         $multa = Multas::findOrFail($id);
         $multa->delete();
         return back()->with('danger', 'Se ha eliminado correctamente el registro');
+    }
+
+    /**
+     * Generar reporte de multas.
+     */ 
+    public function generateReport(){
+        // $multas = Multas::all();
+        $multas = Multas::with('automovil')->get();
+        // return view('modulos.multas.report-multas', compact('multas'));
+        $pdf = FacadePdf::loadView('modulos.multas.report-multas', compact('multas'));
+        return $pdf->stream();  // Output as downloadable PDF file
+        
     }
 }

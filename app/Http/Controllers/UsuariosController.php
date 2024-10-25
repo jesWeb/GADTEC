@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Usuarios;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 
 class UsuariosController extends Controller
 {
@@ -156,5 +157,15 @@ class UsuariosController extends Controller
         $usuario = Usuarios::findOrFail($id);
         $usuario->delete();
         return back()->with('danger', 'Se ha eliminado correctamente el registro');
+    }
+
+    /**
+     * Generar reporte de usuarios
+     */ 
+    public function generateReport(){
+        $usuarios = Usuarios::all();
+        $pdf = FacadePdf::loadView('catalogos.usuarios.report-usuarios', compact('usuarios'));
+        return $pdf->stream();  // Output as downloadable PDF file
+        
     }
 }
