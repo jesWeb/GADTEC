@@ -11,13 +11,17 @@ return new class extends Migration
         //
         Schema::create('seguros', function (Blueprint $table) {
             $table->bigIncrements('id_seguro');
-            $table->string('vehiculo');
+            $table->unsignedBigInteger('id_automovil');
             $table->string('aseguradora');
             $table->string('cobertura');
             $table->date('fecha_vigencia');
             $table->string('monto');
             $table->string('poilza')->nullable();
             $table->string('estatus');
+
+            //llave foranea
+            $table->foreign('id_automovil')->references('id_automovil')->on('automoviles')->onDelete('cascade');
+
             $table->timestamps();
             $table->softDeletes();
         });

@@ -12,23 +12,23 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tarjetas', function (Blueprint $table) {
-            $table->bigIncrements('id_tarjeta'); 
-            $table->string('nombre', 100); 
-            $table->string('num_tarjeta', 50)->unique(); 
-            $table->string('vehiculo_origen', 100); 
-            $table->date('fecha_expedicion'); 
-            $table->date('fecha_vigencia'); 
-            $table->enum('estatus', ['Vigente', 'Expirada', 'Suspendida'])->default('Vigente'); 
-            $table->unsignedBigInteger('id_automovil'); 
+            $table->bigIncrements('id_tarjeta');
+            $table->string('nombre', 100);
+            $table->string('num_tarjeta', 50)->unique();
+            $table->string('vehiculo_origen', 100);
+            $table->date('fecha_expedicion');
+            $table->date('fecha_vigencia');
+            $table->enum('estatus', ['Vigente', 'Expirada', 'Suspendida'])->default('Vigente');
+            $table->unsignedBigInteger('id_automovil');
+            $table->string('fotografia_frontal')->nullable();
+            $table->boolean('activo')->default(0);  // borrado logico del sistema
 
-            // Columnas para las fotografías
-            $table->string('fotografia_frontal')->nullable(); 
-            $table->boolean('activo')->default(0);  // borrado logico del sistema 
-
-            $table->timestamps();
 
             // Definición de la clave foránea (relación con automóviles)
             $table->foreign('id_automovil')->references('id_automovil')->on('automoviles')->onDelete('cascade');
+            $table->timestamps();
+            $table->softDeletes();
+
         });
     }
 

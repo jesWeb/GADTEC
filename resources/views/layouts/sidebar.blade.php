@@ -48,9 +48,10 @@
 
             <x-nav-link :href="route('asignacion.index')" :active="request()->routeIs('asignacion.index')">
                 {{-- nombre del link --}}
-                {{ __('Solicitudes') }}
+                <span class="mx-3"> {{ __('Solicitudes') }}</span>
             </x-nav-link>
         </div>
+        
         {{-- link --}}
         <div
             class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
@@ -62,7 +63,7 @@
 
             <x-nav-link :href="route('catalogos.index')" :active="request()->routeIs('catalogos.index')">
                 {{-- nombre del link --}}
-                {{ __('Catalogos') }}
+                <span class="mx-3"> {{ __('Catalogos') }}</span>
             </x-nav-link>
         </div>
 
@@ -107,8 +108,5 @@
 
             <span class="mx-3">Elementos</span>
         </a> --}}
-
     </nav>
 </div>
-
-

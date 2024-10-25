@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Automoviles;
 use App\Models\siniestros;
-use App\Models\verificacion;
+use App\Models\Usuarios;
+
 use Illuminate\Http\Request;
 
 class SiniestrosController extends Controller
@@ -12,7 +14,7 @@ class SiniestrosController extends Controller
     public function index()
     {
         //
-        $siniestros = siniestros::all();
+        $siniestros = siniestros::with('automovil')->get();
         return view('catalogos.siniestros.index',compact('siniestros'));
     }
 
@@ -20,8 +22,9 @@ class SiniestrosController extends Controller
     public function create()
     {
         //
-        $siniestroC = siniestros::all();
-        return view('catalogos.siniestros.create',compact('siniestroC'));
+        $automoviles  = Automoviles::all();
+        $usuarios = Usuarios::all();
+        return view('catalogos.siniestros.create',compact('automoviles','usuarios'));
     }
 
 
@@ -29,18 +32,19 @@ class SiniestrosController extends Controller
     {
 
         $newSin = new siniestros();
+        $newSin->id_automovil = $request->input('id_automovil');
         $newSin->fecha_siniestro = $request->input('fecha_siniestro');
         $newSin->descripcion = $request->input('descripcion');
         $newSin->estatus = $request->input('estatus');
         $newSin->costo_danos_estimados = $request->input('costo_danos_estimados');
         $newSin->costo_real_danos = $request->input('costo_real_danos');
-        $newSin->responsable = $request->input('responsable');
+        $newSin->id_usuario = $request->input('id_usuario');
         $newSin->observaciones = $request->input('observaciones');
 
          //guardamos datos en BD
          $newSin ->save();
 
-        return to_route('siniestro.index');
+        return to_route('siniestros.index');
     }
 
 
@@ -48,7 +52,7 @@ class SiniestrosController extends Controller
     {
         //
         $ViewSini = siniestros::findOrfail($id);
-        return view('catalogos.siniestro.show', compact('ViewSini'));
+        return view('catalogos.siniestros.show', compact('ViewSini'));
 
     }
 
@@ -56,18 +60,25 @@ class SiniestrosController extends Controller
     {
 
         $EddSin = siniestros::find($id);
-        return view('catalogos.siniestro.edit', compact('EddSin'));
+        $automoviles = Automoviles::all();
+        $usuarios=Usuarios::all();
+        return view('catalogos.siniestros.edit', compact('EddSin','automoviles','usuarios'));
     }
 
 
     public function update(Request $request,  $id)
     {
-
+     $EddSin = siniestros::findOrFail($id);
+     $input = $request->all();
+     $EddSin->update($input);
+     return to_route('siniestros.index');
     }
 
 
     public function destroy( $id)
     {
-
+        $DelSin = siniestros::findOrFail($id);
+        $DelSin->delete();
+        return to_route('siniestros.index');
     }
 }

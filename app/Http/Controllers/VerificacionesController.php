@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Automoviles;
 use App\Models\verificacion;
 use Illuminate\Http\Request;
 
@@ -11,21 +12,18 @@ class VerificacionesController extends Controller
     public function index()
     {
 
-        $verificacion =verificacion::all();
+        $verificacion =verificacion::with('automovil')->get();
         return view('catalogos.verificaciones.index', compact('verificacion'));
     }
 
     public function create()
     {
-        $verificar = verificacion::all();
-        return view('catalogos.verificaciones.create', compact('verificar'));
+        $automoviles = Automoviles::all();
+        return view('catalogos.verificaciones.create', compact('automoviles'));
     }
 
     public function store(Request $request)
     {
-
-
-
         $validatedData = $request->all();
 
         //calculo proxima fecha
@@ -34,7 +32,7 @@ class VerificacionesController extends Controller
         $input['fechaP'] = $proximaV->format('Y-m-d');
 
         $newVer = new verificacion();
-        $newVer->vehiculo = $request->input('vehiculo');
+        $newVer->id_automovil = $request->input('id_automovil');
         $newVer->holograma = $request->input('holograma');
         $newVer->engomado = $request->input('engomado');
         $newVer->fechaV = $request->input('fechaV');
@@ -49,15 +47,15 @@ class VerificacionesController extends Controller
 
     public function show($id)
     {
-        //
         $MostrarVer = verificacion::findOrfail($id);
         return view('catalogos.verificaciones.show', compact('MostrarVer'));
     }
 
-    public function edit($id)
+    public function edit(string $id)
     {
         $EddVer = verificacion::find($id);
-        return view('catalogos.verificaciones.edit', compact('EddVer'));
+        $automoviles = Automoviles::all();
+        return view('catalogos.verificaciones.edit', compact('EddVer','automoviles'));
     }
 
     public function update(Request $request, $id)

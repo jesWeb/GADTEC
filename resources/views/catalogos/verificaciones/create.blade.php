@@ -11,57 +11,59 @@
             </h2>
             {{-- formulario --}}
             <form action="{{ route('verificaciones.store') }}" enctype="multipart/form-data" method="POST">
-                {{-- @include('catalogos.verificaciones._form') --}}
-                {{-- este es un toquen crea una proteccion en el formulario csrf tipo segridad --}}
+
                 @csrf
-                <div class="m-4 xl:p-10">
+                <div class="m-3 xl:p-10 xl:m-5">
                     {{-- 1 row info --}}
-                    <div class="flex flex-col gap-5.5 xl:flex-row">
-                        {{-- vehiculo --}}
-                        {{-- <div class="w-full px-3 xl:w-1/2">
-            <label class="mb-3 block text-base font-medium text-[#07074D]" for="vehiculo">Vehiculo</label>
-            <select name="Marca"
-                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                required>
-                <option disabled selected>Selecciona una opción </option>
-                <option value="">carros</option>
-
-            </select>
-        </div> --}}
+                    <div class="flex flex-col gap-5.5 mt-4 xl:flex-row">
                         <div class="w-full px-3 xl:w-1/2">
-                            <label class="mb-3 block text-base font-medium text-[#07074D]" for="vehiculo">Vehículo</label>
-                            <input type="text" name="vehiculo" id="vehiculo"
-                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                placeholder="Ingresa el vehículo" required>
-                        </div>
+                            <label for="id_automovil" class="mb-3 block text-base font-medium text-[#07074D]">Seleccionar
+                                Automóvil:</label>
+                            <select
+                            name="id_automovil"
+                            id="id_automovil"
+                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                            <option disabled selected>Selecciona una opción...</option>
+                            @foreach ($automoviles as $automovil)
+                                    <option value="{{ $automovil->id_automovil }}">
+                                        {{ $automovil->marca }} {{ $automovil->modelo }} ({{ $automovil->submarca }})
+                                    </option>
+                                @endforeach
+                            </select>
 
+                        </div>
                         {{-- engomado --}}
                         <div class="w-full px-3 xl:w-1/2">
-                            <label class="mb-3 block text-base font-medium text-[#07074D]" for="engomado">Engomado</label>
-                            <select name="engomado"
-                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                required>
-                                <option disabled selected>Selecciona una opción </option>
-                                <option value="amarillo">Amarillo</option>
-                                <option value="azul">azul</option>
-                                <option value="rojo">rojo</option>
+                            <div class="xl:mb-5">
+                                <label class="mb-3 block text-base font-medium text-[#07074D]"
+                                    for="engomado">Engomado</label>
+                                <select name="engomado"
+                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                    required>
+                                    <option disabled selected>Selecciona una opción </option>
+                                    <option value="amarillo">Amarillo</option>
+                                    <option value="azul">azul</option>
+                                    <option value="rojo">rojo</option>
 
-                            </select>
+                                </select>
+                            </div>
                         </div>
                         {{-- Holograma --}}
                         <div class="w-full px-3 xl:w-1/2">
-                            <label class="text-gray-700" for="holograma">holograma</label>
-                            <input type="text" name="holograma"
-                                class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                placeholder="Ingresa el Holograma" required>
+                            <div class="xl:mb-5">
+                                <label class="mb-3 block text-base font-medium text-[#07074D]"
+                                    for="holograma">Holograma</label>
+                                <input type="text" name="holograma"
+                                    class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                    placeholder="Ingresa el Holograma" required>
+                            </div>
                         </div>
-
                     </div>
                     {{-- 2row info --}}
                     <div class="flex flex-col gap-5.5 mt-4 xl:flex-row">
                         {{-- fecha Verificacion --}}
                         <div class="w-full px-3 xl:w-1/2">
-                            <div class="mb-5">
+                            <div class="xl:mb-5">
                                 <label for="fechaV" class="mb-3 block text-base font-medium text-[#07074D]">
                                     Fecha de Verificacion
                                 </label>
@@ -72,10 +74,14 @@
 
                         {{-- Próxima verificación --}}
                         <div class="w-full px-3 xl:w-1/2">
-                            <label class="text-gray-700" for="fechaP">Próxima Verificación</label>
-                            <input
-                                class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                type="text" name="fechaP" id="fechaP" placeholder="Próxima verificación" readonly>
+                            <div class="xl:mb-5">
+                                <label class="mb-3 block text-base font-medium text-[#07074D]" for="fechaP">Próxima
+                                    Verificación</label>
+                                <input
+                                    class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                    type="text" name="fechaP" id="fechaP" placeholder="Próxima verificación"
+                                    readonly>
+                            </div>
                         </div>
 
                     </div>

@@ -10,7 +10,7 @@ class AutomovilController extends Controller
 {
     public function index()
     {
-        //
+
         // $cars = Automovil::paginate(10);
         $cars = Automoviles::all();
 
@@ -52,8 +52,7 @@ class AutomovilController extends Controller
         $request->validate($rules);
         $input = $request->all();
 
-        if ($request->file('fotografias') != '') {
-
+        if ($request->hasFile('fotografias')) {
             // obtener el campo file definido en el formulario
             $file = $request->file('fotografias');
             // obtener el nombre dek archivo
@@ -65,8 +64,6 @@ class AutomovilController extends Controller
             //idicamos el nombre  y la ruta donde se almacena el archivo (img)
             $file->move(public_path('img/carros'), $img2);
             $input['fotografias'] = $img2;
-        } else {
-            $input['fotografias'] = "CarroNull.jpg";
         }
 
         Automoviles::create($input);
@@ -79,8 +76,7 @@ class AutomovilController extends Controller
      */
     public function show($id)
     {
-        //
-        $automovil = Automoviles::find($id);
+        $automovil = Automoviles::findOrFail($id);
         return view('catalogos.Automovil.show', compact('automovil'));
     }
 
@@ -89,13 +85,9 @@ class AutomovilController extends Controller
      */
     public function edit($id)
     {
-        //
         $EddCar = Automoviles::findOrFail($id);
         return view('catalogos.Automovil.edit', compact('EddCar'));
     }
-
-
-
 
     public function update(Request $request, $id)
     {
