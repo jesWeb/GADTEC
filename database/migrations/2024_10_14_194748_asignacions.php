@@ -11,17 +11,23 @@ return new class extends Migration
     {
         Schema::create('asignacions', function (Blueprint $table) {
             $table->bigIncrements('id_asignacion');
-            $table->string('solicitante')->nullable();
+            $table->unsignedBigInteger('id_automovil');
+            $table->unsignedBigInteger('id_usuario');
             $table->string('telefono')->nullable();
-            $table->enum('requierechofer', ['sí', 'no']);
+            $table->boolean('requierechofer')->default(false);
             $table->string('nombre_chofer')->nullable();
             $table->string('vehiculo')->nullable();
             $table->string('lugar')->nullable();
             $table->time('hora_salida')->nullable();
+            $table->date('fecha_salida')->nullable();
             $table->string('no_licencia')->nullable();
             $table->text('condiciones')->nullable();
             $table->text('observaciones')->nullable();
             $table->string('autorizante')->nullable();
+            //llave foranea relacion con automoviles
+            $table->foreign('id_automovil')->references('id_automovil')->on('automoviles')->onDelete('cascade');
+            $table->foreign('id_usuario')->references('id_usuario')->on('usuarios')->onDelete('cascade');
+
             $table->timestamps();
             $table->softDeletes();
         });

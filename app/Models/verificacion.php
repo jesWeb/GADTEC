@@ -8,13 +8,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class verificacion extends Model
 {
-    use HasFactory;
-    use SoftDeletes;
+    use HasFactory,SoftDeletes;
 
-    protected $primarykey = 'id';
+
+    protected $table = 'verificacions';
+    protected $primaryKey = 'id_verificacion';
 
     protected $fillable = [
-        'vehiculo',
+        'id_automovil',
         'holograma',
         'engomado',
         'fechaV',
@@ -22,4 +23,7 @@ class verificacion extends Model
         'observaciones',
         'image'
     ];
+    public function automovil() {
+        return $this->belongsTo(Automoviles::class, 'id_automovil');
+    }
 }

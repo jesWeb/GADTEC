@@ -12,7 +12,7 @@ class Usuarios extends Model
     protected $table = 'usuarios';
 	protected $primaryKey = 'id_usuario';
 	protected $fillable = [
-            'num_empleado', 
+            'num_empleado',
             'nombre',
             'app',
             'apm',
@@ -30,5 +30,10 @@ class Usuarios extends Model
             'id_rol'
         ];
 
-
+        public function asignacion(){
+            return $this->hasOne(asignacion::class,'id_asignacion');
+        }
+        public function siniestros(){
+            return $this->hasOne(siniestros::class,'id_siniestro');
+        }
 }

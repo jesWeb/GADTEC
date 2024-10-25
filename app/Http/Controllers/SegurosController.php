@@ -2,40 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Automoviles;
 use App\Models\seguros;
 use Illuminate\Http\Request;
 
 class SegurosController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         //
-        $seguro = seguros::all();
+        $seguro = seguros::with('automovil')->get();
         return view('catalogos.seguros.index', compact('seguro'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
         //
-        $seguros = new seguros();
-        return view('catalogos.seguros.create', compact('seguros'));
+        $automoviles = Automoviles::all();
+        return view('catalogos.seguros.create', compact('automoviles'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
 
-
          $newSeg = new seguros();
-         $newSeg->vehiculo = $request->input('vehiculo');
+         $newSeg->id_automovil = $request->input('id_automovil');
          $newSeg->aseguradora = $request->input('aseguradora');
          $newSeg->cobertura = $request->input('cobertura');
          $newSeg->fecha_vigencia = $request->input('fecha_vigencia');
@@ -50,16 +44,16 @@ class SegurosController extends Controller
 
     public function show($id)
     {
-        $seguroS = seguros::find($id);
+        $seguroS = seguros::findOrfail($id);
 
         return view('catalogos.seguros.show', compact('seguroS'));
     }
 
     public function edit($id)
     {
-        //
-        $EddSeg = seguros::find($id);
-        return view('catalogos.seguros.edit', compact('EddSeg'));
+        $EddSeg = seguros::findOrFail($id);
+        $automoviles = Automoviles::all();
+        return view('catalogos.seguros.edit', compact('EddSeg','automoviles'));
     }
 
     public function update(Request $request,  $id)

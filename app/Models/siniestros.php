@@ -12,23 +12,25 @@ class siniestros extends Model
     use SoftDeletes;
 
     protected $table = 'sinister';
-
+    protected $primaryKey = 'id_siniestro';
     protected $fillable = [
+        'id_automovil',
         'fecha_siniestro',
         'descripcion',
         'estatus',
         'costo_danos_estimados',
         'costo_real_danos',
-        'responsable',
+        'id_usuario',
         'observaciones',
     ];
 
-    protected $dates = [
-        'fecha_siniestro',
-    ];
+    public function automovil() {
+        return $this->belongsTo(Automoviles::class, 'id_automovil');
+    }
+    public function usuarios() {
+        return $this->belongsTo(usuarios::class, 'id_usuario');
+    }
 
-    // Definición de constantes para estatus
-    const ESTATUS_ACTIVO = 'activo';
-    const ESTATUS_VENCIDO = 'vencido';
+
 
 }
