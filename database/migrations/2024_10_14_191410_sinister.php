@@ -13,15 +13,18 @@ return new class extends Migration
     {
         Schema::create('sinister', function (Blueprint $table) {
             $table->bigIncrements('id_siniestro');
-            $table->string('vehiculo')->nullable();
+            $table->unsignedBigInteger('id_automovil');
             $table->date('fecha_siniestro')->nullable();
             $table->string('descripcion')->nullable();
-            $table->enum('estatus', ['pendiente', 'En Proceso','Cerrado','ninguno'])->default('ninguno');
+            $table->enum('estatus', ['pendiente', 'En Proceso', 'Cerrado', 'ninguno'])->default('ninguno');
             $table->decimal('costo_danos_estimados', 10, 2)->nullable();
             $table->decimal('costo_real_danos', 10, 2)->nullable();
-            $table->string('responsable')->nullable();
+            $table->unsignedBigInteger('id_usuario');
             $table->text('observaciones')->nullable();
-            $table->timestamps(); // Timestamps para created_at y updated_at
+            //llave foranea
+            $table->foreign('id_automovil')->references('id_automovil')->on('automoviles')->onDelete('cascade');
+            $table->foreign('id_usuario')->references('id_usuario')->on('usuarios')->onDelete('cascade');
+            $table->timestamps();
             $table->softDeletes();
         });
     }

@@ -12,15 +12,16 @@ class asignacion extends Model
     use HasFactory;
     use SoftDeletes;
 
-     protected $primarykey = 'id';
+     protected $table = 'asignacions';
+     protected $primarykey = 'id_asignacion';
 
     protected $fillable = [
-        'solicitante',
+        'id_usuario',
         'telefono',
         'requierechofer',
         'nombre_chofer',
-        'vehiculo',
-        'dia_salida',
+        'id_automovil',
+        'fecha_salida',
         'lugar',
         'hora_salida',
         'no_licencia',
@@ -28,4 +29,14 @@ class asignacion extends Model
         'observaciones',
         'autorizante',
     ];
+
+    public function automovil() {
+        return $this->belongsTo(Automoviles::class, 'id_automovil');
+    }
+
+    public function asicnacion(){
+        return $this->belongsTo(asignacion::class,'id_asignacion');
+    }
+
+
 }

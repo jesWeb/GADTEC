@@ -13,16 +13,21 @@
 
                 <div class="m-3 xl:p-10">
                     {{-- 1ra row --}}
-                    <div class="flex flex-col gap-5.5 xl:flex-row">
+                    <div class="flex flex-col gap-5.5 xl:flex-row mb-5">
                         {{-- Automóvil --}}
                         <div class="w-full px-3 xl:w-1/2">
-                            <label class="mb-3 block text-base font-medium text-[#07074D]" for="vehiculo">Automóvil</label>
-                            <input
-                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                type="text"
-                                name="vehiculo"
-                                placeholder="Ingresa el automovil"
-                                required>
+                            <label for="id_automovil" class="mb-3 block text-base font-medium text-[#07074D]">Seleccionar
+                                Automóvil:</label>
+                            <select name="id_automovil" id="id_automovil"
+                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                                <option selected>Selecciona una opción...</option>
+                                @foreach ($automoviles as $automovil)
+                                    <option value="{{ $automovil->id_automovil }}">
+                                        {{ $automovil->marca }} {{ $automovil->modelo }} ({{ $automovil->submarca }})
+                                    </option>
+                                @endforeach
+                            </select>
+
                         </div>
                         {{-- Aseguradora --}}
                         <div class="w-full px-3 xl:w-1/2">
@@ -30,22 +35,16 @@
                                 for="aseguradora">Aseguradora</label>
                             <input
                                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                type="text"
-                                name="aseguradora"
-                                 placeholder="Nombre de la aseguradora"
-                                 required>
+                                type="text" name="aseguradora" placeholder="Nombre de la aseguradora" required>
                         </div>
                         <div class="w-full px-3 xl:w-1/2">
-                            <label class="mb-3 block text-base font-medium text-[#07074D]"
-                                for="cobertura">Cobertura</label>
+                            <label class="mb-3 block text-base font-medium text-[#07074D]" for="cobertura">Cobertura</label>
                             <input
                                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                type="text"
-                                name="cobertura"
-                                placeholder="Ingresa la cobertura"
-                                required>
+                                type="text" name="cobertura" placeholder="Ingresa la cobertura" required>
                         </div>
                     </div>
+                    <div class="px-3 py-3 border-b border-stroke dark:border-strokedark"></div>
                     {{-- 2da row --}}
                     <div class="flex flex-col gap-5.5 xl:flex-row mt-4">
                         {{-- Fecha de vigencia --}}
@@ -55,6 +54,15 @@
                             <input type="date" name="fecha_vigencia"
                                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                 required />
+                        </div>
+                        {{-- Monto --}}
+                        <div class="w-full px-3 xl:w-1/2">
+                            <label class="mb-3 block text-base font-medium text-[#07074D]" for="monto">Monto
+                                Asegurado</label>
+                            <input
+                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                name="monto" min="0" step="0.01" type="number" placeholder="$0.00 MXN"
+                                required>
                         </div>
                         {{-- Estatus --}}
                         <div class="w-full px-3 xl:w-1/2">
@@ -69,20 +77,9 @@
                             </select>
                         </div>
                     </div>
-                    {{-- 3ra row --}}
-                    <div class="flex flex-col gap-5.5 xl:flex-row mt-4">
-                        {{-- Monto --}}
-                        <div class="w-full px-3 xl:w-1/2">
-                            <label class="mb-3 block text-base font-medium text-[#07074D]" for="monto">Monto
-                                Asegurado</label>
-                            <input
-                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                name="monto" min="0" step="0.01" type="number" placeholder="$0.00 MXN"
-                                required>
-                        </div>
-                    </div>
-                     {{-- foto --}}
-                     <div class="pt-4 mb-6">
+                    <div class="px-3 py-3 mt-3 border-b border-stroke dark:border-strokedark"></div>
+                    {{-- foto --}}
+                    <div class="pt-4 mb-6">
                         <label class="mb-5 block text-xl font-semibold text-[#07074D]">
                             Subir Archivo Poliza
                         </label>

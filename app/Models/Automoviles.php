@@ -35,6 +35,7 @@ class Automoviles extends Model
         // 'activo',
     ];
 
+    //reacion uno a muchos
     public function tarjetas() {
         return $this->hasMany(TarjetaCirculacion::class, 'id_automovil');
     }
@@ -47,11 +48,21 @@ class Automoviles extends Model
     public function servicios() {
         return $this->hasMany(Servicios::class, 'id_automovil');
     }
-    //accesor virtual de los files
-    // public function getFotografiasUrlAttribute(): string
-    // {
-    //     return Storage::disk('carros')->url($this->fotografias);
-    // }
 
+    public function verificacion(){
+        return  $this-> hasMany(verificacion::class,'id_automovil');
+    }
+
+    public function asigacion(){
+        return $this->hasMany(asignacion::class,'id_automovil');
+    }
+
+    public function siniestro(){
+        return $this->hasMany(siniestros::class,'id_automovil');
+    }
+    //relacion uno a uno
+    public function seguro(){
+        return $this->hasOne(seguros::class,'id_automovil');
+    }
 
 }

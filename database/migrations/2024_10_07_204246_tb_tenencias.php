@@ -12,20 +12,20 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tenencias', function (Blueprint $table) {
-            $table->id('id_tenencia'); 
-            $table->date('fecha_pago'); 
-            $table->string('origen'); 
-            $table->decimal('monto', 10, 2); 
-            $table->year('año_correspondiente'); 
-            $table->string('estatus'); 
-            $table->date('fecha_vencimiento'); 
+            $table->id('id_tenencia');
+            $table->date('fecha_pago');
+            $table->string('origen');
+            $table->decimal('monto', 10, 2);
+            $table->year('año_correspondiente');
+            $table->string('estatus');
+            $table->date('fecha_vencimiento');
             $table->string('comprobante');
-            $table->text('observaciones')->nullable(); 
+            $table->text('observaciones')->nullable();
             $table->boolean('activo')->default(0);  // borrado logico del sistema
-            $table->timestamps(); 
-            
+            //llave foranea
             $table->foreignId('id_automovil')->constrained('automoviles', 'id_automovil')->onDelete('cascade');
-            
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
