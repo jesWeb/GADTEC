@@ -50,7 +50,7 @@ DB_PORT=3306            # Puerto estándar de MySQL
 DB_DATABASE=nombre_bd   # Cambia 'nombre_bd' al nombre de tu base de datos
 DB_USERNAME=usuario     # Cambia 'usuario' por tu usuario de MySQL (en XAMPP suele ser 'root')
 DB_PASSWORD=contraseña  # Cambia 'contraseña' por tu contraseña de MySQL (en XAMPP suele estar vacía por defecto)
-
+```
 
 ## Genera la clave de la aplicación:
 - php artisan key:generate
