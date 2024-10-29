@@ -6,7 +6,7 @@
     <div class="flex items-center justify-center mt-8">
         <div class="flex items-center">
 
-            <a href="{{ route('dashboard') }}">
+            <a href="{{ route('Gestion') }}">
                 {{-- <x-application-logo class="block w-auto text-gray-800 fill-current h-9 dark:text-gray-200" /> --}}
                 <svg class="w-12 h-12" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -26,7 +26,7 @@
     <nav class="mt-10">
         {{-- link --}}
         <a class="flex items-center px-6 py-2 mt-4 text-gray-100 bg-gray-700 bg-opacity-25"
-            href="{{ route('dashboard') }}">
+            href="{{ route('Gestion') }}">
             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

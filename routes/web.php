@@ -5,6 +5,7 @@ use App\Http\Controllers\admin\Automovil;
 use App\Http\Controllers\AsignacionController;
 use App\Http\Controllers\AutomovilController;
 use App\Http\Controllers\CatalogosController;
+use App\Http\Controllers\GestionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReservacionController;
 use App\Http\Controllers\SegurosController;
@@ -30,13 +31,9 @@ use App\Http\Controllers\JsController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -44,27 +41,21 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Usa 'prefix' como parte de la configuración de grupo de rutas, no como middleware.
-Route::prefix('dashboard')->middleware(['auth'])->group(function () {
-    Route::get('/', function () {
-        return view('dashboard');
-    })->name('dashboard');
-});
-
-
-
 
 Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
-    Route::get('/', function () {
-        return view('dashboard');
-    })->name("dashboard");
+
+    Route::get('/gestion', function () {
+        return app(GestionController::class)->index();
+    })->name("Gestion");
+
+
+    Route::get('/catalogos', [CatalogosController::class, 'index'])->name('catalogos.index');
 
     Route::resource('Automovil', AutomovilController::class);
     Route::resource('asignacion', AsignacionController::class);
     Route::resource('seguros', SegurosController::class);
     Route::resource('siniestros', SiniestrosController::class);
     Route::resource('verificaciones', VerificacionesController::class);
-    Route::get('/catalogos', [CatalogosController::class, 'index'])->name('catalogos.index');
 
     Route::resource('usuarios', UsuariosController::class);
     Route::resource('tarjetas', TarjetaCirculacionController::class);
