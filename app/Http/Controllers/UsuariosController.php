@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Usuarios;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 
 class UsuariosController extends Controller
 {
@@ -66,7 +67,7 @@ class UsuariosController extends Controller
 
             $input['foto'] = $img2;
         } else {
-            $input['foto'] = "shadow.png"; 
+            $input['foto'] = "shadow.png";
         }
 
         Usuarios::create($input);
@@ -131,13 +132,13 @@ class UsuariosController extends Controller
                 }
             }
 
-          
+
             $file = $request->file('foto');
             $img = $file->getClientOriginalName();
             $ldate = date('Ymd_His_');
             $img2 = $ldate . $img;
 
-            
+
             $file->move(public_path('img'), $img2);
 
             $input['foto'] = $img2;
@@ -157,4 +158,14 @@ class UsuariosController extends Controller
         $usuario->delete();
         return back()->with('danger', 'Se ha eliminado correctamente el registro');
     }
+
+    /**
+     * Generar reporte de usuarios
+     */
+    // public function generateReport(){
+    //     $usuarios = Usuarios::all();
+    //     $pdf = FacadePdf::loadView('catalogos.usuarios.report-usuarios', compact('usuarios'));
+    //     return $pdf->stream();  // Output as downloadable PDF file
+
+    // }
 }

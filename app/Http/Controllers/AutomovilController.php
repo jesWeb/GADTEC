@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Automoviles;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 
 class AutomovilController extends Controller
 {
@@ -95,7 +96,7 @@ class AutomovilController extends Controller
         $EddCar = Automoviles::findOrFail($id);
         $input = $request->all();
         $EddCar->update($input);
-        return redirect('Automovil')->with('message', 'Se ha modificado correctamente el registro');
+        return to_route('Automovil.index')->with('message', 'Se ha modificado correctamente el registro');
     }
 
     public function destroy($id)
@@ -104,4 +105,15 @@ class AutomovilController extends Controller
         $cars->delete();
         return to_route('Automovil.index');
     }
+
+    /**
+     * Generar reporte de automovil.
+     */
+    // public function generateReport(){
+    //     // Obtenemos todos los automoviles
+    //     $automoviles = Automoviles::all();
+    //     $pdf = ::loadView('catalogos.Automovil.report-automoviles', compact('automoviles'));
+    //     return $pdf->stream();  // Output as downloadable PDF file
+
+    // }
 }

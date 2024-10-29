@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Servicios;
 use App\Models\Automoviles;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 
 class ServiciosController extends Controller
 {
@@ -80,7 +81,7 @@ class ServiciosController extends Controller
     /**
      * Update the specified resource in storage.
      */
-   
+
     public function update(Request $request, string $id)
     {
         //
@@ -122,4 +123,14 @@ class ServiciosController extends Controller
         $servicio->delete();
         return back()->with('message', 'Se ha eliminado correctamente el registro');
     }
+
+    /**
+     * Generar reporte de servicios
+     */
+    // public function generateReport(){
+    //     $servicios = Servicios::all();
+    //     $pdf = FacadePdf::loadView('modulos.servicios.report-servicios', compact('servicios'));
+    //     return $pdf->stream();  // Output as downloadable PDF file
+
+    // }
 }
