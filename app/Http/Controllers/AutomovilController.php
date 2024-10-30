@@ -109,11 +109,13 @@ class AutomovilController extends Controller
     /**
      * Generar reporte de automovil.
      */
-    // public function generateReport(){
-    //     // Obtenemos todos los automoviles
-    //     $automoviles = Automoviles::all();
-    //     $pdf = ::loadView('catalogos.Automovil.report-automoviles', compact('automoviles'));
-    //     return $pdf->stream();  // Output as downloadable PDF file
+    public function generateReport(){
+        // Obtenemos todos los automoviles
+        $automoviles = Automoviles::all();
+        $pdf = FacadePDF::loadView('catalogos.Automovil.report-automoviles', compact('automoviles'));
+        return $pdf->stream();  // Output as downloadable PDF file
 
-    // }
+    }
+
+   
 }
