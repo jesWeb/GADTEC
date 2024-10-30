@@ -16,15 +16,16 @@ class asignacion extends Model
      protected $primarykey = 'id_asignacion';
 
     protected $fillable = [
+        'id_automovil',
         'id_usuario',
         'telefono',
         'requierechofer',
         'nombre_chofer',
-        'id_automovil',
-        'fecha_salida',
         'lugar',
+        'fecha_salida',
         'hora_salida',
         'no_licencia',
+        'estatus',
         'condiciones',
         'observaciones',
         'autorizante',
@@ -34,8 +35,8 @@ class asignacion extends Model
         return $this->belongsTo(Automoviles::class, 'id_automovil');
     }
 
-    public function asicnacion(){
-        return $this->belongsTo(asignacion::class,'id_asignacion');
+    public function usuarios(){
+        return $this->belongsTo(usuarios::class,'id_usuario');
     }
 
 

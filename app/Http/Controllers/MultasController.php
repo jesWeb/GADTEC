@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Multas;
 use App\Models\Automoviles;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 
 class MultasController extends Controller
 {
@@ -29,7 +30,7 @@ class MultasController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    
+
     public function store(Request $request)
     {
         $rules = [
@@ -64,7 +65,7 @@ class MultasController extends Controller
             $comprobante =  $file->getClientOriginalName();
             $ldate = date('Ymd_His_');
             $comprobante = $ldate . $comprobante;
-            
+
             $file->move(public_path('img'), $comprobante);
             $input['comprobante'] = $comprobante;
         }
@@ -73,7 +74,7 @@ class MultasController extends Controller
 
         return redirect('multas')->with('message', 'Se ha creado correctamente el registro');
 
-        
+
     }
 
     /**
@@ -113,7 +114,7 @@ class MultasController extends Controller
             'id_automovil' => 'nullable|exists:automoviles,id_automovil'
         ];
 
-       
+
         $messages = [
             'tipo_multa.required' => 'El campo tipo de multa es requerido',
             'monto.required' => 'El campo monto es requerido',
@@ -136,7 +137,7 @@ class MultasController extends Controller
             $comprobante =  $file->getClientOriginalName();
             $ldate = date('Ymd_His_');
             $comprobante = $ldate. $comprobante;
-            
+
             $file->move(public_path('img'), $comprobante);
             $input['comprobante'] = $comprobante;
         }
@@ -156,4 +157,16 @@ class MultasController extends Controller
         $multa->delete();
         return back()->with('danger', 'Se ha eliminado correctamente el registro');
     }
+
+    /**
+     * Generar reporte de multas.
+     */
+    // public function generateReport(){
+    //     // $multas = Multas::all();
+    //     $multas = Multas::with('automovil')->get();
+    //     // return view('modulos.multas.report-multas', compact('multas'));
+    //     $pdf = FacadePdf::loadView('modulos.multas.report-multas', compact('multas'));
+    //     return $pdf->stream();  // Output as downloadable PDF file
+
+    // }
 }

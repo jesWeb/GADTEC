@@ -1,0 +1,121 @@
+/* @page{
+    margin: 0.5cm;
+}
+.titulo{
+    color: rgb(198, 50, 50);
+    margin: 1cm 0cm
+}
+p{
+    color: gray;
+    font-size: 1cm;
+} */
+
+
+@page {
+    margin: 3cm 0.5cm 2cm 0.5cm;
+    font-family: 'Arial', sans-serif; /* Fuente más profesional */
+}
+
+body {
+    font-family: 'Arial', sans-serif; /* Aplicamos la misma fuente al cuerpo */
+}
+
+#header {
+    position: fixed;
+    top: -3cm;
+    left: 0cm;
+    width: 100%;
+}
+
+.imgHeader {
+    float: left;
+    width: 3cm;
+}
+
+.infoHeader {
+    float: left;
+    margin-left: 1cm;
+}
+
+h1.titulo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+p {
+    margin: 0;
+    font-size: 16px;
+    color: #666;
+}
+
+.container {
+    margin-top: 1cm; /* Bajamos más la tabla para que no se superponga con el encabezado */
+}
+
+.multas-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    font-size: 14px; /* Ajustamos el tamaño de la fuente */
+}
+
+.multas-table th, .multas-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.multas-table thead {
+    background-color: #f4f4f4;
+}
+
+.multas-table th {
+    font-weight: bold;
+    color: #333;
+}
+
+.multas-table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+.estatus {
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #fff;
+    display: inline-block;
+}
+
+.estatus.pagada {
+    background-color: #4CAF50; /* Verde para pagada */
+}
+
+.estatus.pendiente {
+    background-color: #f44336; /* Rojo para pendiente */
+}
+
+a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+#footer {
+    position: fixed;
+    bottom: -1.5cm;
+    left: 0cm;
+    width: 100%;
+    background-color: rgb(6, 154, 159);
+}
+
+.textFooter {
+    text-align: center;
+    width: 100%;
+    padding: 10px 0;
+    color: white;
+}
