@@ -48,7 +48,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     Route::get('/catalogos', [CatalogosController::class, 'index'])->name('catalogos.index');
 
     Route::resource('Automovil', AutomovilController::class);
-    Route::get('/automoviles-pdf', AutomovilController::class,'generateReport')->name('automoviles-pdf');
+    // Route::get('/automoviles-pdf', AutomovilController::class,'generateReport')->name('automoviles-pdf');
     Route::resource('asignacion', AsignacionController::class);
     Route::resource('seguros', SegurosController::class);
     Route::resource('siniestros', SiniestrosController::class);
