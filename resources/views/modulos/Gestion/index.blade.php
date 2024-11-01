@@ -14,6 +14,7 @@
                             <th class="px-4 py-2 text-left text-gray-600">Vehículo</th>
                             <th class="px-4 py-2 text-left text-gray-600">Placas</th>
                             <th class="px-4 py-2 text-left text-gray-600">Color</th>
+                            <th class="px-4 py-2 text-left text-gray-600">Estatus</th>
                             <th class="px-4 py-2 text-left text-gray-600">Acciones</th>
                         </tr>
                     </thead>
@@ -30,7 +31,9 @@
                                     {{ $dispo->automovil ? $dispo->automovil->placas : 'No disponible' }}</td>
                                 <td class="px-4 py-2 border">
                                     {{ $dispo->automovil ? $dispo->automovil->color : 'No disponible' }}</td>
-
+                                <td class="px-4 py-2 border">
+                                    {{ $dispo->estatus ? $dispo->estatus : 'No disponible' }}</td>
+                                    
                                 {{-- acciones --}}
                                 <td class="px-4 py-2 borde">
                                     <div class="flex items-center space-x-2">
