@@ -11,8 +11,28 @@ class UsuariosController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index() {
-        $usuarios = Usuarios::all();
+    public function index(Request $request) {
+        // $usuarios = Usuarios::all();
+
+        // Inicializar la consulta
+        $query = Usuarios::query();
+
+        if ($request->has('search') && $request->input('search')!= '') {
+            $search = $request->input('search');
+            // Aplicar la búsqueda a la consulta
+            $query->where(function ($q) use ($search) {
+                $q->where('nombre', 'LIKE', "%{$search}%")
+                    ->orWhere('app', 'LIKE', "%{$search}%")
+                    ->orWhere('apm', 'LIKE', "%{$search}%")
+                    ->orWhere('fn', 'LIKE', "%{$search}%")
+                    ->orWhere('empresa', 'LIKE', "%{$search}%")
+                    ->orWhere('rol', 'LIKE', "%{$search}%")
+                    ->orWhere('email', 'LIKE', "%{$search}%")
+                    ->orWhere('usuario', 'LIKE', "%{$search}%");
+            });
+        }
+
+        $usuarios = $query->get();
         return view('catalogos.usuarios.index', compact('usuarios'));
     }
 
@@ -67,7 +87,7 @@ class UsuariosController extends Controller
 
             $input['foto'] = $img2;
         } else {
-            $input['foto'] = "shadow.png"; 
+            $input['foto'] = "shadow.png";
         }
 
         Usuarios::create($input);
@@ -132,13 +152,13 @@ class UsuariosController extends Controller
                 }
             }
 
-          
+
             $file = $request->file('foto');
             $img = $file->getClientOriginalName();
             $ldate = date('Ymd_His_');
             $img2 = $ldate . $img;
 
-            
+
             $file->move(public_path('img'), $img2);
 
             $input['foto'] = $img2;
@@ -161,11 +181,11 @@ class UsuariosController extends Controller
 
     /**
      * Generar reporte de usuarios
-     */ 
-    public function generateReport(){
-        $usuarios = Usuarios::all();
-        $pdf = FacadePdf::loadView('catalogos.usuarios.report-usuarios', compact('usuarios'));
-        return $pdf->stream();  // Output as downloadable PDF file
-        
-    }
+     */
+    // public function generateReport(){
+    //     $usuarios = Usuarios::all();
+    //     $pdf = FacadePdf::loadView('catalogos.usuarios.report-usuarios', compact('usuarios'));
+    //     return $pdf->stream();  // Output as downloadable PDF file
+
+    // }
 }

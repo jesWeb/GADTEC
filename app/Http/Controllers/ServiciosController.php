@@ -12,11 +12,29 @@ class ServiciosController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $servicios = Servicios::with('automovil')->get();
+        $query = Servicios::with('automovil'); 
+        
+        // Verificar si hay una búsqueda
+        if ($request->has('search') && $request->input('search') != '') {
+            $search = $request->input('search');
+            $query->where(function($q) use ($search) {
+                $q->where('tipo_servicio', 'LIKE', "%{$search}%")   
+                ->orWhere('descripcion', 'LIKE', "%{$search}%") 
+                ->orWhere('costo', 'LIKE', "%{$search}%")
+                ->orWhere('lugar_servicio', 'LIKE', "%{$search}%")                  
+                ->orWhereHas('automovil', function ($q) use ($search) {
+                    $q->where('marca', 'LIKE', "%{$search}%")
+                        ->orWhere('modelo', 'LIKE', "%{$search}%");
+                });
+            });
+        }
+    
+        $servicios = $query->get();
         return view('modulos.servicios.index', compact('servicios'));
+       
     }
 
     /**
@@ -81,7 +99,7 @@ class ServiciosController extends Controller
     /**
      * Update the specified resource in storage.
      */
-   
+
     public function update(Request $request, string $id)
     {
         //
@@ -126,11 +144,11 @@ class ServiciosController extends Controller
 
     /**
      * Generar reporte de servicios
-     */ 
-    public function generateReport(){
-        $servicios = Servicios::all();
-        $pdf = FacadePdf::loadView('modulos.servicios.report-servicios', compact('servicios'));
-        return $pdf->stream();  // Output as downloadable PDF file
-        
-    }
+     */
+    // public function generateReport(){
+    //     $servicios = Servicios::all();
+    //     $pdf = FacadePdf::loadView('modulos.servicios.report-servicios', compact('servicios'));
+    //     return $pdf->stream();  // Output as downloadable PDF file
+
+    // }
 }

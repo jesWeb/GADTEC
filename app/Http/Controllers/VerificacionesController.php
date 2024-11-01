@@ -9,10 +9,25 @@ use Illuminate\Http\Request;
 class VerificacionesController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
 
-        $verificacion =verificacion::with('automovil')->get();
+        $query =verificacion::with('automovil');
+        // Verificar si hay una búsqueda
+        if ($request->has('search') && $request->input('search') != '') {
+            $search = $request->input('search');
+            $query->where(function($q) use ($search) {
+                $q->where('id_automovil', 'LIKE', "%{$search}%")
+                ->orWhere('holograma', 'LIKE', "%{$search}%")
+                ->orWhere('engomado', 'LIKE', "%{$search}%")
+                ->orWhere('fechaV', 'LIKE', "%{$search}%")
+                ->orWhereHas('automovil', function ($q) use ($search) {
+                    $q->where('marca', 'LIKE', "%{$search}%")
+                        ->orWhere('modelo', 'LIKE', "%{$search}%");
+                });
+            });
+        }
+        $verificacion = $query->get();
         return view('catalogos.verificaciones.index', compact('verificacion'));
     }
 

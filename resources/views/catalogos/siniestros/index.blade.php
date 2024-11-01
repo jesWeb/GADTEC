@@ -2,11 +2,25 @@
 @section('body')
     <div class="px-4 py-6">
         <div class="p-6 bg-white rounded-md shadow-md">
-            <h2 class="text-lg font-semibold text-gray-700 capitalize">Siniestros</h2>
-            <div class="mb-4 text-right">
-                <a
-                    href="{{ route('siniestros.create') }}"class="inline-block px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Nuevo
-                    registro</a>
+            <h2 class="mb-4 text-lg font-semibold text-gray-700 capitalize">Siniestros</h2>
+            <div class="mb-2">
+                <form action="{{ route('siniestros.index') }}" method="GET" class="flex flex-col items-center justify-between space-y-2 md:flex-row md:space-y-0">
+                    <!-- Campo de búsqueda -->
+                    <div class="flex items-center w-full md:w-auto">
+                        <input type="text" name="search" placeholder="Buscar Siniestro" 
+                            class="w-full px-4 py-2 text-gray-700 border rounded-l-md focus:outline-none md:w-48" 
+                            value="{{ request('search') }}">
+                        <button type="submit" 
+                            class="flex items-center px-4 py-2 ml-1 text-white bg-blue-600 border-l-0 rounded-r-md hover:bg-blue-700 focus:outline-none">
+                            Buscar
+                        </button>
+                    
+                    </div>
+                </form>
+                <!-- Botones de Imprimir y Nuevo Registro -->
+                <div class="flex justify-end ml-2 space-x-2">
+                <a   href="{{ route('siniestros.create') }}"  class="inline-block px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Nuevo registro</a>
+                </div>
             </div>
             <div class="overflow-x-auto rounded-lg shadow">
                 <table class="min-w-full bg-white border border-gray-200 divide-y divide-gray-200">
@@ -16,6 +30,7 @@
                             <th class="px-4 py-2 text-left text-gray-600">Vehículo</th>
                             <th class="px-4 py-2 text-left text-gray-600">Fecha Siniestro</th>
                             <th class="px-4 py-2 text-left text-gray-600">Responsable</th>
+                            <th class="px-4 py-2 text-left text-gray-600">Estatus</th>
                             <th class="px-4 py-2 text-left text-gray-600">Acciones</th>
 
                         </tr>
@@ -28,7 +43,7 @@
                                     {{ $sin->automovil->marca }}-{{ $sin->automovil->submarca }}-{{ $sin->automovil->modelo }}
                                 </td>
                                 <td class="px-4 py-2 border">{{ $sin->fecha_siniestro }}</td>
-                                <td class="px-4 py-2 border">{{ $sin->id_usuario }}</td>
+                                <td class="px-4 py-2 border">{{ $sin->usuarios->nombre }} {{ $sin->usuarios->app }} {{ $sin->usuarios->apm}}</td>
                                 <td class="px-4 py-2 border">{{ $sin->estatus }}</td>
                                 {{-- acciones --}}
                                 <td class="px-4 py-2 border">

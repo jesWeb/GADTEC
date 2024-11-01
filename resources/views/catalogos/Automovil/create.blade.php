@@ -141,7 +141,7 @@
                                     Puertas</label>
                                 <input
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                    type="text" name="num_puertas" placeholder="Ingresa el Color">
+                                    type="text" name="num_puertas" placeholder="Ingresa Numero de puertas ">
                             </div>
                         </div>
                         {{-- Utilidad --}}
@@ -190,7 +190,8 @@
                         {{-- tipo Auto --}}
                         <div class="w-full px-3 xl:w-2/4">
                             <div class="xl:mb-5">
-                                <label class="mb-3 block text-base font-medium text-[#07074D]" for="tipo_automovil"> Tipo de
+                                <label class="mb-3 block text-base font-medium text-[#07074D]" for="tipo_automovil"> Tipo
+                                    de
                                     Automovil</label>
                                 <select name="tipo_automovil"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
@@ -287,7 +288,7 @@
                 <div class="flex justify-end gap-4 mt-4">
                     <a href="{{ route('Automovil.index') }}"
                         class="px-4 py-2 text-gray-700 bg-gray-200 rounded-md shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">Cancelar</a>
-                    <button button type="submit"
+                    <button  type="submit"
                         class="px-4 py-2 text-white bg-indigo-600 rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">Registrar</button>
 
 

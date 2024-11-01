@@ -4,18 +4,38 @@ namespace App\Http\Controllers;
 
 use App\Models\Automoviles;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 
 class AutomovilController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
 
         // $cars = Automovil::paginate(10);
-        $cars = Automoviles::all();
+        // $cars = Automoviles::all();
 
+        // Inicializar la consulta 
+        $query = Automoviles::query();
+
+        if($request->has('search') && $request->input('search') !='' ){
+            $search = $request->input('search');
+            // Aplicar la búsqueda a la consulta
+        $query->where(function ($q) use ($search) {
+            $q->where('marca', 'LIKE', "%{$search}%")
+              ->orWhere('modelo', 'LIKE', "%{$search}%")
+              ->orWhere('color', 'LIKE', "%{$search}%")
+              ->orWhere('kilometraje', 'LIKE', "%{$search}%")
+              ->orWhere('placas', 'LIKE', "%{$search}%")
+              ->orWhere('num_serie', 'LIKE', "%{$search}%")
+              ->orWhere('num_motor', 'LIKE', "%{$search}%")
+              ->orWhere('num_nsi', 'LIKE', "%{$search}%");
+        });
+    }
+        $cars = $query->get();
         return view('catalogos.Automovil.index', compact('cars'));
     }
+
     public function create()
     {
         $AutoC = Automoviles::all();
@@ -68,7 +88,7 @@ class AutomovilController extends Controller
 
         Automoviles::create($input);
 
-        return to_route('Automovil.index');
+        return redirect()->route('Automovil.index')->with('mensaje','Sea registrado con exito el Automovil');
     }
 
     /**
@@ -102,18 +122,19 @@ class AutomovilController extends Controller
     {
         $cars = Automoviles::findOrFail($id);
         $cars->delete();
-        return to_route('Automovil.index');
+        return redirect()->route('Automovil.index')->with('eliminar','se ha eliminado correctamente El automovil');
     }
 
     /**
      * Generar reporte de automovil.
-     */ 
+     */
     public function generateReport(){
         // Obtenemos todos los automoviles
         $automoviles = Automoviles::all();
-        
-        $pdf = FacadePdf::loadView('catalogos.Automovil.report-automoviles', compact('automoviles'));
+        $pdf = FacadePDF::loadView('catalogos.Automovil.report-automoviles', compact('automoviles'));
         return $pdf->stream();  // Output as downloadable PDF file
-        
+
     }
+
+   
 }

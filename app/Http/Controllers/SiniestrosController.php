@@ -11,10 +11,25 @@ use Illuminate\Http\Request;
 class SiniestrosController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
         //
-        $siniestros = siniestros::with('automovil')->get();
+        $query = siniestros::with('automovil', 'usuarios');
+        // Verificar si hay una búsqueda
+        if ($request->has('search') && $request->input('search') != '') {
+            $search = $request->input('search');
+            $query->where(function($q) use ($search) {
+                $q->where('id_automovil', 'LIKE', "%{$search}%")
+                ->orWhere('fecha_siniestro', 'LIKE', "%{$search}%")
+                ->orWhere('descripcion', 'LIKE', "%{$search}%")
+                ->orWhere('estatus', 'LIKE', "%{$search}%")
+                ->orWhereHas('automovil', function ($q) use ($search) {
+                    $q->where('marca', 'LIKE', "%{$search}%")
+                        ->orWhere('modelo', 'LIKE', "%{$search}%");
+                });
+            });
+        }
+        $siniestros = $query->get();
         return view('catalogos.siniestros.index',compact('siniestros'));
     }
 

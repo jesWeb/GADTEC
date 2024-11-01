@@ -14,13 +14,13 @@ return new class extends Migration
             $table->unsignedBigInteger('id_automovil');
             $table->unsignedBigInteger('id_usuario');
             $table->string('telefono')->nullable();
-            $table->boolean('requierechofer')->default(false);
+            $table->boolean('requierechofer')->default(false)->nullable();
             $table->string('nombre_chofer')->nullable();
-            $table->string('vehiculo')->nullable();
             $table->string('lugar')->nullable();
             $table->time('hora_salida')->nullable();
             $table->date('fecha_salida')->nullable();
             $table->string('no_licencia')->nullable();
+            $table->enum('estatus', ['Reservado','Disponible','Ocupado'])->default('Disponible');
             $table->text('condiciones')->nullable();
             $table->text('observaciones')->nullable();
             $table->string('autorizante')->nullable();

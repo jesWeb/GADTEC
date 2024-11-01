@@ -26,9 +26,9 @@
                         @foreach($reservacion as $key => $reserv)
                             <tr class="hover:bg-gray-50">
                                 <td class="px-4 py-2 border">{{ $key + 1 }}</td>
-                                <td class="px-4 py-2 border">{{ $reserv->vehiculo }}</td>
-                                <td class="px-4 py-2 border">{{ $reserv->solicitante }}</td>
-                                <td class="px-4 py-2 border">{{ $reserv->dia_salida }}</td>
+                                <td class="px-4 py-2 border">{{ $reserv->automovil->marca}} {{ $reserv->automovil->submarca}} {{ $reserv->automovil->modelo}}</td>
+                                <td class="px-4 py-2 border">{{ $reserv->usuarios->nombre}} {{ $reserv->usuarios->app}} {{ $reserv->usuarios->apm}}</td>
+                                <td class="px-4 py-2 border">{{ $reserv->fecha_salida }}</td>
                                 <td class="px-4 py-2 border">{{ $reserv->hora_salida }}</td>
                                 <td class="px-4 py-2 border">{{ $reserv->lugar }}</td>
                                 <td class="px-4 py-2 border">{{ $reserv->estatus}}</td>

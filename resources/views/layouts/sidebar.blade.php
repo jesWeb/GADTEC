@@ -6,7 +6,7 @@
     <div class="flex items-center justify-center mt-8">
         <div class="flex items-center">
 
-            <a href="{{ route('dashboard') }}">
+            <a href="{{ route('Gestion') }}">
                 {{-- <x-application-logo class="block w-auto text-gray-800 fill-current h-9 dark:text-gray-200" /> --}}
                 <svg class="w-12 h-12" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -26,7 +26,7 @@
     <nav class="mt-10">
         {{-- link --}}
         <a class="flex items-center px-6 py-2 mt-4 text-gray-100 bg-gray-700 bg-opacity-25"
-            href="{{ route('dashboard') }}">
+            href="{{ route('Gestion') }}">
             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -51,7 +51,7 @@
                 <span class="mx-3"> {{ __('Solicitudes') }}</span>
             </x-nav-link>
         </div>
-        
+    
         {{-- link --}}
         <div
             class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
@@ -83,6 +83,17 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 19.5h10.5M4.5 7.5l1.5-3h12l1.5 3M5.25 7.5h13.5v9.75H5.25V7.5zM8.25 16.5h7.5M9.75 16.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm4.5 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
             </svg>
             <span class="mx-3">Servicios </span>
+        </a>
+
+        {{-- link --}}
+        <a class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" href="/estadisticas">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 17.25h18M3 12h10.5M3 6.75h15" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 6.75V12M10.5 12V17.25M16.5 12V17.25" />
+        </svg>
+        <span class="mx-3">Estadísticas</span>
+
+           
         </a>
 
 
