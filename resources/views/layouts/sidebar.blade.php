@@ -85,6 +85,17 @@
             <span class="mx-3">Servicios </span>
         </a>
 
+        {{-- link --}}
+        <a class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" href="/estadisticas">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 17.25h18M3 12h10.5M3 6.75h15" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 6.75V12M10.5 12V17.25M16.5 12V17.25" />
+        </svg>
+        <span class="mx-3">Estadísticas</span>
+
+           
+        </a>
+
 
         {{-- link --}}
         {{-- <a class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"

@@ -11,10 +11,29 @@ class TeneciasRefrendosController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $tenencias = TeneciasRefrendos::with('automovil')->get();
+        $query = TeneciasRefrendos::with('automovil');
+
+        // Verificar si hay una búsqueda
+        if ($request->has('search') && $request->input('search')!= '') {
+            $search = $request->input('search');
+            $query->where(function($q) use ($search) {
+                $q->where('id_automovil', 'LIKE', "%{$search}%")
+                    ->orWhere('origen', 'LIKE', "%{$search}%")
+                    ->orWhere('monto', 'LIKE', "%{$search}%")
+                    ->orWhere('año_correspondiente', 'LIKE', "%{$search}%")
+                    ->orWhere('estatus', 'LIKE', "%{$search}%")
+                    ->orWhere('fecha_vencimiento', 'LIKE', "%{$search}%")
+                    ->orWhereHas('automovil', function ($q) use ($search) {
+                        $q->where('marca', 'LIKE', "%{$search}%")
+                            ->orWhere('modelo', 'LIKE', "%{$search}%");
+                });
+            });
+        }
+        $tenencias = $query->get();
+
         return view('catalogos.tenencias.index', compact('tenencias'));
     }
 

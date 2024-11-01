@@ -9,10 +9,28 @@ use Illuminate\Http\Request;
 class SegurosController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
         //
-        $seguro = seguros::with('automovil')->get();
+        $query = seguros::with('automovil');
+        // Verificar si hay una búsqueda
+        if ($request->has('search') && $request->input('search') != '') {
+            $search = $request->input('search');
+            $query->where(function($q) use ($search) {
+                $q->where('aseguradora', 'LIKE', "%{$search}%")
+                    ->orWhere('cobertura', 'LIKE', "%{$search}%")
+                    ->orWhere('fecha_vigencia', 'LIKE', "%{$search}%")
+                    ->orWhere('estatus', 'LIKE', "%{$search}%")
+                    ->orWhere('monto', 'LIKE', "%{$search}%")
+                    ->orWhereHas('automovil', function ($q) use ($search) {
+                        $q->where('marca', 'LIKE', "%{$search}%")
+                            ->orWhere('modelo', 'LIKE', "%{$search}%");
+                });
+            });
+
+        }
+
+        $seguro = $query->get();
         return view('catalogos.seguros.index', compact('seguro'));
     }
 

@@ -9,14 +9,33 @@ use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 
 class AutomovilController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
 
         // $cars = Automovil::paginate(10);
-        $cars = Automoviles::all();
+        // $cars = Automoviles::all();
 
+        // Inicializar la consulta 
+        $query = Automoviles::query();
+
+        if($request->has('search') && $request->input('search') !='' ){
+            $search = $request->input('search');
+            // Aplicar la búsqueda a la consulta
+        $query->where(function ($q) use ($search) {
+            $q->where('marca', 'LIKE', "%{$search}%")
+              ->orWhere('modelo', 'LIKE', "%{$search}%")
+              ->orWhere('color', 'LIKE', "%{$search}%")
+              ->orWhere('kilometraje', 'LIKE', "%{$search}%")
+              ->orWhere('placas', 'LIKE', "%{$search}%")
+              ->orWhere('num_serie', 'LIKE', "%{$search}%")
+              ->orWhere('num_motor', 'LIKE', "%{$search}%")
+              ->orWhere('num_nsi', 'LIKE', "%{$search}%");
+        });
+    }
+        $cars = $query->get();
         return view('catalogos.Automovil.index', compact('cars'));
     }
+
     public function create()
     {
         $AutoC = Automoviles::all();

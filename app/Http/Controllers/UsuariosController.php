@@ -11,8 +11,28 @@ class UsuariosController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index() {
-        $usuarios = Usuarios::all();
+    public function index(Request $request) {
+        // $usuarios = Usuarios::all();
+
+        // Inicializar la consulta
+        $query = Usuarios::query();
+
+        if ($request->has('search') && $request->input('search')!= '') {
+            $search = $request->input('search');
+            // Aplicar la búsqueda a la consulta
+            $query->where(function ($q) use ($search) {
+                $q->where('nombre', 'LIKE', "%{$search}%")
+                    ->orWhere('app', 'LIKE', "%{$search}%")
+                    ->orWhere('apm', 'LIKE', "%{$search}%")
+                    ->orWhere('fn', 'LIKE', "%{$search}%")
+                    ->orWhere('empresa', 'LIKE', "%{$search}%")
+                    ->orWhere('rol', 'LIKE', "%{$search}%")
+                    ->orWhere('email', 'LIKE', "%{$search}%")
+                    ->orWhere('usuario', 'LIKE', "%{$search}%");
+            });
+        }
+
+        $usuarios = $query->get();
         return view('catalogos.usuarios.index', compact('usuarios'));
     }
 

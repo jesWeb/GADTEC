@@ -1,12 +1,10 @@
 @extends('layouts.app')
-@section('body')
 
+@section('body')
 <div class="px-4 py-6">
     <div class="p-6 bg-white rounded-md shadow-md">
-        <h2 class="text-lg font-semibold text-gray-700 capitalize">Disponibilidad  automóviles </h2>
-        {{-- <div class="mb-4 text-right">
-            <a href="{{ route('Automovil.create') }}" class="inline-block px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Nuevo registro</a>
-        </div> --}}
+        <h2 class="text-lg font-semibold text-gray-700 capitalize">Disponibilidad Automóviles</h2>
+
         <div class="overflow-x-auto rounded-lg shadow">
             <table class="min-w-full bg-white border border-gray-200 divide-y divide-gray-200">
                 <thead class="bg-gray-100">
@@ -17,20 +15,27 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100">
-                     @foreach($disponibilidad as $key => $disponible)
+                    @foreach($disponibilidad as $key => $disponible)
                         <tr class="hover:bg-gray-50">
                             <td class="px-4 py-2 border">{{ $key + 1 }}</td>
-                            <td class="px-4 py-2 border">{{ $disponible->id_automovil}}</td>
-                            <td class="px-4 py-2 border">{{ $disponible->estatus }}</td>
+                            <td class="px-4 py-2 border">{{ $disponible->automovil->marca }} {{ $disponible->automovil->modelo }}</td>
+                            <td class="px-4 py-2 border">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium 
+                                {{ 
+                                    $disponible->estatus == 'Disponible' ? 'bg-green-100 text-green-800' : 
+                                    ($disponible->estatus == 'Reservado' ? 'bg-yellow-600 text-yellow-600' : 
+                                    'bg-red-100 text-red-800') 
+                                }}">
+                                {{ $disponible->estatus }}
+                            </span>
+
+                            </td>
                         </tr>
-                     @endforeach
+                    @endforeach
                 </tbody>
             </table>
         </div>
     </div>
 </div>
 
-
-
 @endsection
-

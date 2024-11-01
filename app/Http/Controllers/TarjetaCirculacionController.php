@@ -11,8 +11,24 @@ class TarjetaCirculacionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index() {
-        $tarjetas = TarjetaCirculacion::with('automovil')->get();
+    public function index(Request $request) {
+        $query = TarjetaCirculacion::with('automovil');
+
+        // Verificar si hay una búsqueda
+        if ($request->has('search') && $request->input('search')!= '') {
+            $search = $request->input('search');
+            $query->where(function($q) use ($search) {
+                $q->where('nombre', 'LIKE', "%{$search}%")
+                    ->orWhere('num_tarjeta', 'LIKE', "%{$search}%")
+                    ->orWhere('vehiculo_origen', 'LIKE', "%{$search}%")
+                    ->orWhereHas('automovil', function ($q) use ($search) {
+                        $q->where('marca', 'LIKE', "%{$search}%")
+                            ->orWhere('modelo', 'LIKE', "%{$search}%");
+                });
+            });
+        }
+
+        $tarjetas = $query->get();
         return view('catalogos.tarjetas.index', compact('tarjetas'));
     }
 
