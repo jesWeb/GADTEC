@@ -53,7 +53,7 @@ class Automoviles extends Model
         return  $this-> hasMany(verificacion::class,'id_automovil');
     }
 
-    public function asigacion(){
+    public function asignacion(){
         return $this->hasMany(asignacion::class,'id_automovil');
     }
 
