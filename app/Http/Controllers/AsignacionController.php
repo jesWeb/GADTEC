@@ -12,9 +12,8 @@ class AsignacionController extends Controller
 
     public function index()
     {
-
         // $reservacion = asignacion::paginate(10);
-        $reservacion = asignacion::with('automovil')->get();
+        $reservacion = asignacion::with('automovil','usuarios')->get();
         return view('catalogos.asignacion.index', compact('reservacion'));
     }
 
@@ -28,24 +27,37 @@ class AsignacionController extends Controller
     public function store(Request $request)
     {
 
-        $newAsig = new asignacion();
-        $newAsig->id_usuario = $request->input('id_usuario');
-        $newAsig->id_automovil = $request->input('id_automovil');
-        $newAsig->telefono = $request->input('telefono');
-        $newAsig->requierechofer = $request->input('requierechofer');
-        $newAsig->nombre_chofer = $request->input('nombre_chofer');
-        $newAsig->lugar = $request->input('lugar');
-        $newAsig->hora_salida = $request->input('hora_salida');
-        $newAsig->fecha_salida = $request->input('fecha_salida');
-        $newAsig->no_licencia = $request->input('no_licencia');
-        $newAsig->estatus = $request->input('estatus');
-        $newAsig->condiciones = $request->input('condiciones');
-        $newAsig->observaciones = $request->input('observaciones');
-        $newAsig->autorizante = $request->input('autorizante');
-        //guardamos datos en BD
-        $newAsig->save();
 
-        return to_route('asignacion.index');
+        //validacion de hora y dia existente
+        $asigExt = asignacion::where('id_automovil', $request->id_automovil)
+            ->where('fecha_salida', $request->fecha_salida)
+            ->where('hora_salida', $request->hora_salida)
+            ->exists();
+
+        if ($asigExt) {
+            return back()->withErrors(['error' => 'Ya esxite una asignacion para este auto en este horario ']);
+
+        } else {
+            $newAsig = new asignacion();
+            $newAsig->id_usuario = $request->input('id_usuario');
+            $newAsig->id_automovil = $request->input('id_automovil');
+            $newAsig->telefono = $request->input('telefono');
+            $newAsig->requierechofer = $request->input('requierechofer');
+            $newAsig->nombre_chofer = $request->input('nombre_chofer');
+            $newAsig->lugar = $request->input('lugar');
+            $newAsig->hora_salida = $request->input('hora_salida');
+            $newAsig->fecha_salida = $request->input('fecha_salida');
+            $newAsig->no_licencia = $request->input('no_licencia');
+            $newAsig->estatus = $request->input('estatus');
+            $newAsig->condiciones = $request->input('condiciones');
+            $newAsig->observaciones = $request->input('observaciones');
+            $newAsig->autorizante = $request->input('autorizante');
+            //guardamos datos en BD
+            $newAsig->save();
+        }
+
+
+        return to_route('asignacion.index')->with('success', 'Asignación creada con éxito.');
     }
 
     public function show($id)
@@ -57,7 +69,7 @@ class AsignacionController extends Controller
     public function edit($id)
     {
 
-        $EddtAsig = asignacion::find($id);
+        $EddtAsig = asignacion::findOrFail($id);
         return view('catalogos.asignacion.edit', compact('EddtAsig'));
     }
 

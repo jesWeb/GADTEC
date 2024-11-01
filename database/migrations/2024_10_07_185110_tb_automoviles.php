@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('num_nsi', 20)->nullable();
             $table->enum('uso', ['Personal', 'Empresarial'])->default('Empresarial');
             $table->enum('estatus', ['Nuevo', 'Usado'])->default('Nuevo');
+            $table->enum('estatusIn', ['disponible','baja','ocupado','servicio'])->default('disponible');
             $table->string('color', 20)->nullable();
             $table->integer('num_puertas')->nullable();
             $table->date('fecha_registro')->nullable();
