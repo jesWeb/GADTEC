@@ -15,7 +15,11 @@ return new class extends Migration
             $table->bigIncrements('id_servicio');
             $table->string('tipo_servicio', 100);
             $table->text('descripcion')->nullable();
+<<<<<<< HEAD
             $table->date('fecha_servicio');
+=======
+            $table->date('fecha_servicio')->nullable();
+>>>>>>> jesus
             $table->date('prox_servicio')->nullable();
             $table->decimal('costo', 8, 2)->nullable();
             $table->string('lugar_servicio', 100);

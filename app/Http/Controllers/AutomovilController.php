@@ -88,7 +88,7 @@ class AutomovilController extends Controller
 
         Automoviles::create($input);
 
-        return to_route('Automovil.index');
+        return redirect()->route('Automovil.index')->with('mensaje','Sea registrado con exito el Automovil');
     }
 
     /**
@@ -122,7 +122,7 @@ class AutomovilController extends Controller
     {
         $cars = Automoviles::findOrFail($id);
         $cars->delete();
-        return to_route('Automovil.index');
+        return redirect()->route('Automovil.index')->with('eliminar','se ha eliminado correctamente El automovil');
     }
 
     /**

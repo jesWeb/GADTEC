@@ -65,6 +65,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     Route::get('/gestion', function () {
         return app(GestionController::class)->index();
     })->name("Gestion");
+    Route::get('/gestion/{id_asignacion}', [GestionController::class, 'show'])->name('gestion');
     Route::resource('Automovil', AutomovilController::class);
     Route::get('/automoviles-pdf', [AutomovilController::class,'generateReport'])->name('automoviles-pdf');
     Route::resource('asignacion', AsignacionController::class);
@@ -87,7 +88,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     Route::resource('servicios', ServiciosController::class);
     Route::get('js_tipo_servicio', [JsController::class, 'js_tipo_servicio'])->name('js_tipo_servicio');
     Route::get('/multas-pdf', [MultasController::class,'generateReport'])->name('multas-pdf');
-    // Route::get('/multas/generateReport', [MultasController::class, 'generateReport'])->name('multas.generateReport');
+    Route::get('/multas/generateReport', [MultasController::class, 'generateReport'])->name('multas.generateReport');
     Route::get('/servicios-pdf', [ServiciosController::class,'generateReport'])->name('servicios-pdf');
     Route::get('/usuarios-pdf', [UsuariosController::class,'generateReport'])->name('usuarios-pdf');
    

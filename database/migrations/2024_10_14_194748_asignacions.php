@@ -20,7 +20,7 @@ return new class extends Migration
             $table->time('hora_salida')->nullable();
             $table->date('fecha_salida')->nullable();
             $table->string('no_licencia')->nullable();
-            $table->enum('estatus', ['Disponible', 'Ocupado', 'Reservado'])->default('Disponible');
+            $table->enum('estatus', ['Reservado','Disponible','Ocupado'])->default('Disponible');
             $table->text('condiciones')->nullable();
             $table->text('observaciones')->nullable();
             $table->string('autorizante')->nullable();
