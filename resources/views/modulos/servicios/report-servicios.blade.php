@@ -37,11 +37,25 @@
             <tbody>
                 @foreach($servicios as $servicio)
                 <tr>
-                    <td>{{ $servicio->automovil->submarca }} {{ $servicio->automovil->modelo }} </td>
+                    <td>{{ $servicio->automovil->marca }} {{ $servicio->automovil->submarca }} {{ $servicio->automovil->modelo }} </td>
                     <td>{{ $servicio ->tipo_servicio }}</td>
                     <td>{{ $servicio-> descripcion }}</td>
-                    <td>{{ $servicio ->fecha_servicio}}</td>
-                    <td>{{ $servicio ->prox_servicio }}</td>
+                    <td>
+                        @if($servicio->fecha_servicio == '')
+                            <!-- Muestra un guión o un texto vacío si el servicio no es programado -->
+                            -
+                        @else
+                            {{ $servicio->fecha_servicio }}
+                        @endif
+                    </td>
+                    <td>
+                        @if($servicio->prox_servicio == '')
+                            <!-- Muestra un guión o un texto vacío si el servicio no es programado -->
+                            -
+                        @else
+                            {{ $servicio->prox_servicio }}
+                        @endif
+                    </td>
                     <td>{{ $servicio ->costo}}</td>
                     <td>{{ $servicio -> lugar_servicio}}</td>
                     

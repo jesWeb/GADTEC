@@ -74,10 +74,6 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     Route::resource('verificaciones', VerificacionesController::class);
     Route::get('/catalogos', [CatalogosController::class, 'index'])->name('catalogos.index');
     
-    
-  
-});
-
     Route::resource('vigilante', VigilanteController::class);
 
     Route::get('/estadisticas', [EstadisticasController::class, 'index']);
@@ -91,6 +87,10 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     Route::get('/multas/generateReport', [MultasController::class, 'generateReport'])->name('multas.generateReport');
     Route::get('/servicios-pdf', [ServiciosController::class,'generateReport'])->name('servicios-pdf');
     Route::get('/usuarios-pdf', [UsuariosController::class,'generateReport'])->name('usuarios-pdf');
+  
+});
+
+    
    
 
 

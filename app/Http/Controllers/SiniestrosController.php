@@ -25,6 +25,7 @@ class SiniestrosController extends Controller
                 ->orWhere('estatus', 'LIKE', "%{$search}%")
                 ->orWhereHas('automovil', function ($q) use ($search) {
                     $q->where('marca', 'LIKE', "%{$search}%")
+                        ->orWhere('submarca', 'LIKE', "%{$search}%")
                         ->orWhere('modelo', 'LIKE', "%{$search}%");
                 });
             });

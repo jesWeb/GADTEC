@@ -45,7 +45,7 @@
                         <tr class="hover:bg-gray-50">
                             <td class="px-4 py-2 border">{{ $key + 1 }}</td>
                             <td class="px-4 py-2 border">
-                                {{ $tarjeta->automovil->submarca }} {{ $tarjeta->automovil->modelo }} 
+                                {{ $tarjeta->automovil->submarca }} {{ $tarjeta->automovil->marca }}  {{ $tarjeta->automovil->modelo }} 
                             </td> 
                             <td class="px-4 py-2 border">{{ $tarjeta->nombre }}</td>
                             <td class="px-4 py-2 border">{{ $tarjeta->num_tarjeta }}</td> 
@@ -58,7 +58,7 @@
                                 <img src="{{ asset('img/' . $tarjeta->fotografia_frontal) }}" alt="Fotografía Frontal" class="object-cover w-16 h-16">
 
                                 @else
-                                    N/A
+                                    <span class="text-gray-500">N/A</span>
                                 @endif
                             </td>
                             

@@ -38,7 +38,7 @@
                     @foreach ($cars as $key => $car)
                         <tr class="hover:bg-gray-50">
                             <td class="px-4 py-2 border">{{ $key + 1 }}</td>
-                            <td class="px-4 py-2 border">{{ $car->marca }} {{ $car->modelo }}</td>
+                            <td class="px-4 py-2 border">{{ $car->marca }} {{ $car->submarca }} {{ $car->modelo }}</td>
                             <td class="px-4 py-2 border">{{ $car->placas }}</td>
                             <td class="px-4 py-2 border">{{ $car->num_nsi }}</td>
                             <td class="px-4 py-2 border">

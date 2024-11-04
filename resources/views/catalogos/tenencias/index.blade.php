@@ -46,22 +46,27 @@
                     <tr class="hover:bg-gray-50">
                         <td class="px-4 py-2 border">{{ $key + 1 }}</td>
                         <td class="px-4 py-2 border">
-                            {{ $tenencia->automovil->submarca }} {{ $tenencia->automovil->modelo }} 
-                        </td>                         
+                            {{ $tenencia->automovil->marca }} {{ $tenencia->automovil->modelo }}
+                        </td>                           
                         <td class="px-4 py-2 border">{{ $tenencia->fecha_pago }}</td>
                         <td class="px-4 py-2 border">{{ $tenencia->origen }}</td>
                         <td class="px-4 py-2 border">{{ $tenencia->monto }}</td>
                         <td class="px-4 py-2 border">{{ $tenencia->año_correspondiente}}</td>
                         <td class="px-4 py-2 border">
                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium 
-                            {{ $tenencia->estatus == 'Activo' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                            {{ $tenencia->estatus == 'Vigente' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
                                 {{ $tenencia->estatus }}
                             </span>
                         </td>
                         <td class="px-4 py-2 border">{{ $tenencia->fecha_vencimiento }}</td>
                         <td class="px-4 py-2 border">
-                        <img src="{{ asset('img/' . $tenencia->comprobante) }}" alt="Foto de usuario" class="object-cover w-16 h-16">
+                            @if($tenencia->comprobante && $tenencia->comprobante !== 'N/A') 
+                                <img src="{{ asset('img/' . $tenencia->comprobante) }}" alt="Foto de tenencia" class="object-cover w-16 h-16">
+                            @else
+                                <span class="text-gray-500">Sin comprobante</span>
+                            @endif
                         </td>
+
                        
                         
                         <td class="px-4 py-2 border">

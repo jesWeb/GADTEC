@@ -27,6 +27,7 @@ class ServiciosController extends Controller
                 ->orWhere('lugar_servicio', 'LIKE', "%{$search}%")                  
                 ->orWhereHas('automovil', function ($q) use ($search) {
                     $q->where('marca', 'LIKE', "%{$search}%")
+                        ->orWhere('submarca', 'LIKE', "%{$search}%")
                         ->orWhere('modelo', 'LIKE', "%{$search}%");
                 });
             });
@@ -73,7 +74,7 @@ class ServiciosController extends Controller
         $request->validate($rules, $messages);
         $input = $request->all();
         Servicios::create($input);
-        return redirect('servicios')->with('message', 'Se ha creado correctamente el registro');
+        return redirect()->route('servicios.index')->with('message', 'Se ha creado correctamente el registro');
     }
 
     /**
@@ -128,7 +129,7 @@ class ServiciosController extends Controller
         $servicio = Servicios::findOrFail($id);
 
         $servicio->update($input);
-        return redirect('servicios')->with('message', 'Se ha actualizado correctamente el registro');
+        return redirect()->route('servicios.index')->with('message', 'Se ha modificado correctamente el registro');
     }
 
     /**
@@ -139,16 +140,16 @@ class ServiciosController extends Controller
         //
         $servicio = Servicios::findOrFail($id);
         $servicio->delete();
-        return back()->with('message', 'Se ha eliminado correctamente el registro');
+        return redirect()->route('servicios.index')->with('danger', 'Se ha eliminado correctamente el registro');
     }
 
     /**
      * Generar reporte de servicios
      */
-    // public function generateReport(){
-    //     $servicios = Servicios::all();
-    //     $pdf = FacadePdf::loadView('modulos.servicios.report-servicios', compact('servicios'));
-    //     return $pdf->stream();  // Output as downloadable PDF file
+    public function generateReport(){
+        $servicios = Servicios::all();
+        $pdf = FacadePdf::loadView('modulos.servicios.report-servicios', compact('servicios'));
+        return $pdf->stream();  // Output as downloadable PDF file
 
-    // }
+    }
 }

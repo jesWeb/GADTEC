@@ -40,7 +40,7 @@
                             <tr class="hover:bg-gray-50">
                                 <td class="px-4 py-2 border">{{ $key + 1 }}</td>
                                 <td class="px-4 py-2 border">
-                                    {{ $sin->automovil->marca }}-{{ $sin->automovil->submarca }}-{{ $sin->automovil->modelo }}
+                                    {{ $sin->automovil->marca }} {{ $sin->automovil->submarca }} {{ $sin->automovil->modelo }}
                                 </td>
                                 <td class="px-4 py-2 border">{{ $sin->fecha_siniestro }}</td>
                                 <td class="px-4 py-2 border">{{ $sin->usuarios->nombre }} {{ $sin->usuarios->app }} {{ $sin->usuarios->apm}}</td>

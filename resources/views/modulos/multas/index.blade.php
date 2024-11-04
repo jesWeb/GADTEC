@@ -65,7 +65,7 @@
                                 @if($multa->comprobante)
                                     <a href="{{ asset('img/' . $multa->comprobante) }}" target="_blank" class="text-blue-600 hover:underline">Ver Comprobante</a>
                                 @else
-                                    <span class="text-gray-500">No disponible</span>
+                                    <span class="text-gray-500">Sin comprobante</span>
                                 @endif
                             </td>
                             <td class="px-4 py-2 border">

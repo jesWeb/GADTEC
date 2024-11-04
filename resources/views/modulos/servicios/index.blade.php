@@ -46,12 +46,27 @@
                     <tr class="hover:bg-gray-50">
                         <td class="px-4 py-2 border">{{ $key + 1 }}</td>
                         <td class="px-4 py-2 border">
-                            {{ $servicio->automovil->submarca }} {{ $servicio->automovil->modelo }} 
+                            {{ $servicio->automovil->marca }} {{ $servicio->automovil->submarca }} {{ $servicio->automovil->modelo }} 
                         </td> 
                         <td class="px-4 py-2 border">{{ $servicio ->tipo_servicio }}</td>
                         <td class="px-4 py-2 border">{{ $servicio ->descripcion }}</td>
-                        <td class="px-4 py-2 border">{{ $servicio ->fecha_servicio}}</td>
-                        <td class="px-4 py-2 border">{{ $servicio ->prox_servicio }}</td>
+                        <td class="px-4 py-2 text-center border">
+                            @if($servicio->fecha_servicio == '')
+                                <!-- Muestra un guión o un texto vacío si el servicio no es programado -->
+                                -
+                            @else
+                                {{ $servicio->fecha_servicio }}
+                            @endif
+                        </td>
+ 
+                        <td class="px-4 py-2 text-center border">
+                            @if($servicio->prox_servicio == '')
+                                <!-- Muestra un guión o un texto vacío si el servicio no es programado -->
+                                -
+                            @else
+                                {{ $servicio->prox_servicio }}
+                            @endif
+                        </>
                         <td class="px-4 py-2 border">{{ $servicio ->costo}}</td>
                         <td class="px-4 py-2 border">{{ $servicio -> lugar_servicio}}</td>
                         <td class="px-4 py-2 border">

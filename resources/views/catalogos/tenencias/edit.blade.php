@@ -6,7 +6,7 @@
         <div class="p-6 bg-white rounded-lg shadow-lg">
             <h2 class="text-lg font-semibold text-gray-700 capitalize">Editar Tenencia/Refrendo</h2>
 
-            <form action="{{ url('tenencias/' . $tenencia->id_tenencia) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ url('dashboard/tenencias/' . $tenencia->id_tenencia) }}"  method="POST" enctype="multipart/form-data">
             {{ csrf_field() }}
                 {{ method_field('PUT') }}
                 
@@ -114,7 +114,7 @@
 
                 <div class="flex justify-end mt-6 space-x-4">
                     <button type="submit" class="px-4 py-2 text-white bg-indigo-600 rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">Guardar</button>
-                    <a href="/tenencias" class="px-4 py-2 text-gray-700 bg-gray-200 rounded-md shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">Cancelar</a>
+                    <a href="/dashboard/tenencias" class="px-4 py-2 text-gray-700 bg-gray-200 rounded-md shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">Cancelar</a>
                 </div>
             </form>
         </div>

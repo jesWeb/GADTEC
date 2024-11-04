@@ -23,6 +23,7 @@ class AutomovilController extends Controller
             // Aplicar la búsqueda a la consulta
         $query->where(function ($q) use ($search) {
             $q->where('marca', 'LIKE', "%{$search}%")
+             ->orWhere('submarca', 'LIKE', "%{$search}%")
               ->orWhere('modelo', 'LIKE', "%{$search}%")
               ->orWhere('color', 'LIKE', "%{$search}%")
               ->orWhere('kilometraje', 'LIKE', "%{$search}%")

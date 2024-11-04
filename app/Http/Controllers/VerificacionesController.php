@@ -23,6 +23,7 @@ class VerificacionesController extends Controller
                 ->orWhere('fechaV', 'LIKE', "%{$search}%")
                 ->orWhereHas('automovil', function ($q) use ($search) {
                     $q->where('marca', 'LIKE', "%{$search}%")
+                        ->orWhere('submarca', 'LIKE', "%{$search}%")
                         ->orWhere('modelo', 'LIKE', "%{$search}%");
                 });
             });
