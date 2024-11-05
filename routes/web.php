@@ -75,7 +75,6 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     Route::get('/catalogos', [CatalogosController::class, 'index'])->name('catalogos.index');
     
     Route::resource('vigilante', VigilanteController::class);
-
     Route::get('/estadisticas', [EstadisticasController::class, 'index']);
     Route::resource('tarjetas', TarjetaCirculacionController::class);
     Route::resource('tenencias', TeneciasRefrendosController::class);
