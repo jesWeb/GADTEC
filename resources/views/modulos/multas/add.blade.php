@@ -4,10 +4,10 @@
 <div class="mt-8">
     <div class="mt-4">
         <div class="p-6 bg-white rounded-lg shadow-lg">
-            <h2 class="text-lg font-semibold text-gray-700 capitalize">Alta de Usuario</h2>
+            <h2 class="text-lg font-semibold text-gray-700 capitalize">Alta de Multas</h2>
 
-            <form action="{{ url('multas') }}" method="POST" enctype="multipart/form-data">
-                {{ csrf_field() }}
+            <form action="{{ route('multas.store') }}" method="POST" enctype="multipart/form-data">
+            {{ csrf_field() }}
 
                 <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-3">
                     <div class="mb-4">
@@ -97,9 +97,12 @@
 
                 
 
+                <!-- Botones -->
                 <div class="flex justify-end mt-8 space-x-4">
-                    <button type="submit" class="px-5 py-3 text-white bg-indigo-600 rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">Guardar</button>
-                    <a href="{{ url('multas') }}" class="px-5 py-3 text-gray-700 bg-gray-200 rounded-md shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">Cancelar</a>
+                    <button type="submit"
+                        class="px-5 py-3 text-white bg-indigo-600 rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">Guardar</button>
+                    <a href="{{ route('multas.index') }}"
+                        class="px-5 py-3 text-gray-700 bg-gray-200 rounded-md shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">Cancelar</a>
                 </div>
             </form>
         </div>

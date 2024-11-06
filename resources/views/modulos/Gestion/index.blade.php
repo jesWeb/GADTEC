@@ -14,6 +14,7 @@
                             <th class="px-4 py-2 text-left text-gray-600">Vehículo</th>
                             <th class="px-4 py-2 text-left text-gray-600">Placas</th>
                             <th class="px-4 py-2 text-left text-gray-600">Color</th>
+                            <th class="px-4 py-2 text-left text-gray-600">Estatus</th>
                             <th class="px-4 py-2 text-left text-gray-600">Acciones</th>
                         </tr>
                     </thead>
@@ -30,11 +31,13 @@
                                     {{ $dispo->automovil ? $dispo->automovil->placas : 'No disponible' }}</td>
                                 <td class="px-4 py-2 border">
                                     {{ $dispo->automovil ? $dispo->automovil->color : 'No disponible' }}</td>
-
+                                <td class="px-4 py-2 border">
+                                    {{ $dispo->estatus ? $dispo->estatus : 'No disponible' }}</td>
+                                    
                                 {{-- acciones --}}
                                 <td class="px-4 py-2 borde">
                                     <div class="flex items-center space-x-2">
-                                        <a href="{{ route('gestion.show', $dispo->id_asignacion) }}"
+                                        <a href="{{ route('gestion', $dispo->id_asignacion) }}"
                                             class="inline-flex items-center justify-center w-8 h-8 text-green-600 border border-green-600 rounded hover:bg-green-600 hover:text-white">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                 stroke="currentColor" class="w-4 h-4">

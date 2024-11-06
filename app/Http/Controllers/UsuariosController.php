@@ -11,8 +11,28 @@ class UsuariosController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index() {
-        $usuarios = Usuarios::all();
+    public function index(Request $request) {
+        // $usuarios = Usuarios::all();
+
+        // Inicializar la consulta
+        $query = Usuarios::query();
+
+        if ($request->has('search') && $request->input('search')!= '') {
+            $search = $request->input('search');
+            // Aplicar la búsqueda a la consulta
+            $query->where(function ($q) use ($search) {
+                $q->where('nombre', 'LIKE', "%{$search}%")
+                    ->orWhere('app', 'LIKE', "%{$search}%")
+                    ->orWhere('apm', 'LIKE', "%{$search}%")
+                    ->orWhere('fn', 'LIKE', "%{$search}%")
+                    ->orWhere('empresa', 'LIKE', "%{$search}%")
+                    ->orWhere('rol', 'LIKE', "%{$search}%")
+                    ->orWhere('email', 'LIKE', "%{$search}%")
+                    ->orWhere('usuario', 'LIKE', "%{$search}%");
+            });
+        }
+
+        $usuarios = $query->get();
         return view('catalogos.usuarios.index', compact('usuarios'));
     }
 
@@ -71,7 +91,7 @@ class UsuariosController extends Controller
         }
 
         Usuarios::create($input);
-        return redirect('usuarios')->with('message', 'Se ha creado correctamente el registro');
+        return redirect()->route('usuarios.index')->with('message', 'Se ha creado correctamente el registro');
     }
 
     /**
@@ -147,7 +167,7 @@ class UsuariosController extends Controller
         }
 
         $usuario->update($input);
-        return redirect('usuarios')->with('info', 'Se ha actualizado el registro correctamente');
+        return redirect()->route('usuarios.index')->with('message', 'Se ha modificado correctamente el registro');
     }
 
     /**
@@ -156,7 +176,7 @@ class UsuariosController extends Controller
     public function destroy(string $id) {
         $usuario = Usuarios::findOrFail($id);
         $usuario->delete();
-        return back()->with('danger', 'Se ha eliminado correctamente el registro');
+        return redirect()->route('usuarios.index')->with('danger', 'Se ha eliminado correctamente el registro');
     }
 
     /**

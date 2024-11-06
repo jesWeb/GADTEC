@@ -41,7 +41,7 @@
 
             <div class="mb-4">
                 <p class="text-lg font-semibold text-gray-800">Rol Asignado:</p>
-                <p class="text-gray-600">{{ $usuario->roles->nombre }}</p>
+                <p class="text-gray-600">{{ $usuario->rol }}</p>
             </div>
 
             <div class="flex justify-end mt-6">

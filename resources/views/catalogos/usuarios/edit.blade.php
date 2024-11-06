@@ -6,7 +6,7 @@
         <div class="p-6 bg-white rounded-md shadow-md">
             <h3 class="text-lg font-semibold text-gray-700 capitalize">Editar Usuario</h3>
 
-            <form action="{{ url('usuarios/' . $usuario->id_usuario) }}" method="POST" enctype="multipart/form-data">
+            <form  action="{{ url('dashboard/usuarios/' . $usuario->id_usuario) }}"  method="POST" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 {{ method_field('PUT') }}
 

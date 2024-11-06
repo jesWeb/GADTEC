@@ -11,8 +11,26 @@ class TarjetaCirculacionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index() {
-        $tarjetas = TarjetaCirculacion::with('automovil')->get();
+    public function index(Request $request) {
+        $query = TarjetaCirculacion::with('automovil');
+
+        // Verificar si hay una búsqueda
+        if ($request->has('search') && $request->input('search') != '') {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('nombre', 'LIKE', "%{$search}%")
+                    ->orWhere('num_tarjeta', 'LIKE', "%{$search}%")
+                    ->orWhere('vehiculo_origen', 'LIKE', "%{$search}%")
+                    ->orWhereHas('automovil', function ($q) use ($search) {
+                        $q->where('marca', 'LIKE', "%{$search}%")
+                            ->orWhere('submarca', 'LIKE', "%{$search}%")
+                            ->orWhere('modelo', 'LIKE', "%{$search}%");
+                    });
+            });
+        }
+        
+
+        $tarjetas = $query->get();
         return view('catalogos.tarjetas.index', compact('tarjetas'));
     }
 
@@ -67,7 +85,7 @@ class TarjetaCirculacionController extends Controller
 
         TarjetaCirculacion::create($input);
 
-        return redirect('tarjetas')->with('message', 'Se ha creado correctamente el registro');
+        return redirect()->route('tarjetas.index')->with('message', 'Se ha creado correctamente el registro');
     }
 
     /**
@@ -132,7 +150,7 @@ class TarjetaCirculacionController extends Controller
 
         $tarjeta->update($input);
 
-        return redirect('tarjetas')->with('message', 'Se ha actualizado correctamente el registro');
+        return redirect()->route('tarjetas.index')->with('message', 'Se ha modificado correctamente el registro');
 
     } 
 
@@ -142,6 +160,6 @@ class TarjetaCirculacionController extends Controller
     public function destroy(string $id) {
         $tarjeta = TarjetaCirculacion::findOrFail($id);
         $tarjeta->delete();
-        return back()->with('danger', 'Se ha eliminado correctamente el registro');
+        return redirect()->route('tarjetas.index')->with('danger', 'Se ha eliminado correctamente el registro');
     }
 }
