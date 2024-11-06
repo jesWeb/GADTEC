@@ -8,13 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class asignacion extends Model
 {
-
-    use HasFactory;
-    use SoftDeletes;
-
-     protected $table = 'asignacions';
+    use HasFactory ,SoftDeletes;
      protected $primarykey = 'id_asignacion';
-
     protected $fillable = [
         'id_automovil',
         'id_usuario',

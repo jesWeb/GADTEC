@@ -18,6 +18,11 @@ use App\Http\Controllers\ServiciosController;
 use App\Http\Controllers\JsController;
 
 
+//route principal
+Route::get('/', function () {
+    return view('auth.login');
+});
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -25,7 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
+//Routes admin
 Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
 
     Route::get('/gestion', function () {
@@ -37,14 +42,12 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     })->name('gestion.show');
 
     Route::get('/catalogos', [CatalogosController::class, 'index'])->name('catalogos.index');
-
     Route::resource('Automovil', AutomovilController::class);
-    // Route::get('/automoviles-pdf', AutomovilController::class,'generateReport')->name('automoviles-pdf');
+    // Route::get('/automoviles-pdf', AutomovilController::class, 'generateReport')->name('automoviles-pdf');
     Route::resource('asignacion', AsignacionController::class);
     Route::resource('seguros', SegurosController::class);
     Route::resource('siniestros', SiniestrosController::class);
     Route::resource('verificaciones', VerificacionesController::class);
-
     Route::resource('tarjetas', TarjetaCirculacionController::class);
     Route::resource('tenencias', TeneciasRefrendosController::class);
     Route::resource('usuarios', UsuariosController::class);

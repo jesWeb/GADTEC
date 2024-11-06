@@ -68,8 +68,9 @@ class AsignacionController extends Controller
 
     public function edit($id)
     {
+        // $EddtAsig = asignacion::findOrFail($id);
+        dd(asignacion::findOrFail($id)->toSql());
 
-        $EddtAsig = asignacion::findOrFail($id);
         return view('catalogos.asignacion.edit', compact('EddtAsig'));
     }
 
