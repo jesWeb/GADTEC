@@ -179,13 +179,4 @@ class UsuariosController extends Controller
         return redirect()->route('usuarios.index')->with('danger', 'Se ha eliminado correctamente el registro');
     }
 
-    /**
-     * Generar reporte de usuarios
-     */
-    // public function generateReport(){
-    //     $usuarios = Usuarios::all();
-    //     $pdf = FacadePdf::loadView('catalogos.usuarios.report-usuarios', compact('usuarios'));
-    //     return $pdf->stream();  // Output as downloadable PDF file
-
-    // }
 }

@@ -133,7 +133,7 @@ class AutomovilController extends Controller
         // Obtenemos todos los automoviles
         $automoviles = Automoviles::all();
         $pdf = FacadePDF::loadView('catalogos.Automovil.report-automoviles', compact('automoviles'));
-        return $pdf->stream();  // Output as downloadable PDF file
+        return $pdf->stream();  // Archivo PDF
 
     }
 

@@ -61,6 +61,12 @@ Ejecuta las migraciones para crear las tablas necesarias en la base de datos:
 Compila los archivos necesarios con el siguiente comando:
 - npm run build
 
+## Instalar y Configurar DOMPDF (opcional para PDF)
+Si el proyecto requiere generación de PDF, instala la biblioteca DOMPDF:
+- composer require barryvdh/laravel-dompdf
+Después, publica la configuración:
+- php artisan vendor:publish --provider="Barryvdh\DomPDF\ServiceProvider"
+
 ## Ejecutar Proyecto
 Para iniciar el servidor del sistema, utiliza:
 - php artisan serve

@@ -182,7 +182,7 @@ class MultasController extends Controller
         $multas = Multas::with('automovil')->get();
         // return view('modulos.multas.report-multas', compact('multas'));
         $pdf = FacadePdf::loadView('modulos.multas.report-multas', compact('multas'));
-        return $pdf->stream();  // Output as downloadable PDF file
+        return $pdf->stream();  // Salida como archivo PDF
 
     }
     

@@ -6,6 +6,7 @@ use App\Models\asignacion;
 use App\Models\Automoviles;
 use App\Models\Usuarios;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class AsignacionController extends Controller
 {
@@ -26,38 +27,45 @@ class AsignacionController extends Controller
 
     public function store(Request $request)
     {
-
-
-        //validacion de hora y dia existente
+        $validated = $request->validate([
+            'id_usuario' => 'required|exists:usuarios,id_usuario',
+            'id_automovil' => 'required|exists:automoviles,id_automovil',
+            'telefono' => 'required|numeric',
+            'fecha_salida' => 'required|date',
+            'hora_salida' => 'required',
+            'lugar' => 'required|string',
+            'motivo' => 'required|string',
+            'estatus' => 'required|string',
+            'no_licencia' => 'required|string',
+            'condiciones' => 'nullable|string',
+            'autorizante' => 'required|string',
+        ]);
+    
+        // Validación de existencia
         $asigExt = asignacion::where('id_automovil', $request->id_automovil)
             ->where('fecha_salida', $request->fecha_salida)
             ->where('hora_salida', $request->hora_salida)
             ->exists();
-
+    
         if ($asigExt) {
-            return back()->withErrors(['error' => 'Ya esxite una asignacion para este auto en este horario ']);
-
-        } else {
-            $newAsig = new asignacion();
-            $newAsig->id_usuario = $request->input('id_usuario');
-            $newAsig->id_automovil = $request->input('id_automovil');
-            $newAsig->telefono = $request->input('telefono');
-            $newAsig->requierechofer = $request->input('requierechofer');
-            $newAsig->nombre_chofer = $request->input('nombre_chofer');
-            $newAsig->lugar = $request->input('lugar');
-            $newAsig->hora_salida = $request->input('hora_salida');
-            $newAsig->fecha_salida = $request->input('fecha_salida');
-            $newAsig->no_licencia = $request->input('no_licencia');
-            $newAsig->estatus = $request->input('estatus');
-            $newAsig->condiciones = $request->input('condiciones');
-            $newAsig->observaciones = $request->input('observaciones');
-            $newAsig->autorizante = $request->input('autorizante');
-            //guardamos datos en BD
-            $newAsig->save();
+            return back()->withErrors(['error' => 'Ya existe una asignación para este auto en este horario.']);
         }
-
-
-        return to_route('asignacion.index')->with('success', 'Asignación creada con éxito.');
+    
+        $newAsig = new asignacion($validated);
+        
+        // Asignar datos automáticamente
+        $newAsig->fecha_asignacion = Carbon::now();
+        $newAsig->fecha_estimada_dev = Carbon::now()->addDays(7);
+        
+    
+        // Si no se requiere chofer, asegurarse de que el campo `nombre_chofer` esté vacío
+        if (!$request->has('requierechofer')) {
+            $newAsig->nombre_chofer = null;
+        }
+    
+        $newAsig->save();
+    
+        return redirect()->route('asignacion.index')->with('success', 'Asignación creada con éxito.');
     }
 
     public function show($id)

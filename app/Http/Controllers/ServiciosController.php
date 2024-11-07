@@ -149,7 +149,7 @@ class ServiciosController extends Controller
     public function generateReport(){
         $servicios = Servicios::all();
         $pdf = FacadePdf::loadView('modulos.servicios.report-servicios', compact('servicios'));
-        return $pdf->stream();  // Output as downloadable PDF file
+        return $pdf->stream();  // Salida como archivo PDF
 
     }
 }

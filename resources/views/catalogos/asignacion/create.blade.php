@@ -70,7 +70,16 @@
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                     required />
                             </div>
+
+                            
                         </div>
+                        {{-- Motivo --}}
+                    <div class="w-full px-3 xl:w-1/2">
+                        <div class="mb-5">
+                            <label class="mb-3 block text-base font-medium text-[#07074D]" for="motivo">Motivo</label>
+                            <textarea name="motivo" class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required></textarea>
+                        </div>
+                    </div>
                         {{-- estatus  --}}
                         <div class="w-full px-3 xl:w-1/2">
                             <label class="mb-3 block text-base font-medium text-[#07074D]" for="estatus">Estatus</label>
@@ -158,7 +167,7 @@
                             </div>
 
                         </div>
-                          <div class="flex flex-col gap-5.5 mt-3 xl:flex-row">
+                        <div class="flex flex-col gap-5.5 mt-3 xl:flex-row">
                                 {{-- Autorizante --}}
                                 <div class="w-full px-3 ">
                                     <div class="mb-5">
@@ -169,9 +178,16 @@
                                             required />
                                     </div>
                                 </div>
-                            </div>
 
-                    </div>
+                                {{-- Fecha estimada de devolución --}}
+                                <div class="w-full px-3 xl:w-1/2">
+                                    <div class="mb-5">
+                                        <label class="mb-3 block text-base font-medium text-[#07074D]" for="fecha_estimada_dev">Fecha Estimada de Devolución</label>
+                                        <input type="date" name="fecha_estimada_dev" class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                       {{-- 5 row de info --}}
                       <div class="flex flex-col gap-5 mt-3 xl:flex-row">
                         {{-- Condiciones --}}

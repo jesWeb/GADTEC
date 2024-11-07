@@ -5,15 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class asignacion extends Model
 {
+    use HasFactory, SoftDeletes;
 
-    use HasFactory;
-    use SoftDeletes;
-
-     protected $table = 'asignacions';
-     protected $primarykey = 'id_asignacion';
+    protected $table = 'asignacions';
+    protected $primaryKey = 'id_asignacion';
 
     protected $fillable = [
         'id_automovil',
@@ -21,7 +20,8 @@ class asignacion extends Model
         'telefono',
         'requierechofer',
         'nombre_chofer',
-        'lugar',
+        'lugar', // destino
+        'motivo', // motivo de la reserva
         'fecha_salida',
         'hora_salida',
         'no_licencia',
@@ -31,13 +31,41 @@ class asignacion extends Model
         'autorizante',
     ];
 
-    public function automovil() {
+    // Asegura que la fecha de asignación y la fecha estimada de devolución se asignen automáticamente
+    protected $dates = [
+        'fecha_asignacion', 
+        'fecha_estimada_dev',
+    ];
+
+    // Método para obtener la fecha de asignación automáticamente
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($asignacion) {
+            // Asignar la fecha de asignación automáticamente si está vacía
+            if (empty($asignacion->fecha_asignacion)) {
+                $asignacion->fecha_asignacion = now();  
+            }
+
+            if (empty($asignacion->fecha_estimada_dev)) {
+                $asignacion->fecha_estimada_dev = now()->addDays(7);  // Añadir 7 días por defecto
+            }
+        });
+    }
+
+    public function automovil()
+    {
         return $this->belongsTo(Automoviles::class, 'id_automovil');
     }
 
-    public function usuarios(){
-        return $this->belongsTo(usuarios::class,'id_usuario');
+    public function usuarios()
+    {
+        return $this->belongsTo(Usuarios::class, 'id_usuario');
     }
 
-
+    public function checkIns()
+    {
+        return $this->hasMany(CheckIn::class, 'id_asignacion');
+    }
 }
