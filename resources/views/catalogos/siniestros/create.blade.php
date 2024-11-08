@@ -6,7 +6,7 @@
             {{-- titulo --}}
             <h2 class="mb-5 text-xl font-semibold text-gray-700">Registro Siniestros</h2>
             {{-- formulario --}}
-            <form action="{{route('siniestros.store')}} " method="POST">
+            <form action="{{ route('siniestros.store') }} " method="POST">
                 {{-- Token CSRF --}}
                 @csrf
                 <div class="m-3 xl:p-10">
@@ -31,7 +31,8 @@
 
                         {{-- Fecha de siniestro --}}
                         <div class="w-full px-3 xl:w-1/2">
-                            <label class="mb-3 block text-base font-medium text-[#07074D]" for="fecha_siniestro">Fecha de Siniestro</label>
+                            <label class="mb-3 block text-base font-medium text-[#07074D]" for="fecha_siniestro">Fecha de
+                                Siniestro</label>
                             <input
                                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                 type="date" name="fecha_siniestro" required>
@@ -39,7 +40,8 @@
 
                         {{-- Descripción --}}
                         <div class="w-full px-3 xl:w-1/2">
-                            <label class="mb-3 block text-base font-medium text-[#07074D]" for="descripcion">Descripción</label>
+                            <label class="mb-3 block text-base font-medium text-[#07074D]"
+                                for="descripcion">Descripción</label>
                             <textarea
                                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                 name="descripcion" placeholder="Descripción del siniestro..." required></textarea>
@@ -51,8 +53,7 @@
                         {{-- Estatus --}}
                         <div class="w-full px-3 xl:w-1/2">
                             <label class="mb-3 block text-base font-medium text-[#07074D]" for="estatus">Estatus</label>
-                            <select
-                                name="estatus"
+                            <select name="estatus"
                                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                 required>
                                 <option disabled selected>Selecciona una opción</option>
@@ -64,43 +65,49 @@
 
                         {{-- Costo daños estimados --}}
                         <div class="w-full px-3 xl:w-1/2">
-                            <label class="mb-3 block text-base font-medium text-[#07074D]" for="costo_danos_estimados">Costo Daños Estimados</label>
+                            <label class="mb-3 block text-base font-medium text-[#07074D]" for="costo_danos_estimados">Costo
+                                Daños Estimados</label>
                             <input
                                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                type="number" name="costo_danos_estimados" placeholder="Introduce el costo" min="0" required>
+                                type="number" name="costo_danos_estimados" placeholder="Introduce el costo" min="0"
+                                required>
                         </div>
                     </div>
 
                     {{-- Costo real daños --}}
                     <div class="flex flex-col gap-5.5 xl:flex-row">
                         <div class="w-full px-3 xl:w-1/2">
-                            <label class="mb-3 block text-base font-medium text-[#07074D]" for="costo_real_danos">Costo Real Daños</label>
+                            <label class="mb-3 block text-base font-medium text-[#07074D]" for="costo_real_danos">Costo Real
+                                Daños</label>
                             <input
                                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                type="number" name="costo_real_danos" placeholder="Introduce el costo" min="0" required>
+                                type="number" name="costo_real_danos" placeholder="Introduce el costo" min="0"
+                                required>
                         </div>
 
                         {{-- Responsable --}}
                         <div class="w-full px-3 xl:w-1/2">
-                            <label class="mb-3 block text-base font-medium text-[#07074D]" for="id_usuario">Responsable</label>
+                            <label class="mb-3 block text-base font-medium text-[#07074D]"
+                                for="id_usuario">Responsable</label>
 
-                            <select
-                                name="id_usuario"
+                            <select name="id_usuario"
                                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                 required>
                                 <option disabled selected>Selecciona una opción...</option>
                                 @foreach ($usuarios as $usuario)
-                                <option value="{{ $usuario->id_usuario }}">
-                                    {{ $usuario->nombre }}  {{ $usuario->app }}  {{ $usuario->apm }} - {{ $usuario->empresa }}
-                                </option>
-                            @endforeach
+                                    <option value="{{ $usuario->id_usuario }}">
+                                        {{ $usuario->nombre }} {{ $usuario->app }} {{ $usuario->apm }} -
+                                        {{ $usuario->empresa }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
 
                     {{-- Observaciones --}}
                     <div class="mt-5">
-                        <label class="mb-3 block text-base font-medium text-[#07074D]" for="observaciones">Observaciones</label>
+                        <label class="mb-3 block text-base font-medium text-[#07074D]"
+                            for="observaciones">Observaciones</label>
                         <textarea
                             class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                             name="observaciones" placeholder="Observaciones..." required></textarea>
@@ -108,17 +115,17 @@
 
                 </div>
 
-                {{-- Botones --}}
+                {{-- BTN --}}
                 <div class="flex justify-end gap-4 mt-4">
-                    <button type="button"
-                        class="px-6 py-2 font-semibold bg-gray-200 rounded-md hover:bg-red-200 focus:outline-none focus:bg-red-700">
-                      <a href="{{route('siniestros.index')}}">cancelar</a>
-                    </button>
+                    <a href="{{ route('siniestros.index') }}"
+                        class="px-4 py-2 text-gray-700 bg-gray-200 rounded-md shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">Cancelar</a>
                     <button type="submit"
-                        class="px-6 py-2 text-gray-200 bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">Registrar</button>
+                        class="px-4 py-2 text-white bg-indigo-600 rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">Registrar</button>
                 </div>
             </form>
 
         </div>
     </div>
 @endsection
+
+

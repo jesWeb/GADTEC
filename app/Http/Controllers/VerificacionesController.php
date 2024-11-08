@@ -58,7 +58,7 @@ class VerificacionesController extends Controller
         //guardamos datos en BD
         $newVer->save();
 
-        return to_route('verificaciones.index');
+        return redirect()->route('verificaciones.index')->with('mensaje','Se ha registrado correctamente el registro');
     }
 
     public function show($id)
@@ -85,7 +85,7 @@ class VerificacionesController extends Controller
         $input = $request->all();
         $EddVer->update($input);
 
-        return to_route('verificaciones.index');
+        return redirect()->route('verificaciones.index')->with('message',"Se ha actualizado correctamente el registro");
 
     }
 
@@ -94,6 +94,6 @@ class VerificacionesController extends Controller
         //
         $DelVer = verificacion::findOrFail($id);
         $DelVer->delete();
-        return to_route('verificaciones.index');
+        return redirect()->route('verificaciones.index')->with('eliminar','Se ha eliminado el registro');
     }
 }

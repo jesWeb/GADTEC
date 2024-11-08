@@ -44,10 +44,9 @@
                     observaciones : <br>
                     <span class="text-gray-500"> {{ $automovil->observaciones }}</span>
                 </p>
-
-                <div class="mt-4">
-                    <button
-                        class="px-4 py-2 text-white bg-indigo-500 rounded hover:bg-indigo-600 focus:outline-none">Cerrar</button>
+                {{-- buttons --}}
+                <div class="flex justify-end mt-6 space-x-4">
+                    <a  href="{{route('Automovil.index')}}" class="px-4 py-2 text-white bg-indigo-600 rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">Cerrar</a>
                 </div>
             </div>
         </div>

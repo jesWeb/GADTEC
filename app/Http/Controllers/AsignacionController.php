@@ -76,8 +76,9 @@ class AsignacionController extends Controller
 
     public function edit($id)
     {
+        // $EddtAsig = asignacion::findOrFail($id);
+        dd(asignacion::findOrFail($id)->toSql());
 
-        $EddtAsig = asignacion::findOrFail($id);
         return view('catalogos.asignacion.edit', compact('EddtAsig'));
     }
 
@@ -88,13 +89,13 @@ class AsignacionController extends Controller
         $input = $request->all();
         $EddtAsig->update($input);
 
-        return to_route('asignacion.index');
+        return redirect()->route('asignacion.index')->with('message','Se ha actualizado el registro');
     }
 
     public function destroy($id)
     {
         $DelAsg = asignacion::findOrFail($id);
         $DelAsg->delete();
-        return to_route('asignacion.index');
+        return redirect()->route('asignacion.index')->with('eliminar','se ha eliminado el registro');
     }
 }

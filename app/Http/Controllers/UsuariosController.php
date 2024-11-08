@@ -91,7 +91,7 @@ class UsuariosController extends Controller
         }
 
         Usuarios::create($input);
-        return redirect()->route('usuarios.index')->with('message', 'Se ha creado correctamente el registro');
+        return redirect()->route('usuarios.index')->with('mensaje', 'Se ha creado correctamente el registro');
     }
 
     /**

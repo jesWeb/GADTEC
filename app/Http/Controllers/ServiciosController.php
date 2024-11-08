@@ -15,16 +15,16 @@ class ServiciosController extends Controller
     public function index(Request $request)
     {
         //
-        $query = Servicios::with('automovil'); 
-        
+        $query = Servicios::with('automovil');
+
         // Verificar si hay una búsqueda
         if ($request->has('search') && $request->input('search') != '') {
             $search = $request->input('search');
             $query->where(function($q) use ($search) {
-                $q->where('tipo_servicio', 'LIKE', "%{$search}%")   
-                ->orWhere('descripcion', 'LIKE', "%{$search}%") 
+                $q->where('tipo_servicio', 'LIKE', "%{$search}%")
+                ->orWhere('descripcion', 'LIKE', "%{$search}%")
                 ->orWhere('costo', 'LIKE', "%{$search}%")
-                ->orWhere('lugar_servicio', 'LIKE', "%{$search}%")                  
+                ->orWhere('lugar_servicio', 'LIKE', "%{$search}%")
                 ->orWhereHas('automovil', function ($q) use ($search) {
                     $q->where('marca', 'LIKE', "%{$search}%")
                         ->orWhere('submarca', 'LIKE', "%{$search}%")
@@ -32,10 +32,10 @@ class ServiciosController extends Controller
                 });
             });
         }
-    
+
         $servicios = $query->get();
         return view('modulos.servicios.index', compact('servicios'));
-       
+
     }
 
     /**
@@ -74,7 +74,7 @@ class ServiciosController extends Controller
         $request->validate($rules, $messages);
         $input = $request->all();
         Servicios::create($input);
-        return redirect()->route('servicios.index')->with('message', 'Se ha creado correctamente el registro');
+        return redirect()->route('servicios.index')->with('mensaje', 'Se ha creado correctamente el registro');
     }
 
     /**
@@ -140,7 +140,7 @@ class ServiciosController extends Controller
         //
         $servicio = Servicios::findOrFail($id);
         $servicio->delete();
-        return redirect()->route('servicios.index')->with('danger', 'Se ha eliminado correctamente el registro');
+        return redirect()->route('servicios.index')->with('eliminar', 'Se ha eliminado correctamente el registro');
     }
 
     /**

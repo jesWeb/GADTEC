@@ -35,7 +35,6 @@ class SegurosController extends Controller
         return view('catalogos.seguros.index', compact('seguro'));
     }
 
-
     public function create()
     {
         //
@@ -58,7 +57,7 @@ class SegurosController extends Controller
         //guardamos datos en BD
          $newSeg->save();
 
-        return to_route('seguros.index');
+        return redirect()->route('seguros.index')->with('mensaje','Se ha registarado exitosamente!!');
     }
 
     public function show($id)
@@ -80,13 +79,13 @@ class SegurosController extends Controller
         $EddSeg = seguros::findOrFail($id);
         $input = $request->all();
         $EddSeg->update($input);
-        return to_route('seguros.index');
+        return redirect()->route('seguros.index')->with('mensajeAct', 'Se ha actualizado el Seguro');
     }
 
     public function destroy($id)
     {
         $DelSeg = seguros::findOrFail($id);
         $DelSeg->delete();
-        return to_route('seguros.index');
+        return redirect()->route('seguros.index')->with('mensajeDel','Se ha eliminado Correctamente el registró');
     }
 }

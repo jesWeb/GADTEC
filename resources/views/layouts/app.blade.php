@@ -34,7 +34,7 @@
         </div>
 
 
-@yield('js')
+        @yield('js')
 
 
 </body>
