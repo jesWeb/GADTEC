@@ -49,9 +49,9 @@ class TeneciasRefrendosController extends Controller
     }
     /**
      * Store a newly created resource in storage.
-     */ 
+     */
     public function store(Request $request){
-        
+
         $rules = [
             'id_automovil' =>'required',
             'fecha_pago' =>'required',
@@ -78,7 +78,7 @@ class TeneciasRefrendosController extends Controller
             'comprobate.max' => 'El tamaño máximo de la imagen es 2MB',
         ];
         $request->validate($rules, $messages);
-        
+
         $input = $request->all();
 
         if ($request->hasFile('comprobante')) {
@@ -92,12 +92,12 @@ class TeneciasRefrendosController extends Controller
 
             $input['comprobante'] = $img2;
         } else {
-            $input['comprobante'] = "N/A"; 
+            $input['comprobante'] = "N/A";
         }
 
 
         TeneciasRefrendos::create($input);
-        return redirect()->route('tenencias.index')->with('message', 'Se ha creado correctamente el registro');
+        return redirect()->route('tenencias.index')->with('mensaje', 'Se ha creado correctamente el registro');
     }
 
     /**
@@ -158,10 +158,10 @@ class TeneciasRefrendosController extends Controller
             $img = $file->getClientOriginalName();
             $ldate = date('Ymd_His_');
             $img2 = $ldate. $img;
-        
+
             // Guarda la imagen en public/img
             $file->move(public_path('img'), $img2);
-        
+
             $input['comprobante'] = $img2;
         } else {
             // Asigna "N/A" si no se ha subido un nuevo comprobante y el actual es nulo o vacío

@@ -26,8 +26,6 @@ class AsignacionController extends Controller
 
     public function store(Request $request)
     {
-
-
         //validacion de hora y dia existente
         $asigExt = asignacion::where('id_automovil', $request->id_automovil)
             ->where('fecha_salida', $request->fecha_salida)
@@ -56,8 +54,7 @@ class AsignacionController extends Controller
             $newAsig->save();
         }
 
-
-        return to_route('asignacion.index')->with('success', 'Asignación creada con éxito.');
+        return redirect()->route('asignacion.index')->with('mensaje', 'Asignación creada con éxito.');
     }
 
     public function show($id)
@@ -81,13 +78,13 @@ class AsignacionController extends Controller
         $input = $request->all();
         $EddtAsig->update($input);
 
-        return to_route('asignacion.index');
+        return redirect()->route('asignacion.index')->with('message','Se ha actualizado el registro');
     }
 
     public function destroy($id)
     {
         $DelAsg = asignacion::findOrFail($id);
         $DelAsg->delete();
-        return to_route('asignacion.index');
+        return redirect()->route('asignacion.index')->with('eliminar','se ha eliminado el registro');
     }
 }

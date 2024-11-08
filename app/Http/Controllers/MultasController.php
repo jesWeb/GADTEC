@@ -90,7 +90,7 @@ class MultasController extends Controller
 
         Multas::create($input);
 
-        return redirect()->route('multas.index')->with('message', 'Se ha creado correctamente el registro');
+        return redirect()->route('multas.index')->with('mensaje', 'Se ha creado correctamente el registro');
 
 
     }
@@ -115,9 +115,7 @@ class MultasController extends Controller
         return view('modulos.multas.edit', compact('multa', 'automoviles'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(Request $request, string $id)
 {
     $rules = [
@@ -171,7 +169,7 @@ class MultasController extends Controller
         //
         $multa = Multas::findOrFail($id);
         $multa->delete();
-        return redirect()->route('multas.index')->with('danger', 'Se ha eliminado correctamente el registro');
+        return redirect()->route('multas.index')->with('eliminar', 'Se ha eliminado correctamente el registro');
     }
 
     /**
@@ -185,10 +183,10 @@ class MultasController extends Controller
         return $pdf->stream();  // Output as downloadable PDF file
 
     }
-    
 
-    
 
-    
+
+
+
 
 }

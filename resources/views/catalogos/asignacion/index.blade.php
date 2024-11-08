@@ -1,6 +1,4 @@
 @extends('layouts.app')
-
-
 @section('body')
     <div class="px-4 py-6">
         <div class="p-6 bg-white rounded-md shadow-md">
@@ -50,12 +48,15 @@
                                         </a>
 
                                         <!-- Eliminar -->
-                                        <form action="{{ route('asignacion.destroy', $reserv->id_asignacion) }}" method="POST" class="inline">
+                                        <form action="{{ route('asignacion.destroy', $reserv->id_asignacion) }}" method="POST"  id="eliminacion-form" class="inline-block">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="inline-flex items-center justify-center w-8 h-8 text-red-600 border border-red-600 rounded hover:bg-red-600 hover:text-white" onclick="return confirm('¿Está seguro que desea borrar el registro?')">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7H5M10 11v6m4-6v6M7 7h10l-1-1H8l-1 1z" />
+                                            <button type="submit" onclick="deleteRegister(event)"
+                                                class="inline-flex items-center justify-center w-8 h-8 text-red-600 border border-red-600 rounded hover:bg-red-600 hover:text-white">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                    stroke="currentColor" class="w-4 h-4">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M19 7H5M10 11v6m4-6v6M7 7h10l-1-1H8l-1 1z" />
                                                 </svg>
                                             </button>
                                         </form>
@@ -69,3 +70,61 @@
         </div>
     </div>
 @endsection
+
+
+@section('js')
+    {{-- alert creacion --}}
+    @if ($mensaje = Session::get('mensaje'))
+        <script>
+            Swal.fire({
+                title: "Asignacion Registrada",
+                text: "{{ $mensaje }}",
+                icon: "success"
+            });
+        </script>
+    @endif
+    {{-- alerta de editar --}}
+    @if ($updateMessaje = Session::get('message'))
+        <script>
+            Swal.fire({
+                title: "Informacion  Actualizada",
+                text: "{{ $updateMessaje }}",
+                icon: "success"
+            });
+        </script>
+    @endif
+
+    {{-- alerta de eliminacion --}}
+    @if (session('eliminar') == 'se ha eliminado correctamente El automovil')
+        <script>
+            Swal.fire({
+                title: "Eliminado!",
+                text: "eliminar",
+                icon: "success"
+            });
+        </script>
+    @endif
+    <script>
+        function deleteRegister() {
+            event.preventDefault();
+            const btndelete = document.getElementById("eliminacion-form");
+            Swal.fire({
+                title: "Estas seguro de Eliminar el registro?",
+                text: "¡No podrás revertir esto!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si, borrar!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    btndelete.submit();
+                    Swal.fire({
+                        title: "¡Eliminado!",
+                        text: "El automóvil ha sido eliminado correctamente.",
+                        icon: "success"
+                    });
+                }
+            });
+        }
+    </script>
