@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 
 class SiniestrosController extends Controller
 {
-
     public function index(Request $request)
     {
         //
@@ -18,31 +17,27 @@ class SiniestrosController extends Controller
         // Verificar si hay una búsqueda
         if ($request->has('search') && $request->input('search') != '') {
             $search = $request->input('search');
-            $query->where(function($q) use ($search) {
+            $query->where(function ($q) use ($search) {
                 $q->where('id_automovil', 'LIKE', "%{$search}%")
-                ->orWhere('fecha_siniestro', 'LIKE', "%{$search}%")
-                ->orWhere('descripcion', 'LIKE', "%{$search}%")
-                ->orWhere('estatus', 'LIKE', "%{$search}%")
-                ->orWhereHas('automovil', function ($q) use ($search) {
-                    $q->where('marca', 'LIKE', "%{$search}%")
-                        ->orWhere('modelo', 'LIKE', "%{$search}%");
-                });
+                    ->orWhere('fecha_siniestro', 'LIKE', "%{$search}%")
+                    ->orWhere('descripcion', 'LIKE', "%{$search}%")
+                    ->orWhere('estatus', 'LIKE', "%{$search}%")
+                    ->orWhereHas('automovil', function ($q) use ($search) {
+                        $q->where('marca', 'LIKE', "%{$search}%")
+                            ->orWhere('submarca', 'LIKE', "%{$search}%")
+                            ->orWhere('modelo', 'LIKE', "%{$search}%");
+                    });
             });
         }
         $siniestros = $query->get();
-        return view('catalogos.siniestros.index',compact('siniestros'));
+        return view('catalogos.siniestros.index', compact('siniestros'));
     }
-
-
     public function create()
     {
-        //
         $automoviles  = Automoviles::all();
         $usuarios = Usuarios::all();
-        return view('catalogos.siniestros.create',compact('automoviles','usuarios'));
+        return view('catalogos.siniestros.create', compact('automoviles', 'usuarios'));
     }
-
-
     public function store(Request $request)
     {
 
@@ -56,10 +51,10 @@ class SiniestrosController extends Controller
         $newSin->id_usuario = $request->input('id_usuario');
         $newSin->observaciones = $request->input('observaciones');
 
-         //guardamos datos en BD
-         $newSin ->save();
+        //guardamos datos en BD
+        $newSin->save();
 
-        return to_route('siniestros.index');
+        return redirect()->route('siniestros.index')->with('mensaje', 'Se ha creado Correctamente el registro');
     }
 
 
@@ -68,7 +63,6 @@ class SiniestrosController extends Controller
         //
         $ViewSini = siniestros::findOrfail($id);
         return view('catalogos.siniestros.show', compact('ViewSini'));
-
     }
 
     public function edit($id)
@@ -76,24 +70,24 @@ class SiniestrosController extends Controller
 
         $EddSin = siniestros::find($id);
         $automoviles = Automoviles::all();
-        $usuarios=Usuarios::all();
-        return view('catalogos.siniestros.edit', compact('EddSin','automoviles','usuarios'));
+        $usuarios = Usuarios::all();
+        return view('catalogos.siniestros.edit', compact('EddSin', 'automoviles', 'usuarios'));
     }
 
 
     public function update(Request $request,  $id)
     {
-     $EddSin = siniestros::findOrFail($id);
-     $input = $request->all();
-     $EddSin->update($input);
-     return to_route('siniestros.index');
+        $EddSin = siniestros::findOrFail($id);
+        $input = $request->all();
+        $EddSin->update($input);
+        return redirect()->route('siniestros.index')->with('message', 'Se ha modificado correctamente el Registro ');
     }
 
 
-    public function destroy( $id)
+    public function destroy($id)
     {
         $DelSin = siniestros::findOrFail($id);
         $DelSin->delete();
-        return to_route('siniestros.index');
+        return redirect()->route('siniestros.index')->with('eliminar', 'Se ha eliminado correctamente el Registro');
     }
 }

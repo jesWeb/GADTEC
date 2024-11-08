@@ -1,4 +1,3 @@
-
 @extends('layouts.app')
 @section('body')
     <div class="mt-4">
@@ -15,13 +14,9 @@
                         <div class="w-full px-3 xl:w-1/2">
                             <div class="xl:mb-5">
                                 <label class="mb-3 block text-base font-medium text-[#07074D]" for="marca">Marca</label>
-                                <input
-                                type="text"
-                                name="marca"
-                                value="{{ $EddCar->marca }}"
-                                placeholder="Ingresa la marca"
-                                disabled
-                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                                <input type="text" name="marca" value="{{ $EddCar->marca }}"
+                                    placeholder="Ingresa la marca" disabled
+                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
                             </div>
                         </div>
                         {{-- Submarca --}}
@@ -29,13 +24,8 @@
                             <div class="xl:mb-5">
                                 <label class="mb-3 block text-base font-medium text-[#07074D]"
                                     for="submarca">Submarca</label>
-                                <input
-                                    type="text"
-                                    name="submarca"
-                                    id="submarca"
-                                    disabled
-                                    value="{{ $EddCar->submarca }}"
-                                    placeholder="Ingresa la submarca"
+                                <input type="text" name="submarca" id="submarca" disabled
+                                    value="{{ $EddCar->submarca }}" placeholder="Ingresa la submarca"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                     </div>
                             </div>
@@ -78,7 +68,7 @@
                             <div class="xl:mb-5">
                                 <label class="mb-3 block text-base font-medium text-[#07074D]"
                                     for="num_nsi">NSI/Repube</label>
-                                <input type="text" disabled  name="num_nsi" required
+                                <input type="text" disabled name="num_nsi" required
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                     value="{{ old('NSI', $EddCar->num_nsi) }}">
                             </div>
@@ -96,10 +86,8 @@
                                     for="kilometraje">Kilometraje</label>
                                 <input
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                    type="number"
-                                    value="{{old('kilometraje',$EddCar->kilometraje)}}"
-                                    pattern="^\d*\.?\d+$"
-                                    min="0" step="0.01" required name="kilometraje">
+                                    type="number" value="{{ old('kilometraje', $EddCar->kilometraje) }}"
+                                    pattern="^\d*\.?\d+$" min="0" step="0.01" required name="kilometraje">
                             </div>
 
                         </div>
@@ -136,15 +124,10 @@
                         {{-- color --}}
                         <div class="w-full px-3 xl:w-1/2">
                             <div class="xl:mb-5">
-                                <label class="mb-3 block text-base font-medium text-[#07074D]"
-                                    for="color">Color</label>
+                                <label class="mb-3 block text-base font-medium text-[#07074D]" for="color">Color</label>
                                 <input
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                    type="text"
-                                    name="color"
-                                    disabled
-                                    value="{{old('color',$EddCar->color)}}"
-                                    >
+                                    type="text" name="color" disabled value="{{ old('color', $EddCar->color) }}">
                             </div>
                         </div>
                         {{-- No.Puertas --}}
@@ -154,25 +137,26 @@
                                     Puertas</label>
                                 <input
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                    type="text"
-                                    name="num_puertas"
-                                    disabled
-                                    value="{{old('num_puertas',$EddCar->num_puertas)}}"
-                                    >
+                                    type="text" name="num_puertas" disabled
+                                    value="{{ old('num_puertas', $EddCar->num_puertas) }}">
                             </div>
                         </div>
                         {{-- Utilidad --}}
                         <div class="w-full px-3 xl:w-1/2">
                             <div class="xl:mb-5">
                                 <label class="mb-3 block text-base font-medium text-[#07074D]" for="estatus">
-                                    Condiciones</label>
+                                    Condiciones
+                                </label>
                                 <select name="estatus"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                     required>
-                                    <option disabled selected>Selecciona una opcion </option>
-                                    <option value="Nuevo">Nuevo</option>
-                                    <option value="Usado">Usado</option>
-
+                                    <option disabled selected>Selecciona una opcion</option>
+                                    {{-- <option value="Nuevo"
+                                        {{ old('estatus', $Eddcar->estatus) == 'Nuevo' ? 'selected' : '' }}>Nuevo
+                                    </option>
+                                    <option value="Usado"
+                                        {{ old('estatus', $Eddcar->estatus) == 'Usado' ? 'selected' : '' }}>Usado
+                                    </option> --}}
                                 </select>
                             </div>
                         </div>
@@ -186,9 +170,7 @@
                                     for="placas">Placas</label>
                                 <input
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                    type="text"
-                                    value="{{old('placas',$EddCar->placas)}}"
-                                    name="placas">
+                                    type="text" value="{{ old('placas', $EddCar->placas) }}" name="placas">
                             </div>
 
                         </div>
@@ -198,10 +180,8 @@
                                 <label for="fecha_registro" class="mb-3 block text-base font-medium text-[#07074D]">
                                     Fecha de Ingreso
                                 </label>
-                                <input
-                                    type="date"
-                                    name="fecha_registro"
-                                    value="{{old('fecha_registro',$EddCar->fecha_registro)}}"
+                                <input type="date" name="fecha_registro"
+                                    value="{{ old('fecha_registro', $EddCar->fecha_registro) }}"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                             </div>
                         </div>
@@ -244,10 +224,8 @@
                             <div class="xl:mb-5">
                                 <label class="mb-3 block text-base font-medium text-[#07074D]"
                                     for="responsable">Responsable</label>
-                                <input
-                                     type="text"
-                                    name="responsable"
-                                     value="{{old('responsable',$EddCar->responsable)}}"
+                                <input type="text" name="responsable"
+                                    value="{{ old('responsable', $EddCar->responsable) }}"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                     required placeholder="Ingresa el nombre del responsable" />
                             </div>
@@ -288,10 +266,9 @@
                     </div>
 
                     {{-- BTN --}}
-                    <div class="flex justify-end gap-4 mt-4">
-
-                        <button type="submit"
-                            class="px-6 py-2 text-gray-200 bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">Actualizar</button>
+                    <div class="flex justify-end mt-6 space-x-4">
+                        <a href="{{ route('Automovil.index') }}" class="px-4 py-2 text-gray-700 bg-gray-200 rounded-md shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">Cancelar</a>
+                        <button type="submit" class="px-4 py-2 text-white bg-indigo-600 rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">Actualizar</button>
                     </div>
             </form>
 

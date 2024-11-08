@@ -20,7 +20,7 @@ return new class extends Migration
             $table->set('empresa', ['GÄTSIMED', 'DYDETEC', 'Empresa 3'])->default('GÄTSIMED');    // no recomiendo tenerlo aqui por si hay mas empresas tabla aparte
             $table->date('fn');
             $table->set('sex', ['Femenino', 'Masculino'])->default('Femenino');
-            $table->set('rol', ['Administrador', 'Moderador', 'Vigilante'])->default('Administrador');
+            $table->set('rol', ['Administrador', 'Moderador', 'Usuario'])->default('Administrador');
             $table->string('gen', 50);
             $table->text('foto');
             $table->string('email')->unique(); // Cambia de text a string

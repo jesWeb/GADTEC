@@ -91,7 +91,7 @@ class UsuariosController extends Controller
         }
 
         Usuarios::create($input);
-        return redirect('usuarios')->with('message', 'Se ha creado correctamente el registro');
+        return redirect()->route('usuarios.index')->with('mensaje', 'Se ha creado correctamente el registro');
     }
 
     /**
@@ -167,7 +167,7 @@ class UsuariosController extends Controller
         }
 
         $usuario->update($input);
-        return redirect('usuarios')->with('info', 'Se ha actualizado el registro correctamente');
+        return redirect()->route('usuarios.index')->with('message', 'Se ha modificado correctamente el registro');
     }
 
     /**
@@ -176,16 +176,7 @@ class UsuariosController extends Controller
     public function destroy(string $id) {
         $usuario = Usuarios::findOrFail($id);
         $usuario->delete();
-        return back()->with('danger', 'Se ha eliminado correctamente el registro');
+        return redirect()->route('usuarios.index')->with('danger', 'Se ha eliminado correctamente el registro');
     }
 
-    /**
-     * Generar reporte de usuarios
-     */
-    // public function generateReport(){
-    //     $usuarios = Usuarios::all();
-    //     $pdf = FacadePdf::loadView('catalogos.usuarios.report-usuarios', compact('usuarios'));
-    //     return $pdf->stream();  // Output as downloadable PDF file
-
-    // }
 }

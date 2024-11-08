@@ -6,7 +6,7 @@
         <div class="p-6 bg-white rounded-lg shadow-md">
             <h2 class="mb-4 text-2xl font-bold">Editar Tarjeta de Circulación</h2>
 
-            <form action="{{ url('tarjetas/' . $tarjeta->id_tarjeta) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ url('dashboard/tarjetas/' . $tarjeta->id_tarjeta) }}"  method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 

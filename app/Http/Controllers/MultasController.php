@@ -28,6 +28,7 @@ class MultasController extends Controller
                 ->orWhere('fecha_multa', 'LIKE', "%{$search}%")
                 ->orWhereHas('automovil', function ($q) use ($search) {
                     $q->where('marca', 'LIKE', "%{$search}%")
+                        ->orWhere('submarca', 'LIKE', "%{$search}%")
                         ->orWhere('modelo', 'LIKE', "%{$search}%");
                 });
             });
@@ -89,7 +90,7 @@ class MultasController extends Controller
 
         Multas::create($input);
 
-        return redirect('multas')->with('message', 'Se ha creado correctamente el registro');
+        return redirect()->route('multas.index')->with('mensaje', 'Se ha creado correctamente el registro');
 
 
     }
@@ -114,9 +115,7 @@ class MultasController extends Controller
         return view('modulos.multas.edit', compact('multa', 'automoviles'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(Request $request, string $id)
 {
     $rules = [
@@ -158,7 +157,7 @@ class MultasController extends Controller
 
     $multa->update($input);
 
-    return redirect('multas')->with('message', 'Se ha modificado correctamente el registro');
+    return redirect()->route('multas.index')->with('message', 'Se ha modificado correctamente el registro');
 }
 
 
@@ -170,7 +169,7 @@ class MultasController extends Controller
         //
         $multa = Multas::findOrFail($id);
         $multa->delete();
-        return back()->with('danger', 'Se ha eliminado correctamente el registro');
+        return redirect()->route('multas.index')->with('eliminar', 'Se ha eliminado correctamente el registro');
     }
 
     /**
@@ -181,13 +180,13 @@ class MultasController extends Controller
         $multas = Multas::with('automovil')->get();
         // return view('modulos.multas.report-multas', compact('multas'));
         $pdf = FacadePdf::loadView('modulos.multas.report-multas', compact('multas'));
-        return $pdf->stream();  // Output as downloadable PDF file
+        return $pdf->stream();  // Salida como archivo PDF
 
     }
-    
 
-    
 
-    
+
+
+
 
 }

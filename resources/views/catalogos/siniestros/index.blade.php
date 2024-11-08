@@ -4,22 +4,24 @@
         <div class="p-6 bg-white rounded-md shadow-md">
             <h2 class="mb-4 text-lg font-semibold text-gray-700 capitalize">Siniestros</h2>
             <div class="mb-2">
-                <form action="{{ route('siniestros.index') }}" method="GET" class="flex flex-col items-center justify-between space-y-2 md:flex-row md:space-y-0">
+                <form action="{{ route('siniestros.index') }}" method="GET"
+                    class="flex flex-col items-center justify-between space-y-2 md:flex-row md:space-y-0">
                     <!-- Campo de búsqueda -->
                     <div class="flex items-center w-full md:w-auto">
-                        <input type="text" name="search" placeholder="Buscar Siniestro" 
-                            class="w-full px-4 py-2 text-gray-700 border rounded-l-md focus:outline-none md:w-48" 
+                        <input type="text" name="search" placeholder="Buscar Siniestro"
+                            class="w-full px-4 py-2 text-gray-700 border rounded-l-md focus:outline-none md:w-48"
                             value="{{ request('search') }}">
-                        <button type="submit" 
+                        <button type="submit"
                             class="flex items-center px-4 py-2 ml-1 text-white bg-blue-600 border-l-0 rounded-r-md hover:bg-blue-700 focus:outline-none">
                             Buscar
                         </button>
-                    
+
                     </div>
                 </form>
                 <!-- Botones de Imprimir y Nuevo Registro -->
                 <div class="flex justify-end ml-2 space-x-2">
-                <a   href="{{ route('siniestros.create') }}"  class="inline-block px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Nuevo registro</a>
+                    <a href="{{ route('siniestros.create') }}"
+                        class="inline-block px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Nuevo registro</a>
                 </div>
             </div>
             <div class="overflow-x-auto rounded-lg shadow">
@@ -40,10 +42,12 @@
                             <tr class="hover:bg-gray-50">
                                 <td class="px-4 py-2 border">{{ $key + 1 }}</td>
                                 <td class="px-4 py-2 border">
-                                    {{ $sin->automovil->marca }}-{{ $sin->automovil->submarca }}-{{ $sin->automovil->modelo }}
+                                    {{ $sin->automovil->marca }} {{ $sin->automovil->submarca }}
+                                    {{ $sin->automovil->modelo }}
                                 </td>
                                 <td class="px-4 py-2 border">{{ $sin->fecha_siniestro }}</td>
-                                <td class="px-4 py-2 border">{{ $sin->usuarios->nombre }} {{ $sin->usuarios->app }} {{ $sin->usuarios->apm}}</td>
+                                <td class="px-4 py-2 border">{{ $sin->usuarios->nombre }} {{ $sin->usuarios->app }}
+                                    {{ $sin->usuarios->apm }}</td>
                                 <td class="px-4 py-2 border">{{ $sin->estatus }}</td>
                                 {{-- acciones --}}
                                 <td class="px-4 py-2 border">
@@ -70,12 +74,11 @@
 
                                         <!-- Eliminar -->
                                         <form action="{{ route('siniestros.destroy', $sin) }}" method="POST"
-                                            class="inline">
+                                            id="eliminacion-form" class="inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit"
-                                                class="inline-flex items-center justify-center w-8 h-8 text-red-600 border border-red-600 rounded hover:bg-red-600 hover:text-white"
-                                                onclick="return confirm('¿Está seguro que desea borrar el registro?')">
+                                            <button type="submit" onclick="deleteRegister(event)"
+                                                class="inline-flex items-center justify-center w-8 h-8 text-red-600 border border-red-600 rounded hover:bg-red-600 hover:text-white">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                     stroke="currentColor" class="w-4 h-4">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -94,4 +97,60 @@
             {{-- {{ $cars->links() }} --}}
         </div>
     </div>
+@endsection
+
+@section('js')
+
+@section('js')
+    {{-- alert creacion --}}
+    @if ($mensaje = Session::get('mensaje'))
+        <script>
+            Swal.fire({
+                title: "Siniestro Registrado",
+                text: "{{ $mensaje }}",
+                icon: "success"
+            });
+        </script>
+    @endif
+    {{-- alerta de editar --}}
+    @if ($updateMessaje = Session::get('message'))
+        <script>
+            Swal.fire({
+                title: "Informacion  Actualizada",
+                text: "{{ $updateMessaje }}",
+                icon: "success"
+            });
+        </script>
+    @endif
+
+    {{-- alerta de eliminacion --}}
+    @if (session('eliminar') == 'se ha eliminado correctamente El automovil')
+        <script>
+            Swal.fire({
+                title: "Eliminado!",
+                text: "eliminar",
+                icon: "success"
+            });
+        </script>
+    @endif
+    <script>
+        function deleteRegister() {
+            event.preventDefault();
+            const btndelete = document.getElementById("eliminacion-form");
+            Swal.fire({
+                title: "Estas seguro de Eliminar el registro?",
+                text: "¡No podrás revertir esto!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si, borrar!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    btndelete.submit();
+                }
+            });
+        }
+    </script>
+
 @endsection

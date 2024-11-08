@@ -6,8 +6,8 @@
         <div class="p-6 bg-white rounded-lg shadow-lg">
             <h2 class="text-lg font-semibold text-gray-700 capitalize">Editar Multa</h2>
 
-            <form action="{{ url('multas/' . $multa->id_multa) }}" method="POST" enctype="multipart/form-data">
-                {{ csrf_field() }}
+            <form action="{{ url('dashboard/multas/' . $multa->id_multa) }}" method="POST" enctype="multipart/form-data">
+            {{ csrf_field() }}
                 {{method_field('PUT')}}
                 <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-3">
                     <div class="mb-4">

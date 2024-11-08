@@ -28,6 +28,7 @@ class TeneciasRefrendosController extends Controller
                     ->orWhere('fecha_vencimiento', 'LIKE', "%{$search}%")
                     ->orWhereHas('automovil', function ($q) use ($search) {
                         $q->where('marca', 'LIKE', "%{$search}%")
+                            ->orWhere('submarca', 'LIKE', "%{$search}%")
                             ->orWhere('modelo', 'LIKE', "%{$search}%");
                 });
             });
@@ -48,9 +49,9 @@ class TeneciasRefrendosController extends Controller
     }
     /**
      * Store a newly created resource in storage.
-     */ 
+     */
     public function store(Request $request){
-        
+
         $rules = [
             'id_automovil' =>'required',
             'fecha_pago' =>'required',
@@ -60,7 +61,6 @@ class TeneciasRefrendosController extends Controller
             'estatus' =>'required',
             'fecha_vencimiento' =>'required',
             'comprobante' =>'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'observaciones' =>'required',
             'id_automovil' =>'required'
 
         ];
@@ -76,10 +76,9 @@ class TeneciasRefrendosController extends Controller
             'comprobante.file' => 'El archivo debe ser una imagen',
             'comprobante.mimes' => 'El archivo debe ser de tipo jpeg, png, jpg o gif',
             'comprobate.max' => 'El tamaño máximo de la imagen es 2MB',
-            'observaciones.required' => 'El campo observaciones es requerido'
         ];
         $request->validate($rules, $messages);
-        
+
         $input = $request->all();
 
         if ($request->hasFile('comprobante')) {
@@ -93,12 +92,12 @@ class TeneciasRefrendosController extends Controller
 
             $input['comprobante'] = $img2;
         } else {
-            $input['comprobante'] = "shadow.png"; 
+            $input['comprobante'] = "N/A";
         }
 
 
         TeneciasRefrendos::create($input);
-        return redirect('tenencias')->with('message', 'Se ha creado correctamente el registro');
+        return redirect()->route('tenencias.index')->with('mensaje', 'Se ha creado correctamente el registro');
     }
 
     /**
@@ -134,7 +133,6 @@ class TeneciasRefrendosController extends Controller
             'estatus' =>'required',
             'fecha_vencimiento' =>'required',
             'comprobante' =>'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'observaciones' =>'required',
             'id_automovil' =>'required'
         ];
 
@@ -149,7 +147,6 @@ class TeneciasRefrendosController extends Controller
             'comprobante.file' => 'El archivo debe ser una imagen',
             'comprobante.mimes' => 'El archivo debe ser de tipo jpeg',
             'comprobante.max' => 'El tamaño máximo de la imagen es 2MB',
-            'observaciones.required' => 'El campo observaciones es requerido'
         ];
         $request->validate($rules, $messages);
         $tenencia = TeneciasRefrendos::findOrFail($id);
@@ -161,17 +158,18 @@ class TeneciasRefrendosController extends Controller
             $img = $file->getClientOriginalName();
             $ldate = date('Ymd_His_');
             $img2 = $ldate. $img;
-        
+
             // Guarda la imagen en public/img
             $file->move(public_path('img'), $img2);
-        
+
             $input['comprobante'] = $img2;
         } else {
-            $input['comprobante'] = $tenencia->comprobante; 
+            // Asigna "N/A" si no se ha subido un nuevo comprobante y el actual es nulo o vacío
+            $input['comprobante'] = $tenencia->comprobante ?: 'N/A';
         }
 
         $tenencia->update($input);
-        return redirect('tenencias')->with('message', 'Se ha modificado correctamente el registro');
+        return redirect()->route('tenencias.index')->with('message', 'Se ha modificado correctamente el registro');
 
     }
 
@@ -183,6 +181,6 @@ class TeneciasRefrendosController extends Controller
         //
         $tenencia = TeneciasRefrendos::findOrFail($id);
         $tenencia->delete();
-        return back()->with('danger', 'Se ha eliminado correctamente el registro');
+        return redirect()->route('tenencias.index')->with('danger', 'Se ha eliminado correctamente el registro');
     }
 }

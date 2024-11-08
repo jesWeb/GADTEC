@@ -26,32 +26,46 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100">
-                    @foreach($asignaciones as $asignacion)
+                    @foreach($vigilante as $asignacion)
                         <tr class="hover:bg-gray-50">
-                            <td class="px-4 py-2 border">{{ $asignacion['vehiculo'] }}</td>
-                            <td class="px-4 py-2 border">{{ $asignacion['usuario'] }}</td>
-                            <td class="px-4 py-2 border">{{ $asignacion['fecha_asignacion'] }}</td>
-                            <td class="px-4 py-2 border">{{ $asignacion['fecha_estimacion_dev'] }}</td>
-                            <td class="px-4 py-2 border">{{ $asignacion['fecha_llegada'] }}</td>
-                            <td class="px-4 py-2 border">{{ $asignacion['destino'] }}</td>
-                            <td class="px-4 py-2 border">{{ $asignacion['motivo'] }}</td>
-                            <td class="px-4 py-2 border">{{ $asignacion['km_salida'] }}</td>
-                            <td class="px-4 py-2 border">{{ $asignacion['combustible_salida'] }}</td>
-                            <td class="px-4 py-2 border">{{ $asignacion['hora_salida'] }}</td>
-                            <td class="px-4 py-2 border">{{ $asignacion['km_llegada'] }}</td>
-                            <td class="px-4 py-2 border">{{ $asignacion['combustible_llegada'] }}</td>
-                            <td class="px-4 py-2 border">{{ $asignacion['hora_llegada'] }}</td>
-                            {{-- acciones --}}
+                            <td class="px-4 py-2 border">{{ $asignacion->automovil->marca ?? 'N/A' }}</td>
+                            <td class="px-4 py-2 border">{{ $asignacion->usuarios->nombre ?? 'N/A' }}</td>
+                            <td class="px-4 py-2 border">{{ $asignacion->fecha_asignacion ?? 'N/A' }}</td>
+                            <td class="px-4 py-2 border">{{ $asignacion->fecha_estimada_dev ?? 'N/A' }}</td>
+                            
+                            <!-- Muestra la fecha de llegada automática si hay un check-in registrado -->
                             <td class="px-4 py-2 border">
-                                <div class="flex items-center space-x-2">
-                                    <!-- Editar -->
-                                    <a href="#" class="inline-flex items-center justify-center w-8 h-8 text-yellow-600 border border-yellow-600 rounded hover:bg-yellow-600 hover:text-white">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 3l5 5-1.5 1.5-5-5M3 21h18M3 21l8-8 5 5-8 8H3z" />
-                                        </svg>
-                                    </a>
-                                </div>
+                                @if($asignacion->checkIns->isNotEmpty() && $asignacion->checkIns->first()->fecha_llegada)
+                                    {{ $asignacion->checkIns->first()->fecha_llegada->format('d/m/Y') }}
+                                @else
+                                    <!-- Mensaje indicando que la fecha está pendiente de ingreso -->
+                                    <p class="text-sm font-semibold text-red-600">Fecha pendiente de ingreso</p>
+                                @endif
                             </td>
+
+
+                            <td class="px-4 py-2 border">{{ $asignacion->lugar ?? 'N/A' }}</td>
+                            <td class="px-4 py-2 border">{{ $asignacion->motivo ?? 'N/A' }}</td>
+
+                            @if($asignacion->checkIns->isNotEmpty())
+                                <td class="px-4 py-2 border">{{ $asignacion->checkIns->first()->km_salida ?? 'N/A' }}</td>
+                                <td class="px-4 py-2 border">{{ $asignacion->checkIns->first()->combustible_salida ?? 'N/A' }}</td>
+                                <td class="px-4 py-2 border">{{ $asignacion->checkIns->first()->hora_salida ?? 'N/A' }}</td>
+                                <td class="px-4 py-2 border">{{ $asignacion->checkIns->first()->km_llegada ?? 'N/A' }}</td>
+                                <td class="px-4 py-2 border">{{ $asignacion->checkIns->first()->combustible_llegada ?? 'N/A' }}</td>
+                                <td class="px-4 py-2 border">{{ $asignacion->checkIns->first()->hora_llegada ?? 'N/A' }}</td>
+                            @else
+                                <td class="px-4 py-2 border" colspan="6">No hay datos de check-in</td>
+                            @endif
+
+                            <td class="px-4 py-2 text-center border">
+                                <a href="{{ route('vigilante.edit', $asignacion->id_asignacion) }}" class="inline-flex items-center justify-center w-8 h-8 text-yellow-600 border border-yellow-600 rounded hover:bg-yellow-600 hover:text-white">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 3l5 5-1.5 1.5-5-5M3 21h18M3 21l8-8 5 5-8 8H3z" />
+                                    </svg>
+                                </a>
+                            </td>
+
                         </tr>
                     @endforeach
                 </tbody>

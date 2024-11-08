@@ -1,4 +1,4 @@
-<div x-cloak :class="sidebarOpen ? 'block' : 'hidden'" @click="sidebarOpen = false class="fixed inset-0 z-20 transition-opacity bg-black opacity-50 lg:hidden"></div>
+<div x-cloak :class="sidebarOpen ? 'block' : 'hidden'" @click="sidebarOpen = false" class="fixed inset-0 z-20 transition-opacity bg-black opacity-50 lg:hidden"></div>
 
 <div x-cloak :class="sidebarOpen ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'"
     class="fixed inset-y-0 left-0 z-30 w-64 overflow-y-auto transition duration-300 transform bg-gray-900 lg:translate-x-0 lg:static lg:inset-0">
@@ -69,7 +69,7 @@
 
 
         {{-- link --}}
-        <a class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" href="/multas">
+        <a class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" href="/dashboard/multas">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
         <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 13.5h7.5m-7.5 0a1.5 1.5 0 100-3h7.5a1.5 1.5 0 100 3m-7.5 0v3m7.5-3v3M6.75 21h10.5M4.5 4.5l3.75 3.75M16.5 4.5l-3.75 3.75M7.5 10.5L3 7.5M16.5 10.5L21 7.5" />
         </svg>
@@ -78,7 +78,7 @@
         </a>
 
         {{-- link --}}
-        <a class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" href="/servicios">
+        <a class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" href="/dashboard/servicios">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 19.5h10.5M4.5 7.5l1.5-3h12l1.5 3M5.25 7.5h13.5v9.75H5.25V7.5zM8.25 16.5h7.5M9.75 16.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm4.5 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
             </svg>
@@ -86,7 +86,7 @@
         </a>
 
         {{-- link --}}
-        <a class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" href="/estadisticas">
+        <a class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" href="/dashboard/estadisticas">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3 17.25h18M3 12h10.5M3 6.75h15" />
             <path stroke-linecap="round" stroke-linejoin="round" d="M5 6.75V12M10.5 12V17.25M16.5 12V17.25" />
