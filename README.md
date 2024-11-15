@@ -43,12 +43,16 @@ Duplica el archivo [.env.example] para crear el archivo [.env]:
 - cp .env.example .env
 
 Establece la conexión a tu base de datos MySQL en local, que suelen ser los siguientes:
+
+```env
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1       
 DB_PORT=3306            # Puerto estándar de MySQL
 DB_DATABASE=nombre_bd   # Cambia 'nombre_bd' al nombre de tu base de datos
 DB_USERNAME=usuario     # Cambia 'usuario' por tu usuario de MySQL (en XAMPP suele ser 'root')
 DB_PASSWORD=contraseña  # Cambia 'contraseña' por tu contraseña de MySQL (en XAMPP suele estar vacía por defecto)
+```
+
 
 ## Genera la clave de la aplicación:
 - php artisan key:generate
@@ -83,17 +87,12 @@ Por ejemplo:
 Reemplaza 192.168.1.104 con la IP correspondiente de tu computadora en la red.
 
 
-## Credenciales de Acceso
+## ## Credenciales de Acceso
 Los usuarios generados por el seeder tienen los siguientes datos de inicio de sesión:
 
-- Administrador
-    Usuario: admin
-    Contraseña: admin123
+| Rol           | Usuario       | Contraseña       |
+|---------------|---------------|------------------|
+| Administrador | admin         | admin123         |
+| Moderador     | moderador     | moderador546     |
+| Usuario       | usuario       | usuario789       |
 
-- Moderador
-    Usuario: moderador
-    Contraseña: moderador546
-
-- Usuario
-    Usuario: usuario
-    Contraseña: usuario789
