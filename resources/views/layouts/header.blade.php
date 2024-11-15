@@ -12,20 +12,22 @@
 
     {{-- Opciones de usuario --}}
     <div x-data="{ dropdownOpen: false }" class="relative" @click.away="dropdownOpen = false">
-        <div>
-            <div>{{ Auth::user()->name }}</div>
+        <!-- Mostrar nombre del usuario y la imagen -->
+        <div class="flex items-center space-x-3">
+            <div class="font-medium text-gray-900">{{ Auth::user()->nombre }} {{ Auth::user()->apm }}</div>
             <button @click="dropdownOpen = !dropdownOpen" x-ref="dropdownMenuOpen"
-                    class="relative block w-8 h-8 overflow-hidden rounded-full shadow focus:outline-none">
+                    class="relative block w-8 h-8 ml-3 overflow-hidden rounded-full shadow focus:outline-none">
                 <img class="object-cover w-full h-full"
-                    src="https://images.unsplash.com/photo-1528892952291-009c663ce843?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=296&q=80"
+                    src="{{ Auth::user()->foto ? asset('img/' . Auth::user()->foto) : 'shadow.png' }}"
                     alt="Your avatar">
             </button>
         </div>
 
+        <!-- Menú desplegable -->
         <div x-cloak x-show="dropdownOpen"
              class="absolute right-0 z-10 w-48 mt-2 overflow-hidden bg-white rounded-md shadow-xl">
             <a href="{{ route('profile.edit') }}"
-               class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white">Profile</a>
+               class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white">Perfil</a>
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <a href="#" onclick="event.preventDefault(); this.closest('form').submit();"

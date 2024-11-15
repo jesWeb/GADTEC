@@ -38,7 +38,6 @@ class AsignacionController extends Controller
             'estatus' => 'required|string',
             'no_licencia' => 'required|string',
             'condiciones' => 'nullable|string',
-            'autorizante' => 'required|string',
         ]);
     
         // Validación de existencia
@@ -54,8 +53,8 @@ class AsignacionController extends Controller
         $newAsig = new asignacion($validated);
         
         // Asignar datos automáticamente
-        $newAsig->fecha_asignacion = Carbon::now();
-        $newAsig->fecha_estimada_dev = Carbon::now()->addDays(7);
+        $newAsig->fecha_asignacion = date('Y-m-d');
+        $newAsig->fecha_estimada_dev = date('Y-m-d', strtotime('+5 days'));
         
     
         // Si no se requiere chofer, asegurarse de que el campo `nombre_chofer` esté vacío

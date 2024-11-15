@@ -54,4 +54,13 @@ class CatalogosController extends Controller
 
         return view('catalogos.index', compact('catalogosCardsData'));
     }
+
+    public function show($id)
+    {
+        
+        $backRoute = route('catalogos.index'); 
+
+        return view('catalogos.index', compact('backRoute'));
+    }
+
 }

@@ -14,10 +14,13 @@ use Illuminate\Support\Facades\DB;
 class GestionController extends Controller
 {
 
+    public function __construct() {
+        $this->middleware('auth:usuarios');
+    }
 
     public function index()
     {
-        $disponibilidad = asignacion::with('automovil')
+        $disponibilidad = Automoviles::with('asignacion')
             ->get();
         // dd($disponibilidad);
         return view('modulos.Gestion.index', compact('disponibilidad'));

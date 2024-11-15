@@ -1,8 +1,16 @@
 @extends('layouts.app')
 
 @section('body')
-
+<div class="flex justify-end ml-2 space-x-2">
+    <a href="{{ $backRoute ?? route('catalogos.index') }}" class="flex items-center text-blue-500 hover:text-blue-700">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+            Volver a Catálogos
+    </a>
+</div>
 <div class="px-4 py-6">
+
     <div class="p-6 bg-white rounded-md shadow-md">
         <h2 class="mb-4 text-lg font-semibold text-gray-700 capitalize">Usuarios</h2>
         <div class="mb-2">
@@ -50,7 +58,7 @@
                         <td class="px-4 py-2 border">{{ $key + 1 }}</td>
                         <td class="px-4 py-2 border">
                             <img src="{{ asset('img/' . $usuario->foto) }}" alt="Foto de usuario"
-                                class="object-cover w-15 h-15">
+                                class="object-cover w-16 h-16">
                         </td>
                         <td class="px-4 py-2 border">{{ $usuario->num_empleado }}</td>
                         <td class="px-4 py-2 border">{{ $usuario->nombre }} {{ $usuario->app }} {{ $usuario->apm }}</td>

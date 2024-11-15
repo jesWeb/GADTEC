@@ -57,6 +57,11 @@ DB_PASSWORD=contraseña  # Cambia 'contraseña' por tu contraseña de MySQL (en 
 Ejecuta las migraciones para crear las tablas necesarias en la base de datos:
 - php artisan migrate
 
+## Ejecutar los Seeders
+Para poblar la base de datos con datos iniciales en usuarios, como usuarios y roles, ejecuta los seeders con los siguientes comando:
+- php artisan db:seed
+- php artisan db:seed --class=UsuarioSeeder  
+
 ## Compilar Estilos de Vue (o frontend)
 Compila los archivos necesarios con el siguiente comando:
 - npm run build
@@ -77,3 +82,18 @@ Por ejemplo:
 - php artisan serve --host=192.168.1.104 --port=8000
 Reemplaza 192.168.1.104 con la IP correspondiente de tu computadora en la red.
 
+
+## Credenciales de Acceso
+Los usuarios generados por el seeder tienen los siguientes datos de inicio de sesión:
+
+- Administrador
+    Usuario: admin
+    Contraseña: admin123
+
+- Moderador
+    Usuario: moderador
+    Contraseña: moderador546
+
+- Usuario
+    Usuario: usuario
+    Contraseña: usuario789

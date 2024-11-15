@@ -153,7 +153,12 @@
                                 }
                             </script>
 
-                                {{-- No. de Licencia --}}
+                                
+                            </div>
+
+                        </div>
+                        <div class="flex flex-col gap-5.5 mt-3 xl:flex-row">
+                        {{-- No. de Licencia --}}
                                 <div class="w-full px-3 xl:w-1/2">
                                     <div class="mb-5">
                                         <label class="mb-3 block text-base font-medium text-[#07074D]" for="no_licencia">No.
@@ -164,21 +169,7 @@
                                             required />
                                     </div>
                                 </div>
-                            </div>
-
-                        </div>
-                        <div class="flex flex-col gap-5.5 mt-3 xl:flex-row">
-                                {{-- Autorizante --}}
-                                <div class="w-full px-3 ">
-                                    <div class="mb-5">
-                                        <label class="mb-3 block text-base font-medium text-[#07074D]"
-                                            for="autorizante">Autorizante</label>
-                                        <input type="text" name="autorizante"
-                                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                            required />
-                                    </div>
-                                </div>
-
+                                
                                 {{-- Fecha estimada de devolución --}}
                                 <div class="w-full px-3 xl:w-1/2">
                                     <div class="mb-5">
@@ -186,22 +177,28 @@
                                         <input type="date" name="fecha_estimada_dev" class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                                     </div>
                                 </div>
+                                
                             </div>
-                        </div>
-                      {{-- 5 row de info --}}
-                      <div class="flex flex-col gap-5 mt-3 xl:flex-row">
-                        {{-- Condiciones --}}
-                        <div class="w-full px-3 xl:w-1/2">
-                            <div class="mb-5">
-                                <label class="mb-3 block text-base font-medium text-[#07074D]"
-                                    for="condiciones">Condiciones</label>
-                                <textarea name="condiciones"
-                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                    rows="4"></textarea>
-                            </div>
-                        </div>
 
-                    </div>
+                            {{-- 5 row de info --}}
+                        <div class="flex flex-col gap-5 mt-3 xl:flex-row">
+                            {{-- Condiciones --}}
+                            <div class="w-full px-3 xl:w-1/2">
+                                <div class="mb-5">
+                                    <label class="mb-3 block text-base font-medium text-[#07074D]"
+                                        for="condiciones">Condiciones</label>
+                                    <textarea name="condiciones"
+                                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                        rows="4"></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+                        </div>
+                      
+
+
+                    
                     {{-- BTN --}}
                     <div class="flex justify-end gap-4 mt-4">
                         <button type="submit"
