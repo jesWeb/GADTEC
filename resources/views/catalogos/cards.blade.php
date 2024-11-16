@@ -6,9 +6,12 @@
         <a href="{{ $card['href'] }}" class="text-lg">
 
             <div class="flex flex-col items-center">
-
-                <div class="mx-auto rounded-full xl:h-15 xl:w-20 md:h-25 ">
-                    <img src="https://picsum.photos/200/300" alt="">
+                <div class="mx-auto rounded-full xl:h-15 xl:w-20 ">
+                  <div class="px-3 mt-3 rounded-full ">
+                    @if (isset($card['imagen']))
+                    <img src="{{$card['imagen']}}" class="h-12 "  alt="">
+                   @endif
+                  </div>
                 </div>
                 {{-- title --}}
                 <h4 class="my-3 font-medium leading-6">

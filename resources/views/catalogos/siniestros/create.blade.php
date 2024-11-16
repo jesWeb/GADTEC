@@ -28,7 +28,6 @@
 
                         </div>
 
-
                         {{-- Fecha de siniestro --}}
                         <div class="w-full px-3 xl:w-1/2">
                             <label class="mb-3 block text-base font-medium text-[#07074D]" for="fecha_siniestro">Fecha de
@@ -37,54 +36,6 @@
                                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                 type="date" name="fecha_siniestro" required>
                         </div>
-
-                        {{-- Descripción --}}
-                        <div class="w-full px-3 xl:w-1/2">
-                            <label class="mb-3 block text-base font-medium text-[#07074D]"
-                                for="descripcion">Descripción</label>
-                            <textarea
-                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                name="descripcion" placeholder="Descripción del siniestro..." required></textarea>
-                        </div>
-                    </div>
-
-                    {{-- 2ª fila de información --}}
-                    <div class="flex flex-col gap-5.5 xl:flex-row">
-                        {{-- Estatus --}}
-                        <div class="w-full px-3 xl:w-1/2">
-                            <label class="mb-3 block text-base font-medium text-[#07074D]" for="estatus">Estatus</label>
-                            <select name="estatus"
-                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                required>
-                                <option disabled selected>Selecciona una opción</option>
-                                <option value="Pendiente">Pendiente</option>
-                                <option value="En Proceso">En Proceso</option>
-                                <option value="Cerrado">Cerrado</option>
-                            </select>
-                        </div>
-
-                        {{-- Costo daños estimados --}}
-                        <div class="w-full px-3 xl:w-1/2">
-                            <label class="mb-3 block text-base font-medium text-[#07074D]" for="costo_danos_estimados">Costo
-                                Daños Estimados</label>
-                            <input
-                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                type="number" name="costo_danos_estimados" placeholder="Introduce el costo" min="0"
-                                required>
-                        </div>
-                    </div>
-
-                    {{-- Costo real daños --}}
-                    <div class="flex flex-col gap-5.5 xl:flex-row">
-                        <div class="w-full px-3 xl:w-1/2">
-                            <label class="mb-3 block text-base font-medium text-[#07074D]" for="costo_real_danos">Costo Real
-                                Daños</label>
-                            <input
-                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                type="number" name="costo_real_danos" placeholder="Introduce el costo" min="0"
-                                required>
-                        </div>
-
                         {{-- Responsable --}}
                         <div class="w-full px-3 xl:w-1/2">
                             <label class="mb-3 block text-base font-medium text-[#07074D]"
@@ -104,17 +55,41 @@
                         </div>
                     </div>
 
+                    {{-- 2ª fila de información --}}
+                    <div class="flex flex-col gap-5.5 mt-5 xl:flex-row">
+                        {{-- Costo daños estimados --}}
+                        <div class="w-full px-3 xl:w-1/2">
+                            <label class="mb-3 block text-base font-medium text-[#07074D]" for="costo_danos_estimados">Costo
+                                Daños Estimados</label>
+                            <input
+                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                type="text" pattern="^\d*([,.]?\d+)?$" min="0" name="costo_danos_estimados" placeholder="Introduce el costo"
+                                required>
+                        </div>
+                    </div>
+
+
+                    <div class="flex flex-col gap-5.5 xl:flex-row mt-6">
+                        {{-- Descripción --}}
+                        <div class="w-full px-3 xl:w-1/2">
+                            <label class="mb-3 block text-base font-medium text-[#07074D]"
+                                for="descripcion">Descripción del Siniestro</label>
+                            <textarea
+                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                name="descripcion" placeholder="Descripción del siniestro..." required></textarea>
+                        </div>
+                    </div>
+
                     {{-- Observaciones --}}
                     <div class="mt-5">
                         <label class="mb-3 block text-base font-medium text-[#07074D]"
-                            for="observaciones">Observaciones</label>
+                            for="observaciones">Observaciones Adicionales</label>
                         <textarea
                             class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                            name="observaciones" placeholder="Observaciones..." required></textarea>
+                            name="observaciones" placeholder="Observaciones..." ></textarea>
                     </div>
 
                 </div>
-
                 {{-- BTN --}}
                 <div class="flex justify-end gap-4 mt-4">
                     <a href="{{ route('siniestros.index') }}"
@@ -127,5 +102,3 @@
         </div>
     </div>
 @endsection
-
-

@@ -19,7 +19,6 @@ class siniestros extends Model
         'descripcion',
         'estatus',
         'costo_danos_estimados',
-        'costo_real_danos',
         'id_usuario',
         'observaciones',
     ];

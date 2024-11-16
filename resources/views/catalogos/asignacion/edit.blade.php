@@ -7,7 +7,7 @@
             {{-- titulo --}}
             <h2 class="mb-5 text-xl font-semibold text-gray-700">Solicitud de Vehiculo</h2>
             {{-- formulario --}}
-            <form action="{{ route('asignacion.update', $EddtAsig->id) }}" method="post" enctype='multipart/form-data'>
+            <form action="{{ route('asignacion.update', $EddtAsig) }}" method="post" enctype='multipart/form-data'>
                 @csrf
                 @method('PATCH')
                 <div class="m-4 xl:p-10">

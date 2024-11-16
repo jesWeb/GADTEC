@@ -45,9 +45,9 @@ class SiniestrosController extends Controller
         $newSin->id_automovil = $request->input('id_automovil');
         $newSin->fecha_siniestro = $request->input('fecha_siniestro');
         $newSin->descripcion = $request->input('descripcion');
-        $newSin->estatus = $request->input('estatus');
-        $newSin->costo_danos_estimados = $request->input('costo_danos_estimados');
-        $newSin->costo_real_danos = $request->input('costo_real_danos');
+         //limpieza de estring en costos
+        $costoDano = $request->input('costo_danos_estimados');
+        $newSin->costo_danos_estimados =  str_replace(',', '.',$costoDano);
         $newSin->id_usuario = $request->input('id_usuario');
         $newSin->observaciones = $request->input('observaciones');
 
@@ -78,7 +78,9 @@ class SiniestrosController extends Controller
     public function update(Request $request,  $id)
     {
         $EddSin = siniestros::findOrFail($id);
-        $input = $request->all();
+
+
+        $input = $request->only(['fecha_siniestro', 'estatus', 'id_usuario', 'observaciones', 'descripcion']);
         $EddSin->update($input);
         return redirect()->route('siniestros.index')->with('message', 'Se ha modificado correctamente el Registro ');
     }

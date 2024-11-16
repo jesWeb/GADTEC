@@ -94,7 +94,7 @@
                                 for="kilometraje">Kilometraje</label>
                             <input
                                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                type="text" placeholder="Introduce el kilometraje" pattern="^\d*\.?\d+$" min="0"
+                                type="text" placeholder="Introduce el kilometraje" pattern="^\d*([,.]?\d+)?$" min="0"
                                 required name="kilometraje">
                         </div>
 
@@ -103,7 +103,7 @@
                     <div class="w-full px-3 xl:w-1/2">
                         <div class="xl:mb-5">
                             <label class="mb-3 block text-base font-medium text-[#07074D]"
-                                for="capacidad_combustible">Capacidad de combustible</label>
+                                for="capacidad_combustible">Capacidad de combustible (Lts)</label>
                             <input
                                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                 type="number" name="capacidad_combustible" min="0" step="0.01" placeholder=" Capacidad"
@@ -175,7 +175,6 @@
                                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                 type="text" placeholder="Introduce Placas" required name="placas">
                         </div>
-
                     </div>
                     {{-- fecha ingreso --}}
                     <div class="w-full px-3 xl:w-2/4">
@@ -267,27 +266,6 @@
                 </div>
 
             </div>
-
-            <script>
-                const fileInput = document.getElementById('fotografias');
-                const fileCountDisplay = document.getElementById('file-count');
-                const fileNamesDisplay = document.getElementById('file-names');
-
-                fileInput.addEventListener('change', function () {
-                    const files = fileInput.files;
-                    const fileCount = files.length;
-                    fileCountDisplay.textContent = `${fileCount} archivos seleccionados`;
-                    fileNamesDisplay.innerHTML = '';
-
-                    for (let i = 0; i < fileCount; i++) {
-                        const listItem = document.createElement('li');
-                        listItem.textContent = files[i].name; // Muestra el nombre del archivo
-                        fileNamesDisplay.appendChild(listItem);
-                    }
-                });
-
-            </script>
-
             {{-- BTN --}}
             <div class="flex justify-end gap-4 mt-4">
                 <a href="{{ route('Automovil.index') }}"
@@ -297,4 +275,26 @@
         </form>
     </div>
 </div>
+@endsection
+
+@section('js')
+<script>
+    const fileInput = document.getElementById('fotografias');
+    const fileCountDisplay = document.getElementById('file-count');
+    const fileNamesDisplay = document.getElementById('file-names');
+
+    fileInput.addEventListener('change', function () {
+        const files = fileInput.files;
+        const fileCount = files.length;
+        fileCountDisplay.textContent = `${fileCount} archivos seleccionados`;
+        fileNamesDisplay.innerHTML = '';
+
+        for (let i = 0; i < fileCount; i++) {
+            const listItem = document.createElement('li');
+            listItem.textContent = files[i].name; // Muestra el nombre del archivo
+            fileNamesDisplay.appendChild(listItem);
+        }
+    });
+
+</script>
 @endsection
