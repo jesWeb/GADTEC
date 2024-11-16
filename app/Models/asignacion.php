@@ -45,12 +45,14 @@ class asignacion extends Model
         static::creating(function ($asignacion) {
             // Asignar la fecha de asignación automáticamente si está vacía
             if (empty($asignacion->fecha_asignacion)) {
-                $asignacion->fecha_asignacion = now();  
+                $asignacion->fecha_asignacion = date('Y-m-d');  
             }
 
             if (empty($asignacion->fecha_estimada_dev)) {
-                $asignacion->fecha_estimada_dev = now()->addDays(7);  // Añadir 7 días por defecto
+                $asignacion->fecha_estimada_dev = date('Y-m-d');  // Añadir 7 días por defecto
             }
+
+            
         });
     }
 

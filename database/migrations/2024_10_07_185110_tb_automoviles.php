@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('automoviles', function (Blueprint $table) {
             $table->bigIncrements('id_automovil');
+            // $table->unsignedBigInteger('id_asignacion');
             $table->string('marca', 20)->nullable();
             $table->string('submarca', 25)->nullable();
             $table->integer('modelo')->nullable();
@@ -33,6 +34,8 @@ return new class extends Migration
             $table->string('responsable', 50)->nullable();
             $table->string('fotografias')->nullable();
             $table->text('observaciones')->nullable();
+            //relaciones
+            // $table->foreign('id_asignacion')->references('id_asignacion')->on('asignacions')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -44,5 +47,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('automoviles');
+
     }
 };

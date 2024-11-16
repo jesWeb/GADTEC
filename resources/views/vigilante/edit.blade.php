@@ -37,14 +37,26 @@
                     </div>
 
                     <!-- Campos de Check-In -->
+
+                    <div class="col-span-2 lg:col-span-3">
+                    <h3 class="mt-6 text-lg font-medium text-gray-700">Datos de Salida</h3>
                     <div>
                         <label for="km_salida" class="block text-sm font-medium text-gray-700">KM Salida</label>
                         <input type="number" name="km_salida" id="km_salida" value="{{ old('km_salida') }}" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-200" required>
                     </div>
+
                     <div>
                         <label for="combustible_salida" class="block text-sm font-medium text-gray-700">Combustible Salida</label>
-                        <input type="text" name="combustible_salida" id="combustible_salida" value="{{ old('combustible_salida') }}" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-200" required>
+                        <select name="combustible_salida" id="combustible_salida" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-200" required>
+                            <option value="1/4" {{ old('combustible_salida') == '1/4' ? 'selected' : '' }}>1/4</option>
+                            <option value="1/2" {{ old('combustible_salida') == '1/2' ? 'selected' : '' }}>1/2</option>
+                            <option value="3/4" {{ old('combustible_salida') == '3/4' ? 'selected' : '' }}>3/4</option>
+                            <option value="vacío" {{ old('combustible_salida') == 'vacío' ? 'selected' : '' }}>Vacío</option>
+                            <option value="reserva" {{ old('combustible_salida') == 'reserva' ? 'selected' : '' }}>Reserva</option>
+                            <option value="lleno" {{ old('combustible_salida') == 'lleno' ? 'selected' : '' }}>Lleno</option>
+                        </select>
                     </div>
+
                     <div>
                         <label for="hora_salida" class="block text-sm font-medium text-gray-700">Hora Salida</label>
                         <input type="time" name="hora_salida" id="hora_salida" 
@@ -52,18 +64,31 @@
                             class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-200" 
                             required>
                     </div>
+                    </div>
 
+                    <div class="col-span-2 lg:col-span-3">
+                    <h3 class="mt-6 text-lg font-medium text-gray-700">Datos de Llegada</h3>
                     <div>
                         <label for="km_llegada" class="block text-sm font-medium text-gray-700">KM Llegada</label>
-                        <input type="number" name="km_llegada" id="km_llegada" value="{{ old('km_llegada') }}" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-200" required>
+                        <input type="number" name="km_llegada" id="km_llegada" value="{{ old('km_llegada') }}" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-200" disabled>
                     </div>
+
                     <div>
                         <label for="combustible_llegada" class="block text-sm font-medium text-gray-700">Combustible Llegada</label>
-                        <input type="text" name="combustible_llegada" id="combustible_llegada" value="{{ old('combustible_llegada') }}" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-200" required>
+                        <select name="combustible_llegada" id="combustible_llegada" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-200" disabled>
+                            <option value="1/4" {{ old('combustible_llegada') == '1/4' ? 'selected' : '' }}>1/4</option>
+                            <option value="1/2" {{ old('combustible_llegada') == '1/2' ? 'selected' : '' }}>1/2</option>
+                            <option value="3/4" {{ old('combustible_llegada') == '3/4' ? 'selected' : '' }}>3/4</option>
+                            <option value="vacío" {{ old('combustible_llegada') == 'vacío' ? 'selected' : '' }}>Vacío</option>
+                            <option value="reserva" {{ old('combustible_llegada') == 'reserva' ? 'selected' : '' }}>Reserva</option>
+                            <option value="lleno" {{ old('combustible_llegada') == 'lleno' ? 'selected' : '' }}>Lleno</option>
+                        </select>
                     </div>
+
                     <div>
                         <label for="hora_llegada" class="block text-sm font-medium text-gray-700">Hora Llegada</label>
-                        <input type="time" name="hora_llegada" id="hora_llegada" value="{{ old('hora_llegada') }}" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-200" required>
+                        <input type="time" name="hora_llegada" id="hora_llegada" value="{{ old('hora_llegada') }}" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-200" disabled>
+                    </div>
                     </div>
                 </div>
 

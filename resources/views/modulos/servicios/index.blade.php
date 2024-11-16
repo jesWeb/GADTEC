@@ -65,11 +65,11 @@
                                 <td class="px-4 py-2 text-center border">
                                     @if ($servicio->prox_servicio == '')
                                         <!-- Muestra un guión o un texto vacío si el servicio no es programado -->
-                                        -
+                                        No aplica
                                     @else
                                         {{ $servicio->prox_servicio }}
                                     @endif
-                                    </>
+                                </td>
                                 <td class="px-4 py-2 border">{{ $servicio->costo }}</td>
                                 <td class="px-4 py-2 border">{{ $servicio->lugar_servicio }}</td>
                                 <td class="px-4 py-2 border">

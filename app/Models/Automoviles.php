@@ -56,6 +56,9 @@ class Automoviles extends Model
     public function asignacion(){
         return $this->hasMany(asignacion::class,'id_automovil');
     }
+    public function asignacionRev(){
+        return $this->belongsTo(asignacion::class,'id_asignacion');
+    }
 
     public function siniestro(){
         return $this->hasMany(siniestros::class,'id_automovil');

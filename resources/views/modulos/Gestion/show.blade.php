@@ -18,6 +18,8 @@
                             <th class="px-4 py-2 text-left text-gray-600">#</th>
                             <th class="px-4 py-2 text-left text-gray-600">Fechas Reservadas</th>
                             <th class="px-4 py-2 text-left text-gray-600">Horario Salida</th>
+                            <th class="px-4 py-2 text-left text-gray-600">Chofer</th>
+                            <th class="px-4 py-2 text-left text-gray-600">Solicitante</th>
                             <th class="px-4 py-2 text-left text-gray-600">Horario Entrada</th>
                             <th class="px-4 py-2 text-left text-gray-600">Estatus</th>
                         </tr>
@@ -32,7 +34,14 @@
                             <td class="px-4 py-2 border">
                                 {{ \Carbon\Carbon::parse($salidas->hora_salida)->format('h:i A') }}
                             </td>
-                            <td class="px-4 py-2 border"></td>
+                            <td class="px-4 py-2 border">@if ($salidas->chofer == '')
+                                        <!-- Muestra un guión o un texto vacío si el servicio no es programado -->
+                                        No aplica
+                                    @else
+                                        {{ $salidas->chofer }}
+                                    @endif</td>
+                            <td class="px-4 py-2 border">{{ $salidas->usuarios->nombre }} {{ $salidas->usuarios->app }} {{ $salidas->usuarios->apm }}, {{ $salidas->usuarios->empresa }}</td>
+                            <td class="px-4 py-2 border">{{ \Carbon\Carbon::parse($salidas->checkIns->first()->hora_llegada)->format('H:i') }}</td>
                             <td class="px-4 py-2 border">{{ $salidas->estatus }}</td>
 
 

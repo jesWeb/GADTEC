@@ -15,12 +15,12 @@ return new class extends Migration
             $table->boolean('requierechofer')->default(false)->nullable();
             $table->string('nombre_chofer')->nullable();
             $table->string('lugar')->nullable();
-            $table->date('fecha_asignacion')->nullable(); // Este campo será automático
             $table->time('hora_salida')->nullable();
+            $table->time('hora_llegada')->nullable();
             $table->date('fecha_salida')->nullable();
-            $table->date('fecha_estimada_dev')->nullable(); 
+            $table->date('fecha_estimada_dev')->nullable();
             $table->string('no_licencia')->nullable();
-            $table->enum('estatus', ['Reservado', 'Disponible', 'Ocupado'])->default('Disponible');
+            $table->enum('estatus', ['Reservado', 'Disponible', 'Ocupado'])->default('Reservado');
             $table->text('condiciones')->nullable();
             $table->text('observaciones')->nullable();
             $table->string('autorizante')->nullable();
