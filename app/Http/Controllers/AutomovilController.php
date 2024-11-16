@@ -98,7 +98,7 @@ class AutomovilController extends Controller
 
         //limpieza de kilometraje en el req
         $request->merge(['kilometraje' => $kilometraje]);
-
+        //validacion para guardar
         $request->validate($rules, $message);
         $input = $request->all();
         //validacion de las fotos

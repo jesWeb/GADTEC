@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,7 +34,7 @@ class asignacion extends Model
 
     // Asegura que la fecha de asignación y la fecha estimada de devolución se asignen automáticamente
     protected $dates = [
-        'fecha_asignacion', 
+        'fecha_asignacion',
         'fecha_estimada_dev',
     ];
 
@@ -45,7 +46,7 @@ class asignacion extends Model
         static::creating(function ($asignacion) {
             // Asignar la fecha de asignación automáticamente si está vacía
             if (empty($asignacion->fecha_asignacion)) {
-                $asignacion->fecha_asignacion = now();  
+                $asignacion->fecha_asignacion = now();
             }
 
             if (empty($asignacion->fecha_estimada_dev)) {
@@ -59,6 +60,7 @@ class asignacion extends Model
         return $this->belongsTo(Automoviles::class, 'id_automovil');
     }
 
+
     public function usuarios()
     {
         return $this->belongsTo(Usuarios::class, 'id_usuario');
@@ -68,4 +70,5 @@ class asignacion extends Model
     {
         return $this->hasMany(CheckIn::class, 'id_asignacion');
     }
+
 }

@@ -45,9 +45,9 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     Route::resource('siniestros', SiniestrosController::class);
     Route::resource('verificaciones', VerificacionesController::class);
     Route::get('/catalogos', [CatalogosController::class, 'index'])->name('catalogos.index');
-    
+
     Route::resource('vigilante', VigilanteController::class);
-    Route::get('/estadisticas', [EstadisticasController::class, 'index']);
+    Route::get('/estadisticas', [EstadisticasController::class, 'index'])->name('estadisticas');
     Route::resource('tarjetas', TarjetaCirculacionController::class);
     Route::resource('tenencias', TeneciasRefrendosController::class);
     Route::resource('usuarios', UsuariosController::class);
@@ -62,6 +62,14 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
 
     Route::resource('vigilante', VigilanteController::class);
 });
+
+//route Vigilante
+Route::group(['prefix'=> 'dashboard','middleware'=> ['auth']],function(){
+
+});
+
+
+//route Visualizador
 
 
 
