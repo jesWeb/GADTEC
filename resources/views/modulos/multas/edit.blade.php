@@ -6,7 +6,7 @@
         <div class="p-6 bg-white rounded-lg shadow-lg">
             <h2 class="text-lg font-semibold text-gray-700 capitalize">Editar Multa</h2>
 
-            <form action="{{ url('dashboard/multas/' . $multa->id_multa) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('multas.update', $multa->id_multa) }}" method="POST" enctype="multipart/form-data">
             {{ csrf_field() }}
                 {{method_field('PUT')}}
                 <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-3">
@@ -25,12 +25,14 @@
                     </div>
 
                     <div>
-                        <label class="block text-base font-medium text-[#07074D]" for="tipo_multa">Tipo de Multa</label>
-                        <input type="text" class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" 
-                            name="tipo_multa" value="{{ old('tipo_multa', $multa->tipo_multa) }}" id="tipo_multa" placeholder="ejemplo: 12345">
-                        <div class="mt-1 text-sm text-red-600">
-                            @error('tipo_multa')<i>{{ $message }}</i>@enderror
-                        </div>
+                        <label class="block text-base font-medium text-[#07074D]" for="tipo_multa">Tipo de multa</label>
+                        <select class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" 
+                                name="tipo_multa" id="tipo_multa">
+                            <option value="Federal" {{(old('tipo_multa', $multa->tipo_multa) == 'Federal') ? 'selected' : '' }}>Federal</option>
+                            <option value="Estatal" {{(old('tipo_multa', $multa->tipo_multa) == 'Estatal') ? 'selected' : '' }} >Estatal</option>
+                            <option value="Municipal" {{(old('tipo_multa', $multa->tipo_multa) == 'Municipal') ? 'selected' : '' }}>Municipal</option>
+                            <option value="Guardia Nacional" {{(old('tipo_multa', $multa->tipo_multa) == 'Guardia Nacional') ? 'selected' : '' }}>Guardia Nacional</option>
+                        </select>
                     </div>
 
                     <div>
@@ -66,7 +68,6 @@
                                 name="estatus" id="estatus">
                             <option value="Pagada" {{(old('estatus', $multa->estatus) == 'Pagada') ? 'selected' : '' }}>Pagada</option>
                             <option value="Pendiente" {{(old('estatus', $multa->estatus) == 'Pendiente') ? 'selected' : '' }} >Pendiente</option>
-                            <option value="Cancelada" {{(old('estatus', $multa->estatus) == 'Cancelada') ? 'selected' : '' }}>Cancelada</option>
                         </select>
                     </div>
                 </div>
@@ -103,7 +104,7 @@
 
                 <div class="flex justify-end mt-8 space-x-4">
                     <button type="submit" class="px-5 py-3 text-white bg-indigo-600 rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">Guardar</button>
-                    <a href="{{ url('multas') }}" class="px-5 py-3 text-gray-700 bg-gray-200 rounded-md shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">Cancelar</a>
+                    <a href="{{ route('multas.index') }}" class="px-5 py-3 text-gray-700 bg-gray-200 rounded-md shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">Cancelar</a>
                 </div>
             </form>
         </div>

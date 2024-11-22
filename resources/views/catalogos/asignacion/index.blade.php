@@ -27,7 +27,7 @@
                                 <td class="px-4 py-2 border">{{ $reserv->automovil->marca}} {{ $reserv->automovil->submarca}} {{ $reserv->automovil->modelo}}</td>
                                 <td class="px-4 py-2 border">{{ $reserv->usuarios->nombre}} {{ $reserv->usuarios->app}} {{ $reserv->usuarios->apm}}</td>
                                 <td class="px-4 py-2 border">{{ $reserv->fecha_salida }}</td>
-                                <td class="px-4 py-2 border">{{ $reserv->hora_salida }}</td>
+                                <td class="px-4 py-2 border">{{ date('H:i', strtotime($reserv->hora_salida)) }}</td>
                                 <td class="px-4 py-2 border">{{ $reserv->lugar }}</td>
                                 <td class="px-4 py-2 border">{{ $reserv->estatus}}</td>
                                 {{-- acciones --}}

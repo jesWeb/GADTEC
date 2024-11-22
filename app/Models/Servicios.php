@@ -19,6 +19,7 @@ class Servicios extends Model
         'costo', 
         'lugar_servicio',
         'activo',
+        'comprobante',
         'id_automovil'
     ];
 

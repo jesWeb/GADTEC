@@ -2,15 +2,22 @@
 
 @section('body')
 <div class="mt-8">
-    <div class="mt-4">
-        <div class="p-6 bg-white rounded-md shadow-md">
+    <div class="p-6 mx-auto bg-white rounded-lg shadow-lg max-w-7xl">
+        <div class="flex items-center justify-between mb-6">
             <h3 class="text-lg font-semibold text-gray-700 capitalize">Editar Usuario</h3>
 
+            <!-- Imagen de Usuario a la derecha -->
+            <div>
+                <img src="{{ asset('img/' . $usuario->foto) }}" alt="Foto de Usuario" class="object-cover w-16 h-16 border-4 border-indigo-500 rounded-full">
+            </div>
+        </div>
+
+        <hr class="mb-6">
             <form action="{{ route('usuarios.update', $usuario->id_usuario) }}"  method="POST" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 {{ method_field('PUT') }}
 
-                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+                <div class="grid grid-cols-1 gap-6 pt-3 sm:grid-cols-2 md:grid-cols-3">
                     <!-- N° Empleado -->
                     <div>
                         <label for="num_empleado" class="block text-base font-medium text-gray-700">N° Empleado</label>
@@ -91,7 +98,7 @@
                     <!-- Contraseña -->
                     <div class="relative col-span-1 md:col-span-2">
                         <label for="pass" class="block text-base font-medium text-gray-700">Contraseña</label>
-                        <input type="password" name="pass" id="pass" placeholder="Contraseña" value="{{ old('pass', $usuario->pass) }}" class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        <input type="password" name="pass" id="pass" placeholder="Contraseña" class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
                         <button type="button" onclick="togglePassword()" class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500">
                             <!-- Icono de Ojo -->
                             <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

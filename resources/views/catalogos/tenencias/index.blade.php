@@ -60,7 +60,7 @@
                                 </td>
                                 <td class="px-4 py-2 border">{{ $tenencia->fecha_pago }}</td>
                                 <td class="px-4 py-2 border">{{ $tenencia->origen }}</td>
-                                <td class="px-4 py-2 border">{{ $tenencia->monto }}</td>
+                                <td class="px-4 py-2 border">$ {{ $tenencia->monto }}</td>
                                 <td class="px-4 py-2 border">{{ $tenencia->año_correspondiente }}</td>
                                 <td class="px-4 py-2 border">
                                     <span

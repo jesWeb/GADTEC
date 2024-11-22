@@ -61,17 +61,18 @@
                         <tr class="hover:bg-gray-50">
                             <td class="px-4 py-2 border">{{ $asignacion->automovil->marca ?? 'N/A' }}</td>
                             <td class="px-4 py-2 border">{{ $asignacion->usuarios->nombre ?? 'N/A' }}</td>
-                            <td class="px-4 py-2 border">{{ $asignacion->fecha_asignacion ?? 'N/A' }}</td>
+                            <td class="px-4 py-2 border">
+                                {{ $asignacion->fecha_asignacion ? date('d/m/Y', strtotime($asignacion->fecha_asignacion)) : 'N/A' }}
+                            </td>
                             <td class="px-4 py-2 border">
                                 <span class="text-red-600">
-                                    
-                                    {{ $asignacion->fecha_estimada_dev ? date('Y/m/d', strtotime('-5 days', strtotime($asignacion->fecha_estimada_dev))) : 'N/A' }}
+                                    {{ $asignacion->fecha_estimada_dev ? date('d/m/Y', strtotime($asignacion->fecha_estimada_dev)) : 'N/A' }}
 
                                 </span>
-                            <hr>
-                            {{ $asignacion->fecha_estimada_dev ?? 'N/A' }} 
-                                
-                            </td>
+                                <hr>
+                                    {{ $asignacion->fecha_estimada_dev ? date('d/m/Y', strtotime('+5 days', strtotime($asignacion->fecha_estimada_dev))) : 'N/A' }}
+                                </td>
+
                             
                             <!-- Muestra la fecha de llegada automática si hay un check-in registrado -->
                             <td class="px-4 py-2 border">
@@ -90,10 +91,14 @@
                             @if($asignacion->checkIns->isNotEmpty())
                                 <td class="px-4 py-2 border">{{ $asignacion->checkIns->first()->km_salida ?? 'N/A' }}</td>
                                 <td class="px-4 py-2 border">{{ $asignacion->checkIns->first()->combustible_salida ?? 'N/A' }}</td>
-                                <td class="px-4 py-2 border">{{ $asignacion->checkIns->first()->hora_salida ?? 'N/A' }}</td>
+                                <td class="px-4 py-2 border">
+                                    {{ $asignacion->checkIns->first()->hora_salida ? date('H:i', strtotime($asignacion->checkIns->first()->hora_salida)) : 'N/A' }}
+                                </td>                                
                                 <td class="px-4 py-2 border">{{ $asignacion->checkIns->first()->km_llegada ?? 'N/A' }}</td>
                                 <td class="px-4 py-2 border">{{ $asignacion->checkIns->first()->combustible_llegada ?? 'N/A' }}</td>
-                                <td class="px-4 py-2 border">{{ $asignacion->checkIns->first()->hora_llegada ?? 'N/A' }}</td>
+                                <td class="px-4 py-2 border">
+                                    {{ $asignacion->checkIns->first()->hora_llegada ? date('H:i', strtotime($asignacion->checkIns->first()->hora_llegada)) : 'N/A' }}
+                                </td>
                             @else
                                 <td class="px-4 py-2 border" colspan="6">No hay datos de check-in</td>
                             @endif
