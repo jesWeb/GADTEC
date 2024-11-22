@@ -41,7 +41,7 @@ class EliminarReservasExpiradas extends Command
         //actulizar el estatus del carro
         $reservasEnCurso = asignacion::whereDate('fecha_salida', '<=', $obTime->toDateString())
             //reserva inicializada
-            ->whereTime('hora_salida', '<=', $obTime->toTimeString())
+            ->whereTime('hora_salida', '=', $obTime->toTimeString())
             ->where(function ($query) use ($obTime) {
                 $query->where('fecha_estimada_dev', '>=', $obTime->toDateString())
                     ->orWhere(function ($query) use ($obTime) {
@@ -52,7 +52,7 @@ class EliminarReservasExpiradas extends Command
 
         // Cambiar el estatus a 'ocupado'
         foreach ($reservasEnCurso as $reserva) {
-            $reserva->update(['estatus' => 'occupied']);
+            $reserva->update(['estatus' => 'ocupado']);
         }
 
         //menaje de las resrevas eliminadas

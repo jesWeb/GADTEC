@@ -56,12 +56,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/gestion', function () {
-        return app(GestionController::class)->index();
-    })->name("Gestion");
-    Route::get('/gestion/{id_asignacion}', [GestionController::class, 'show'])->name('gestion');
-    
-    
+    // Route::get('/gestion', function () {
+    //     return app(GestionController::class)->index();
+    // })->name("Gestion");
+    // Route::get('/gestion/{id_asignacion}', [GestionController::class, 'show'])->name('gestion');
+
+
    // Rutas accesibles para los roles
     Route::middleware('role:Administrador|Moderador')->group(function () {
         Route::get('/gestion', [GestionController::class, 'index'])->name('Gestion');
@@ -69,7 +69,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('vigilante', VigilanteController::class);
         Route::get('/vigilante/edit2/{id}/', [VigilanteController::class, 'edit2'])->name('edit2');
             Route::put('/vigilante/update2/{id_asignacion}', [VigilanteController::class, 'update2'])->name('update2');
-    
+
     });
 
     Route::middleware('role:Administrador|Usuario')->group(function () {
@@ -77,11 +77,11 @@ Route::middleware('auth')->group(function () {
 
     });
 
-
-
     // Rutas para el Administrador
     Route::middleware('role:Administrador')->group(function () {
-        Route::get('/dashboard', [GestionController::class, 'index'])->name('admin.dashboard');
+        Route::get('/dashboard', function () {
+            return app(GestionController::class)->index();
+         })->name("admin.dashboard");
         Route::resource('usuarios', UsuariosController::class);
         Route::resource('Automovil', AutomovilController::class);
         Route::resource('asignacion', AsignacionController::class);
@@ -99,7 +99,7 @@ Route::middleware('auth')->group(function () {
         Route::get('administrador/gestion/{id_asignacion}', [GestionController::class, 'show'])->name('gestion');
 
         Route::get('/catalogos', [CatalogosController::class, 'index'])->name('catalogos.index');
-        Route::get('/estadisticas', [EstadisticasController::class, 'index']);
+        Route::get('/estadisticas', [EstadisticasController::class, 'index'])->name('estadisticas');
         Route::get('js_tipo_servicio', [JsController::class, 'js_tipo_servicio'])->name('js_tipo_servicio');
 
         Route::get('/automoviles-pdf', [AutomovilController::class, 'generateReport'])->name('automoviles-pdf');
@@ -114,16 +114,15 @@ Route::middleware('auth')->group(function () {
     // Rutas para el Moderador (Vigilante)
     Route::middleware('role:Moderador')->group(function () {
         Route::get('/moderador/dashboard', [GestionController::class, 'index'])->name('moderator.dashboard');
-        Route::resource('vigilante', VigilanteController::class);
+        Route::get('/moderador/vigilante', [VigilanteController::class, 'index'])->name('moderador.vigilante');
         Route::get('/vigilante/edit2/{id}/', [VigilanteController::class, 'edit2'])->name('edit2');
         Route::put('/vigilante/update2/{id_asignacion}', [VigilanteController::class, 'update2'])->name('update2');
         Route::get('/gestion/{id_asignacion}', [GestionController::class, 'show'])->name('gestion');
-    
+
     });
 
     // Rutas para el Usuario
     Route::middleware('role:Usuario')->group(function () {
         Route::get('/user/dashboard', [AutorizanteController::class, 'index'])->name('user.dashboard');
-        // Agrega aquí otras rutas específicas para el usuario
     });
 });

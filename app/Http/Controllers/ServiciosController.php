@@ -58,6 +58,7 @@ class ServiciosController extends Controller
             'prox_servicio' =>'nullable|date',
             'costo' => 'required|numeric',
             'lugar_servicio' => 'nullable|string|max:255',
+            'comprobante' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
             'id_automovil' => 'nullable|exists:automoviles,id_automovil'
         ];
 
@@ -68,11 +69,24 @@ class ServiciosController extends Controller
             'prox_servicio.nullable' => 'El campo próximo servicio es opcional',
             'costo.required' => 'El campo costo es requerido',
             'lugar_servicio.nullable' => 'El campo lugar de servicio es opcional',
+            'comprobante.nullable' => 'El campo comprobante es opcional',
             'id_automovil.exists' => 'El campo automóvil no existe'
         ];
 
         $request->validate($rules, $messages);
         $input = $request->all();
+
+        // Guardar comprobante
+        if ($request->hasFile('comprobante')) {
+            $file = $request->file('comprobante');
+            $comprobante =  $file->getClientOriginalName();
+            $ldate = date('Ymd_His_');
+            $comprobante = $ldate . $comprobante;
+
+            $file->move(public_path('img'), $comprobante);
+            $input['comprobante'] = $comprobante;
+        }
+
         Servicios::create($input);
         return redirect()->route('servicios.index')->with('mensaje', 'Se ha creado correctamente el registro');
     }
@@ -111,6 +125,7 @@ class ServiciosController extends Controller
             'prox_servicio' =>'nullable|date',
             'costo' => 'required|numeric',
             'lugar_servicio' => 'nullable|string|max:255',
+            'comprobante' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
             'id_automovil' => 'nullable|exists:automoviles,id_automovil'
         ];
 
@@ -121,12 +136,24 @@ class ServiciosController extends Controller
             'prox_servicio.nullable' => 'El campo próximo servicio es opcional',
             'costo.required' => 'El campo costo es requerido',
             'lugar_servicio.nullable' => 'El campo lugar de servicio es opcional',
+            'comprobante.nullable' => 'El campo comprobante es opcional',
             'id_automovil.exists' => 'El campo automóvil no existe'
         ];
 
         $request->validate($rules, $messages);
         $input = $request->all();
         $servicio = Servicios::findOrFail($id);
+
+        // Guardar comprobante
+        if ($request->hasFile('comprobante')) {
+            $file = $request->file('comprobante');
+            $comprobante =  $file->getClientOriginalName();
+            $ldate = date('Ymd_His_');
+            $comprobante = $ldate . $comprobante;
+
+            $file->move(public_path('img'), $comprobante);
+            $input['comprobante'] = $comprobante;
+        }
 
         $servicio->update($input);
         return redirect()->route('servicios.index')->with('message', 'Se ha modificado correctamente el registro');

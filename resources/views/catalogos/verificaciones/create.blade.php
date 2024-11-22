@@ -4,11 +4,16 @@
     <div class="flex flex-col mt-5 gap-9">
 
         <div class="p-6 bg-white border rounded-md shadow-md">
-            {{-- titulo --}}
-            <h2 class="mb-5 text-xl font-semibold text-gray-700">
-                <h2 class="text-xl font-semibold text-gray-700">Registro Verificaciones</h2>
-
-            </h2>
+            <div class="flex justify-between mb-3">
+                <h2 class="mb-4 text-lg font-semibold text-gray-700 capitalize">Verificaciones vehiculares</h2>
+                {{-- arrow back --}}
+                <div class="py-3">
+                    <a href="{{ route('catalogos.index') }}"
+                        class="flex items-center justify-center w-12 h-10 text-white rounded-full shadow ">
+                        <img src="/img/arrow-back.svg" alt="">
+                    </a>
+                </div>
+            </div>
             {{-- formulario --}}
             <form action="{{ route('verificaciones.store') }}" enctype="multipart/form-data" method="POST">
 

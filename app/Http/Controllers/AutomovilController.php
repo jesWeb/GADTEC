@@ -101,6 +101,7 @@ class AutomovilController extends Controller
         //validacion para guardar
         $request->validate($rules, $message);
         $input = $request->all();
+
         //validacion de las fotos
         if ($request->hasFile('fotografias')) {
             // obtener el campo file definido en el formulario
@@ -115,6 +116,8 @@ class AutomovilController extends Controller
             $file->move(public_path('img/carros'), $img2);
             $input['fotografias'] = $img2;
         }
+        //  return response()->json(['success'=>$img2]);
+
         Automoviles::create($input);
 
         return redirect()->route('Automovil.index')->with('mensaje', 'Sea registrado con exito el Automovil');

@@ -52,7 +52,7 @@
                                 {{ $multa->automovil->marca }} {{ $multa->automovil->modelo }}
                             </td>
                             <td class="px-4 py-2 border">{{ $multa->tipo_multa }}</td>
-                            <td class="px-4 py-2 border">{{ $multa->monto }}</td>
+                            <td class="px-4 py-2 border">$ {{ $multa->monto }}</td>
                             <td class="px-4 py-2 border">{{ $multa->fecha_multa }}</td>
                             <td class="px-4 py-2 border">{{ $multa->lugar }}</td>
                             <td class="px-4 py-2 border">
@@ -63,6 +63,8 @@
                             </td>
                             <td class="px-4 py-2 border">
                                 @if($multa->comprobante)
+                                    <img src="{{ asset('img/' . $multa->comprobante) }}"
+                                        alt="Comprobante" class="inline-flex items-center object-cover w-16 h-16 ">
                                     <a href="{{ asset('img/' . $multa->comprobante) }}" target="_blank" class="text-blue-600 hover:underline">Ver Comprobante</a>
                                 @else
                                     <span class="text-gray-500">Sin comprobante</span>

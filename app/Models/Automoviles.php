@@ -53,13 +53,6 @@ class Automoviles extends Model
         return  $this-> hasMany(verificacion::class,'id_automovil');
     }
 
-    public function asignacion(){
-        return $this->hasMany(asignacion::class,'id_automovil');
-    }
-    public function asignacionRev(){
-        return $this->belongsTo(asignacion::class,'id_asignacion');
-    }
-
     public function siniestro(){
         return $this->hasMany(siniestros::class,'id_automovil');
     }
@@ -67,5 +60,7 @@ class Automoviles extends Model
     public function seguro(){
         return $this->hasOne(seguros::class,'id_automovil');
     }
-
+    public function asignacion(){
+        return $this->hasOne(asignacion::class,'id_automovil');
+    }
 }

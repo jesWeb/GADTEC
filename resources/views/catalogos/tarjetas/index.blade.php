@@ -11,7 +11,10 @@
     </div>
     <div class="px-4 py-6">
         <div class="p-6 bg-white rounded-md shadow-md">
-            <h2 class="mb-4 text-lg font-semibold text-gray-700 capitalize">Tarjetas de Circulación</h2>
+            <div class="flex justify-between mb-3">
+                <h2 class="mb-4 text-lg font-semibold text-gray-700 capitalize">Tarjetas de Circulación</h2>
+            </div>
+
             <div class="mb-2">
                 <form action="{{ route('tarjetas.index') }}" method="GET"
                     class="flex flex-col items-center justify-between space-y-2 md:flex-row md:space-y-0">
@@ -117,7 +120,7 @@
         </div>
     </div>
 @endsection
-\
+
 
 @section('js')
     {{-- alert creacion --}}

@@ -16,7 +16,7 @@ class SegurosController extends Controller
         // Verificar si hay una búsqueda
         if ($request->has('search') && $request->input('search') != '') {
             $search = $request->input('search');
-            $query->where(function($q) use ($search) {
+            $query->where(function ($q) use ($search) {
                 $q->where('aseguradora', 'LIKE', "%{$search}%")
                     ->orWhere('cobertura', 'LIKE', "%{$search}%")
                     ->orWhere('fecha_vigencia', 'LIKE', "%{$search}%")
@@ -28,7 +28,6 @@ class SegurosController extends Controller
                             ->orWhere('modelo', 'LIKE', "%{$search}%");
                     });
             });
-
         }
 
         $seguro = $query->get();
@@ -42,22 +41,41 @@ class SegurosController extends Controller
         return view('catalogos.seguros.create', compact('automoviles'));
     }
 
-
     public function store(Request $request)
     {
+        $rules = [
+            'id_automovil' => 'required|exists:automoviles,id_automovil',
+            'aseguradora' => 'required|string',
+            'cobertura' => 'required|string',
+            'monto' => 'required|string',
+            'fecha_vigencia' => 'required|date',
+            'poliza' => 'nullable|file|mimes:jpeg,png,jpg,pdf',
+        ];
 
-         $newSeg = new seguros();
-         $newSeg->id_automovil = $request->input('id_automovil');
-         $newSeg->aseguradora = $request->input('aseguradora');
-         $newSeg->cobertura = $request->input('cobertura');
-         $newSeg->fecha_vigencia = $request->input('fecha_vigencia');
-         $newSeg->estatus = $request->input('estatus');
-         $newSeg->monto = $request->input('monto');
 
+        $request->validate($rules);
+        $input = $request->all();
+
+        //validacion de las fotos
+        if ($request->hasFile('poliza')) {
+            // obtener el campo file definido en el formulario
+            $file = $request->file('poliza');
+            // obtener el nombre dek archivo
+            $img = $file->getClientOriginalName();
+            //obtener fecha y hora
+            $ldate = date('Ymd_His_');
+            //concatena la fecha y hora con el nombre del Archivo (img)
+            $img2 = $ldate . $img;
+            //idicamos el nombre  y la ruta donde se almacena el archivo (img)
+            $file->move(public_path('img/seguros'), $img2);
+            $input['poliza'] = $img2;
+        }
+
+        // return response()->json(['success'=>$img2]);
         //guardamos datos en BD
-         $newSeg->save();
+        seguros::create($input);
 
-        return redirect()->route('seguros.index')->with('mensaje','Se ha registarado exitosamente!!');
+        return redirect()->route('seguros.index')->with('mensaje', 'Se ha registarado exitosamente!!');
     }
 
     public function show($id)
@@ -71,7 +89,7 @@ class SegurosController extends Controller
     {
         $EddSeg = seguros::findOrFail($id);
         $automoviles = Automoviles::all();
-        return view('catalogos.seguros.edit', compact('EddSeg','automoviles'));
+        return view('catalogos.seguros.edit', compact('EddSeg', 'automoviles'));
     }
 
     public function update(Request $request,  $id)
@@ -86,6 +104,6 @@ class SegurosController extends Controller
     {
         $DelSeg = seguros::findOrFail($id);
         $DelSeg->delete();
-        return redirect()->route('seguros.index')->with('mensajeDel','Se ha eliminado Correctamente el registró');
+        return redirect()->route('seguros.index')->with('mensajeDel', 'Se ha eliminado Correctamente el registró');
     }
 }

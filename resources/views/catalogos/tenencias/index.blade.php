@@ -12,7 +12,9 @@
     </div>
     <div class="px-4 py-6">
         <div class="p-6 bg-white rounded-md shadow-md">
-            <h2 class="mb-4 text-lg font-semibold text-gray-700 capitalize">Tenencias/Refrendos</h2>
+            <div class="flex justify-between mb-3">
+                <h2 class="mb-4 text-lg font-semibold text-gray-700 capitalize">Tenencias/Refrendos</h2>
+            </div>
             <div class="mb-2">
                 <form action="{{ route('tenencias.index') }}" method="GET"
                     class="flex flex-col items-center justify-between space-y-2 md:flex-row md:space-y-0">
@@ -60,7 +62,7 @@
                                 </td>
                                 <td class="px-4 py-2 border">{{ $tenencia->fecha_pago }}</td>
                                 <td class="px-4 py-2 border">{{ $tenencia->origen }}</td>
-                                <td class="px-4 py-2 border">{{ $tenencia->monto }}</td>
+                                <td class="px-4 py-2 border">$ {{ $tenencia->monto }}</td>
                                 <td class="px-4 py-2 border">{{ $tenencia->año_correspondiente }}</td>
                                 <td class="px-4 py-2 border">
                                     <span

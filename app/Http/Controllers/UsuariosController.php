@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Usuarios;
+use Illuminate\Support\Facades\Hash;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 
 class UsuariosController extends Controller
@@ -76,6 +77,9 @@ class UsuariosController extends Controller
 
         $input = $request->all();
 
+        // Encriptar la contraseña antes de guardar
+        $input['pass'] = Hash::make($request->pass);
+
         if ($request->hasFile('foto')) {
             $file = $request->file('foto');
             $img = $file->getClientOriginalName();
@@ -113,7 +117,8 @@ class UsuariosController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id) {
+  
+     public function update(Request $request, string $id) {
         $rules = [
             'nombre' => 'required',
             'app' => 'required',
@@ -121,10 +126,10 @@ class UsuariosController extends Controller
             'rol'=> 'required',
             'email' => 'required|email',
             'usuario' => 'required',
-            'pass' => 'required',
+            'pass' => 'nullable',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ];
-
+    
         $messages = [
             'nombre.required' => 'El campo nombre es requerido',
             'app.required' => 'El campo apellido paterno es requerido',
@@ -133,43 +138,51 @@ class UsuariosController extends Controller
             'email.required' => 'El campo e-mail es requerido',
             'email.email' => 'El formato del e-mail es incorrecto',
             'usuario.required' => 'El campo usuario es requerido',
-            'pass.required' => 'El campo contraseña es requerido',
             'foto.image' => 'El archivo debe ser una imagen',
             'foto.mimes' => 'El archivo debe ser de tipo jpeg, png, jpg o gif',
             'foto.max' => 'El tamaño máximo de la imagen es 2MB',
         ];
-
+    
         $request->validate($rules, $messages);
-
+    
+        // Buscar al usuario
         $usuario = Usuarios::findOrFail($id);
-        $input = $request->all();
-
+        $input = $request->except('pass'); // Excluye el campo pass del input
+    
+        // Verificar si se proporcionó una nueva contraseña
+        if ($request->filled('pass')) {
+            // Encriptar la nueva contraseña
+            $input['pass'] = Hash::make($request->pass);
+        }
+    
+        // Manejo de la foto
         if ($request->hasFile('foto')) {
+            // Eliminar la imagen antigua si existe
             if ($usuario->foto && $usuario->foto != "shadow.png") {
                 $oldImagePath = public_path('img/' . $usuario->foto);
                 if (file_exists($oldImagePath)) {
                     unlink($oldImagePath); // Elimina la imagen anterior
                 }
             }
-
-
+    
+            // Subir la nueva imagen
             $file = $request->file('foto');
             $img = $file->getClientOriginalName();
             $ldate = date('Ymd_His_');
             $img2 = $ldate . $img;
-
-
             $file->move(public_path('img'), $img2);
-
+    
             $input['foto'] = $img2;
         } else {
+            // Si no se proporciona una nueva foto, mantener la foto actual
             $input['foto'] = $usuario->foto;
         }
-
+    
+        // Actualizar el usuario con los nuevos datos
         $usuario->update($input);
+    
         return redirect()->route('usuarios.index')->with('message', 'Se ha modificado correctamente el registro');
     }
-
     /**
      * Remove the specified resource from storage.
      */

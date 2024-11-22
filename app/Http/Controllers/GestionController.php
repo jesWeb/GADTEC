@@ -20,8 +20,10 @@ class GestionController extends Controller
 
     public function index()
     {
-        $disponibilidad = Automoviles::with('asignacion')
-            ->get();
+        // $disponibilidad = asignacion::with('automovil')
+        //     ->get();
+        $disponibilidad = Automoviles::with('asignacion')->get();
+
         // dd($disponibilidad);
         return view('modulos.Gestion.index', compact('disponibilidad'));
     }
