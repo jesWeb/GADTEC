@@ -51,7 +51,7 @@
                     <td>
                         @if($servicio->prox_servicio == '')
                             <!-- Muestra un guión o un texto vacío si el servicio no es programado -->
-                            -
+                            No aplica
                         @else
                             {{ $servicio->prox_servicio }}
                         @endif

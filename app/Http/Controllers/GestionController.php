@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\DB;
 class GestionController extends Controller
 {
 
+    public function __construct() {
+        $this->middleware('auth:usuarios');
+    }
 
     public function index()
     {

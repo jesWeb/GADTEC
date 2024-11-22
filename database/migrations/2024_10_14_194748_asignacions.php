@@ -15,6 +15,7 @@ return new class extends Migration
             $table->boolean('requierechofer')->default(false)->nullable();
             $table->string('nombre_chofer')->nullable();
             $table->string('lugar')->nullable();
+            $table->date('fecha_asignacion')->nullable();
             $table->time('hora_salida')->nullable();
             $table->time('hora_llegada')->nullable();
             $table->date('fecha_salida')->nullable();

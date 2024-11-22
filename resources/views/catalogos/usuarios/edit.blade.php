@@ -2,15 +2,22 @@
 
 @section('body')
 <div class="mt-8">
-    <div class="mt-4">
-        <div class="p-6 bg-white rounded-md shadow-md">
+    <div class="p-6 mx-auto bg-white rounded-lg shadow-lg max-w-7xl">
+        <div class="flex items-center justify-between mb-6">
             <h3 class="text-lg font-semibold text-gray-700 capitalize">Editar Usuario</h3>
 
-            <form  action="{{ url('dashboard/usuarios/' . $usuario->id_usuario) }}"  method="POST" enctype="multipart/form-data">
+            <!-- Imagen de Usuario a la derecha -->
+            <div>
+                <img src="{{ asset('img/' . $usuario->foto) }}" alt="Foto de Usuario" class="object-cover w-16 h-16 border-4 border-indigo-500 rounded-full">
+            </div>
+        </div>
+
+        <hr class="mb-6">
+            <form action="{{ route('usuarios.update', $usuario->id_usuario) }}"  method="POST" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 {{ method_field('PUT') }}
 
-                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+                <div class="grid grid-cols-1 gap-6 pt-3 sm:grid-cols-2 md:grid-cols-3">
                     <!-- N° Empleado -->
                     <div>
                         <label for="num_empleado" class="block text-base font-medium text-gray-700">N° Empleado</label>
@@ -89,11 +96,33 @@
                     </div>
 
                     <!-- Contraseña -->
-                    <div class="col-span-1 md:col-span-2">
+                    <div class="relative col-span-1 md:col-span-2">
                         <label for="pass" class="block text-base font-medium text-gray-700">Contraseña</label>
-                        <input type="password" name="pass" id="pass" placeholder="Contraseña"  value="{{ old('usuario', $usuario->pass) }}" class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        <input type="password" name="pass" id="pass" placeholder="Contraseña" class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        <button type="button" onclick="togglePassword()" class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500">
+                            <!-- Icono de Ojo -->
+                            <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                            </svg>
+                        </button>
                         @error('pass') <span class="text-sm text-red-600">{{ $message }}</span> @enderror
                     </div>
+
+                    <script>
+                        function togglePassword() {
+                            const passField = document.getElementById('pass');
+                            const eyeIcon = document.getElementById('eye-icon');
+                            if (passField.type === 'password') {
+                                passField.type = 'text';
+                                eyeIcon.setAttribute('stroke', '#1F2937'); // Cambiar color al ver
+                            } else {
+                                passField.type = 'password';
+                                eyeIcon.setAttribute('stroke', 'currentColor'); // Cambiar color al ocultar
+                            }
+                        }
+                    </script>
+
 
                     <!-- Selección de Imagen -->
                     <div class="flex flex-col items-center space-y-4">
@@ -131,7 +160,7 @@
 
                 <div class="flex justify-end mt-6">
                     <button type="submit"class="px-6 py-2 text-gray-200 bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">Guardar</button>
-                    <a href="{{ url('usuarios') }}">
+                    <a href="{{ route('usuarios.index') }}">
                         <button type="button" class="px-6 py-2 ml-2 font-semibold bg-gray-200 rounded-md hover:bg-red-200 focus:outline-none focus:bg-red-700">Cancelar</button>
                     </a>
                 </div>

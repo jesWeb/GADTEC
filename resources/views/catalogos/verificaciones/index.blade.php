@@ -2,17 +2,19 @@
 
 
 @section('body')
+    <div class="flex justify-end ml-2 space-x-2">
+        <a href="{{ $backRoute ?? route('catalogos.index') }}" class="flex items-center text-blue-500 hover:text-blue-700">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+                Volver a Catálogos
+        </a>
+    </div>
     <div class="px-4 py-6">
         <div class="p-6 bg-white rounded-md shadow-md">
 
             <div class="flex justify-between mb-3">
                 <h2 class="mb-4 text-lg font-semibold text-gray-700 capitalize">Verificaciones vehiculares</h2>
-                {{-- arrow back --}}
-                <div class="py-3">
-                    <a href="{{ route('catalogos.index') }}" class="flex items-center justify-center w-12 h-10 text-white rounded-full shadow ">
-                        <img src="/img/arrow-back.svg" alt="">
-                    </a>
-                </div>
             </div>
 
             <div class="mb-2">

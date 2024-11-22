@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('lugar_servicio', 100);
             $table->unsignedBigInteger('id_automovil');
             $table->boolean('activo')->default(0);  // borrado logico del sistema
+            $table->text('comprobante')->nullable();
+
             // Definición de la clave foránea (relación con automóviles)
             $table->foreign('id_automovil')->references('id_automovil')->on('automoviles')->onDelete('cascade');
             $table->timestamps();

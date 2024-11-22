@@ -40,6 +40,7 @@
                             <th class="px-4 py-2 text-left text-gray-600">Proximo Servicio</th>
                             <th class="px-4 py-2 text-left text-gray-600">Costo</th>
                             <th class="px-4 py-2 text-left text-gray-600">Lugar de Servicio</th>
+                            <th class="px-4 py-2 text-left text-gray-600">Comprobante</th>
                             <th class="px-4 py-2 text-left text-gray-600">Acciones</th>
                         </tr>
                     </thead>
@@ -65,13 +66,20 @@
                                 <td class="px-4 py-2 text-center border">
                                     @if ($servicio->prox_servicio == '')
                                         <!-- Muestra un guión o un texto vacío si el servicio no es programado -->
-                                        -
+                                        No aplica
                                     @else
                                         {{ $servicio->prox_servicio }}
                                     @endif
-                                    </>
-                                <td class="px-4 py-2 border">{{ $servicio->costo }}</td>
+                                </td>
+                                <td class="px-4 py-2 border">${{ $servicio->costo }}</td>
                                 <td class="px-4 py-2 border">{{ $servicio->lugar_servicio }}</td>
+                                <td class="px-4 py-2 text-sm border">
+                                @if($servicio->comprobante)
+                                    <a href="{{ asset('img/' . $servicio->comprobante) }}" target="_blank" class="text-blue-600 hover:underline">Ver Comprobante</a>
+                                @else
+                                    <span class="text-gray-500">Sin comprobante</span>
+                                @endif
+                            </td>
                                 <td class="px-4 py-2 border">
                                     <div class="flex items-center space-x-2">
                                         <!-- Ver -->
@@ -118,7 +126,7 @@
     @if ($mensaje = Session::get('mensaje'))
         <script>
             Swal.fire({
-                title: "Multa Registrada",
+                title: "Servicio Registrado",
                 text: "{{ $mensaje }}",
                 icon: "success"
             });
@@ -128,7 +136,7 @@
     @if ($updateMessaje = Session::get('message'))
         <script>
             Swal.fire({
-                title: "Informacion  Actualizada",
+                title: "Información  Actualizada",
                 text: "{{ $updateMessaje }}",
                 icon: "success"
             });

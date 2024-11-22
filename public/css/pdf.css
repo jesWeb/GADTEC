@@ -10,14 +10,13 @@ p{
     font-size: 1cm;
 } */
 
-
 @page {
     margin: 3cm 0.5cm 2cm 0.5cm;
-    font-family: 'Arial', sans-serif; /* Fuente más profesional */
+    font-family: 'Arial', sans-serif;
 }
 
 body {
-    font-family: 'Arial', sans-serif; /* Aplicamos la misma fuente al cuerpo */
+    font-family: 'Arial', sans-serif;
 }
 
 #header {
@@ -41,16 +40,18 @@ h1.titulo {
     font-size: 24px;
     font-weight: bold;
     color: #333;
+    margin: 1cm 0cm;
 }
 
+h2 { border-bottom: 1px solid #ddd; padding-bottom: 5px; }
 p {
     margin: 0;
     font-size: 16px;
-    color: #666;
+    color: gray;
 }
 
 .container {
-    margin-top: 1cm; /* Bajamos más la tabla para que no se superponga con el encabezado */
+    margin-top: 1cm;
 }
 
 .multas-table {
@@ -58,7 +59,7 @@ p {
     border-collapse: collapse;
     background-color: #fff;
     border: 1px solid #ddd;
-    font-size: 14px; /* Ajustamos el tamaño de la fuente */
+    font-size: 14px;
 }
 
 .multas-table th, .multas-table td {
@@ -89,11 +90,11 @@ p {
 }
 
 .estatus.pagada {
-    background-color: #4CAF50; /* Verde para pagada */
+    background-color: #4CAF50;
 }
 
 .estatus.pendiente {
-    background-color: #f44336; /* Rojo para pendiente */
+    background-color: #f44336;
 }
 
 a {
@@ -104,6 +105,24 @@ a {
 a:hover {
     text-decoration: underline;
 }
+
+table { 
+    width: 100%; 
+    border-collapse: 
+    collapse; margin-top: 
+    20px; }
+th, td 
+    { border: 1px solid #ddd; 
+        padding: 8px; 
+        text-align: left; 
+    }
+        th { 
+            background-color: #f9f9f9; 
+            font-weight: bold; 
+        }
+    
+        .section { margin-top: 20px; }
+        .total { font-weight: bold; font-size: 18px; text-align: right; margin-top: 10px; }
 
 #footer {
     position: fixed;

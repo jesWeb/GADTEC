@@ -44,6 +44,16 @@
                             </div>
                         </div>
 
+                         <!-- Fecha de Servicio -->
+                        <div>
+                            <label class="block text-base font-medium text-[#07074D]" for="fecha_servicio">Fecha de Servicio</label>
+                            <input class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" 
+                                type="date" name="fecha_servicio" value="{{ old('fecha_servicio') }}" id="fecha_servicio" placeholder="">
+                            <div id="VehiculoOrigenHelp" class="mt-1 text-sm text-red-600">
+                                @error('fecha_servicio')<i>{{ $message }}</i>@enderror
+                            </div>
+                        </div>
+
                         <!-- Campos dinámicos según el tipo de servicio -->
                         <div id="camp_servicios"></div>
 
@@ -74,6 +84,15 @@
                                 type="text" name="lugar_servicio" id="lugar_servicio">
                             <div id="lugar_servicioHelp" class="mt-1 text-sm text-red-600">
                                 @error('lugar_servicio')<i>{{ $message }}</i>@enderror
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-base font-medium text-[#07074D]" for="comprobante">Comprobante</label>
+                            <input class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" 
+                                type="file" name="comprobante" id="comprobante" accept="image/*">
+                            <div id="FotografiaFrontalHelp" class="mt-1 text-sm text-red-600">
+                                @error('comprobante')<i>{{ $message }}</i>@enderror
                             </div>
                         </div>
 

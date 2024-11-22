@@ -1,3 +1,4 @@
+
 @extends('layouts.app')
 @section('body')
     <div class="px-4 py-6">
@@ -10,23 +11,23 @@
                 <table class="min-w-full bg-white border border-gray-200 divide-y divide-gray-200">
                     <thead class="bg-gray-100">
                         <tr>
-                            <th class="px-4 py-2 text-center text-gray-600">#</th>
-                            <th class="px-4 py-2 text-center text-gray-600">Vehículo</th>
-                            <th class="px-4 py-2 text-center text-gray-600">Placas</th>
-                            <th class="px-4 py-2 text-center text-gray-600">Estatus</th>
-                            <th class="px-4 py-2 text-center text-gray-600">Acciones</th>
+                            <th class="px-4 py-2 text-left text-gray-600">#</th>
+                            <th class="px-4 py-2 text-left text-gray-600">Vehículo</th>
+                            <th class="px-4 py-2 text-left text-gray-600">Placas</th>
+                            <th class="px-4 py-2 text-left text-gray-600">Estatus</th>
+                            <th class="px-4 py-2 text-left text-gray-600">Acciones</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
                         @foreach ($disponibilidad as $key => $dispo)
                             <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-2 text-center border">{{ $key + 1 }}</td>
-                                <td class="px-4 py-2 text-center border">
+                                <td class="px-4 py-2 border">{{ $key + 1 }}</td>
+                                <td class="px-4 py-2 border">
                                     {{ $dispo->marca ? $dispo->marca : 'No disponible' }} -
                                     {{ $dispo->submarca ? $dispo->submarca : '' }} -
                                     {{ $dispo->modelo ? $dispo->modelo : '' }}
                                 </td>
-                                <td class="px-4 py-2 text-center border">
+                                <td class="px-4 py-2 border">
                                     {{ $dispo->placas ? $dispo->placas : 'No disponible' }}</td>
                                 <td class="px-4 py-2 text-center border">
                                     @if ($dispo->asignacion)

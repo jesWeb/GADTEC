@@ -43,12 +43,16 @@ Duplica el archivo [.env.example] para crear el archivo [.env]:
 - cp .env.example .env
 
 Establece la conexión a tu base de datos MySQL en local, que suelen ser los siguientes:
+
+```env
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1       
 DB_PORT=3306            # Puerto estándar de MySQL
 DB_DATABASE=nombre_bd   # Cambia 'nombre_bd' al nombre de tu base de datos
 DB_USERNAME=usuario     # Cambia 'usuario' por tu usuario de MySQL (en XAMPP suele ser 'root')
 DB_PASSWORD=contraseña  # Cambia 'contraseña' por tu contraseña de MySQL (en XAMPP suele estar vacía por defecto)
+```
+
 
 ## Genera la clave de la aplicación:
 - php artisan key:generate
@@ -56,6 +60,11 @@ DB_PASSWORD=contraseña  # Cambia 'contraseña' por tu contraseña de MySQL (en 
 ## Migraciones de Base de Datos
 Ejecuta las migraciones para crear las tablas necesarias en la base de datos:
 - php artisan migrate
+
+## Ejecutar los Seeders
+Para poblar la base de datos con datos iniciales en usuarios, como usuarios y roles, ejecuta los seeders con los siguientes comando:
+- php artisan db:seed
+- php artisan db:seed --class=UsuarioSeeder  
 
 ## Compilar Estilos de Vue (o frontend)
 Compila los archivos necesarios con el siguiente comando:
@@ -76,4 +85,14 @@ Para iniciar el servidor del sistema, utiliza:
 Por ejemplo:
 - php artisan serve --host=192.168.1.104 --port=8000
 Reemplaza 192.168.1.104 con la IP correspondiente de tu computadora en la red.
+
+
+## ## Credenciales de Acceso
+Los usuarios generados por el seeder tienen los siguientes datos de inicio de sesión:
+
+| Rol           | Usuario       | Contraseña       |
+|---------------|---------------|------------------|
+| Administrador | admin         | admin123         |
+| Moderador     | moderador     | moderador546     |
+| Usuario       | usuario       | usuario789       |
 

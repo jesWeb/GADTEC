@@ -1,6 +1,7 @@
 @foreach ($catalogosCardsData as $card)
     <div
         class="transition duration-300 transform bg-white shadow-sm rounded-xl xl:px-3 xl:py-3 dark:border-strokedark dark:bg-boxdark hover:scale-105">
+        
         {{-- link --}}
         <a href="{{ $card['href'] }}" class="text-lg">
 
