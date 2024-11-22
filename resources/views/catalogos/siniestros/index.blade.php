@@ -8,12 +8,8 @@
                 {{-- arrow back --}}
                 <div class="py-3">
                     <a href="{{ route('catalogos.index') }}"
-                        class="flex items-center justify-center w-10 h-10 text-white bg-gray-800 rounded-full">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
-                        </svg>
+                        class="flex items-center justify-center w-12 h-10 text-white rounded-full shadow ">
+                        <img src="/img/arrow-back.svg" alt="">
                     </a>
                 </div>
             </div>
@@ -40,7 +36,8 @@
                 </div>
                 <!-- Btn Nuevo Registro -->
                 <div class="flex justify-end ml-2 space-x-3">
-                    <a href="{{ route('siniestros.create') }}" class="inline-block px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Nuevo registro</a>
+                    <a href="{{ route('siniestros.create') }}"
+                        class="inline-block px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Nuevo registro</a>
                 </div>
             </div>
             {{-- tables data --}}

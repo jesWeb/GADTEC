@@ -19,8 +19,8 @@ class GestionController extends Controller
     {
         // $disponibilidad = asignacion::with('automovil')
         //     ->get();
-        $disponibilidad = Automoviles::with('asignacion')
-        ->get();
+        $disponibilidad = Automoviles::with('asignacion')->get();
+
         // dd($disponibilidad);
         return view('modulos.Gestion.index', compact('disponibilidad'));
     }

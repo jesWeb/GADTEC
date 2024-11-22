@@ -63,18 +63,7 @@
                             class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                             name="monto" min="0" step="0.01" type="number" placeholder="$0.00 MXN" required>
                     </div>
-                    {{-- Estatus --}}
-                    <div class="w-full px-3 xl:w-1/2">
-                        <label class="mb-3 block text-base font-medium text-[#07074D]" for="estatus">Estatus</label>
-                        <select name="estatus"
-                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                            required>
-                            <option disabled selected>Selecciona una opción</option>
-                            <option value="Activo">Activo</option>
-                            <option value="Suspensdido">Suspensdido</option>
-                            <option value="Baja">Baja</option>
-                        </select>
-                    </div>
+
                 </div>
                 <div class="px-3 py-3 mt-3 border-b border-stroke dark:border-strokedark"></div>
                 {{-- foto --}}
@@ -83,7 +72,7 @@
                         Subir Archivos
                     </label>
                     <div class="mb-8">
-                        <input type="file" name="poliza" id="fotografias" class="sr-only" multiple />
+                        <input type="file" name="poliza" id="poliza" class="sr-only" multiple />
                         <label for="poliza"
                             class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
                             <div>
@@ -104,7 +93,7 @@
             </div>
 
             <script>
-                const fileInput = document.getElementById('fotografias');
+                const fileInput = document.getElementById('poliza');
                 const fileCountDisplay = document.getElementById('file-count');
                 const fileNamesDisplay = document.getElementById('file-names');
 

@@ -4,8 +4,17 @@
     <div class="flex flex-col gap-9">
 
         <div class="p-6 bg-white border rounded-md shadow-md">
-            {{-- titulo --}}
+            <div class="flex justify-between mb-3">
+                  {{-- titulo --}}
             <h2 class="mb-5 text-xl font-semibold text-gray-700">Registro de Seguros</h2>
+                {{-- arrow back --}}
+                <div class="py-3">
+                    <a href="{{ route('catalogos.index') }}" class="flex items-center justify-center w-12 h-10 text-white rounded-full shadow ">
+                        <img src="/img/arrow-back.svg" alt="">
+                    </a>
+                </div>
+            </div>
+
             {{-- formulario --}}
             <form action="{{ route('seguros.update', $EddSeg->id_seguro) }}" method="POST" enctype="multipart/form-data">
                 {{-- este es un toquen crea una proteccion en el formulario csrf tipo segridad --}}

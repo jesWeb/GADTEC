@@ -4,27 +4,54 @@
 @section('body')
     <div class="px-4 py-6">
         <div class="p-6 bg-white rounded-md shadow-md">
-            <h2 class="mb-4 text-lg font-semibold text-gray-700 capitalize">Verificaciones vehiculares</h2>
+
+            <div class="flex justify-between mb-3">
+                <h2 class="mb-4 text-lg font-semibold text-gray-700 capitalize">Verificaciones vehiculares</h2>
+                {{-- arrow back --}}
+                <div class="py-3">
+                    <a href="{{ route('catalogos.index') }}" class="flex items-center justify-center w-12 h-10 text-white rounded-full shadow ">
+                        <img src="/img/arrow-back.svg" alt="">
+                    </a>
+                </div>
+            </div>
 
             <div class="mb-2">
-                <form action="{{ route('verificaciones.index') }}" method="GET"
-                    class="flex flex-col items-center justify-between space-y-2 md:flex-row md:space-y-0">
-                    <!-- Campo de búsqueda -->
-                    <div class="flex items-center w-full md:w-auto">
-                        <input type="text" name="search" placeholder="Buscar Verificacion"
-                            class="w-full px-4 py-2 text-gray-700 border rounded-l-md focus:outline-none md:w-48"
-                            value="{{ request('search') }}">
-                        <button type="submit"
-                            class="flex items-center px-4 py-2 ml-1 text-white bg-blue-600 border-l-0 rounded-r-md hover:bg-blue-700 focus:outline-none">
-                            Buscar
-                        </button>
+                <div class="flex justify-between">
+                    <form action="{{ route('verificaciones.index') }}" method="GET"
+                        class="flex flex-col items-center justify-between space-y-2 md:flex-row md:space-y-0">
+                        <!-- Campo de búsqueda -->
+                        <div class="flex items-center w-full md:w-auto">
+                            <input type="text" name="search" placeholder="Buscar Verificacion"
+                                class="w-full px-4 py-2 text-gray-700 border rounded-l-md focus:outline-none md:w-48"
+                                value="{{ request('search') }}">
+                            <button type="submit"
+                                class="flex items-center px-4 py-2 ml-1 text-white bg-blue-600 border-l-0 rounded-r-md hover:bg-blue-700 focus:outline-none">
+                                Buscar
+                            </button>
 
-                    </div>
-                </form>
-                <!-- Botones de Imprimir y Nuevo Registro -->
+                        </div>
+                    </form>
+
+                </div>
+                <!-- Botones  Nuevo Registro -->
                 <div class="flex justify-end ml-2 space-x-2">
+                    {{-- registro --}}
                     <a href="{{ route('verificaciones.create') }}"
-                        class="inline-block px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Nuevo registro</a>
+                        class="inline-block px-4 py-3 text-white bg-blue-600 rounded hover:bg-blue-700">Nuevo registro</a>
+                    {{-- alert calendar --}}
+                    <button id="btn-calendar"
+                        class="inline-flex items-center px-6 py-3 text-base font-medium text-white transition duration-150 ease-in-out bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" height="24"
+                            fill="none" class="svg-icon">
+                            <g stroke-width="2" stroke-linecap="round" stroke="#fff">
+                                <rect y="5" x="4" width="16" rx="2" height="16"></rect>
+                                <path d="m8 3v4"></path>
+                                <path d="m16 3v4"></path>
+                                <path d="m4 11h16"></path>
+                            </g>
+                        </svg>
+
+                    </button>
                 </div>
             </div>
             <div class="overflow-x-auto rounded-lg shadow">
@@ -71,8 +98,8 @@
                                         </a>
 
                                         <!-- Eliminar -->
-                                        <form action="{{ route('verificaciones.destroy', $vr) }}"
-                                            id="eliminacion-form" class="inline">
+                                        <form action="{{ route('verificaciones.destroy', $vr) }}" id="eliminacion-form"
+                                            class="inline">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" onclick="deleteRegister(event)"
@@ -91,11 +118,7 @@
                     </tbody>
                 </table>
             </div>
-            <!-- Imagen de verificación -->
-            <div class="flex justify-center my-4">
-                <img src="{{ asset('img/verificacion.png') }}" alt="Imagen de Verificación"
-                    class="object-cover rounded-md h-19">
-            </div>
+
             <!-- Navegación de paginación -->
             {{-- {{ $cars->links() }} --}}
         </div>
@@ -157,5 +180,19 @@
                 }
             });
         }
+    </script>
+
+    {{-- calendar  --}}
+    <script>
+        const btnAlert = document.getElementById('btn-calendar');
+        btnAlert.addEventListener('click', () => {
+            Swal.fire({
+                // title: "Calendario  de verificacion",
+                imageUrl: "/img/verificacion.png",
+                imageWidth: 450,
+                imageHeight: 320,
+                imageAlt: "Custom image"
+            });
+        });
     </script>
 @endsection

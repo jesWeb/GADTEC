@@ -26,8 +26,6 @@ class AsignacionController extends Controller
     }
 
 
-
-
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -62,8 +60,6 @@ class AsignacionController extends Controller
 
         $newAsig = new asignacion($validated);
 
-        // Asignar datos automáticamente
-        // $newAsig->fecha_asignacion = Carbon::now();
 
 
         // Si no se requiere chofer, el campo nombre_chofer  debe estar vacío

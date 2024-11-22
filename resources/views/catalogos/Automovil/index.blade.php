@@ -2,7 +2,15 @@
 @section('body')
     <div class="px-4 py-6">
         <div class="p-6 bg-white rounded-md shadow-md">
-            <h2 class="mb-4 text-lg font-semibold text-gray-700 capitalize">Vehiculos</h2>
+            <div class="flex justify-between mb-3">
+                <h2 class="mb-4 text-lg font-semibold text-gray-700 capitalize">Vehiculos</h2>
+                {{-- arrow back --}}
+                <div class="py-3">
+                    <a href="{{ route('catalogos.index') }}" class="flex items-center justify-center w-10 h-10 text-white bg-black rounded-full shadow ">
+                        <img src="/img/arrow-back.svg" alt="">
+                    </a>
+                </div>
+            </div>
             <div class="mb-2">
                 <form action="{{ route('Automovil.index') }}" method="GET"
                     class="flex flex-col items-center justify-between space-y-2 md:flex-row md:space-y-0">
@@ -144,4 +152,5 @@
             });
         }
     </script>
+
 @endsection

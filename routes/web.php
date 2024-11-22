@@ -38,6 +38,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
         return app(GestionController::class)->index();
     })->name("Gestion");
     Route::get('/gestion/{id_asignacion}', [GestionController::class, 'show'])->name('gestion');
+
     Route::resource('Automovil', AutomovilController::class);
     Route::get('/automoviles-pdf', [AutomovilController::class, 'generateReport'])->name('automoviles-pdf');
     Route::resource('asignacion', AsignacionController::class);
