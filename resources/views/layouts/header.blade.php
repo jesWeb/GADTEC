@@ -1,6 +1,6 @@
 <header class="flex items-center justify-between px-6 py-4 bg-white border-b-4 border-indigo-600">
     <div class="flex items-center">
-        <button @click="sidebarOpen = true; $refs.dropdownMenuOpen = false" 
+        <button @click="sidebarOpen = true; $refs.dropdownMenuOpen = false"
                 class="text-gray-500 focus:outline-none lg:hidden">
             <!-- Icono del sidebar -->
             <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -26,8 +26,8 @@
         <!-- Menú desplegable -->
         <div x-cloak x-show="dropdownOpen"
              class="absolute right-0 z-10 w-48 mt-2 overflow-hidden bg-white rounded-md shadow-xl">
-            <a href="{{ route('profile.edit') }}"
-               class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white">Perfil</a>
+            {{-- <a href="{{ route('profile.edit') }}"
+               class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white">Perfil</a> --}}
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <a href="#" onclick="event.preventDefault(); this.closest('form').submit();"
