@@ -1,146 +1,119 @@
 @extends('layouts.app')
 @section('body')
-    <div class="container px-4 mx-auto">
-        <div class="flex justify-center mt-8">
-            <section class="w-full p-6 bg-white rounded-lg shadow-lg">
-                {{-- info main --}}
-                <h1 class="text-lg font-semibold tracking-wide text-center text-indigo-500 md:m-5">Informacion de
-                    Automovil
-                </h1>
-                {{-- info --}}
-                <div class="flex items-center mb-8 space-x-8">
-                    {{-- img --}}
-                    <div class="flex-shrink-0">
-                        <img src="https://picsum.photos/250/500" alt="">
-                    </div>
-                    {{-- info --}}
-                    <div class="flex-grow">
+    <div class="px-4 mx-auto">
+        {{--  --}}
+        <section class="w-full p-6 bg-white rounded-lg shadow-lg minh-screen">
+            {{-- info main --}}
+            <h1 class="text-lg font-semibold tracking-wide text-center text-indigo-500 md:m-5">Informacion de
+                Automovil
+            </h1>
 
-                        <div class="">
-
-
-                            <p class="text-lg font-semibold text-gray-800">Marca: <span
-                                    class="text-gray-600">{{ $automovil->marca }}</span> </p>
-
-
-                            <p class="text-lg font-semibold text-gray-800">Submarca: <span
-                                    class="text-gray-600">{{ $automovil->submarca }}</span> </p>
-
-                            <p class="text-lg ">Modelo: <span class="text-gray-600">{{ $automovil->modelo }}</span></p>
-
-
-
-                        </div>
-                        <div class="">
-                            <div class="mb-4">
-                                <p class="text-lg font-semibold text-gray-800">Numero de Serie</p>
-                                <p class="text-gray-600">{{ $automovil->num_serie }}</p>
-                            </div>
-
-                            <div class="text-center">
-                                <p class="text-lg font-semibold text-gray-800">Numero Motor</p>
-                                <p class="text-gray-600">{{ $automovil->num_motor }}</p>
-                            </div>
-
-                            <div class="mb-4">
-                                <p class="text-lg font-semibold text-gray-800">NSI/Repube</p>
-                                <p class="text-gray-600">{{ $automovil->num_nsi }}</p>
-                            </div>
-                        </div>
-
-
-                        <div class="mb-4">
-                            <p class="text-lg font-semibold text-gray-800">Numero de Serie</p>
-                            <p class="text-gray-600">{{ $automovil->num_serie }}</p>
-                        </div>
-
-                        <div class="text-center">
-                            <p class="text-lg font-semibold text-gray-800">Numero Motor</p>
-                            <p class="text-gray-600">{{ $automovil->num_motor }}</p>
-                        </div>
-
-                        <div class="mb-4">
-                            <p class="text-lg font-semibold text-gray-800">NSI/Repube</p>
-                            <p class="text-gray-600">{{ $automovil->num_nsi }}</p>
-                        </div>
-
-                    </div>
-
-                    <div class="flex justify-center gap-6 px-2 py-2 m-3 ">
-                        <div class="mb-4">
-                            <p class="text-lg font-semibold text-gray-800">Capacidad de combustible</p>
-                            <p class="text-gray-600">{{ $automovil->capacidad_combustible }}</p>
-                        </div>
-                        <div class="mb-4">
-                            <p class="text-lg font-semibold text-gray-800">Tipo combustible</p>
-                            <p class="text-gray-600">{{ $automovil->tipo_combustible }}</p>
-                        </div>
-                        <div class="mb-4">
-                            <p class="text-lg font-semibold text-gray-800">Tipo de Automovil</p>
-                            <p class="text-gray-600">{{ $automovil->tipo_automovil }}</p>
-                        </div>
-                    </div>
-                    <div class="flex justify-center gap-6 px-2 py-2 m-3 ">
-                        <div class="mb-4">
-                            <p class="text-lg font-semibold text-gray-800">Kilometraje</p>
-                            <p class="text-gray-600">{{ $automovil->kilometraje }}</p>
-                        </div>
-                        <div class="mb-4">
-                            <p class="text-lg font-semibold text-gray-800">Placas</p>
-                            <p class="text-gray-600">{{ $automovil->placas }}</p>
-                        </div>
-
-                        <div class="mb-4">
-                            <p class="text-lg font-semibold text-gray-800">Uso</p>
-                            <p class="text-gray-600">{{ $automovil->uso }}</p>
-                        </div>
-
-                    </div>
-
-
-
-
-
-                    <div class="flex justify-center gap-6 px-2 py-2 m-3 align-middle">
-                        <div class="text-center">
-                            <p class="text-lg font-semibold text-gray-800">Numero de Puertas</p>
-                            <p class="text-gray-600">{{ $automovil->num_puertas }}</p>
-                        </div>
-                        <div class="text-center">
-                            <p class="text-lg font-semibold text-gray-800">Estatus</p>
-                            <p class="text-gray-600">{{ $automovil->estatus }}</p>
-                        </div>
-                        <div class="">
-                            <p class="text-lg font-semibold text-gray-800">Fecha de Registro</p>
-                            <p class="text-gray-600">{{ $automovil->fecha_registro }}</p>
-                        </div>
-                    </div>
-
-                    <div class="flex items-center justify-center gap-6 px-2 py-2 m-3">
-
-                        <div class="">
-                            <p class="text-lg font-semibold text-gray-800">Responsable:</p>
-                            <p class="text-gray-600">{{ $automovil->responsable }}</p>
-                        </div>
-                        <div class="mb-4">
-                            <p class="text-lg font-semibold text-gray-800">Observaciones</p>
-                            <p class="text-gray-600">{{ $automovil->observaciones }}</p>
-                        </div>
-
-                    </div>
-
-
-
+            <div class="flex flex-col mt-3 md:flex-row">
+                <!-- img -->
+                <div class="mb-6 mr-0 md:mr-8 md:mb-0">
+                    <img class="w-1/2 mx-auto md:w-full w" src="https://placeholder.pics/svg/400" alt="can_help_banner">
                 </div>
+                <!--  -->
 
-                {{-- btn --}}
-                <div class="flex justify-end mt-6 space-x-4">
-                    <a href="{{ route('Automovil.index') }}"
-                        class="px-4 py-2 text-white bg-indigo-600 rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">Cerrar</a>
+                <div class="flex flex-col flex-wrap flex-1 -mx-2 -mb-4 sm:flex-row">
+
+                    <div class="w-full px-2 mb-4 sm:w-1/2 ">
+                        <div class="h-full px-6 py-4 border border-t-0 border-l-0 border-zinc-500 rounded-br-xl">
+
+                            <div class="flex flex-col">
+                                <p class="text-lg font-semibold text-gray-800 ">Marca:</p>
+                                <span class="text-gray-600">{{ $automovil->marca }}</span>
+                                <p class="text-lg font-semibold text-gray-800 ">Submarca:</p>
+                                <span class="text-gray-600">{{ $automovil->submarca }}</span>
+                                <p class="text-lg ">Modelo:</p>
+                                <span class="text-gray-600">{{ $automovil->modelo }}</span>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="w-full px-2 mb-4 sm:w-1/2 ">
+                        <div class="h-full px-6 py-4 border border-t-0 border-l-0 border-zinc-500 rounded-br-xl">
+                            <div class="flex flex-col ">
+                                <p class="text-lg font-semibold text-gray-800">Numero de Serie :</p>
+                                <span class="text-gray-600 ">{{ $automovil->num_serie }}</span>
+                                <p class="text-lg font-semibold text-gray-800">Numero de Motor :</p>
+                                <span class="text-gray-600 ">{{ $automovil->num_motor }}</span>
+                                <p class="text-lg font-semibold text-gray-800">Repube / NSI :</p>
+                                <span class="text-gray-600 ">{{ $automovil->num_nsi }}</span>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full px-2 mb-4 sm:w-1/2 ">
+                        <div class="h-full px-6 py-4 border border-t-0 border-l-0 border-zinc-500 rounded-br-xl">
+                            <div class="flex mt-4 space-x-5 ">
+                                <div class="flex flex-col">
+                                    <p class="text-lg font-semibold text-gray-800 ">Capacidad de combustible (Lts): </p>
+                                    <span class="text-gray-600 ">{{ $automovil->capacidad_combustible }}</span>
+                                    <p class="text-lg font-semibold text-gray-800 ">Tipo de combustible : </p>
+                                    <span class="text-gray-600 ">{{ $automovil->tipo_combustible }}</span>
+                                    <p class="text-lg font-semibold text-gray-800 ">Kilometraje :</p>
+                                    <span class="text-gray-600 ">{{ $automovil->kilometraje }}</span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full px-2 mb-4 sm:w-1/2 ">
+                        <div class="h-full px-6 py-4 border border-t-0 border-l-0 border-zinc-500 rounded-br-xl">
+                            <div class="flex mt-4 space-x-5 ">
+                                <div class="flex flex-col">
+                                    <p class=" mb-1.5 inline text-lg font-semibold text-gray-800">Color : </p><span
+                                        class="text-gray-600 ">{{ $automovil->color }}</span>
+                                    <p class=" mt-1.5 inline text-lg font-semibold text-gray-800">Numero de Puertas : </p>
+                                    <span class="text-gray-600 ">{{ $automovil->num_puertas }}</span>
+                                    <p class=" mb-1.5 inline text-lg font-semibold text-gray-800">Condiciones: </p> <span
+                                        class="text-gray-600 ">{{ $automovil->estatus }}</span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full px-2 mb-4 sm:w-1/2 ">
+                        <div class="h-full px-6 py-4 border border-t-0 border-l-0 border-zinc-500 rounded-br-xl">
+                            <div class="flex mt-4 space-x-5 ">
+                                <div class="flex flex-col">
+                                    <p class="text-lg font-semibold text-gray-800 ">Placas : </p> <span
+                                        class="text-gray-600 ">{{ $automovil->placas }}</span>
+                                    <p class="font-semibold text-gray-800 inlinext-lg">Fecha de Ingreso :</p> <span
+                                        class="text-gray-600 ">{{ $automovil->fecha_registro }}</span>
+                                    <p class="text-lg font-semibold text-gray-800 ">Tipo de Automovil : </p> <span
+                                        class="text-gray-600 ">{{ $automovil->tipo_automovil }}</span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full px-2 mb-4 sm:w-1/2 ">
+                        <div class="h-full px-6 py-4 border border-t-0 border-l-0 border-zinc-500 rounded-br-xl">
+                            <div class="flex mt-4 space-x-5 ">
+                                <div class="flex flex-col">
+                                    <p class="inline text-lg font-semibold text-gray-800">Uso : <span
+                                            class="p-2 text-gray-600">{{ $automovil->uso }}</span> </p>
+                                    <p class="inline text-lg font-semibold text-gray-800">Responsable : <span
+                                            class="p-2 text-gray-600">{{ $automovil->responsable }}</span> </p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </section>
+            </div>
 
-        </div>
 
+
+            {{-- btn --}}
+            <div class="flex justify-end mt-6 space-x-4">
+                <a href="{{ route('Automovil.index') }}"
+                    class="px-4 py-2 text-white bg-indigo-600 rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">Cerrar</a>
+            </div>
+        </section>
     </div>
 @endsection
