@@ -189,9 +189,9 @@
         const btnAlert = document.getElementById('btn-calendar');
         btnAlert.addEventListener('click', () => {
             Swal.fire({
-                // title: "Calendario  de verificacion",
-                imageUrl: "/img/verificacion.png",
-                imageWidth: 450,
+                title: "Calendario  de verificacion",
+                imageUrl: "/img/Verificacion.png",
+                imageWidth: 480,
                 imageHeight: 320,
                 imageAlt: "Custom image"
             });

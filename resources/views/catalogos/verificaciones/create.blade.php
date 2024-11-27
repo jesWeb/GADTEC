@@ -44,9 +44,11 @@
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                     required>
                                     <option disabled selected>Selecciona una opción </option>
-                                    <option value="amarillo">Amarillo</option>
-                                    <option value="azul">azul</option>
-                                    <option value="rojo">rojo</option>
+                                    <option value="Verde">Verde</option>
+                                    <option value="Amarillo">Amarillo</option>
+                                    <option value="Rojo">Rojo</option>
+                                    <option value="Azul">Azul</option>
+                                    <option value="Rosa">Rosa</option>
 
                                 </select>
                             </div>
