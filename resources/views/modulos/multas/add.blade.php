@@ -33,7 +33,6 @@
                             <option value="Federal" selected>Federal</option>
                             <option value="Estatal">Estatal</option>
                             <option value="Municipal">Municipal</option>
-                            <option value="Guardia Nacional">Guardia Nacional</option>
                         </select>
                     </div>
 

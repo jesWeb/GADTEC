@@ -21,35 +21,46 @@
                     <!-- N° Empleado -->
                     <div>
                         <label for="num_empleado" class="block text-base font-medium text-gray-700">N° Empleado</label>
-                        <input type="text" name="num_empleado" id="num_empleado"  value="{{ old('num_empleado', $usuario->num_empleado) }}" placeholder="ejemplo: 12345" class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" value="{{ old('num_empleado') }}">
+                        <input type="text" name="num_empleado" id="num_empleado"  value="{{ old('num_empleado', $usuario->num_empleado) }}" 
+                            placeholder="ejemplo: 12345" class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                            value="{{ old('num_empleado') }}"
+                            title="Actualiza el número de empleado"
+                        >
                         @error('num_empleado') <span class="text-sm text-red-600">{{ $message }}</span> @enderror
                     </div>
 
                     <!-- Nombre -->
                     <div>
                         <label for="nombre" class="block text-base font-medium text-gray-700">Nombre</label>
-                        <input type="text" name="nombre" id="nombre" value="{{ old('nombre', $usuario->nombre) }}"  placeholder="ejemplo: Juan" class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" value="{{ old('nombre') }}">
+                        <input type="text" name="nombre" id="nombre" value="{{ old('nombre', $usuario->nombre) }}"  
+                        placeholder="ejemplo: Juan"  title="Actualiza el nombre del usuario"
+                        class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" value="{{ old('nombre') }}">
                         @error('nombre') <span class="text-sm text-red-600">{{ $message }}</span> @enderror
                     </div>
 
                      <!-- Apellido Paterno -->
                      <div>
                         <label for="app" class="block text-base font-medium text-gray-700">Apellido Paterno</label>
-                        <input type="text" name="app" id="app" value="{{ old('app', $usuario->app) }}"  placeholder="ejemplo: Pérez" class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" value="{{ old('app') }}">
+                        <input type="text" name="app" id="app" value="{{ old('app', $usuario->app) }}"  
+                        placeholder="ejemplo: Pérez" title="Actualiza el apellido paterno"
+                        class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" value="{{ old('app') }}">
                         @error('app') <span class="text-sm text-red-600">{{ $message }}</span> @enderror
                     </div>
 
                     <!-- Apellido Materno -->
                     <div>
                         <label for="apm" class="block text-base font-medium text-gray-700">Apellido Materno</label>
-                        <input type="text" name="apm" id="apm" value="{{ old('apm', $usuario->apm) }}"  placeholder="ejemplo: López" class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" value="{{ old('apm') }}">
+                        <input type="text" name="apm" id="apm" value="{{ old('apm', $usuario->apm) }}"  
+                        placeholder="ejemplo: López" title="Actualiza el apellido materno"
+                        class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" value="{{ old('apm') }}">
                         @error('apm') <span class="text-sm text-red-600">{{ $message }}</span> @enderror
                     </div>
 
                     <!-- Selección de Empresa -->
                     <div>
                         <label for="empresa" class="block text-base font-medium text-gray-700">Selección de Empresa</label>
-                        <select name="empresa" id="empresa" class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        <select name="empresa" id="empresa" title="Actualiza la empresa a la que pertenece el usuario"
+                        class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
                             <option value="GÄTSIMED" {{ $usuario->empresa == 'GÄTSIMED' ? 'selected' : '' }}>GÄTSIMED</option>
                             <option value="DYDETEC" {{ $usuario->empresa == 'DYDETEC' ? 'selected' : '' }}>DYDETEC</option>
                             <option value="Empresa 3" {{ $usuario->empresa == 'Empresa 3' ? 'selected' : '' }}>Empresa 3</option>
@@ -59,13 +70,15 @@
                      <!-- Fecha de Nacimiento -->
                      <div>
                         <label for="fn" class="block text-base font-medium text-gray-700">Fecha de Nacimiento</label>
-                        <input type="date" name="fn" id="fn" value="{{ old('fn', $usuario->fn) }}"  class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" value="{{ old('fn') }}">
+                        <input type="date" name="fn" id="fn" value="{{ old('fn', $usuario->fn) }}" title="Actualiza la fecha de nacimiento del usuario"
+                        class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" value="{{ old('fn') }}">
                     </div>
 
                     <!-- Selección de Sexo -->
                     <div>
                         <label for="gen" class="block text-base font-medium text-gray-700">Selección de Sexo</label>
-                        <select name="gen" id="gen"  class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        <select name="gen" id="gen" title="Actualiza el sexo del usuario"
+                         class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
                             <option value="Femenino" {{ $usuario->gen == 'Femenino' ? 'selected' : '' }}>Femenino</option>
                             <option value="Masculino" {{ $usuario->gen == 'Masculino' ? 'selected' : '' }}>Masculino</option>
                         </select>
@@ -74,7 +87,8 @@
                     <!-- Selección de Rol -->
                     <div>
                         <label for="rol" class="block text-base font-medium text-gray-700">Selección de Rol</label>
-                        <select name="rol" id="rol" class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        <select name="rol" id="rol" title="Actualiza el rol del usuario"
+                         class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
                             <option value="Administrador" {{ $usuario->rol == 'Administrador' ? 'selected' : '' }}>Administrador</option>
                             <option value="Moderador" {{ $usuario->rol == 'Moderador' ? 'selected' : '' }}>Moderador</option>
                             <option value="Vigilante" {{ $usuario->rol == 'Usuario' ? 'selected' : '' }}>Usuario</option>
@@ -84,22 +98,25 @@
                      <!-- E-Mail -->
                      <div>
                         <label for="email" class="block text-base font-medium text-gray-700">E-Mail</label>
-                        <input type="email" name="email" id="email" value="{{ old('email', $usuario->email) }}" placeholder="ejemplo@correo.com" class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" value="{{ old('email') }}">
+                        <input type="email" name="email" id="email" value="{{ old('email', $usuario->email) }}" title="Actualiza el correo electrónico del usuario"
+                        placeholder="ejemplo@correo.com" class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" value="{{ old('email') }}">
                         @error('email') <span class="text-sm text-red-600">{{ $message }}</span> @enderror
                     </div>
 
                     <!-- Usuario -->
                     <div>
                         <label for="usuario" class="block text-base font-medium text-gray-700">Usuario</label>
-                        <input type="text" name="usuario" id="usuario" value="{{ old('usuario', $usuario->usuario) }}" placeholder="Nombre de Usuario" class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" value="{{ old('usuario') }}">
+                        <input type="text" name="usuario" id="usuario" value="{{ old('usuario', $usuario->usuario) }}" 
+                        placeholder="Nombre de Usuario" title="Actualiza el nombre de usuario" class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" value="{{ old('usuario') }}">
                         @error('usuario') <span class="text-sm text-red-600">{{ $message }}</span> @enderror
                     </div>
 
                     <!-- Contraseña -->
                     <div class="relative col-span-1 md:col-span-2">
                         <label for="pass" class="block text-base font-medium text-gray-700">Contraseña</label>
-                        <input type="password" name="pass" id="pass" placeholder="Contraseña" class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
-                        <button type="button" onclick="togglePassword()" class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500">
+                        <input type="password" name="pass" id="pass" placeholder="Contraseña" title="Actualiza la contraseña del usuario"
+                        class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        <button type="button" onclick="togglePassword()"  title="Ver la contraseña del usuario" class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500">
                             <!-- Icono de Ojo -->
                             <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
@@ -129,7 +146,7 @@
                         <label for="foto" class="block text-base font-medium text-gray-700">Seleccionar Imagen</label>
 
                         <div class="relative w-40 h-40 overflow-hidden transition duration-300 ease-in-out border border-gray-300 border-dashed rounded-lg shadow-lg cursor-pointer bg-gray-50 hover:bg-gray-100 hover:shadow-xl">
-                            <input type="file" name="foto" id="foto" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer">
+                            <input type="file" title="Actualizar la foto del usuario" name="foto" id="foto" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer">
                             <div class="flex flex-col items-center justify-center h-full text-gray-500 transition duration-300 ease-in-out hover:text-indigo-600">
                                 <!-- Icono de Cámara -->
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -145,7 +162,7 @@
                     <!-- Selección de Estatus -->
                     <div>
                         <label for="estatus" class="block text-base font-medium text-gray-700">Selección de Estatus</label>
-                        <select name="estatus" id="estatus" class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        <select name="estatus" id="estatus" title="Actualizar el estatus del usuario" class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
                             <option selected>Selecciona una opción...</option>
                             <option value="Activo" {{ $usuario->estatus == 'Activo' ? 'selected' : '' }}>Activo</option>
                             <option value="Inactivo" {{ $usuario->estatus == 'Inactivo' ? 'selected' : '' }}>Inactivo</option>
@@ -159,8 +176,8 @@
                 <hr class="my-6">
 
                 <div class="flex justify-end mt-6">
-                    <button type="submit"class="px-6 py-2 text-gray-200 bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">Guardar</button>
-                    <a href="{{ route('usuarios.index') }}">
+                    <button type="submit" title="Actualizar los datos del usuario" class="px-6 py-2 text-gray-200 bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">Guardar</button>
+                    <a href="{{ route('usuarios.index') }}" title="Cancelar la edición">
                         <button type="button" class="px-6 py-2 ml-2 font-semibold bg-gray-200 rounded-md hover:bg-red-200 focus:outline-none focus:bg-red-700">Cancelar</button>
                     </a>
                 </div>

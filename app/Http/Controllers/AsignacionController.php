@@ -35,7 +35,6 @@ class AsignacionController extends Controller
             'fecha_salida' => 'required|date',
             'fecha_estimada_dev' => 'required|date',
             'hora_salida' => 'required|date_format:H:i',
-            'hora_llegada' => 'required|date_format:H:i',
             'lugar' => 'required|string',
             'motivo' => 'required|string',
             'no_licencia' => 'required|string',

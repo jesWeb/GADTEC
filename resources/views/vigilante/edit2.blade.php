@@ -7,7 +7,7 @@
             <h2 class="text-lg font-semibold text-gray-700 capitalize">Reporte Check-In</h2>
 
             <form action="{{ route('update2', $asignacion->id_asignacion) }}" method="POST">
-                @csrf
+            @csrf
                 @method('PUT')
 
                 <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -43,13 +43,13 @@
                     <div>
                         <label for="km_salida" class="block text-sm font-medium text-gray-700">KM Salida</label>
                         <input type="number" name="km_salida" id="km_salida" value="{{ old('km_salida', $asignacion->checkIns->first()->km_salida) }}"
-                            class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-200" 
-                            disable>
+                            class="block w-full mt-1 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-200" 
+                            disabled>
                     </div>
                     <div>
                         <label for="combustible_salida" class="block text-sm font-medium text-gray-700">Combustible Salida</label>
                         <select name="combustible_salida" id="combustible_salida" 
-                            class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-200" disable>
+                            class="block w-full mt-1 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-200" disabled>
                             <option value="1/4" {{ old('combustible_salida', $asignacion->checkIns->first()->combustible_salida) == '1/4' ? 'selected' : '' }}>1/4</option>
                             <option value="1/2" {{ old('combustible_salida', $asignacion->checkIns->first()->combustible_salida) == '1/2' ? 'selected' : '' }}>1/2</option>
                             <option value="3/4" {{ old('combustible_salida', $asignacion->checkIns->first()->combustible_salida) == '3/4' ? 'selected' : '' }}>3/4</option>
@@ -63,8 +63,8 @@
                         <label for="hora_salida" class="block text-sm font-medium text-gray-700">Hora Salida</label>
                         <input type="time" name="hora_salida" id="hora_salida" 
                             value="{{ old('hora_salida', $asignacion->checkIns->first()->hora_salida) }}" 
-                            class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-200" 
-                            disable>
+                            class="block w-full mt-1 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-200" 
+                            disabled>
                     </div>
 
                     </div>
@@ -94,11 +94,11 @@
                     </div>
                 </div>
 
-                <div class="mt-6">
-                    <button type="submit" class="inline-flex items-center px-4 py-2 text-gray-700 bg-yellow-600 border border-transparent rounded-md shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
-                        Crear Check-In
+                <div class="flex justify-end mt-6">
+                    <button type="submit" class="inline-flex items-center px-4 py-2 text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                        Check-Out
                     </button>
-                    <a href="{{ route('vigilante.index') }}" class="ml-4 text-gray-600 hover:underline">Cancelar</a>
+                    <a href="{{ route('vigilante.index') }}" class="inline-flex items-center px-4 py-2 ml-2 text-white bg-gray-700 border border-transparent rounded-md shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Cancelar</a>
                 </div>
             </form>
         </div>

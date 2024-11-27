@@ -33,16 +33,20 @@
                                     @if ($dispo->asignacion)
                                         <span
                                             class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium
-                                            {{ $dispo->asignacion->estatus == 'Reservado' ? 'bg-orange-100 text-orange-800' : 'bg-green-100 text-green-800' }}">
-
+                                            {{ 
+                                                $dispo->asignacion->estatus == 'Reservado' ? 'bg-orange-100 text-orange-800' : 
+                                                ($dispo->asignacion->estatus == 'Ocupado' ? 'bg-red-100 text-red-800' : 
+                                                'bg-green-100 text-green-800') 
+                                            }}">
                                             {{ $dispo->asignacion->estatus }}
                                         </span>
                                     @else
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800">
-                                        Disponible
-                                    </span>
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                                            Disponible
+                                        </span>
                                     @endif
                                 </td>
+
 
                                 {{-- acciones --}}
                                 <td class="px-4 py-2">

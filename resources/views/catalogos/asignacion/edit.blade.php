@@ -173,9 +173,11 @@
                     </div>
                 </div>
                 {{-- BTN --}}
-                <div class="flex justify-end gap-4 mt-4">
-                    <button type="submit"
+                <div class="flex justify-end gap-4 mt-4">      
+                    <button type="submit" title="Actualizar solicitud"
                         class="px-6 py-2 text-gray-200 bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">Guardar</button>
+                        <a href="{{ route('asignacion.index') }}" title="Cancelar edición" 
+                        class="px-4 py-2 text-gray-700 bg-gray-200 rounded-md shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">Cancelar</a>
                 </div
             </form>
         </div>

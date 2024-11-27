@@ -31,7 +31,6 @@
                             <option value="Federal" {{(old('tipo_multa', $multa->tipo_multa) == 'Federal') ? 'selected' : '' }}>Federal</option>
                             <option value="Estatal" {{(old('tipo_multa', $multa->tipo_multa) == 'Estatal') ? 'selected' : '' }} >Estatal</option>
                             <option value="Municipal" {{(old('tipo_multa', $multa->tipo_multa) == 'Municipal') ? 'selected' : '' }}>Municipal</option>
-                            <option value="Guardia Nacional" {{(old('tipo_multa', $multa->tipo_multa) == 'Guardia Nacional') ? 'selected' : '' }}>Guardia Nacional</option>
                         </select>
                     </div>
 

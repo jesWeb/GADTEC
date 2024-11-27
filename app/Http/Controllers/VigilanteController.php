@@ -55,6 +55,10 @@ class VigilanteController extends Controller
         $checkIn->combustible_salida = $request->combustible_salida;
         $checkIn->hora_salida = $request->hora_salida;
 
+        // Cambiar el estatus de la asignación a "ocupado"
+        $asignacion->estatus = 'ocupado';
+        $asignacion->save();
+
         // Relacionar el check-in con la asignación
         $asignacion->checkIns()->save($checkIn);
     
@@ -82,6 +86,14 @@ class VigilanteController extends Controller
         $checkIn->fecha_llegada = now();
     }
 
+
+    // Obtener la asignación relacionada con el check-in
+    $asignacion = $checkIn->asignacion;
+    if ($asignacion) {
+        // Cambiar el estatus de la asignación a "disponible"
+        $asignacion->estatus = 'disponible';
+        $asignacion->save();
+    }
     // Guardar los cambios en el registro existente
     $checkIn->save();
 

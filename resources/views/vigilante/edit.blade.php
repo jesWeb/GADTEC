@@ -70,12 +70,12 @@
                     <h3 class="mt-6 text-lg font-medium text-gray-700">Datos de Llegada</h3>
                     <div>
                         <label for="km_llegada" class="block text-sm font-medium text-gray-700">KM Llegada</label>
-                        <input type="number" name="km_llegada" id="km_llegada" value="{{ old('km_llegada') }}" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-200" disabled>
+                        <input type="number" name="km_llegada" id="km_llegada" value="{{ old('km_llegada') }}" class="block w-full mt-1 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-200" disabled>
                     </div>
 
                     <div>
                         <label for="combustible_llegada" class="block text-sm font-medium text-gray-700">Combustible Llegada</label>
-                        <select name="combustible_llegada" id="combustible_llegada" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-200" disabled>
+                        <select name="combustible_llegada" id="combustible_llegada" class="block w-full mt-1 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:border-gray-200 focus:ring focus:order-gray-200" disabled>
                             <option value="1/4" {{ old('combustible_llegada') == '1/4' ? 'selected' : '' }}>1/4</option>
                             <option value="1/2" {{ old('combustible_llegada') == '1/2' ? 'selected' : '' }}>1/2</option>
                             <option value="3/4" {{ old('combustible_llegada') == '3/4' ? 'selected' : '' }}>3/4</option>
@@ -87,7 +87,7 @@
 
                     <div>
                         <label for="hora_llegada" class="block text-sm font-medium text-gray-700">Hora Llegada</label>
-                        <input type="time" name="hora_llegada" id="hora_llegada" value="{{ old('hora_llegada') }}" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-200" disabled>
+                        <input type="time" name="hora_llegada" id="hora_llegada" value="{{ old('hora_llegada') }}" class="block w-full mt-1 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-200" disabled>
                     </div>
                     </div>
                 </div>
@@ -96,7 +96,7 @@
                     <button type="submit" class="inline-flex items-center px-4 py-2 text-white bg-yellow-600 border border-transparent rounded-md shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
                         Crear Check-In
                     </button>
-                    <a href="{{ route('vigilante.index') }}" class="ml-4 text-gray-600 hover:underline">Cancelar</a>
+                    <a href="{{ route('vigilante.index') }}" class="inline-flex items-center px-4 py-2 text-white bg-gray-700 border border-transparent rounded-md shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Cancelar</a>
                 </div>
             </form>
         </div>
