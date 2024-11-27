@@ -20,7 +20,7 @@
                             <select name="id_usuario" id="id_usuario"
                                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
                                 <option disabled selected>Selecciona una opción...</option>
-                                @foreach ($reserv as $reserv)
+                                @foreach ($reservU  as $reserv)
                                     <option value="{{ $reserv->id_usuario }}"
                                         @if(old('id_usuario') == $reserv->id_usuario) selected @endif>
                                         {{ $reserv->nombre }} {{ $reserv->app }} {{ $reserv->apm }}
@@ -133,10 +133,11 @@
                     </div>
                 </div>
                 {{-- BTN --}}
-                <div class="flex justify-end gap-4 mt-4">
-                    <button type="submit"
-                        class="px-6 py-2 text-gray-200 bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">Guardar</button>
-                </div
+
+                <div class="flex justify-end mt-6 space-x-4">
+                    <a href="{{ route('asignacion.index') }}" class="px-4 py-2 text-gray-700 bg-gray-200 rounded-md shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">Cancelar</a>
+                    <button type="submit" class="px-4 py-2 text-white bg-indigo-600 rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">Actualizar</button>
+                </div>
             </form>
         </div>
     </div>
