@@ -1,77 +1,106 @@
 @extends('layouts.app')
-
 @section('body')
-    <div class="flex flex-col mt-5 gap-9">
-        <div class="p-6 bg-white border rounded-md shadow-md">
-            {{-- Titulo --}}
-            <h2 class="mb-5 text-xl font-semibold text-gray-700">
-                <span class="text-xl font-semibold text-gray-700">Detalles de Verificación</span>
-            </h2>
+<div class="px-6 py-2">
+    <!-- Mapa de sitio -->
+    <div class="flex justify-end mt-2 mb-4">
+        <nav class="text-sm text-gray-600">
+                <div class="flex items-center space-x-4">
+                    <li class="flex items-center">
+                        <a href="{{ route('Gestion') }}" title="Ir a la gestión de vehículos" class="flex items-center text-gray-700 hover:text-gray-900">
+                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
+                            </svg>
+                            Gestión
+                        </a>
+                    </li>
+                    <!-- Separador -->
+                    <p class="text-gray-500">/</p>
+                    <!-- Catálogos -->
+                    <li class="flex items-center">
+                        <a href="{{ $backRoute ?? route('catalogos.index') }}" title="Volver a Catálogos" class="text-gray-800 hover:text-gray-800">
+                            Catálogos
+                        </a>
+                    </li>
+                    <!-- Separador -->
+                    <p class="text-gray-500">/</p>
+                    <!-- Verificaciones Vehiculares -->
+                    <li class="flex items-center">
+                        <a href="{{route('verificaciones.index')}}" title="Volver a la página de verificaciones" class="text-gray-800 hover:text-gray-800">
+                            Verificaciones 
+                        </a>
+                    </li>
 
-            {{-- Información --}}
-            <div class="m-4 xl:p-10">
-                {{-- Fila con tres campos de información --}}
-                <div class="flex flex-col gap-5 xl:flex-row">
-                    {{-- Automóvil seleccionado --}}
-                    <div class="w-full px-3 xl:w-1/3">
-                        <h4 for="id_automovil" class="mb-3 block text-base font-medium text-[#07074D]">Automóvil:</h4>
-                        <p class="text-base text-gray-600">{{ $MostrarVer->automovil->marca }} {{ $MostrarVer->automovil->modelo }} ({{ $MostrarVer->automovil->submarca }})</p>
-                    </div>
-
-                    {{-- Engomado --}}
-                    <div class="w-full px-3 xl:w-1/3">
-                        <h4 class="mb-3 block text-base font-medium text-[#07074D]" for="engomado">Engomado</h4>
-                        <p class="text-base text-gray-600">{{ $MostrarVer->engomado }}</p>
-                    </div>
-
-                    {{-- Holograma --}}
-                    <div class="w-full px-3 xl:w-1/3">
-                        <h4 class="text-base font-medium text-[#07074D]" for="holograma">Holograma</h4>
-                        <p class="text-base text-gray-600">{{ $MostrarVer->holograma }}</p>
-                    </div>
-                </div>
-
-                {{-- Fila con dos campos --}}
-                <div class="flex flex-col gap-2 mt-6 xl:flex-row">
-                    {{-- Fecha de Verificación --}}
-                    <div class="w-full px-3 xl:w-1/2">
-                        <label for="fechaV" class="mb-3 block text-base font-medium text-[#07074D]">Fecha de Verificación</label>
-                        <p class="text-base text-gray-600">{{ $MostrarVer->fechaV }}</p>
-                    </div>
-
-                    {{-- Próxima Verificación --}}
-                    <div class="w-full px-3 xl:w-1/2">
-                        <label for="fechaP" class="mb-3 block text-base font-medium text-[#07074D]">Próxima Verificación</label>
-                        <p class="text-base text-gray-600">{{ $MostrarVer->fechaP }}</p>
-                    </div>
-                </div>
-
-                {{-- Observaciones --}}
-                <div class="mt-4">
-                    <label class="mb-3 block text-base font-medium text-[#07074D]" for="observaciones">Observaciones del vehículo</label>
-                    <p class="text-base text-gray-600">{{ $MostrarVer->observaciones }}</p>
-                </div>
-
-                {{-- Archivos (si se subieron) --}}
-                {{-- @if($EddVer->files && $EddVer->files->count() > 0)
-                    <div class="mt-4">
-                        <label class="mb-3 block text-base font-medium text-[#07074D]" for="files">Archivos Subidos</label>
-                        <ul class="pl-5 list-disc">
-                            @foreach ($EddVer->files as $file)
-                                <li>
-                                    <a href="{{ route('files.download', $file->id) }}" class="text-blue-500">{{ $file->file_name }}</a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif --}}
+                    <!-- Separador -->
+                    <p class="text-gray-500">/</p>
+                    <!-- Verificaciones Vehiculares -->
+                    <li class="flex items-center">
+                        <p  class="text-gray-800 hover:text-gray-800">
+                            Ver Detalle Verificación
+                        </p>
+                    </li>
+                </ul>
             </div>
-
-            {{-- Botón de Cerrar --}}
-            <div class="flex justify-end gap-4 mt-6">
-                <a href="{{ route('verificaciones.index') }}"
-                    class="px-6 py-2 text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">Cerrar</a>
-            </div>
-        </div>
+        </nav>
     </div>
+    <div class="container px-4 mx-auto">
+        <div class="flex justify-center mt-12">
+            <div class="w-full max-w-3xl p-8 bg-white rounded-lg shadow-lg bg-gradient-to-r">            
+                <div class="text-center">
+                    <h1 class="text-4xl font-extrabold text-gray-800">Detalle de Verificación</h1>
+                    <p class="mt-2 text-lg text-gray-600">Información completa sobre la verificación seleccionada</p>
+                </div>
+                {{-- Title --}}
+                <h2 class="text-2xl font-semibold tracking-tight text-center text-green-600 f text-primary-800 md:m-5">
+                    Detalles de Verificación -
+                    {{ $MostrarVer->automovil->marca }} {{ $MostrarVer->automovil->submarca }}
+                    {{ $MostrarVer->automovil->modelo }}</h2>
+            
+            {{-- content --}}
+            <article class="flex flex-wrap max-w-3xl mx-auto md:flex-nowrap group">
+                {{-- poliza Img --}}
+                <img class="w-full max-h-[400px] object-cover md:w-52"
+                    src="https://i.ibb.co/Kr4b0zJ/152013403-10158311889099633-8423107287930246533-o.jpg" alt="">
+                {{-- content info --}}
+                <div class="mt-6 ml-4 space-y-6">
+                    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                        <div class="p-4 bg-white rounded-lg shadow-sm">
+                            <h4 class="text-lg font-semibold text-gray-800">Fecha de Verificación:</h4>
+                            <span class="mt-2 text-base leading-relaxed text-gray-500 ">{{ \Carbon\Carbon::parse( $MostrarVer->fecha_verificacion )->locale('es')->format('d-m-Y') }}</span>
+                        </div>
+                        <div class="p-4 bg-white rounded-lg shadow-sm">
+                            <h4 class="text-lg font-semibold text-gray-800">Engomado: </h4>
+                            <span class="mt-2 text-base leading-relaxed text-gray-500 ">{{ $MostrarVer->engomado }}</span>
+                        </div>
+                        <div class="p-4 bg-white rounded-lg shadow-sm">
+                            <h4 class="text-lg font-semibold text-gray-800">Holograma:</h4>
+                            <span class="mt-2 text-base leading-relaxed text-gray-500 ">{{ $MostrarVer->holograma }}</span>
+                        </div>
+                
+
+                        <div class="p-4 bg-white rounded-lg shadow-sm">
+                            <h4 class="text-lg font-semibold text-gray-800">Próxima Verificación:</h4>
+                            <span class="mt-2 text-base leading-relaxed text-gray-500 ">{{ \Carbon\Carbon::parse( $MostrarVer->proxima_verificacion )->locale('es')->format('d-m-Y') }}</span>
+                        </div>
+                
+                        <div class="p-4 bg-white rounded-lg shadow-sm">
+                            <h4 class="text-lg font-semibold text-gray-800">Observaciones de Verificación:</h4>
+                            <span
+                                class="mt-2 text-base leading-relaxed text-gray-500 ">{{$MostrarVer->observaciones }}</span>
+                        </div>
+                    </div>
+                </div>
+
+            </article>
+            {{-- btn --}}
+            <div class="flex justify-end mt-6 space-x-4">
+                <a href="{{ route('verificaciones.index') }}" title="Volver al listado de verificaciones"
+                class="inline-flex items-center justify-center px-4 py-2 text-white transition duration-200 bg-green-600 rounded-md hover:bg-green-700 focus:outline-none">Cerrar</a>
+            </div>
+        </section>
+    </div>
+</div>
 @endsection

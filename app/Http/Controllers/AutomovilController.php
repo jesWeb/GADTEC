@@ -46,7 +46,7 @@ class AutomovilController extends Controller
     {
         // dd($request);
         //limpieza de comas en kilometraje
-        $kilometraje = str_replace(',' , '' , $request->input('kilometraje'));
+        $kilometraje = str_replace(',', '', $request->input('kilometraje'));
 
         $rules = [
             'marca' => 'required|string|max:20',
@@ -55,7 +55,7 @@ class AutomovilController extends Controller
                 'required',
                 'integer',
                 'min:1990',
-                 /*VaLIDACION DE MODELO *
+                /*VaLIDACION DE MODELO *
                   *creamos una func persiolaizada
                   donde los atributos de $attribute recibe el parametreo del input y $value -> valor del campo
                   */
@@ -94,6 +94,8 @@ class AutomovilController extends Controller
             'modelo.min' => 'El año del modelo debe ser como mínimo 1990 .',
             'modelo.required' => 'El campo Modelo es obligatorio.',
             'modelo.integer' => 'El año del modelo debe ser un número entero.',
+            'fotografias.mimes' => 'El archivo de fotografía debe ser de tipo: jpeg, png, jpg, pdf.',
+            'fotografias.max' => 'El archivo de fotografía no debe superar los 10MB.',
         ];
 
         //limpieza de kilometraje en el req
@@ -102,26 +104,26 @@ class AutomovilController extends Controller
         $request->validate($rules, $message);
         $input = $request->all();
 
-        //validacion de las fotos
-        if ($request->hasFile('fotografias')) {
-            // obtener el campo file definido en el formulario
+
+
+           // Guardar fotografía frontal
+           if ($request->hasFile('fotografias')) {
             $file = $request->file('fotografias');
-            // obtener el nombre dek archivo
-            $img = $file->getClientOriginalName();
-            //obtener fecha y hora
+            $image = $file->getClientOriginalName();
             $ldate = date('Ymd_His_');
-            //concatena la fecha y hora con el nombre del Archivo (img)
-            $img2 = $ldate . $img;
-            //idicamos el nombre  y la ruta donde se almacena el archivo (img)
-            $file->move(public_path('img/carros'), $img2);
-            $input['fotografias'] = $img2;
+            $imgFrontal = $ldate . $image;
+
+            $file->move(public_path('img'), $imgFrontal);
+            $input['fotografias'] = $imgFrontal;
         }
-        //  return response()->json(['success'=>$img2]);
 
         Automoviles::create($input);
 
         return redirect()->route('Automovil.index')->with('mensaje', 'Sea registrado con exito el Automovil');
     }
+
+
+
 
     /**
      * Display the specified resource.

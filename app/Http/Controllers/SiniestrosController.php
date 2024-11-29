@@ -78,8 +78,6 @@ class SiniestrosController extends Controller
     public function update(Request $request,  $id)
     {
         $EddSin = siniestros::findOrFail($id);
-
-
         $input = $request->only(['fecha_siniestro', 'estatus', 'id_usuario', 'observaciones', 'descripcion']);
         $EddSin->update($input);
         return redirect()->route('siniestros.index')->with('message', 'Se ha modificado correctamente el Registro ');

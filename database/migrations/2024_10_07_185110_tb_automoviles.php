@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('automoviles', function (Blueprint $table) {
             $table->bigIncrements('id_automovil');
-            // $table->unsignedBigInteger('id_asignacion')->nullable();
             $table->string('marca', 20)->nullable();
             $table->string('submarca', 25)->nullable();
             $table->integer('modelo')->nullable();
@@ -27,15 +26,14 @@ return new class extends Migration
             $table->string('num_nsi', 20)->nullable();
             $table->enum('uso', ['Personal', 'Empresarial'])->default('Empresarial');
             $table->enum('estatus', ['Nuevo', 'Usado'])->default('Nuevo');
-            $table->enum('estatusIn', ['disponible','baja','ocupado','servicio'])->default('disponible');
+            $table->enum('estatusIn', ['Disponible', 'En servicio', 'Mantenimiento', 'No disponible'])->default('Disponible');
             $table->string('color', 20)->nullable();
             $table->integer('num_puertas')->nullable();
             $table->date('fecha_registro')->nullable();
             $table->string('responsable', 50)->nullable();
             $table->string('fotografias')->nullable();
             $table->text('observaciones')->nullable();
-            //relaciones
-            //$table->foreign('id_asignacion')->references('id_asignacion')->on('asignacions')->onDelete('cascade');
+
             $table->timestamps();
             $table->softDeletes();
         });

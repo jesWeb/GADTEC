@@ -1,7 +1,34 @@
 @extends('layouts.app')
 
 @section('body')
-    <div class="px-4 py-6">
+    <div class="px-6 py-2">
+        <!-- Mapa de sitio -->
+        <div class="flex justify-end mt-2 mb-4">
+            <nav class="text-sm text-gray-600">
+                <ul class="flex items-center space-x-4">
+                    <li class="flex items-center">
+                        <a href="{{ route('Gestion') }}" title="Ir a la gestión de vehículos" class="flex items-center text-gray-700 hover:text-gray-900">
+                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
+                            </svg>
+                            Gestion
+                        </a>
+                    </li>
+                    <!-- Separador -->
+                    <li class="text-gray-500">/</li>
+                    <!-- Servicios -->
+                    <li class="flex items-center">
+                        <p  class="text-gray-800 hover:text-gray-800">
+                            Servicios
+                        </p>
+                    </li>
+                </ul>
+            </nav>
+        </div>
         <div class="p-6 bg-white rounded-md shadow-md">
             <h2 class="mb-4 text-lg font-semibold text-gray-700 capitalize">Servicios</h2>
             <div class="mb-2">
@@ -9,35 +36,37 @@
                     class="flex flex-col items-center justify-between space-y-2 md:flex-row md:space-y-0">
                     <!-- Campo de búsqueda -->
                     <div class="flex items-center w-full md:w-auto">
-                        <input type="text" name="search" placeholder="Buscar Servicio"
+                        <input type="text" name="search" placeholder="Buscar servicio" title="Introduce el tipo de servicio o vehículo para buscar"
                             class="w-full px-4 py-2 text-gray-700 border rounded-l-md focus:outline-none md:w-48"
                             value="{{ request('search') }}">
+                           
                         <button type="submit"
-                            class="flex items-center px-4 py-2 ml-1 text-white bg-blue-600 border-l-0 rounded-r-md hover:bg-blue-700 focus:outline-none">
+                            class="flex items-center px-4 py-2 ml-1 text-white bg-blue-600 border-l-0 rounded-r-md hover:bg-blue-700 focus:outline-none"
+                            title="Buscar servicio">
                             Buscar
                         </button>
-
                     </div>
                 </form>
                 <!-- Botones de Imprimir y Nuevo Registro -->
                 <div class="flex justify-end ml-2 space-x-2">
-                    <a href="{{ route('servicios-pdf') }}" target="_blank" teal
-                        class="inline-block px-4 py-2 text-white bg-green-600 rounded hover:bg-green-700">Imprimir</a>
-                    <a href="servicios/create"
-                        class="inline-block px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Nuevo registro</a>
+                    <a href="{{ route('servicios-pdf') }}" target="_blank" class="inline-block px-4 py-2 text-white bg-green-600 rounded hover:bg-green-700" title="Imprimir reporte">
+                        Imprimir
+                    </a>
+                    <a href="servicios/create" class="inline-block px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700" title="Registrar nuevo servicio">
+                        Nuevo registro
+                    </a>
                 </div>
-
             </div>
             <div class="overflow-x-auto rounded-lg shadow">
                 <table class="min-w-full bg-white border border-gray-200 divide-y divide-gray-200">
                     <thead class="bg-gray-100">
                         <tr>
                             <th class="px-4 py-2 text-left text-gray-600">#</th>
-                            <th class="px-4 py-2 text-left text-gray-600">Vehiculo</th>
+                            <th class="px-4 py-2 text-left text-gray-600">Vehículo</th>
                             <th class="px-4 py-2 text-left text-gray-600">Tipo de Servicio</th>
-                            <th class="px-4 py-2 text-left text-gray-600">Descripcion</th>
+                            <th class="px-4 py-2 text-left text-gray-600">Descripción</th>
                             <th class="px-4 py-2 text-left text-gray-600">Fecha</th>
-                            <th class="px-4 py-2 text-left text-gray-600">Proximo Servicio</th>
+                            <th class="px-4 py-2 text-left text-gray-600">Próximo Servicio</th>
                             <th class="px-4 py-2 text-left text-gray-600">Costo</th>
                             <th class="px-4 py-2 text-left text-gray-600">Lugar de Servicio</th>
                             <th class="px-4 py-2 text-left text-gray-600">Comprobante</th>
@@ -56,7 +85,6 @@
                                 <td class="px-4 py-2 border">{{ $servicio->descripcion }}</td>
                                 <td class="px-4 py-2 text-center border">
                                     @if ($servicio->fecha_servicio == '')
-                                        <!-- Muestra un guión o un texto vacío si el servicio no es programado -->
                                         -
                                     @else
                                         {{ $servicio->fecha_servicio }}
@@ -65,7 +93,6 @@
 
                                 <td class="px-4 py-2 text-center border">
                                     @if ($servicio->prox_servicio == '')
-                                        <!-- Muestra un guión o un texto vacío si el servicio no es programado -->
                                         No aplica
                                     @else
                                         {{ $servicio->prox_servicio }}
@@ -74,21 +101,30 @@
                                 <td class="px-4 py-2 border">${{ $servicio->costo }}</td>
                                 <td class="px-4 py-2 border">{{ $servicio->lugar_servicio }}</td>
                                 <td class="px-4 py-2 text-sm border">
-                                @if($servicio->comprobante)
-                                    <a href="{{ asset('img/' . $servicio->comprobante) }}" target="_blank" class="text-blue-600 hover:underline">Ver Comprobante</a>
-                                @else
-                                    <span class="text-gray-500">Sin comprobante</span>
-                                @endif
-                            </td>
+                                    @if($servicio->comprobante)
+                                        <a href="{{ asset('img/' . $servicio->comprobante) }}" target="_blank" class="text-blue-600 hover:underline" title="Ver comprobante">
+                                            Ver Comprobante
+                                        </a>
+                                    @else
+                                        <span class="text-gray-500">Sin comprobante</span>
+                                    @endif
+                                </td>
                                 <td class="px-4 py-2 border">
                                     <div class="flex items-center space-x-2">
                                         <!-- Ver -->
                                         <a href="servicios/{{ $servicio->id_servicio }}"
-                                            class="inline-flex items-center justify-center w-8 h-8 text-green-600 border border-green-600 rounded hover:bg-green-600 hover:text-white">
+                                            class="inline-flex items-center justify-center w-8 h-8 text-green-600 border border-green-600 rounded hover:bg-green-600 hover:text-white" title="Ver detalles del servicio">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                 stroke="currentColor" class="w-4 h-4">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                     d="M12 3C6.48 3 2 12 2 12s4.48 9 10 9 10-9 10-9-4.48-9-10-9zm0 12c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z" />
+                                            </svg>
+                                        </a>
+
+                                        <!-- Editar -->
+                                        <a href="servicios/{{$servicio->id_servicio}}/edit" class="inline-flex items-center justify-center w-8 h-8 text-yellow-600 border border-yellow-600 rounded hover:bg-yellow-600 hover:text-white" title="Editar información del servicio">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 3l5 5-1.5 1.5-5-5M3 21h18M3 21l8-8 5 5-8 8H3z" />
                                             </svg>
                                         </a>
 
@@ -98,7 +134,7 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" onclick="deleteRegister(event)"
-                                                class="inline-flex items-center justify-center w-8 h-8 text-red-600 border border-red-600 rounded hover:bg-red-600 hover:text-white">
+                                                class="inline-flex items-center justify-center w-8 h-8 text-red-600 border border-red-600 rounded hover:bg-red-600 hover:text-white" title="Eliminar servicio">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                     stroke="currentColor" class="w-4 h-4">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -114,12 +150,8 @@
                 </table>
             </div>
         </div>
-
-
-
     </div>
 @endsection
-
 
 @section('js')
     {{-- alert creacion --}}
@@ -136,7 +168,7 @@
     @if ($updateMessaje = Session::get('message'))
         <script>
             Swal.fire({
-                title: "Información  Actualizada",
+                title: "Información Actualizada",
                 text: "{{ $updateMessaje }}",
                 icon: "success"
             });
@@ -148,7 +180,7 @@
         <script>
             Swal.fire({
                 title: "Eliminado!",
-                text: "eliminar",
+                text: "El automóvil ha sido eliminado correctamente.",
                 icon: "success"
             });
         </script>
@@ -158,21 +190,17 @@
             event.preventDefault();
             const btndelete = document.getElementById("eliminacion-form");
             Swal.fire({
-                title: "Estas seguro de Eliminar el registro?",
-                text: "¡No podrás revertir esto!",
+                title: "¿Estás seguro de eliminar el registro?",
+                text: "¡Esta acción no se puede deshacer!",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Si, borrar!"
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Sí, eliminarlo",
+                cancelButtonText: "Cancelar"
             }).then((result) => {
                 if (result.isConfirmed) {
                     btndelete.submit();
-                    Swal.fire({
-                        title: "¡Eliminado!",
-                        text: "El automóvil ha sido eliminado correctamente.",
-                        icon: "success"
-                    });
                 }
             });
         }

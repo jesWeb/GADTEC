@@ -67,7 +67,7 @@ class SegurosController extends Controller
             //concatena la fecha y hora con el nombre del Archivo (img)
             $img2 = $ldate . $img;
             //idicamos el nombre  y la ruta donde se almacena el archivo (img)
-            $file->move(public_path('img/seguros'), $img2);
+            $file->move(public_path('img'), $img2);
             $input['poliza'] = $img2;
         }
 

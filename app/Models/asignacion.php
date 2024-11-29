@@ -24,7 +24,7 @@ class asignacion extends Model
         'motivo', // motivo de la reserva
         'fecha_salida',
         'hora_salida',
-        'hora_llegada',
+        'fecha_estimada_dev',
         'no_licencia',
         'estatus',
         'condiciones',
@@ -35,7 +35,7 @@ class asignacion extends Model
     // Asegura que la fecha de asignación y la fecha estimada de devolución se asignen automáticamente
     protected $dates = [
         'fecha_asignacion',
-        'fecha_estimada_dev',
+       
     ];
 
     // Método para obtener la fecha de asignación automáticamente
@@ -48,11 +48,6 @@ class asignacion extends Model
             if (empty($asignacion->fecha_asignacion)) {
                 $asignacion->fecha_asignacion = date('Y-m-d');
             }
-
-            if (empty($asignacion->fecha_estimada_dev)) {
-                $asignacion->fecha_estimada_dev = date('Y-m-d');  // Añadir 7 días por defecto
-            }
-
 
         });
     }

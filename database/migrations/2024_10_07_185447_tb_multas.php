@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('multas', function (Blueprint $table) {
             $table->bigIncrements('id_multa');
-            $table->enum('tipo_multa',  ['Federal', 'Estatal', 'Municipal', 'Guardia Nacional'])->default('Estatal');
+            $table->enum('tipo_multa',  ['Federal', 'Estatal', 'Municipal'])->default('Estatal');
             $table->decimal('monto', 8, 2);
             $table->date('fecha_multa');
             $table->string('lugar', 100);
