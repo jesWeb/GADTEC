@@ -100,7 +100,7 @@
                         <div class="w-full px-3 xl:w-1/2">
                             <div class="mb-5">
                                 <label for="fechaV" class="mb-3 block text-base font-medium text-[#07074D]" title="Fecha de la verificación realizada">Fecha de Verificación:</label>
-                                <input type="date" name="fechaV" value="{{ $EddVer->fechaV }}" id="fechaV"
+                                <input type="date" name="fecha_verificacio" value="{{ $EddVer->fecha_verificacion }}" id="fecha_verificacion"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" 
                                     placeholder="Selecciona la fecha" title="Fecha de verificación realizada" />
                             </div>
@@ -111,7 +111,7 @@
                             <label class="text-gray-700" for="fechaP" title="Fecha en la que debe realizarse la próxima verificación">Próxima Verificación:</label>
                             <input
                                 class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                type="text" name="fechaP" value="{{ $EddVer->fechaP }}" placeholder="Próxima verificación" readonly title="Fecha estimada para la próxima verificación">
+                                type="text" name="proxima_verificacion" value="{{ $EddVer->proxima_verificacion }}" placeholder="Próxima verificación" readonly title="Fecha estimada para la próxima verificación">
                         </div>
                     </div>
                     {{-- Observaciones --}}

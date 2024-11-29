@@ -77,11 +77,11 @@
                         <!-- Fechas -->
                         <div class="p-4 bg-white rounded-lg shadow-sm">
                             <p class="text-lg font-semibold text-gray-800">Fecha de Expedición</p>
-                            <p class="text-gray-600">{{ $tarjeta->fecha_expedicion }}</p>
+                            <p class="text-gray-600">{{ date('d/m/Y', strtotime($tarjeta->fecha_expedicion)) }}</p>
                         </div>
                         <div class="p-4 bg-white rounded-lg shadow-sm">
                             <p class="text-lg font-semibold text-gray-800">Fecha de Vigencia</p>
-                            <p class="text-gray-600">{{ $tarjeta->fecha_vigencia }}</p>
+                            <p class="text-gray-600">{{ date('d/m/Y', strtotime($tarjeta->fecha_vigencia)) }}</p>
                         </div>
 
                         <!-- Estatus -->
