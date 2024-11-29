@@ -266,18 +266,23 @@
 @section('scripts')
     <script>
         const inputElement = document.querySelector('input[id="fotografias"]');
-
         FilePond.registerPlugin(FilePondPluginImagePreview);
-
         const pond = FilePond.create(inputElement, {
-            allowPreview: true,
-            acceptedFileTypes: ['image/png', 'image/jpeg', 'image/jpg'],
-            labelFileLoadError: 'Error al cargar el archivo',
-            server : {
-                process : '{{ route('Automovil.store') }}',
-                headers:{
-                    'X-CSRF-TOKEN' : '{{CSRF_TOKEN()}}'
-                }
+            allowMultiple: true,
+            maxFiles: 5,
+            // acceptedFileTypes: ['image/jpeg', 'image/png', 'application/pdf'],
+            labelIdle: 'Arrastra y suelta los archivos o haz clic para seleccionarlos',
+            imagePreviewMinHeight: 20,
+            imagePreviewMaxFileSize: null,
+            server: {
+                process: {
+                 url: '{{ route('Automovil.store') }}',
+                     method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                },
+
             }
         });
     </script>
