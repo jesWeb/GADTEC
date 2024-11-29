@@ -13,7 +13,8 @@ class AsignacionController extends Controller
 
     public function index()
     {
-        // $reservacion = asignacion::paginate(10);
+
+
         $reservacion = asignacion::with('automovil', 'usuarios')->get();
         return view('catalogos.asignacion.index', compact('reservacion'));
     }
@@ -47,25 +48,11 @@ class AsignacionController extends Controller
             'condiciones' => 'nullable|string',
             'autorizante' => 'nullable|string',
         ]);
-        //fecha y hora a objetos
-        $fecha_reservada = Carbon::parse($request->fecha_salida . '' . $request->hora_salida);
 
-        //validar si el carro esta dispo en la hora y fecha
-        $AsigExistente = asignacion::where('id_automovil', $request->id_automovil)
-            //verificar misma fecha
-            ->where('fecha_salida', $request->fecha_salida)
-            ->where(function ($query) use ($fecha_reservada) {
-                // ajuste de la duración de la asignación
-                $query->whereBetween('hora_salida', [$fecha_reservada->format('H:i'), $fecha_reservada->addMinutes(15)->format('H:i')]);
-            })->exists();
+        //verificar si ya esta a[partado]
 
-        if ($AsigExistente) {
-            return back()->withErrors(['error' => 'Ya existe una asignación para este auto en este horario .']);
-        }
 
         $newAsig = new asignacion($validated);
-
-
 
         // Si no se requiere chofer, el campo nombre_chofer  debe estar vacío
         if (!$request->has('requierechofer')) {
@@ -76,6 +63,9 @@ class AsignacionController extends Controller
 
         return redirect()->route('asignacion.index')->with('success', 'Asignación creada con éxito.');
     }
+
+
+
 
     public function show($id)
     {

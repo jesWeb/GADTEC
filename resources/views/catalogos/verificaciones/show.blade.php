@@ -69,7 +69,7 @@
                     <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                         <div class="p-4 bg-white rounded-lg shadow-sm">
                             <h4 class="text-lg font-semibold text-gray-800">Fecha de Verificación:</h4>
-                            <span class="mt-2 text-base leading-relaxed text-gray-500 ">{{ $MostrarVer->fechaV }}</span>
+                            <span class="mt-2 text-base leading-relaxed text-gray-500 ">{{ \Carbon\Carbon::parse( $MostrarVer->fecha_verificacion )->locale('es')->format('d-m-Y') }}</span>
                         </div>
                         <div class="p-4 bg-white rounded-lg shadow-sm">
                             <h4 class="text-lg font-semibold text-gray-800">Engomado: </h4>
@@ -83,7 +83,7 @@
 
                         <div class="p-4 bg-white rounded-lg shadow-sm">
                             <h4 class="text-lg font-semibold text-gray-800">Próxima Verificación:</h4>
-                            <span class="mt-2 text-base leading-relaxed text-gray-500 ">{{ $MostrarVer->fechaP }}</span>
+                            <span class="mt-2 text-base leading-relaxed text-gray-500 ">{{ \Carbon\Carbon::parse( $MostrarVer->proxima_verificacion )->locale('es')->format('d-m-Y') }}</span>
                         </div>
                 
                         <div class="p-4 bg-white rounded-lg shadow-sm">

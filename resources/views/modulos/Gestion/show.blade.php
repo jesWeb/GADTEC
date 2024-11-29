@@ -53,7 +53,8 @@
                                 <tr class="hover:bg-gray-50">
                                     <td class="px-4 py-2 border">{{ $key + 1 }}</td>
                                     <td class="px-4 py-2 border">
-                                        {{ \Carbon\Carbon::parse($salidas->fecha_salida)->format('d-m-y') }}
+
+                                        {{ \Carbon\Carbon::parse($salidas->fecha_salida)->locale('es')->format('d-m-Y') }}
                                     </td>
                                     <td class="px-4 py-2 border">
                                         {{ \Carbon\Carbon::parse($salidas->hora_salida)->format('h:i A') }}

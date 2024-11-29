@@ -67,10 +67,13 @@
                         <p class="text-gray-600">{{ $servicio->fecha_servicio }}</p>
                     </div>
 
-                    <div class="p-6 bg-transparent rounded-lg shadow-sm">
-                        <p class="text-lg font-semibold text-gray-800">Fecha de Proximo Servicio</p>
-                        <p class="text-gray-600">{{ $servicio->prox_servicio }}</p>
-                    </div>
+            <div class="p-6 bg-transparent rounded-lg shadow-sm">
+                <p class="text-lg font-semibold text-gray-800">Fecha de Servicio</p>
+                <p class="text-gray-600">
+                    {{\Carbon\Carbon::parse(  $servicio->fecha_servicio
+ )->locale('es')->format('d-m-Y') }}
+                </p>
+            </div>
 
                     <div class="p-6 bg-transparent rounded-lg shadow-sm">
                         <p class="text-lg font-semibold text-gray-800">Lugar de Servicio</p>

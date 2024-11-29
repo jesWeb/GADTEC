@@ -70,7 +70,7 @@
                         <div class="p-4 bg-white rounded-lg shadow-sm">
 
                             <h4 class="text-lg font-semibold text-gray-800">Fecha Siniestro: </h4>
-                            <span class="mt-2 text-lg leading-relaxed text-gray-500 ">{{ $ViewSini->fecha_siniestro }}</span>
+                            <span class="mt-2 text-lg leading-relaxed text-gray-500 ">{{ \Carbon\Carbon::parse($ViewSini->fecha_siniestro )->locale('es')->format('d-m-Y') }}</span>
                         </div>
                         <div class="p-4 bg-white rounded-lg shadow-sm">
                             <h4 class="text-lg font-semibold text-gray-800">Estatus:</h4>

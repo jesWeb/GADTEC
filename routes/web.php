@@ -19,6 +19,7 @@ use App\Http\Controllers\MultasController;
 use App\Http\Controllers\ServiciosController;
 use App\Http\Controllers\JsController;
 use App\Http\Controllers\AutorizanteController;
+use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\ProfileController;
 
 /*
@@ -86,7 +87,14 @@ Route::middleware('auth')->group(function () {
          })->name("admin.dashboard");
         Route::get('/autorizar/update/{id_asignacion}', [GestionController::class, 'update'])->name('autorizar');
         Route::resource('usuarios', UsuariosController::class);
+
         Route::resource('Automovil', AutomovilController::class);
+        //file pond
+        Route::post('/temp-upload', [AutomovilController::class, 'tempUpload']);
+        Route::delete('/temp-remove/{file}', [AutomovilController::class, 'tempDelete']);
+        //  Route::get('/load-fotografias', [FileUploadController::class, 'index'])->name('load-fotografias');
+
+
         Route::resource('asignacion', AsignacionController::class);
         Route::resource('seguros', SegurosController::class);
         Route::resource('siniestros', SiniestrosController::class);
