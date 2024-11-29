@@ -53,8 +53,9 @@ class VerificacionesController extends Controller
 
         // Obtener el valor del engomado y la fecha
         $engomado = $request->input('engomado');
-        $fechaV = Carbon::parse($request->input('fechaV')); // Usar Carbon para manipular fechas
-        $mes = $fechaV->month; // Número del mes (1-12)
+         // Usar Carbon para manipular fechas
+        $fechaV = Carbon::parse($request->input('fechaV'));
+        $mes = $fechaV->month;
 
         // Definir rangos de meses según el engomado
         $rangos = [

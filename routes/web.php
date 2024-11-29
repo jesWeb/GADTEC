@@ -63,26 +63,24 @@ Route::middleware('auth')->group(function () {
     // Route::get('/gestion/{id_asignacion}', [GestionController::class, 'show'])->name('gestion');
 
 
-   // Rutas accesibles para los roles
+    // Rutas accesibles para los roles
     Route::middleware('role:Administrador|Moderador')->group(function () {
         Route::get('/gestion', [GestionController::class, 'index'])->name('Gestion');
         Route::get('/gestion/{id_asignacion}', [GestionController::class, 'show'])->name('gestion');
         Route::resource('vigilante', VigilanteController::class);
         Route::get('/vigilante/edit2/{id}/', [VigilanteController::class, 'edit2'])->name('edit2');
-            Route::put('/vigilante/update2/{id_asignacion}', [VigilanteController::class, 'update2'])->name('update2');
-
+        Route::put('/vigilante/update2/{id_asignacion}', [VigilanteController::class, 'update2'])->name('update2');
     });
 
     Route::middleware('role:Administrador|Usuario')->group(function () {
         Route::resource('autorizante', AutorizanteController::class);
-
     });
 
     // Rutas para el Administrador
     Route::middleware('role:Administrador')->group(function () {
         Route::get('/dashboard', function () {
             return app(GestionController::class)->index();
-         })->name("admin.dashboard");
+        })->name("admin.dashboard");
         Route::resource('usuarios', UsuariosController::class);
 
         Route::resource('Automovil', AutomovilController::class);
@@ -126,7 +124,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/vigilante/edit2/{id}/', [VigilanteController::class, 'edit2'])->name('edit2');
         Route::put('/vigilante/update2/{id_asignacion}', [VigilanteController::class, 'update2'])->name('update2');
         Route::get('/gestion/{id_asignacion}', [GestionController::class, 'show'])->name('gestion');
-
     });
 
     // Rutas para el Usuario
