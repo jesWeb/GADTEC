@@ -20,7 +20,13 @@ class AsignacionController extends Controller
 
     public function create()
     {
-        $auto = Automoviles::all();
+        
+        $auto = \DB::select("SELECT aut.id_automovil, aut.marca, aut.submarca, aut.modelo, aut.estatusIn, asi.estatus
+        FROM automoviles AS aut
+        LEFT JOIN asignacions AS asi ON aut.id_automovil = asi.id_automovil
+        WHERE aut.estatusIn = 'Disponible'
+        AND (asi.estatus IS NULL OR asi.estatus NOT IN ('Reservado', 'Ocupado', 'Autorizado'))");
+
         $reservU = Usuarios::all();
         return view('catalogos.asignacion.create', compact('auto', 'reservU'));
     }
@@ -39,7 +45,7 @@ class AsignacionController extends Controller
             'motivo' => 'required|string',
             'no_licencia' => 'required|string',
             'condiciones' => 'nullable|string',
-            'autorizante' => 'required|string',
+            'autorizante' => 'nullable|string',
         ]);
         //fecha y hora a objetos
         $fecha_reservada = Carbon::parse($request->fecha_salida . '' . $request->hora_salida);
@@ -80,20 +86,22 @@ class AsignacionController extends Controller
     public function edit($id)
     {
         $EddtAsig = asignacion::findOrFail($id);
-        // dd(asignacion::findOrFail($id)->toSql());
+        $reservU = Usuarios::all();  // Obtener todos los usuarios
+        
 
-        return view('catalogos.asignacion.edit', compact('EddtAsig'));
+        return view('catalogos.asignacion.edit', compact('EddtAsig', 'reservU'));
     }
 
     public function update(Request $request, $id)
     {
-
         $EddtAsig = asignacion::findOrFail($id);
         $input = $request->all();
+        $reservU = Usuarios::all();  // Obtener todos los usuarios
         $EddtAsig->update($input);
 
         return redirect()->route('asignacion.index')->with('message', 'Se ha actualizado el registro');
     }
+
 
     public function destroy($id)
     {

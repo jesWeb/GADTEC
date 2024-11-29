@@ -17,11 +17,10 @@ return new class extends Migration
             $table->string('lugar')->nullable();
             $table->date('fecha_asignacion')->nullable();
             $table->time('hora_salida')->nullable();
-            $table->time('hora_llegada')->nullable();
             $table->date('fecha_salida')->nullable();
             $table->date('fecha_estimada_dev')->nullable();
             $table->string('no_licencia')->nullable();
-            $table->enum('estatus', ['Reservado', 'Disponible', 'Ocupado'])->default('Reservado');
+            $table->enum('estatus', ['Reservado', 'Disponible', 'Ocupado', 'Autorizado'])->default('Reservado');
             $table->text('condiciones')->nullable();
             $table->text('observaciones')->nullable();
             $table->string('autorizante')->nullable();

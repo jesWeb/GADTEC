@@ -49,20 +49,20 @@ Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])->
 Route::get('/reset-password/{token}', [PasswordResetLinkController::class, 'edit'])->name('password.reset');
 Route::post('/reset-password', [PasswordResetLinkController::class, 'update'])->name('password.update');
 
+Route::middleware('auth')->group(function () {
+    Route::middleware('role:Administrador|Moderador')->group(function () {
+        Route::get('/gestion', [GestionController::class, 'index'])->name('Gestion');
+        Route::get('/gestion/{id_asignacion}', [GestionController::class, 'show'])->name('gestion');
+        Route::resource('vigilante', VigilanteController::class);
+        Route::get('/vigilante/edit2/{id}/', [VigilanteController::class, 'edit2'])->name('edit2');
+        Route::put('/vigilante/update2/{id_asignacion}', [VigilanteController::class, 'update2'])->name('update2');
+    });
+});
+  
 
 // Rutas protegidas por el middleware 'auth'
 Route::middleware('auth')->group(function () {
-    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-    // Route::get('/gestion', function () {
-    //     return app(GestionController::class)->index();
-    // })->name("Gestion");
-    // Route::get('/gestion/{id_asignacion}', [GestionController::class, 'show'])->name('gestion');
-
-
-   // Rutas accesibles para los roles
+    
     // Route::middleware('role:Administrador|Moderador')->group(function () {
     //     Route::get('/gestion', [GestionController::class, 'index'])->name('Gestion');
     //     Route::get('/gestion/{id_asignacion}', [GestionController::class, 'show'])->name('gestion');
@@ -72,13 +72,7 @@ Route::middleware('auth')->group(function () {
 
     // });
 
-    Route::middleware('role:Administrador|Moderador')->group(function () {
-        Route::get('/gestion', [GestionController::class, 'index'])->name('Gestion');
-        Route::get('/gestion/{id_asignacion}', [GestionController::class, 'show'])->name('gestion');
-        Route::get('/vigilante/edit2/{id}/', [VigilanteController::class, 'edit2'])->name('edit2');
-        Route::put('/vigilante/update2/{id_asignacion}', [VigilanteController::class, 'update2'])->name('update2');
-    });
-    
+
 
     Route::middleware('role:Administrador|Usuario')->group(function () {
         Route::resource('autorizante', AutorizanteController::class);
@@ -90,6 +84,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/dashboard', function () {
             return app(GestionController::class)->index();
          })->name("admin.dashboard");
+        Route::get('/autorizar/update/{id_asignacion}', [GestionController::class, 'update'])->name('autorizar');
         Route::resource('usuarios', UsuariosController::class);
         Route::resource('Automovil', AutomovilController::class);
         Route::resource('asignacion', AsignacionController::class);

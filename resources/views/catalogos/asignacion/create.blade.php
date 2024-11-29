@@ -1,11 +1,46 @@
 @extends('layouts.app')
 
 @section('body')
-    <div class="flex flex-col mt-5 gap-9">
+<div class="px-6 py-2">
+        <!-- Mapa de sitio -->
+        <div class="flex justify-end mt-2 mb-4">
+            <nav class="text-sm text-gray-600">
+                <ul class="flex items-center space-x-4">
+                    <li class="flex items-center">
+                        <a href="{{ route('Gestion') }}" title="Ir a la gestión de vehículos" class="flex items-center text-gray-700 hover:text-gray-900">
+                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
+                            </svg>
+                            Gestion
+                        </a>
+                    </li>
+                    <!-- Separador -->
+                    <li class="text-gray-500">/</li>
+                    <!-- Solicitudes  -->
+                    <li class="flex items-center">
+                        <a href="{{ route('asignacion.index') }}" title="Volver a la página de solicitudes"  class="text-gray-800 hover:text-gray-800">
+                            Solicitudes de Autómovil
+                        </a>
+                    </li>
+                    <!-- Separador -->
+                    <li class="text-gray-500">/</li>
+                    <!-- Marca -->
+                    <li class="flex items-center">
+                        <p  class="text-gray-800 hover:text-gray-800">
+                            Nueva Solicitud de Autómovil
+                        </p>
+                    </li>
+                </ul>
+            </nav>
+        </div>
 
         <div class="p-6 bg-white border rounded-md shadow-md">
             {{-- titulo --}}
-            <h2 class="mb-5 text-xl font-semibold text-gray-700">Solicitud de Vehiculo</h2>
+            <h2 class="mb-5 text-xl font-semibold text-gray-700">Agregar Solicitud de Vehiculo</h2>
             {{-- formulario --}}
             <form action="{{ route('asignacion.store') }}" method="POST">
                 @csrf
@@ -30,7 +65,7 @@
                         <div class="w-full px-3 xl:w-1/2">
                             <label class="mb-3 block text-base font-medium text-[#07074D]" for="fecha_salida">Fecha de
                                 Reservación</label>
-                            <input type="date" id="fecha" name="fecha_salida" title="Ingresa fecha de reservación"
+                            <input type="date" id="fecha_salida" name="fecha_salida" title="Ingresa fecha de reservación"
                                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                 required>
                         </div>
@@ -39,7 +74,7 @@
                             <div class="mb-5">
                                 <label class="mb-3 block text-base font-medium text-[#07074D]"
                                     for="telefono">Teléfono</label>
-                                <input title="Teléfono" type="text" name="Ingresa teléfono"
+                                <input title="Ingresa teléfono" type="text" name="telefono"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                     placeholder="729 237 0990" required />
                             </div>
@@ -128,7 +163,7 @@
                                     <div id="choferInput" class="hidden ml-4">
                                         <label class="mb-3 block text-base font-medium text-[#07074D]" for="nombre_chofer">
                                             Chofer</label>
-                                        <input type="text" name="nombre_chofer" title="Ingresa el nombre del chofer">
+                                        <input type="text" name="nombre_chofer" title="Ingresa el nombre del chofer"
                                             class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                                     </div>
                                 </div>

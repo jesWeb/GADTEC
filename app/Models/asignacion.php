@@ -25,7 +25,6 @@ class asignacion extends Model
         'fecha_salida',
         'hora_salida',
         'fecha_estimada_dev',
-        'hora_llegada',
         'no_licencia',
         'estatus',
         'condiciones',

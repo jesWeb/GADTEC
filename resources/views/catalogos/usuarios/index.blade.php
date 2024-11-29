@@ -2,15 +2,42 @@
 
 @section('body')
 
-<div class="flex justify-end ml-2 space-x-2">
-    <a href="{{ $backRoute ?? route('catalogos.index') }}" title="Volver a Catálogos" class="flex items-center text-blue-500 hover:text-blue-700">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-        </svg>
-            Volver a Catálogos
-    </a>
-</div>
-    <div class="px-4 py-6">
+<div class="px-6 py-2">
+        <!-- Mapa de sitio -->
+        <div class="flex justify-end mt-2 mb-4">
+            <nav class="text-sm text-gray-600">
+                <div class="flex items-center space-x-4">
+                    <li class="flex items-center">
+                        <a href="{{ route('Gestion') }}" title="Ir a la gestión de vehículos" class="flex items-center text-gray-700 hover:text-gray-900">
+                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
+                            </svg>
+                            Gestión
+                        </a>
+                    </li>
+                    <!-- Separador -->
+                    <p class="text-gray-500">/</p>
+                    <!-- Catálogos -->
+                    <li class="flex items-center">
+                        <a href="{{ $backRoute ?? route('catalogos.index') }}" title="Volver a Catálogos" class="text-gray-800 hover:text-gray-800">
+                            Catálogos
+                        </a>
+                    </li>
+                    <!-- Separador -->
+                    <p class="text-gray-500">/</p>
+                    <!-- Usuarios -->
+                    <li class="flex items-center">
+                        <p  class="text-gray-800 hover:text-gray-800">
+                            Usuarios
+                        </p>
+                    </li>
+                </ul>
+            </nav>
+        </div>
 
         <div class="p-6 bg-white rounded-md shadow-md">
 
@@ -27,7 +54,7 @@
                         <input type="text" name="search" placeholder="Buscar Usuario" title="Ingresa usuario"
                             class="w-full px-4 py-2 text-gray-700 border rounded-l-md focus:outline-none md:w-48"
                             value="{{ request('search') }}">
-                        <button type="submit"  title="Realizar búsqueda">
+                        <button type="submit"  title="Realizar búsqueda"
                             class="flex items-center px-4 py-2 ml-1 text-white bg-blue-600 border-l-0 rounded-r-md hover:bg-blue-700 focus:outline-none">
                             Buscar
                         </button>

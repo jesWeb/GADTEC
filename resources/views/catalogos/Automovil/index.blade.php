@@ -1,18 +1,45 @@
 @extends('layouts.app')
 @section('body')
-<div class="flex justify-end ml-2 space-x-2">
-    <a href="{{ $backRoute ?? route('catalogos.index') }}" class="flex items-center text-blue-500 hover:text-blue-700">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24"
-            stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-        </svg>
-        Volver a Catálogos
-    </a>
-</div>
-<div class="px-4 py-6">
+
+<div class="px-6 py-2">
+    <!-- Mapa de sitio -->
+    <div class="flex justify-end mt-2 mb-4">
+            <nav class="text-sm text-gray-600">
+                <div class="flex items-center space-x-4">
+                    <li class="flex items-center">
+                        <a href="{{ route('Gestion') }}" title="Ir a la gestión de vehículos" class="flex items-center text-gray-700 hover:text-gray-900">
+                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
+                            </svg>
+                            Gestión
+                        </a>
+                    </li>
+                    <!-- Separador -->
+                    <p class="text-gray-500">/</p>
+                    <!-- Catálogos -->
+                    <li class="flex items-center">
+                        <a href="{{ $backRoute ?? route('catalogos.index') }}" title="Volver a Catálogos" class="text-gray-800 hover:text-gray-800">
+                            Catálogos
+                        </a>
+                    </li>
+                    <!-- Separador -->
+                    <p class="text-gray-500">/</p>
+                    <!-- Usuarios -->
+                    <li class="flex items-center">
+                        <p  class="text-gray-800 hover:text-gray-800">
+                            Autómoviles
+                        </p>
+                    </li>
+                </ul>
+            </nav>
+    </div>
     <div class="p-6 bg-white rounded-md shadow-md">
         <div class="flex justify-between mb-3">
-            <h2 class="mb-4 text-lg font-semibold text-gray-700 capitalize">Vehiculos</h2>
+            <h2 class="mb-4 text-lg font-semibold text-gray-700 capitalize">Automóviles</h2>
 
         </div>
         <div class="mb-2">
@@ -21,18 +48,20 @@
                 <div class="flex items-center w-full md:w-auto">
                     <input type="text" name="search" placeholder="Buscar Automovil"
                         class="w-full px-4 py-2 text-gray-700 border rounded-l-md focus:outline-none md:w-48"
-                        value="{{ request('search') }}">
+                        value="{{ request('search') }}"
+                        title="Buscar automóvil">
                     <button type="submit"
-                        class="flex items-center px-4 py-2 ml-1 text-white bg-blue-600 border-l-0 rounded-r-md hover:bg-blue-700 focus:outline-none">
+                        class="flex items-center px-4 py-2 ml-1 text-white bg-blue-600 border-l-0 rounded-r-md hover:bg-blue-700 focus:outline-none"
+                        title="Realizar búsqueda">
                         Buscar
                     </button>
                 </div>
             </form>
 
             <div class="flex justify-end ml-2 space-x-2">
-                <a href="{{ route('automoviles-pdf') }}" target="_blank"
+                <a href="{{ route('automoviles-pdf') }}" target="_blank" title="Imprimir reporte"
                     class="inline-block px-4 py-2 text-white bg-green-600 rounded hover:bg-green-700">Imprimir</a>
-                <a href="{{ route('Automovil.create') }}"
+                <a href="{{ route('Automovil.create') }}" title="Agregar un nuevo registro de automóvil"
                     class="inline-block px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Nuevo registro</a>
             </div>
         </div>
@@ -59,7 +88,8 @@
                         <td class="px-4 py-2 border">
                             <div class="flex items-center space-x-2">
                                 <a href="{{ route('Automovil.show', $car->id_automovil) }}"
-                                    class="inline-flex items-center justify-center w-8 h-8 text-green-600 border border-green-600 rounded hover:bg-green-600 hover:text-white">
+                                    class="inline-flex items-center justify-center w-8 h-8 text-green-600 border border-green-600 rounded hover:bg-green-600 hover:text-white"
+                                    title="Ver automóvil">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke="currentColor" class="w-4 h-4">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -68,7 +98,8 @@
                                 </a>
 
                                 <a href="{{ route('Automovil.edit', $car->id_automovil) }}"
-                                    class="inline-flex items-center justify-center w-8 h-8 text-yellow-600 border border-yellow-600 rounded hover:bg-yellow-600 hover:text-white">
+                                    class="inline-flex items-center justify-center w-8 h-8 text-yellow-600 border border-yellow-600 rounded hover:bg-yellow-600 hover:text-white"
+                                    title="Editar automóvil">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke="currentColor" class="w-4 h-4">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -80,7 +111,7 @@
                                     id="eliminacion-form" class="inline-block">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" onclick="deleteRegister(event)"
+                                    <button type="submit" onclick="deleteRegister(event)" title="Borrar automóvil"
                                         class="inline-flex items-center justify-center w-8 h-8 text-red-600 border border-red-600 rounded hover:bg-red-600 hover:text-white">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                             stroke="currentColor" class="w-4 h-4">

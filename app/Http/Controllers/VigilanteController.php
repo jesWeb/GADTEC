@@ -12,7 +12,10 @@ class VigilanteController extends Controller
     // Mostrar la bitácora de asignaciones
     public function index()
     {
-        $vigilante = asignacion::with(['automovil', 'usuarios', 'checkIns'])->get();
+        // $vigilante = asignacion::with(['automovil', 'usuarios', 'checkIns'])->get();
+        $vigilante = Asignacion::with(['automovil', 'usuarios', 'checkIns'])
+        ->where('estatus', '!=', 'reservado')
+        ->get();
         return view('vigilante.index', compact('vigilante'));
     }
 
@@ -41,37 +44,45 @@ class VigilanteController extends Controller
         // Validar la entrada
         $request->validate([
             'km_salida' => 'required|numeric',
-            'combustible_salida' => 'required|string',
-            'hora_salida' => 'nullable|date_format:H:i',
-        
+            'combustible_salida' => 'required|string'
         ]);
-    
+        
         // Obtener la asignación
-        $asignacion = asignacion::findOrFail($id_asignacion);
+        $asignacion = Asignacion::findOrFail($id_asignacion);
     
         // Crear un nuevo check-in
         $checkIn = new CheckIn();
         $checkIn->km_salida = $request->km_salida;
         $checkIn->combustible_salida = $request->combustible_salida;
-        $checkIn->hora_salida = $request->hora_salida;
+        $checkIn->hora_salida = $asignacion->hora_salida; 
 
+        $asignacion->fecha_estimada_dev = $request->fecha_estimada_dev;
+    
         // Cambiar el estatus de la asignación a "ocupado"
         $asignacion->estatus = 'ocupado';
+        
         $asignacion->save();
-
+        
         // Relacionar el check-in con la asignación
         $asignacion->checkIns()->save($checkIn);
     
         return redirect()->route('vigilante.index')->with('success', 'Check-In creado exitosamente.');
     }
+    
+    
+    
+    
 
   public function update2(Request $request, $id_check)
 {
     $request->validate([
         'km_llegada' => 'nullable|numeric',
         'combustible_llegada' => 'nullable|string',
-        'hora_llegada' => 'nullable|date_format:H:i',
+        // 'hora_llegada' => 'nullable|date_format:H:i',
+
     ]);
+
+    // dd($request->all());
 
     // Obtener el check-in existente
     $checkIn = CheckIn::findOrFail($id_check);
@@ -81,14 +92,17 @@ class VigilanteController extends Controller
     $checkIn->combustible_llegada = $request->combustible_llegada;
     $checkIn->hora_llegada = $request->hora_llegada;
 
+
     // Asignar la fecha de llegada si aún no está establecida
     if (!$checkIn->fecha_llegada) {
         $checkIn->fecha_llegada = now();
     }
 
-
+    
     // Obtener la asignación relacionada con el check-in
     $asignacion = $checkIn->asignacion;
+
+    $asignacion->fecha_estimada_dev = $request->fecha_estimada_dev;
     if ($asignacion) {
         // Cambiar el estatus de la asignación a "disponible"
         $asignacion->estatus = 'disponible';
@@ -100,7 +114,18 @@ class VigilanteController extends Controller
     return redirect()->route('vigilante.index')->with('success', 'Check-In actualizado exitosamente.');
 }
 
-    
+public function show(string $id)
+{
+    // Obtener la asignación por su ID
+    $asignacion = asignacion::findOrFail($id);
+
+    // Obtener la asignación con las relaciones de automovil, usuarios y checkIns
+    $vigilante = asignacion::with(['automovil', 'usuarios', 'checkIns'])->findOrFail($id);
+
+    // Pasar la variable $vigilante a la vista 'modulos.servicios.show'
+    return view('vigilante.show', compact('vigilante'));
+}
+
     
     
 

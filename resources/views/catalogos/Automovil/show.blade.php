@@ -1,119 +1,173 @@
 @extends('layouts.app')
+
 @section('body')
-    <div class="px-4 mx-auto">
-        {{--  --}}
-        <section class="w-full p-6 bg-white rounded-lg shadow-lg minh-screen">
-            {{-- info main --}}
-            <h1 class="text-lg font-semibold tracking-wide text-center text-indigo-500 md:m-5">Informacion de
-                Automovil
-            </h1>
+<div class="px-6 py-2">
+    <!-- Mapa de sitio -->
+    <div class="flex justify-end mt-2 mb-4">
+        <nav class="text-sm text-gray-600">
+                <div class="flex items-center space-x-4">
+                    <li class="flex items-center">
+                        <a href="{{ route('Gestion') }}" title="Ir a la gestión de vehículos" class="flex items-center text-gray-700 hover:text-gray-900">
+                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
+                            </svg>
+                            Gestión
+                        </a>
+                    </li>
+                    <!-- Separador -->
+                    <p class="text-gray-500">/</p>
+                    <!-- Catálogos -->
+                    <li class="flex items-center">
+                        <a href="{{ $backRoute ?? route('catalogos.index') }}" title="Volver a Catálogos" class="text-gray-800 hover:text-gray-800">
+                            Catálogos
+                        </a>
+                    </li>
+                    <!-- Separador -->
+                    <p class="text-gray-500">/</p>
+                    <!-- Usuarios -->
+                    <li class="flex items-center">
+                        <a href="{{route('Automovil.index')}}" title="Volver a la página de automoviles" class="text-gray-800 hover:text-gray-800">
+                            Automóviles
+                        </a>
+                    </li>
 
-            <div class="flex flex-col mt-3 md:flex-row">
-                <!-- img -->
-                <div class="mb-6 mr-0 md:mr-8 md:mb-0">
-                    <img class="w-1/2 mx-auto md:w-full w" src="https://placeholder.pics/svg/400" alt="can_help_banner">
-                </div>
-                <!--  -->
-
-                <div class="flex flex-col flex-wrap flex-1 -mx-2 -mb-4 sm:flex-row">
-
-                    <div class="w-full px-2 mb-4 sm:w-1/2 ">
-                        <div class="h-full px-6 py-4 border border-t-0 border-l-0 border-zinc-500 rounded-br-xl">
-
-                            <div class="flex flex-col">
-                                <p class="text-lg font-semibold text-gray-800 ">Marca:</p>
-                                <span class="text-gray-600">{{ $automovil->marca }}</span>
-                                <p class="text-lg font-semibold text-gray-800 ">Submarca:</p>
-                                <span class="text-gray-600">{{ $automovil->submarca }}</span>
-                                <p class="text-lg ">Modelo:</p>
-                                <span class="text-gray-600">{{ $automovil->modelo }}</span>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="w-full px-2 mb-4 sm:w-1/2 ">
-                        <div class="h-full px-6 py-4 border border-t-0 border-l-0 border-zinc-500 rounded-br-xl">
-                            <div class="flex flex-col ">
-                                <p class="text-lg font-semibold text-gray-800">Numero de Serie :</p>
-                                <span class="text-gray-600 ">{{ $automovil->num_serie }}</span>
-                                <p class="text-lg font-semibold text-gray-800">Numero de Motor :</p>
-                                <span class="text-gray-600 ">{{ $automovil->num_motor }}</span>
-                                <p class="text-lg font-semibold text-gray-800">Repube / NSI :</p>
-                                <span class="text-gray-600 ">{{ $automovil->num_nsi }}</span>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="w-full px-2 mb-4 sm:w-1/2 ">
-                        <div class="h-full px-6 py-4 border border-t-0 border-l-0 border-zinc-500 rounded-br-xl">
-                            <div class="flex mt-4 space-x-5 ">
-                                <div class="flex flex-col">
-                                    <p class="text-lg font-semibold text-gray-800 ">Capacidad de combustible (Lts): </p>
-                                    <span class="text-gray-600 ">{{ $automovil->capacidad_combustible }}</span>
-                                    <p class="text-lg font-semibold text-gray-800 ">Tipo de combustible : </p>
-                                    <span class="text-gray-600 ">{{ $automovil->tipo_combustible }}</span>
-                                    <p class="text-lg font-semibold text-gray-800 ">Kilometraje :</p>
-                                    <span class="text-gray-600 ">{{ $automovil->kilometraje }}</span>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="w-full px-2 mb-4 sm:w-1/2 ">
-                        <div class="h-full px-6 py-4 border border-t-0 border-l-0 border-zinc-500 rounded-br-xl">
-                            <div class="flex mt-4 space-x-5 ">
-                                <div class="flex flex-col">
-                                    <p class=" mb-1.5 inline text-lg font-semibold text-gray-800">Color : </p><span
-                                        class="text-gray-600 ">{{ $automovil->color }}</span>
-                                    <p class=" mt-1.5 inline text-lg font-semibold text-gray-800">Numero de Puertas : </p>
-                                    <span class="text-gray-600 ">{{ $automovil->num_puertas }}</span>
-                                    <p class=" mb-1.5 inline text-lg font-semibold text-gray-800">Condiciones: </p> <span
-                                        class="text-gray-600 ">{{ $automovil->estatus }}</span>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-full px-2 mb-4 sm:w-1/2 ">
-                        <div class="h-full px-6 py-4 border border-t-0 border-l-0 border-zinc-500 rounded-br-xl">
-                            <div class="flex mt-4 space-x-5 ">
-                                <div class="flex flex-col">
-                                    <p class="text-lg font-semibold text-gray-800 ">Placas : </p> <span
-                                        class="text-gray-600 ">{{ $automovil->placas }}</span>
-                                    <p class="font-semibold text-gray-800 inlinext-lg">Fecha de Ingreso :</p> <span
-                                        class="text-gray-600 ">{{ $automovil->fecha_registro }}</span>
-                                    <p class="text-lg font-semibold text-gray-800 ">Tipo de Automovil : </p> <span
-                                        class="text-gray-600 ">{{ $automovil->tipo_automovil }}</span>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-full px-2 mb-4 sm:w-1/2 ">
-                        <div class="h-full px-6 py-4 border border-t-0 border-l-0 border-zinc-500 rounded-br-xl">
-                            <div class="flex mt-4 space-x-5 ">
-                                <div class="flex flex-col">
-                                    <p class="inline text-lg font-semibold text-gray-800">Uso : <span
-                                            class="p-2 text-gray-600">{{ $automovil->uso }}</span> </p>
-                                    <p class="inline text-lg font-semibold text-gray-800">Responsable : <span
-                                            class="p-2 text-gray-600">{{ $automovil->responsable }}</span> </p>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    <!-- Separador -->
+                    <p class="text-gray-500">/</p>
+                    <!-- Usuarios -->
+                    <li class="flex items-center">
+                        <p  class="text-gray-800 hover:text-gray-800">
+                           Ver Detalle de Automóvil
+                        </p>
+                    </li>
+                </ul>
             </div>
-
-
-
-            {{-- btn --}}
-            <div class="flex justify-end mt-6 space-x-4">
-                <a href="{{ route('Automovil.index') }}"
-                    class="px-4 py-2 text-white bg-indigo-600 rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">Cerrar</a>
-            </div>
-        </section>
+        </nav>
     </div>
+    <div class="container px-4 mx-auto">
+        <div class="flex justify-center mt-12">
+            <div class="w-full max-w-5xl p-8 bg-white rounded-lg shadow-lg bg-gradient-to-r">
+                
+                <div class="text-center">
+                    <h1 class="text-4xl font-extrabold text-gray-800">Detalle del Automóvil</h1>
+                    <p class="mt-2 text-lg text-gray-600">Información completa sobre el automóvil seleccionado</p>
+                </div>
+
+                <!-- Tarjeta de información del automóvil -->
+                <div class="flex p-6 mt-6 bg-white rounded-lg shadow-sm">
+                    
+                    <!-- Detalles del vehículo -->
+                    <div class="w-2/3 ml-6">
+                        <p class="text-xl font-bold text-center text-green-600">{{ $automovil->marca }} {{ $automovil->submarca }} {{ $automovil->modelo }}</p>
+                        <!-- Carrusel de imágenes -->
+                        <div class="w-full">
+                            <div class="slick-carousel">
+                                <!-- Imagen 1 -->
+                                <div>
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaoEsjLsnN-xjinEV-ag1iT9pk69RHns1oxw&s" alt="Imagen del Vehículo" class="object-cover h-40 mx-auto rounded-lg shadow-md w-60">
+                                </div>
+                                <!-- Imagen 2 -->
+                                <div>
+                                    <img src="https://photos.dealerimagepro.com/lib/dalton-1327/09.04.2024/USED/%28Toyota%20-%20Corolla%295YFBPRBE8NP317331/5YFBPRBE8NP317331--02.jpg?ver=1725494695642" alt="Imagen del Vehículo" class="object-cover h-40 mx-auto rounded-lg shadow-md w-60">
+                                </div>
+                                <!-- Imagen 3 -->
+                                <div>
+                                    <img src="https://photos.dealerimagepro.com/lib/dalton-1327/09.04.2024/USED/%28Toyota%20-%20Corolla%295YFBPRBE8NP317331/5YFBPRBE8NP317331--03.jpg?ver=172549469537" alt="Imagen del Vehículo" class="object-cover h-40 mx-auto rounded-lg shadow-md w-60">
+                                </div>
+                                <!-- Imagen 4 -->
+                                <div>
+                                    <img src="https://photos.dealerimagepro.com/lib/dalton-1327/09.04.2024/USED/%28Toyota%20-%20Corolla%295YFBPRBE8NP317331/5YFBPRBE8NP317331--04.jpg?ver=1725494695523" alt="Imagen del Vehículo" class="object-cover h-40 mx-auto rounded-lg shadow-md w-60">
+                                </div>
+                                <!-- Imagen 5 -->
+                                <div>
+                                    <img src="https://photos.dealerimagepro.com/lib/dalton-1327/09.04.2024/USED/%28Toyota%20-%20Corolla%295YFBPRBE8NP317331/5YFBPRBE8NP317331--05.jpg?ver=17254946955" alt="Imagen del Vehículo" class="object-cover h-40 mx-auto rounded-lg shadow-md w-60">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Detalles del automóvil usando grid -->
+                        <div class="grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4">
+                            <div class="p-4 bg-white rounded-lg shadow-sm">
+                                <p class="text-lg font-semibold text-gray-800">Marca:</p>
+                                <p class="text-gray-600">{{ $automovil->marca }}</p>
+                            </div>
+                            <div class="p-4 bg-white rounded-lg shadow-sm">
+                                <p class="text-lg font-semibold text-gray-800">Submarca:</p>
+                                <p class="text-gray-600">{{ $automovil->submarca }}</p>
+                            </div>
+                            <div class="p-4 bg-white rounded-lg shadow-sm">
+                                <p class="text-lg font-semibold text-gray-800">Modelo:</p>
+                                <p class="text-gray-600">{{ $automovil->modelo }}</p>
+                            </div>
+                            <div class="p-4 bg-white rounded-lg shadow-sm">
+                                <p class="text-lg font-semibold text-gray-800">Número de Serie:</p>
+                                <p class="text-gray-600">{{ $automovil->num_serie }}</p>
+                            </div>
+                            <div class="p-4 bg-white rounded-lg shadow-sm">
+                                <p class="text-lg font-semibold text-gray-800">Número de Motor:</p>
+                                <p class="text-gray-600">{{ $automovil->num_motor }}</p>
+                            </div>
+                            <div class="p-4 bg-white rounded-lg shadow-sm">
+                                <p class="text-lg font-semibold text-gray-800">Capacidad de Combustible (Lts):</p>
+                                <p class="text-gray-600">{{ $automovil->capacidad_combustible }}</p>
+                            </div>
+                            <div class="p-4 bg-white rounded-lg shadow-sm">
+                                <p class="text-lg font-semibold text-gray-800">Tipo de Combustible:</p>
+                                <p class="text-gray-600">{{ $automovil->tipo_combustible }}</p>
+                            </div>
+                            <div class="p-4 bg-white rounded-lg shadow-sm">
+                                <p class="text-lg font-semibold text-gray-800">Kilometraje:</p>
+                                <p class="text-gray-600">{{ $automovil->kilometraje }}</p>
+                            </div>
+                            <div class="p-4 bg-white rounded-lg shadow-sm">
+                                <p class="text-lg font-semibold text-gray-800">Color:</p>
+                                <p class="text-gray-600">{{ $automovil->color }}</p>
+                            </div>
+                            <div class="p-4 bg-white rounded-lg shadow-sm">
+                                <p class="text-lg font-semibold text-gray-800">Número de Puertas:</p>
+                                <p class="text-gray-600">{{ $automovil->num_puertas }}</p>
+                            </div>
+                            <div class="p-4 bg-white rounded-lg shadow-sm">
+                                <p class="text-lg font-semibold text-gray-800">Condiciones:</p>
+                                <p class="text-gray-600">{{ $automovil->estatus }}</p>
+                            </div>
+                            <div class="p-4 bg-white rounded-lg shadow-sm">
+                                <p class="text-lg font-semibold text-gray-800">Placas:</p>
+                                <p class="text-gray-600">{{ $automovil->placas }}</p>
+                            </div>
+                            <div class="p-4 bg-white rounded-lg shadow-sm">
+                                <p class="text-lg font-semibold text-gray-800">Fecha de Ingreso:</p>
+                                <p class="text-gray-600">{{ $automovil->fecha_registro }}</p>
+                            </div>
+                            <div class="p-4 bg-white rounded-lg shadow-sm">
+                                <p class="text-lg font-semibold text-gray-800">Tipo de Automóvil:</p>
+                                <p class="text-gray-600">{{ $automovil->tipo_automovil }}</p>
+                            </div>
+                            <div class="p-4 bg-white rounded-lg shadow-sm">
+                                <p class="text-lg font-semibold text-gray-800">Uso:</p>
+                                <p class="text-gray-600">{{ $automovil->uso }}</p>
+                            </div>
+                            <div class="p-4 bg-white rounded-lg shadow-sm">
+                                <p class="text-lg font-semibold text-gray-800">Responsable:</p>
+                                <p class="text-gray-600">{{ $automovil->responsable }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botón de regreso -->
+                <div class="flex justify-end mt-6">
+                    <a href="{{ route('Automovil.index') }}" title="Volver al listado de automoviles"
+                    class="inline-flex items-center justify-center px-4 py-2 text-white transition duration-200 bg-green-500 rounded-md hover:bg-green-600 focus:outline-none">
+                        <i class="mr-2 fa-solid fa-arrow-left"></i> Volver
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
+
