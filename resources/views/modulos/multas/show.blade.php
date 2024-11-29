@@ -5,7 +5,7 @@
     <div class="flex justify-center mt-8">
         <div class="w-full max-w-3xl p-8 bg-white shadow-lg rounded-xl">
             <h1 class="pb-4 mb-6 text-4xl font-bold text-gray-800 border-b">Detalles de la Multa</h1>
-            
+
             <ol class="flex mb-6 space-x-2 text-sm text-gray-500">
                 <li class="breadcrumb-item">Inicio</li>
                 <li>/</li>
@@ -30,7 +30,7 @@
 
                 <div class="mb-4">
                     <p class="text-xl font-medium text-gray-800">Fecha de multa:</p>
-                    <p class="text-lg text-gray-600">{{ $multa->fecha_multa }}</p>
+                    <p class="text-lg text-gray-600">  {{\Carbon\Carbon::parse( $multa->fecha_multa )->locale('es')->format('d-m-Y') }}</p>
                 </div>
 
                 <div class="mb-4">

@@ -10,8 +10,12 @@
 
             <div class="flex flex-col mt-3 md:flex-row">
                 <!-- img -->
+                {{-- @if ($MostrarVer->image)
+                <img src="{{asset('img/' . $MostrarVer->image) }}" alt=""
+                    class="w-full max-h-[400px] object-cover md:w-52 ">
+                @else --}}
                 <div class="mb-6 mr-0 md:mr-8 md:mb-0">
-                    <img class="w-1/2 mx-auto md:w-full w" src="https://placeholder.pics/svg/400" alt="can_help_banner">
+                    <img class="w-1/2 mx-auto md:w-full max-h-[400px]  max-w-[400px]" src="{{asset('img/' . $automovil->fotografias) }}"  alt="can_help_banner">
                 </div>
                 <!--  -->
 

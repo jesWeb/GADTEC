@@ -28,7 +28,9 @@
                     <div class="p-5 pb-10">
                         <h4 class="text-lg font-semibold text-gray-800">Fecha de salida:</h4>
                         <span
-                            class="mt-2 text-base leading-relaxed text-gray-500 ">{{ $asignacionV->fecha_salida }}</span>
+                            class="mt-2 text-base leading-relaxed text-gray-500 ">
+                            {{ \Carbon\Carbon::parse($asignacionV->fecha_salida)->locale('es')->format('d-m-Y') }}
+                    </span>
                     </div>
                     <div class="p-5 pb-10">
                         <h4 class="text-lg font-semibold text-gray-800">Hora de salida:</h4>

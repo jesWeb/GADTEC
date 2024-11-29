@@ -247,7 +247,7 @@
                         <h3 class="mb-5 block text-xl font-semibold text-[#07074D]">
                             Subir Archivos
                         </h3>
-                        <input type="file" name="fotografias[]" id="fotografias" multiple />
+                        <input type="file" name="fotografias" class="filepond" id="fotografias" multiple />
                     </div>
 
                 </div>
@@ -266,22 +266,11 @@
 @section('scripts')
     <script>
         const inputElement = document.querySelector('input[id="fotografias"]');
+        FilePond.registerPlugin(FilePondPluginImagePreview);
         const pond = FilePond.create(inputElement, {
-            allowMultiple: true,
-            maxFiles: 5,
-            acceptedFileTypes: ['image/jpeg', 'image/png', 'application/pdf'],
-            labelIdle: 'Arrastra y suelta los archivos o haz clic para seleccionarlos',
-            imagePreviewMinHeight: 20,
-            imagePreviewMaxFileSize: null,
-            server: {
-                process: {
-                    url: "{{ route('Automovil.store') }}", // Asegúrate de que este código esté dentro de una plantilla Blade
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': "{{ csrf_token() }}", // Asegúrate de que esta línea esté dentro de un archivo Blade también
-                    },
-                }
-            }
+            allowPreview: true,
+            acceptedFileTypes: ['image/png', 'image/jpeg', 'image/jpg'],
+            labelFileLoadError: 'Error al cargar el archivo',
         });
     </script>
 @endsection

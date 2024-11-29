@@ -57,7 +57,9 @@
                                 <td class="px-4 py-2 border">{{ $seg->automovil->marca }} {{ $seg->automovil->submarca }}
                                     {{ $seg->automovil->modelo }}</td>
                                 <td class="px-4 py-2 border">{{ $seg->aseguradora }}</td>
-                                <td class="px-4 py-2 border">{{ $seg->fecha_vigencia }}</td>
+                                <td class="px-4 py-2 border">
+                                    {{ \Carbon\Carbon::parse($seg->fecha_vigencia)->locale('es')->format('d-m-Y') }}
+                                </td>
                                 <td class="px-4 py-2 border">{{ $seg->estatus }}</td>
 
                                 {{-- acciones --}}

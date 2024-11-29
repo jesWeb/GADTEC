@@ -71,7 +71,9 @@
                                         {{ $tenencia->estatus }}
                                     </span>
                                 </td>
-                                <td class="px-4 py-2 border">{{ $tenencia->fecha_vencimiento }}</td>
+                                <td class="px-4 py-2 border">
+                                    {{\Carbon\Carbon::parse($tenencia->fecha_vencimiento )->locale('es')->format('d-m-Y') }}
+                                    </td>
                                 <td class="px-4 py-2 border">
                                     @if ($tenencia->comprobante && $tenencia->comprobante !== 'N/A')
                                         <img src="{{ asset('img/' . $tenencia->comprobante) }}" alt="Foto de tenencia"

@@ -11,15 +11,26 @@
         </div>
         {{-- content --}}
         <article class="flex flex-wrap max-w-3xl mx-auto md:flex-nowrap group">
-            {{-- poliza Img --}}
-            <img class="w-full max-h-[400px] object-cover md:w-52"
+            {{--  Img --}}
+
+            @if ($MostrarVer->image)
+            <img src="{{asset('img/' . $MostrarVer->image) }}" alt=""
+                class="w-full max-h-[400px] object-cover md:w-52 ">
+            @else
+            <p>No hay imagen disponible.</p>
+            {{-- <img class="w-full max-h-[400px] object-cover md:w-52"
                 src="https://i.ibb.co/Kr4b0zJ/152013403-10158311889099633-8423107287930246533-o.jpg" alt="">
-            {{-- content info --}}
+            --}}
+            @endif
+
+
             <div class="">
                 <div class="flex">
                     <div class="p-5 pb-10">
                         <h4 class="text-lg font-semibold text-gray-800">Fecha de Verificación :</h4>
-                        <span class="mt-2 text-base leading-relaxed text-gray-500 ">{{ $MostrarVer->fechaV }}</span>
+                        <span class="mt-2 text-base leading-relaxed text-gray-500 ">
+                            {{\Carbon\Carbon::parse( $MostrarVer->fecha_verificacion)->locale('es')->format('d-m-Y') }}</span>
+                        </span>
                     </div>
                     <div class="p-5 pb-10 ">
                         <h4 class="text-lg font-semibold text-gray-800">Engomado: </h4>
@@ -34,7 +45,9 @@
 
                     <div class="p-5 pb-10 ">
                         <h4 class="text-lg font-semibold text-gray-800">Próxima Verificación:</h4>
-                        <span class="mt-2 text-base leading-relaxed text-gray-500 ">{{ $MostrarVer->fechaP }}</span>
+                        <span class="mt-2 text-base leading-relaxed text-gray-500 ">
+                            {{\Carbon\Carbon::parse($MostrarVer->proxima_verificacion)->locale('es')->format('d-m-Y') }}</span>
+                        </span>
                     </div>
                 </div>
                 <div class="">

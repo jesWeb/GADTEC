@@ -33,7 +33,7 @@
                 <p class="text-lg font-semibold text-gray-800">Año Correspondiente:</p>
                 <p class="text-gray-600">{{ $tenencia->año_correspondiente }}</p>
             </div>
-            
+
             <div class="mb-4">
                 <p class="text-lg font-semibold text-gray-800">Estatus:</p>
                 <p class="text-gray-600">{{ $tenencia->estatus }}</p>
@@ -41,7 +41,7 @@
 
             <div class="mb-4">
                 <p class="text-lg font-semibold text-gray-800">Fecha de vencimiento:</p>
-                <p class="text-gray-600">{{ $tenencia-> fecha_vencimiento }}</p>
+                <p class="text-gray-600">{{\Carbon\Carbon::parse($tenencia->fecha_vencimiento )->locale('es')->format('d-m-Y') }}</p>
             </div>
 
             <div class="mb-4">

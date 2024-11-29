@@ -38,7 +38,9 @@
                         </div>
                         <div class="p-5 pb-10 ">
                             <h4 class="text-lg font-semibold text-gray-800">Fecha de Vigencia:</h4>
-                            <span class="mt-2 text-lg leading-relaxed text-gray-500 ">{{ $seguroS->fecha_vigencia }}</span>
+                            <span class="mt-2 text-lg leading-relaxed text-gray-500 ">
+                            {{ \Carbon\Carbon::parse($seguroS->fecha_vigencia)->locale('es')->format('d-m-Y') }}
+                            </span>
                         </div>
                     </div>
                 </div>

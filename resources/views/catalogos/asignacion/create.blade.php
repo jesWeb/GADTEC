@@ -94,23 +94,23 @@
                             </div>
                         </div>
                         {{-- Fecha  de devolución --}}
-                        <div class="w-full px-3 xl:w-1/2">
+                        {{-- <div class="w-full px-3 xl:w-1/2">
                             <div class="mb-5">
                                 <label class="mb-3 block text-base font-medium text-[#07074D]"
                                     for="fecha_estimada_dev">Fecha de Devolución</label>
                                 <input type="date" name="fecha_estimada_dev"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                             </div>
-                        </div>
+                        </div> --}}
                         {{-- Hora de Salida --}}
-                        <div class="w-full px-3 xl:w-1/2">
+                        {{-- <div class="w-full px-3 xl:w-1/2">
                             <div class="mb-5">
                                 <label class="mb-3 block text-base font-medium text-[#07074D]" for="hora_llegada">Hora de llegada Aproximada</label>
                                 <input type="time" name="hora_llegada"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                     required />
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
 
                     <div class="px-3 py-3 border-b border-stroke dark:border-strokedark"></div>
@@ -155,16 +155,7 @@
                                     required />
                             </div>
                         </div>
-                        {{-- Autorizante --}}
-                        <div class="w-full px-3 xl:w-1/2 ">
-                            <div class="mb-5">
-                                <label class="mb-3 block text-base font-medium text-[#07074D]"
-                                    for="autorizante">Autorizante</label>
-                                <input type="text" name="autorizante"
-                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                    required />
-                            </div>
-                        </div>
+
                     </div>
                     <div class="flex flex-col gap-5 mt-3 xl:flex-row">
                         {{-- Condiciones --}}

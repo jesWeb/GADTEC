@@ -64,7 +64,9 @@
                                     {{ $sin->automovil->marca }} {{ $sin->automovil->submarca }}
                                     {{ $sin->automovil->modelo }}
                                 </td>
-                                <td class="px-4 py-2 border">{{ $sin->fecha_siniestro }}</td>
+                                <td class="px-4 py-2 border">
+                                    {{ \Carbon\Carbon::parse($sin->fecha_siniestro )->locale('es')->format('d-m-Y') }}
+                                    </td>
                                 <td class="px-4 py-2 border">{{ $sin->usuarios->nombre }} {{ $sin->usuarios->app }}
                                     {{ $sin->usuarios->apm }}</td>
                                 <td class="px-4 py-2 border">{{ $sin->estatus }}</td>
