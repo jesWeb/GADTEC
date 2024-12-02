@@ -26,37 +26,40 @@ class verificacion extends Model
     ];
 
 
-    //metodo para la verificacion
-    public function ObtenerVerificacion()
-    {
-        //obtener el color del vehiculo
-        $color  = strtolower($this->engomado);
-        //obtener el ano actual
-        $ano_actual = Carbon::now()->year();
-
-        //validacion de las proximas verificaciones de acuerdo al engomado
-
-        switch ($color) {
-            //octubre Noviembre
-            case 'verde':
-                return
-                    Carbon::create($ano_actual, 7, 1);
-            //Agosto septiembre
-            case 'rojo':
-                return
-                    Carbon::create($ano_actual, 6, 1);
-            //noviembre diciembre
-            case 'azul':
-                return
-                    Carbon::create($ano_actual, 5, 1);
+    protected $cats = [
+        'image' => 'array',
+    ];
 
 
-            default:
-                return
-                    Carbon::create($ano_actual, 9, 0);
+    // //metodo para la verificacion
+    // public function ObtenerVerificacion()
+    // {
+    //     //obtener el color del vehiculo
+    //     $color  = strtolower($this->engomado);
+    //     //obtener el ano actual
+    //     $ano_actual = Carbon::now()->year();
 
-        }
-    }
+    //     //validacion de las proximas verificaciones de acuerdo al engomado
+
+    //     switch ($color) {
+    //         //octubre Noviembre
+    //         case 'verde':
+    //             return
+    //                 Carbon::create($ano_actual, 7, 1);
+    //         //Agosto septiembre
+    //         case 'rojo':
+    //             return
+    //                 Carbon::create($ano_actual, 6, 1);
+    //         //noviembre diciembre
+    //         case 'azul':
+    //             return
+    //                 Carbon::create($ano_actual, 5, 1);
+    //         default:
+    //             return
+    //                 Carbon::create($ano_actual, 9, 0);
+
+    //     }
+    // }
 
 
 

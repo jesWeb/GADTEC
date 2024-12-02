@@ -16,9 +16,8 @@ return new class extends Migration
             $table->string('cobertura');
             $table->date('fecha_vigencia');
             $table->string('monto');
-            $table->string('poliza')->nullable();
+            $table->string('poliza');
             $table->enum('estatus',['Activo','Suspendido','Baja'])->default('Activo');
-
             //llave foranea
             $table->foreign('id_automovil')->references('id_automovil')->on('automoviles')->onDelete('cascade');
 

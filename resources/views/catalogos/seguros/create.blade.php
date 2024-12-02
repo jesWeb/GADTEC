@@ -7,7 +7,7 @@
         {{-- titulo --}}
         <h2 class="mb-5 text-xl font-semibold text-gray-700">Registro de Seguros</h2>
         {{-- formulario --}}
-        <form action="{{ route('seguros.store') }}" method="POST">
+        <form action="{{ route('seguros.store') }}" enctype="multipart/form-data" method="POST">
             {{-- este es un toquen crea una proteccion en el formulario csrf tipo segridad --}}
             @csrf
 
@@ -34,12 +34,14 @@
                         <label class="mb-3 block text-base font-medium text-[#07074D]"
                             for="aseguradora">Aseguradora</label>
                         <input
+                            value="{{ old('aseguradora') }}"
                             class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                             type="text" name="aseguradora" placeholder="Nombre de la aseguradora" required>
                     </div>
                     <div class="w-full px-3 xl:w-1/2">
                         <label class="mb-3 block text-base font-medium text-[#07074D]" for="cobertura">Cobertura</label>
                         <input
+                        value="{{ old('cobertura') }}"
                             class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                             type="text" name="cobertura" placeholder="Ingresa la cobertura" required>
                     </div>
@@ -52,6 +54,7 @@
                         <label class="mb-3 block text-base font-medium text-[#07074D]" for="fecha_vigencia">Fecha de
                             Vigencia del seguro</label>
                         <input type="date" name="fecha_vigencia"
+                        value="{{ old('fecha_vigencia') }}"
                             class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                             required />
                     </div>
@@ -60,6 +63,7 @@
                         <label class="mb-3 block text-base font-medium text-[#07074D]" for="monto">Monto
                             Asegurado</label>
                         <input
+                        value="{{ old('monto') }}"
                             class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                             name="monto" min="0" step="0.01" type="number" placeholder="$0.00 MXN" required>
                     </div>
@@ -67,14 +71,21 @@
                 </div>
                 <div class="px-3 py-3 mt-3 border-b border-stroke dark:border-strokedark"></div>
                 {{-- foto --}}
-                <div class="pt-4 mb-6">
-                    <label class="mb-5 block text-xl font-semibold text-[#07074D]">
+                {{-- <div class="pt-4 mb-6">
+                    <h3 class="mb-5 block text-xl font-semibold text-[#07074D]">
                         Subir Archivos
-                    </label>
-                    <div class="mb-8">
-                        <input type="file" name="poliza" id="poliza" class="sr-only" multiple />
-                        <label for="poliza"
-                            class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
+                    </h3>
+                    <input type="file" name="poliza[]" id="poliza" multiple />
+                </div> --}}
+                {{-- foto --}}
+                <div class="pt-4 mb-6">
+                    <h3 class="mb-5 block text-xl font-semibold text-[#07074D]">
+                        Subir Archivos
+                    </h3>
+                    <input type="file" name="poliza[]" id="poliza" class="sr-only" multiple />
+                     <div class="mb-8">
+
+                        <label for="poliza" class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
                             <div>
                                 <span
                                     class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
@@ -85,12 +96,14 @@
                                     <ul id="file-names" class="pl-5 list-disc"></ul>
                                 </div>
                             </div>
-
                         </label>
                     </div>
                 </div>
 
+
+
             </div>
+
 
             <script>
                 const fileInput = document.getElementById('poliza');

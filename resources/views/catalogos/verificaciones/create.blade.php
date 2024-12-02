@@ -105,18 +105,13 @@
                             <textarea name="observaciones" id="observaciones" placeholder="Observaciones..."
                                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">{{ old('observaciones') }}</textarea>
                         </div>
-
-                        <!-- Subir Archivos -->
-                        <div class="pt-4 mb-6">
-                            <label class="mb-5 block text-xl font-semibold text-[#07074D]">
-                                Subir Archivos
-                            </label>
-                            <input type="file" name="image" id="image" class="sr-only" multiple />
-                            <label for="image"
-                                class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
-                                <span class="text-xl font-semibold text-[#07074D]">Subir archivo</span>
-                            </label>
-                        </div>
+                        {{-- foto --}}
+                    <div class="pt-4 mb-6">
+                        <h3 class="mb-5 block text-xl font-semibold text-[#07074D]">
+                            Subir Archivos
+                        </h3>
+                        <input type="file" name="image[]" id="fotografias" multiple />
+                    </div>
 
                         <!-- Botones -->
                         <div class="flex justify-end gap-4 mt-4">

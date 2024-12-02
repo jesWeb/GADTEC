@@ -28,7 +28,7 @@
 
                     <div>
                         <label class="block text-base font-medium text-[#07074D]" for="nombre">Nombre</label>
-                        <input class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" 
+                        <input class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                type="text" name="nombre" value="{{ old('nombre') }}" id="nombre" placeholder="Ejemplo: Juan Pérez">
                         <div id="NombreHelp" class="mt-1 text-sm text-red-600">
                             @error('nombre')<i>{{ $message }}</i>@enderror
@@ -37,7 +37,7 @@
 
                     <div>
                         <label class="block text-base font-medium text-[#07074D]" for="num_tarjeta">Número de Tarjeta</label>
-                        <input class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" 
+                        <input class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                type="text" name="num_tarjeta" value="{{ old('num_tarjeta') }}" id="num_tarjeta" placeholder="Ejemplo: 123456789">
                         <div id="NumTarjetaHelp" class="mt-1 text-sm text-red-600">
                             @error('num_tarjeta')<i>{{ $message }}</i>@enderror
@@ -46,7 +46,7 @@
 
                     <div>
                         <label class="block text-base font-medium text-[#07074D]" for="vehiculo_origen">Vehículo de Origen</label>
-                        <input class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" 
+                        <input class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                type="text" name="vehiculo_origen" value="{{ old('vehiculo_origen') }}" id="vehiculo_origen" placeholder="Ejemplo: Toyota Corolla">
                         <div id="VehiculoOrigenHelp" class="mt-1 text-sm text-red-600">
                             @error('vehiculo_origen')<i>{{ $message }}</i>@enderror
@@ -55,7 +55,7 @@
 
                     <div>
                         <label class="block text-base font-medium text-[#07074D]" for="fecha_expedicion">Fecha de Expedición</label>
-                        <input class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" 
+                        <input class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                type="date" name="fecha_expedicion" value="{{ old('fecha_expedicion') }}" id="fecha_expedicion">
                         <div id="FechaExpedicionHelp" class="mt-1 text-sm text-red-600">
                             @error('fecha_expedicion')<i>{{ $message }}</i>@enderror
@@ -64,7 +64,7 @@
 
                     <div>
                         <label class="block text-base font-medium text-[#07074D]" for="fecha_vigencia">Fecha de Vigencia</label>
-                        <input class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" 
+                        <input class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                type="date" name="fecha_vigencia"  value="{{ old('fecha_vigencia') }}" id="fecha_vigencia" readonly>
                         <div id="FechaVigenciaHelp" class="mt-1 text-sm text-red-600">
                             @error('fecha_vigencia')<i>{{ $message }}</i>@enderror
@@ -86,7 +86,7 @@
 
                     <div>
                         <label class="block text-base font-medium text-[#07074D]" for="fotografia_frontal">Fotografía Frontal</label>
-                        <input class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" 
+                        <input class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                type="file" name="fotografia_frontal" id="fotografia_frontal" accept="image/*">
                         <div id="FotografiaFrontalHelp" class="mt-1 text-sm text-red-600">
                             @error('fotografia_frontal')<i>{{ $message }}</i>@enderror
@@ -110,20 +110,20 @@
 <script>
    $(document).ready(function() {
         $('#fecha_expedicion').change(function() {      // verifica los cambios de fecha_expedicion
-            
+
             const fechaExpedicionInput = $(this).val();     // obtiene los datos de fecha_expedicion
-            
+
             if (fechaExpedicionInput) { // verifica que exista un afecha completa en el campo de fecha_expedicion
-                
+
                 const fechaExpedicion = new Date(fechaExpedicionInput);     // crea constante tipo arreglo de fecha_expedicion
 
                 fechaExpedicion.setFullYear(fechaExpedicion.getFullYear() + 6);    // aumento al año en 6
-            
+
                 const year = fechaExpedicion.getFullYear();     // año
                 const mont = String(fechaExpedicion.getMonth() + 1).padStart(2, '0');   // mes - padStar() corta el capo a dos caracteres
                 const date = String(fechaExpedicion.getDate()).padStart(2, '0');    // dia - padStar() corta el capo a dos caracteres
                 const fechaVigenciaFormateada = `${year}-${mont}-${date}`;  // concatena los datos de la fecha para fecha_vigencia
-                
+
                 // regresa la fecha_vigencia por id
                 $('#fecha_vigencia').val(fechaVigenciaFormateada);
             }

@@ -23,6 +23,12 @@ class seguros extends Model
         'estatus',
     ];
 
+    //conertir a fotografias a json
+    protected $cats = [
+        'poliza' => 'array',
+    ];
+
+
     public function automovil()
     {
         return $this->belongsTo(Automoviles::class, 'id_automovil');

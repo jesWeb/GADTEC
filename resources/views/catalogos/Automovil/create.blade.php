@@ -16,6 +16,7 @@
                             <div class="xl:mb-5">
                                 <label class="mb-3 block text-base font-medium text-[#07074D]" for="marca">Marca</label>
                                 <input type="text" name="marca" placeholder="Ingresa la marca"
+                                    value="{{ old('marca') }}"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                     required>
                             </div>
@@ -26,6 +27,7 @@
                                 <label class="mb-3 block text-base font-medium text-[#07074D]"
                                     for="submarca">Submarca</label>
                                 <input type="text" name="submarca" id="submarca" placeholder="Ingresa la submarca"
+                                    value="{{ old('submarca') }}"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                     required>
                             </div>
@@ -35,6 +37,7 @@
                             <div class="xl:mb-5">
                                 <label class="mb-3 block text-base font-medium text-[#07074D]" for="modelo">Modelo</label>
                                 <input type="number" name="modelo" placeholder="Inresa el Modelo"
+                                    value="{{ old('modelo') }}"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                     required>
                                 @error('modelo')
@@ -51,7 +54,7 @@
                             <div class="xl:mb-5">
                                 <label class="mb-3 block text-base font-medium text-[#07074D]"
                                     for="num_serie">No.Serie</label>
-                                <input
+                                <input value="{{ old('num_serie') }}"
                                     class="w-full
                                     rounded-md border
                                     border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
@@ -64,7 +67,7 @@
                             <div class="xl:mb-5">
                                 <label class="mb-3 block text-base font-medium text-[#07074D]"
                                     for="num_motor">No.Motor</label>
-                                <input
+                                <input value="{{ old('num_motor') }}"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                     type="text" name="num_motor" required placeholder="ejemplo: xxx-xxx-xxx">
                             </div>
@@ -74,7 +77,7 @@
                             <div class="xl:mb-5">
                                 <label class="mb-3 block text-base font-medium text-[#07074D]"
                                     for="num_nsi">NSI/Repube</label>
-                                <input
+                                <input value="{{ old('num_nsi') }}"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                     type="text" placeholder="Introduce NSI" name="num_nsi" required>
                             </div>
@@ -91,7 +94,7 @@
                             <div class="xl:mb-5">
                                 <label class="mb-3 block text-base font-medium text-[#07074D]"
                                     for="kilometraje">Kilometraje</label>
-                                <input
+                                <input value="{{ old('kilometraje') }}"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                     type="text" placeholder="Introduce el kilometraje" pattern="^\d*([,.]?\d+)?$"
                                     min="0" required name="kilometraje">
@@ -103,7 +106,7 @@
                             <div class="xl:mb-5">
                                 <label class="mb-3 block text-base font-medium text-[#07074D]"
                                     for="capacidad_combustible">Capacidad de combustible (Lts)</label>
-                                <input
+                                <input value="{{ old('capacidad_combustible') }}"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                     type="number" name="capacidad_combustible" min="0" step="0.01"
                                     placeholder=" Capacidad" required>
@@ -119,9 +122,12 @@
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                     required>
                                     <option disabled selected>Selecciona una opcion </option>
-                                    <option value="Gasolina">Gasolina</option>
-                                    <option value="Diésel">Diésel</option>
-                                    <option value="Eléctrico">Eléctrico</option>
+                                    <option value="Gasolina"
+                                        {{ old('tipo_combustible' == 'Gasolina' ? 'selected' : '') }}>Gasolina</option>
+                                    <option value="Diésel" {{ old('tipo_combustible' == 'Diésel' ? 'selected' : '') }}>
+                                        Diésel</option>
+                                    <option value="Eléctrico" {{ old('Eléctrico' == '' ? 'selected' : '') }}>Eléctrico
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -131,8 +137,10 @@
                         {{-- color --}}
                         <div class="w-full px-3 xl:w-1/2">
                             <div class="xl:mb-5">
-                                <label class="mb-3 block text-base font-medium text-[#07074D]" for="color">Color</label>
+                                <label class="mb-3 block text-base font-medium text-[#07074D]"
+                                    for="color">Color</label>
                                 <input
+                                    value="{{old('color')}}"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                     type="text" name="color" placeholder="Ingresa el Color">
                             </div>
@@ -143,6 +151,7 @@
                                 <label class="mb-3 block text-base font-medium text-[#07074D]" for="num_puertas">Numero de
                                     Puertas</label>
                                 <input
+                                    value="{{old('num_puertas')}}"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                     type="text" name="num_puertas" placeholder="Ingresa Numero de puertas ">
                             </div>
@@ -156,8 +165,8 @@
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                     required>
                                     <option disabled selected>Selecciona una opcion </option>
-                                    <option value="Nuevo">Nuevo</option>
-                                    <option value="Usado">Usado</option>
+                                    <option value="Nuevo" {{old('estatus' == 'Nuevo' ? 'selected' : ''  )}}  >Nuevo</option>
+                                    <option value="Usado" {{old('estatus' == 'Usado' ? 'selected' : ''  )}}  >Usado</option>
 
                                 </select>
                             </div>
@@ -172,6 +181,7 @@
                                 <label class="mb-3 block text-base font-medium text-[#07074D]"
                                     for="placas">Placas</label>
                                 <input
+                                value="{{old('placas')}}"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                     type="text" placeholder="Introduce Placas" required name="placas">
                             </div>
@@ -183,6 +193,7 @@
                                     Fecha de Ingreso
                                 </label>
                                 <input type="date" name="fecha_registro"
+                                    value="{{old('fecha_registro')}}"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                             </div>
                         </div>
@@ -199,9 +210,9 @@
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                     required>
                                     <option disabled selected>Selecciona una opción</option>
-                                    <option value="Automovil">Automóvil - Vehículo de pasajeros</option>
-                                    <option value="Camioneta">Camioneta - Vehículo de carga ligera</option>
-                                    <option value="Motocicleta">Motocicleta - Dos ruedas</option>
+                                    <option value="Automovil"{{old('estatus' == 'Automovil' ? 'selected' : ''  )}}>Automóvil - Vehículo de pasajeros</option>
+                                    <option value="Camioneta"{{old('estatus' == 'Camioneta' ? 'selected' : ''  )}}>Camioneta - Vehículo de carga ligera</option>
+                                    <option value="Motocicleta"{{old('estatus' == 'Motocicleta' ? 'selected' : ''  )}}>Motocicleta - Dos ruedas</option>
                                 </select>
                             </div>
                         </div>
@@ -214,8 +225,8 @@
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                     required>
                                     <option disabled selected>Selecciona una opcion </option>
-                                    <option value="Personal">Personal</option>
-                                    <option value="Empresarial">Empresarial</option>
+                                    <option value="Personal"{{old('estatus' == 'Personal' ? 'selected' : ''  )}}>Personal</option>
+                                    <option value="Empresarial"{{old('estatus' == 'Empresarial' ? 'selected' : ''  )}}>Empresarial</option>
 
                                 </select>
                             </div>
@@ -226,6 +237,7 @@
                                 <label class="mb-3 block text-base font-medium text-[#07074D]"
                                     for="responsable">Responsable</label>
                                 <input type="text" name="responsable"
+                                value="{{old('responsable')}}"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                     required placeholder="Ingresa el nombre del responsable" />
                             </div>
@@ -238,16 +250,16 @@
                             del
                             vehiculo</label>
                         <textarea placeholder="Observaciones ..."
+
                             class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                             name="observaciones"></textarea>
                     </div>
                     {{-- foto --}}
-
                     <div class="pt-4 mb-6">
                         <h3 class="mb-5 block text-xl font-semibold text-[#07074D]">
                             Subir Archivos
                         </h3>
-                        <input type="file" name="fotografias" class="filepond" id="fotografias" multiple />
+                        <input type="file" name="fotografias[]" id="fotografias" multiple />
                     </div>
 
                 </div>
@@ -263,27 +275,3 @@
     </div>
 @endsection
 
-@section('scripts')
-    <script>
-        const inputElement = document.querySelector('input[id="fotografias"]');
-        FilePond.registerPlugin(FilePondPluginImagePreview);
-        const pond = FilePond.create(inputElement, {
-            allowMultiple: true,
-            maxFiles: 5,
-            // acceptedFileTypes: ['image/jpeg', 'image/png', 'application/pdf'],
-            labelIdle: 'Arrastra y suelta los archivos o haz clic para seleccionarlos',
-            imagePreviewMinHeight: 20,
-            imagePreviewMaxFileSize: null,
-            server: {
-                process: {
-                 url: '{{ route('Automovil.store') }}',
-                     method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    }
-                },
-
-            }
-        });
-    </script>
-@endsection

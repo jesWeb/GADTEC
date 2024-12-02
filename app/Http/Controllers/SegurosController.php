@@ -36,42 +36,45 @@ class SegurosController extends Controller
 
     public function create()
     {
-        //
+        // dd($request);
         $automoviles = Automoviles::all();
         return view('catalogos.seguros.create', compact('automoviles'));
     }
 
     public function store(Request $request)
     {
+    //  dd($request);
         $rules = [
             'id_automovil' => 'required|exists:automoviles,id_automovil',
             'aseguradora' => 'required|string',
             'cobertura' => 'required|string',
             'monto' => 'required|string',
             'fecha_vigencia' => 'required|date',
-            'poliza' => 'nullable|file|mimes:jpeg,png,jpg,pdf',
+            'poliza' => 'nullable|array|max:5',
+            'poliza.*' => 'file|mimes:jpeg,png,jpg,pdf|max:10240',
         ];
-
-
+        //validacion
         $request->validate($rules);
-        $input = $request->all();
 
-        //validacion de las fotos
+        //guardar fotos
+        $fotografias = [];
+
         if ($request->hasFile('poliza')) {
-            // obtener el campo file definido en el formulario
-            $file = $request->file('poliza');
-            // obtener el nombre dek archivo
-            $img = $file->getClientOriginalName();
-            //obtener fecha y hora
-            $ldate = date('Ymd_His_');
-            //concatena la fecha y hora con el nombre del Archivo (img)
-            $img2 = $ldate . $img;
-            //idicamos el nombre  y la ruta donde se almacena el archivo (img)
-            $file->move(public_path('img'), $img2);
-            $input['poliza'] = $img2;
+            $files = $request->file('poliza');
+            //limitar 5 fotos
+            $files = array_slice($files, 0, 5);
+
+            foreach ($request->file('poliza') as $file) {
+                $imgPoliza = date('Ymd_His_') . $file->getClientOriginalName();
+                $file->move(public_path('img/poliza'), $imgPoliza);
+                $fotografias[] = $imgPoliza;
+            }
         }
 
-        // return response()->json(['success'=>$img2]);
+        $input = $request->all();
+        //$input Guardar en json la imagen
+        $input['poliza'] = json_encode($fotografias);
+
         //guardamos datos en BD
         seguros::create($input);
 

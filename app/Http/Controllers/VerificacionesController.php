@@ -48,12 +48,13 @@ class VerificacionesController extends Controller
             'fechaV' => 'required|date',
             'holograma' => 'required|string|max:255',
             'observaciones' => 'nullable|string',
-            'image' => 'nullable|file|mimes:jpg,png,jpeg|max:2048'
+            'image' => 'nullable|array|max:5',
+            'image.*' => 'file|mimes:jpg,png,jpeg|max:10240'
         ]);
 
         // Obtener el valor del engomado y la fecha
         $engomado = $request->input('engomado');
-         // Usar Carbon para manipular fechas
+        // Usar Carbon para manipular fechas
         $fechaV = Carbon::parse($request->input('fechaV'));
         $mes = $fechaV->month;
 
@@ -99,6 +100,23 @@ class VerificacionesController extends Controller
         // Calcular la próxima fecha de verificación sumando 6 meses
         $proximaVerificacion = $fechaV->copy()->addMonths(6);
 
+        //guardar fotografias
+        $fotografias = [];
+
+        if ($request->hasFile('image')) {
+            $files = $request->file('image');
+            //limitar a 5
+            $files = array_slice($files, 0, 5);
+            foreach ($request->file('image') as $file) {
+                $imgVeri = date('Ymd_His_') . $file->getClientOriginalName();
+                $file->move(public_path('img/verificaciones'), $imgVeri);
+                $fotografias[] = $imgVeri;
+            }
+        }
+
+        //guardar en json la img
+        $input['image'] = json_encode($fotografias);
+
         // Guardar la verificación
         Verificacion::create([
             'id_automovil' => $request->input('id_automovil'),
@@ -107,7 +125,7 @@ class VerificacionesController extends Controller
             'fecha_verificacion' => $fechaV->format('Y-m-d'),
             'proxima_verificacion' => $proximaVerificacion->format('Y-m-d'),
             'observaciones' => $request->input('observaciones'),
-            'image' => $request->file('image')
+            'image' => $input['image'],
         ]);
 
         return redirect()->route('verificaciones.index')->with('mensaje', 'Se ha registrado correctamente el registro');
