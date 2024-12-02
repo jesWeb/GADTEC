@@ -28,11 +28,11 @@ class Automoviles extends Model
         'color',
         'num_puertas',
         'estatus',
+        'estatusIn',
         'fecha_registro',
         'responsable',
         'observaciones',
         'fotografias',
-
     ];
 
     //conevertir fotografias a json

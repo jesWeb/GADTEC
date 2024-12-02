@@ -58,8 +58,6 @@ class TeneciasRefrendosController extends Controller
             'origen' =>'required',
             'monto' =>'required',
             'año_correspondiente' =>'required',
-            'estatus' =>'required',
-            'fecha_vencimiento' =>'required',
             'comprobante' =>'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'id_automovil' =>'required'
 
@@ -71,8 +69,6 @@ class TeneciasRefrendosController extends Controller
             'origen.required' => 'El campo origen es requerido',
             'monto.required' => 'El campo monto es requerido',
             'año_correspondiente.required' => 'El campo año correspondiente es requerido',
-            'estatus.required' => 'El campo estatus es requerido',
-            'fecha_vencimiento.required' => 'El campo fecha de vencimiento es requerido',
             'comprobante.file' => 'El archivo debe ser una imagen',
             'comprobante.mimes' => 'El archivo debe ser de tipo jpeg, png, jpg o gif',
             'comprobate.max' => 'El tamaño máximo de la imagen es 2MB',
@@ -130,8 +126,6 @@ class TeneciasRefrendosController extends Controller
             'origen' =>'required',
             'monto' =>'required',
             'año_correspondiente' =>'required',
-            'estatus' =>'required',
-            'fecha_vencimiento' =>'required',
             'comprobante' =>'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'id_automovil' =>'required'
         ];
@@ -142,8 +136,6 @@ class TeneciasRefrendosController extends Controller
             'origen.required' => 'El campo origen es requerido',
             'monto.required' => 'El campo monto es requerido',
             'año_correspondiente.required' => 'El campo año correspondiente es requerido',
-            'estatus.required' => 'El campo estatus es requerido',
-            'fecha_vencimiento.required' => 'El campo fecha de vencimiento es requerido',
             'comprobante.file' => 'El archivo debe ser una imagen',
             'comprobante.mimes' => 'El archivo debe ser de tipo jpeg',
             'comprobante.max' => 'El tamaño máximo de la imagen es 2MB',

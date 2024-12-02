@@ -16,7 +16,8 @@
         <div class="flex items-center space-x-3">
             <div class="font-medium text-gray-900">{{ Auth::user()->nombre }} {{ Auth::user()->apm }}</div>
             <button @click="dropdownOpen = !dropdownOpen" x-ref="dropdownMenuOpen"
-                    class="relative block w-8 h-8 ml-3 overflow-hidden rounded-full shadow focus:outline-none">
+                    class="relative block w-8 h-8 ml-3 overflow-hidden rounded-full shadow focus:outline-none"
+                    title="Cerrar sesión">
                 <img class="object-cover w-full h-full"
                     src="{{ Auth::user()->foto ? asset('img/' . Auth::user()->foto) : 'shadow.png' }}"
                     alt="Your avatar">
@@ -26,11 +27,10 @@
         <!-- Menú desplegable -->
         <div x-cloak x-show="dropdownOpen"
              class="absolute right-0 z-10 w-48 mt-2 overflow-hidden bg-white rounded-md shadow-xl">
-            {{-- <a href="{{ route('profile.edit') }}"
-               class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white">Perfil</a> --}}
+
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
-                <a href="#" onclick="event.preventDefault(); this.closest('form').submit();"
+                <a href="#" onclick="event.preventDefault(); this.closest('form').submit();" title=" ¿Seguro que deseas salir?"
                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white">Cerrar sesión</a>
             </form>
         </div>

@@ -35,4 +35,24 @@ class GestionController extends Controller
             ->get();
         return view('modulos.Gestion.show', compact('dispo',));
     }
+
+
+    public function update($id, Request $request)
+    {
+        $query = asignacion::find($id);
+            $query->estatus = 'Autorizado';
+        $query -> save();
+        
+        $disponibilidad = Automoviles::with('asignacion')->get();
+        return view('modulos.Gestion.index', compact('disponibilidad'));
+    }
+    // public function usu_salvar(UsuariosModel $id, Request $request){
+    //     //dd($id);
+    //     $id->update(
+    //             //$request->all();
+    //             $request->only('nombre','ap_paterno','ap_materno','correo','pass')
+    //         );
+    //     return redirect()->route("usu_detalle", ['id' => $id->id]);
+    // }
+
 }

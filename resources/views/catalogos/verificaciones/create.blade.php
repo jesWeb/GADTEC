@@ -1,17 +1,57 @@
 @extends('layouts.app')
 
 @section('body')
-    <div class="flex flex-col mt-5 gap-9">
+<div class="px-6 py-2">
+    <!-- Mapa de sitio -->
+    <div class="flex justify-end mt-2 mb-4">
+        <nav class="text-sm text-gray-600">
+                <div class="flex items-center space-x-4">
+                    <li class="flex items-center">
+                        <a href="{{ route('Gestion') }}" title="Ir a la gestión de vehículos" class="flex items-center text-gray-700 hover:text-gray-900">
+                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
+                            </svg>
+                            Gestión
+                        </a>
+                    </li>
+                    <!-- Separador -->
+                    <p class="text-gray-500">/</p>
+                    <!-- Catálogos -->
+                    <li class="flex items-center">
+                        <a href="{{ $backRoute ?? route('catalogos.index') }}" title="Volver a Catálogos" class="text-gray-800 hover:text-gray-800">
+                            Catálogos
+                        </a>
+                    </li>
+                    <!-- Separador -->
+                    <p class="text-gray-500">/</p>
+                    <!-- Verificaciones Vehiculares -->
+                    <li class="flex items-center">
+                        <a href="{{route('verificaciones.index')}}" title="Volver a la página de verificaciones" class="text-gray-800 hover:text-gray-800">
+                            Verificaciones 
+                        </a>
+                    </li>
+
+                    <!-- Separador -->
+                    <p class="text-gray-500">/</p>
+                    <!-- Verificaciones Vehiculares -->
+                    <li class="flex items-center">
+                        <p  class="text-gray-800 hover:text-gray-800">
+                            Registrar Nueva Verificación
+                        </p>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
 
         <div class="p-6 bg-white border rounded-md shadow-md">
             <div class="flex justify-between mb-3">
                 <h2 class="mb-4 text-lg font-semibold text-gray-700 capitalize">Verificaciones vehiculares</h2>
-                <div class="py-3">
-                    <a href="{{ route('catalogos.index') }}"
-                        class="flex items-center justify-center w-12 h-10 text-white rounded-full shadow">
-                        <img src="/img/arrow-back.svg" alt="">
-                    </a>
-                </div>
+                
             </div>
             <form action="{{ route('verificaciones.store') }}" enctype="multipart/form-data" method="POST">
                 @csrf

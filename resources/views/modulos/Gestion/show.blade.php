@@ -1,7 +1,30 @@
 @extends('layouts.app')
 @section('body')
-    <div class="px-4 py-6">
-
+    <div class="px-6 py-2">
+        <!-- Mapa de sitio -->
+        <div class="flex justify-end mt-2 mb-4">
+            <nav class="text-sm text-gray-600">
+                <ul class="flex items-center space-x-4">
+                    <li class="flex items-center">
+                        <!-- Flecha de regresar -->
+                        <a href="{{ route('Gestion') }}" title="Volver a la página de gestión" class="flex items-center text-gray-600 hover:text-gray-900">
+                            <svg class="w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                            </svg>
+                            Regresar a Gestión
+                        </a>
+                    </li>
+                    <!-- Separador -->
+                    <li class="text-gray-500">/</li>
+                    <!-- Marca -->
+                    <li class="flex items-center">
+                        <p  class="text-gray-800 hover:text-gray-800">
+                            Ver disponibilidad de automóvil
+                        </p>
+                    </li>
+                </ul>
+            </nav>
+        </div>
         <div class="p-6 bg-white rounded-md shadow-md">
             <div class="flex justify-between mb-3">
                 {{-- ttulo --}}
@@ -10,13 +33,7 @@
                         {{ $titulo->automovil->marca }} {{ $titulo->automovil->submarca }} {{ $titulo->automovil->modelo }}
                     </h1>
                 @endforeach
-                {{-- arrow back --}}
-                <div class="">
-                    <a href="{{ route('Gestion') }}"
-                        class="flex items-center justify-center w-10 h-10 text-white rounded-full shadow ">
-                        <img src="/img/arrow-back.svg" alt="">
-                    </a>
-                </div>
+                
             </div>
             {{--  --}}
             <section class="mt-5">

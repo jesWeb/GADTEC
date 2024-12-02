@@ -17,8 +17,7 @@ return new class extends Migration
             $table->string('origen');
             $table->decimal('monto', 10, 2);
             $table->year('año_correspondiente');
-            $table->string('estatus');
-            $table->date('fecha_vencimiento');
+            $table->enum('estatus', ['Vigente', 'Expirada', 'Suspendida'])->default('Vigente');
             $table->string('comprobante');
             $table->text('observaciones')->nullable();
             $table->boolean('activo')->default(0);  // borrado logico del sistema

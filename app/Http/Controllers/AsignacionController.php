@@ -8,6 +8,7 @@ use App\Models\Usuarios;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
+
 class AsignacionController extends Controller
 {
 
@@ -21,7 +22,13 @@ class AsignacionController extends Controller
 
     public function create()
     {
-        $auto = Automoviles::all();
+
+        $auto = \DB::select("SELECT aut.id_automovil, aut.marca, aut.submarca, aut.modelo, aut.estatusIn, asi.estatus
+        FROM automoviles AS aut
+        LEFT JOIN asignacions AS asi ON aut.id_automovil = asi.id_automovil
+        WHERE aut.estatusIn = 'Disponible'
+        AND (asi.estatus IS NULL OR asi.estatus NOT IN ('Reservado', 'Ocupado', 'Autorizado'))");
+
         $reservU = Usuarios::all();
         return view('catalogos.asignacion.create', compact('auto', 'reservU'));
     }
@@ -35,13 +42,12 @@ class AsignacionController extends Controller
             'telefono' => 'required|numeric',
             'fecha_salida' => 'required|date',
             'fecha_estimada_dev' => 'required|date',
-            'hora_salida' => 'nullable|date_format:H:i',
-            'hora_llegada' => 'nullable|date_format:H:i',
+            'hora_salida' => 'required|date_format:H:i',
             'lugar' => 'required|string',
             'motivo' => 'required|string',
             'no_licencia' => 'required|string',
             'condiciones' => 'nullable|string',
-            'autorizante' => 'required|string',
+            'autorizante' => 'nullable|string',
         ]);
 
         //verificar si ya esta a[partado]
@@ -70,21 +76,23 @@ class AsignacionController extends Controller
 
     public function edit($id)
     {
-        $EddtAsig = asignacion::find($id);
-        $reservU = Usuarios::all();
+        $EddtAsig = asignacion::findOrFail($id);
+        $reservU = Usuarios::all();  // Obtener todos los usuarios
+
 
         return view('catalogos.asignacion.edit', compact('EddtAsig', 'reservU'));
     }
 
     public function update(Request $request, $id)
     {
-
         $EddtAsig = asignacion::findOrFail($id);
         $input = $request->all();
+        $reservU = Usuarios::all();  // Obtener todos los usuarios
         $EddtAsig->update($input);
 
         return redirect()->route('asignacion.index')->with('message', 'Se ha actualizado el registro');
     }
+
 
     public function destroy($id)
     {

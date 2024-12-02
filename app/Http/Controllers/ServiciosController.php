@@ -50,46 +50,78 @@ class ServiciosController extends Controller
      * Store a newly created resource in storage.
      */
 
-    public function store(Request $request){
-        $rules = [
-            'tipo_servicio' => 'required|string|max:100',
-            'descripcion' => 'nullable|string|max:255',
-            'fecha_servicio' =>'nullable|date',
-            'prox_servicio' =>'nullable|date',
-            'costo' => 'required|numeric',
-            'lugar_servicio' => 'nullable|string|max:255',
-            'comprobante' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
-            'id_automovil' => 'nullable|exists:automoviles,id_automovil'
-        ];
+     public function store(Request $request)
+     {
+         $rules = [
+             'tipo_servicio' => 'required|string|max:100',
+             'descripcion' => 'nullable|string|max:255',
+             'fecha_servicio' => 'nullable|date',
+             'prox_servicio' => 'nullable|date',
+             'costo' => 'nullable|numeric',
+             'lugar_servicio' => 'required|string|max:255',
+             'comprobante' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
+             'id_automovil' => 'nullable|exists:automoviles,id_automovil'
+         ];
+     
+         $messages = [
+             'tipo_servicio.required' => 'El campo tipo de servicio es requerido',
+             'descripcion.required' => 'El campo descripción es requerido',
+             'fecha_servicio.required' => 'El campo fecha de servicio es requerida',
+             'prox_servicio.nullable' => 'El campo próximo servicio es opcional',
+             'costo.nullable' => 'El campo costo es requerido',
+             'lugar_servicio.required' => 'El campo lugar de servicio es requerido',
+             'comprobante.nullable' => 'El campo comprobante es opcional',
+             'id_automovil.exists' => 'El campo automóvil no existe'
+         ];
+     
+         $request->validate($rules, $messages);
+         $input = $request->all();
+     
+         // Guardar comprobante
+         if ($request->hasFile('comprobante')) {
+             $file = $request->file('comprobante');
+             $comprobante =  $file->getClientOriginalName();
+             $ldate = date('Ymd_His_');
+             $comprobante = $ldate . $comprobante;
+     
+             $file->move(public_path('img'), $comprobante);
+             $input['comprobante'] = $comprobante;
+         }
+     
+        // Obtener automovil
+        $automovil = Automoviles::find($request->id_automovil);
+        if ($automovil) {
+            // Obtener la fecha actual
+            $fechaActual = now()->format('Y-m-d'); 
 
-        $messages = [
-            'tipo_servicio.required' => 'El campo tipo de servicio es requerido',
-            'descripcion.nullable' => 'El campo descripción es opcional',
-            'fecha_servicio.nullable' => 'El campo fecha de servicio es opcional',
-            'prox_servicio.nullable' => 'El campo próximo servicio es opcional',
-            'costo.required' => 'El campo costo es requerido',
-            'lugar_servicio.nullable' => 'El campo lugar de servicio es opcional',
-            'comprobante.nullable' => 'El campo comprobante es opcional',
-            'id_automovil.exists' => 'El campo automóvil no existe'
-        ];
-
-        $request->validate($rules, $messages);
-        $input = $request->all();
-
-        // Guardar comprobante
-        if ($request->hasFile('comprobante')) {
-            $file = $request->file('comprobante');
-            $comprobante =  $file->getClientOriginalName();
-            $ldate = date('Ymd_His_');
-            $comprobante = $ldate . $comprobante;
-
-            $file->move(public_path('img'), $comprobante);
-            $input['comprobante'] = $comprobante;
+            // Si el servicio es programado
+            if ($request->tipo_servicio == 'Programado') {
+                // Verificar si la próxima fecha de servicio es hoy
+                if ($request->prox_servicio && $request->prox_servicio == $fechaActual) {
+                    $automovil->estatusIn = 'Mantenimiento';  
+                    $automovil->save();  
+                }
+            } 
+            // Si el servicio es no programado
+            elseif ($request->tipo_servicio == 'No programado') {
+                // Verificar si la fecha de servicio es hoy
+                if ($request->fecha_servicio && $request->fecha_servicio == $fechaActual) {
+                    $automovil->estatusIn = 'En servicio';  
+                    $automovil->save();  
+                }
+            }
+        } else {
+            // Manejar el caso en que el automóvil no se encuentra
+            return redirect()->back()->withErrors(['id_automovil' => 'Automóvil no encontrado.']);
         }
 
-        Servicios::create($input);
-        return redirect()->route('servicios.index')->with('mensaje', 'Se ha creado correctamente el registro');
+    // Crear el servicio
+    $servicio = Servicios::create($input);
+
+    return redirect()->route('servicios.index')->with('mensaje', 'Se ha creado correctamente el registro');
+
     }
+
 
     /**
      * Display the specified resource.
@@ -115,49 +147,70 @@ class ServiciosController extends Controller
      * Update the specified resource in storage.
      */
 
-    public function update(Request $request, string $id)
-    {
-        //
-        $rules = [
-            'tipo_servicio' => 'required|string|max:100',
-            'descripcion' => 'nullable|string|max:255',
-            'fecha_servicio' =>'nullable|date',
-            'prox_servicio' =>'nullable|date',
-            'costo' => 'required|numeric',
-            'lugar_servicio' => 'nullable|string|max:255',
-            'comprobante' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
-            'id_automovil' => 'nullable|exists:automoviles,id_automovil'
-        ];
+     public function update(Request $request, string $id)
+     {
+         $rules = [
+             'tipo_servicio' => 'required|string|max:100',
+             'descripcion' => 'nullable|string|max:255',
+             'fecha_servicio' => 'nullable|date',
+             'prox_servicio' => 'nullable|date',
+             'costo' => 'required|numeric',
+             'lugar_servicio' => 'required|string|max:255',
+             'comprobante' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
+             'id_automovil' => 'nullable|exists:automoviles,id_automovil'
+         ];
+         
+         $messages = [
+             'tipo_servicio.required' => 'El campo tipo de servicio es requerido',
+             'descripcion.required' => 'El campo descripción es requerido',
+             'fecha_servicio.required' => 'El campo fecha de servicio es requerida',
+             'prox_servicio.nullable' => 'El campo próximo servicio es opcional',
+             'costo.required' => 'El campo costo es requerido',
+             'lugar_servicio.required' => 'El campo lugar de servicio es requerido',
+             'comprobante.nullable' => 'El campo comprobante es opcional',
+             'id_automovil.exists' => 'El campo automóvil no existe'
+         ];
+     
+         $request->validate($rules, $messages);
+         $input = $request->all();
+         $servicio = Servicios::findOrFail($id);
+     
+         // Guardar comprobante si hay archivo
+         if ($request->hasFile('comprobante')) {
+             $file = $request->file('comprobante');
+             $comprobante =  $file->getClientOriginalName();
+             $ldate = date('Ymd_His_');
+             $comprobante = $ldate . $comprobante;
+     
+             $file->move(public_path('img'), $comprobante);
+             $input['comprobante'] = $comprobante;
+         }
+     
+         // Obtener el automóvil relacionado
+         $automovil = Automoviles::find($request->id_automovil);
+         if (!$automovil) {
+             return redirect()->back()->withErrors(['id_automovil' => 'Automóvil no encontrado.']);
+         }
+    
+         $fechaActual = now()->format('Y-m-d');
 
-        $messages = [
-            'tipo_servicio.required' => 'El campo tipo de servicio es requerido',
-            'descripcion.nullable' => 'El campo descripción es opcional',
-            'fecha_servicio.nullable' => 'El campo fecha de servicio es opcional',
-            'prox_servicio.nullable' => 'El campo próximo servicio es opcional',
-            'costo.required' => 'El campo costo es requerido',
-            'lugar_servicio.nullable' => 'El campo lugar de servicio es opcional',
-            'comprobante.nullable' => 'El campo comprobante es opcional',
-            'id_automovil.exists' => 'El campo automóvil no existe'
-        ];
-
-        $request->validate($rules, $messages);
-        $input = $request->all();
-        $servicio = Servicios::findOrFail($id);
-
-        // Guardar comprobante
-        if ($request->hasFile('comprobante')) {
-            $file = $request->file('comprobante');
-            $comprobante =  $file->getClientOriginalName();
-            $ldate = date('Ymd_His_');
-            $comprobante = $ldate . $comprobante;
-
-            $file->move(public_path('img'), $comprobante);
-            $input['comprobante'] = $comprobante;
+        // Actualizar el estatus del automóvil según el tipo de servicio
+        if ($request->tipo_servicio == 'Programado' && $request->prox_servicio == $fechaActual) {
+            $automovil->estatusIn = 'Mantenimiento';  
+        } elseif ($request->tipo_servicio == 'No programado' && $request->fecha_servicio == $fechaActual) {
+            $automovil->estatusIn = 'En servicio';  
+        } else {
+            $automovil->estatusIn = 'Disponible';  
         }
-
-        $servicio->update($input);
-        return redirect()->route('servicios.index')->with('message', 'Se ha modificado correctamente el registro');
-    }
+     
+         $automovil->save();  // Guardar cambios en el automóvil
+     
+         // Actualizar el servicio
+         $servicio->update($input);
+     
+         return redirect()->route('servicios.index')->with('message', 'Se ha modificado correctamente el registro');
+     }
+     
 
     /**
      * Remove the specified resource from storage.

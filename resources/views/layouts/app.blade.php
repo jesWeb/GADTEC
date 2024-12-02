@@ -12,6 +12,9 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
         rel="stylesheet" />
+    <!-- tooltip -->
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.js" defer></script>
+
 
     {{-- Estilos de FilePond --}}
     <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
@@ -28,25 +31,28 @@
 </head>
 
 <body class="font-sans antialiased">
-    <div class="flex min-h-screen bg-gray-200 " x-data="{ sidebarOpen: false }">
+    <div class="flex min-h-screen bg-gray-200" x-data="{ sidebarOpen: false }">
 
+        {{-- Sidebar --}}
         @include('layouts.sidebar')
 
         <div class="flex flex-col flex-1 overflow-hidden">
+            {{-- Header --}}
             @include('layouts.header')
-            {{-- Section content  --}}
-            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200 ">
+
+            {{-- Section content --}}
+            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
                 <div class="container px-6 py-8 mx-auto">
                     @yield('body')
                 </div>
             </main>
         </div>
 
-
+        {{-- JS Scripts --}}
         @yield('js')
-        <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
-        <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
         @yield('scripts')
+    </div>
 </body>
+
 
 </html>
