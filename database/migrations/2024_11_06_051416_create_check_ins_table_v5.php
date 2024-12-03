@@ -20,8 +20,8 @@ class CreateCheckInsTableV5 extends Migration
             $table->enum('combustible_llegada', ['1/4', '1/2', '3/4', 'reserva', 'lleno'])->nullable();
             $table->time('hora_llegada')->nullable();
             $table->string('fecha_llegada')->nullable();
-            $table->string('fotografias_salida')->nullable(); // img de ida 
-            $table->string('fotografias_regreso')->nullable(); // img de regreso
+            $table->string('imagenes_ida_regreso')->nullable(); // img de ida 
+            $table->string('imagenes_ida_regreso_c')->nullable(); // img de regreso
             $table->foreign('id_asignacion')->references('id_asignacion')->on('asignacions')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();

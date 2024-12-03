@@ -8,6 +8,7 @@ use App\Models\Usuarios;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
+
 class AsignacionController extends Controller
 {
 
@@ -88,7 +89,7 @@ class AsignacionController extends Controller
     {
         $EddtAsig = asignacion::findOrFail($id);
         $reservU = Usuarios::all();  // Obtener todos los usuarios
-        
+
 
         return view('catalogos.asignacion.edit', compact('EddtAsig', 'reservU'));
     }

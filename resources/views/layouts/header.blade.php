@@ -27,7 +27,7 @@
         <!-- Menú desplegable -->
         <div x-cloak x-show="dropdownOpen"
              class="absolute right-0 z-10 w-48 mt-2 overflow-hidden bg-white rounded-md shadow-xl">
-            
+
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <a href="#" onclick="event.preventDefault(); this.closest('form').submit();" title=" ¿Seguro que deseas salir?"

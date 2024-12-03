@@ -31,7 +31,7 @@ return new class extends Migration
             $table->integer('num_puertas')->nullable();
             $table->date('fecha_registro')->nullable();
             $table->string('responsable', 50)->nullable();
-            $table->string('fotografias')->nullable();
+            $table->string('fotografias');
             $table->text('observaciones')->nullable();
 
             $table->timestamps();

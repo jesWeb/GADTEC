@@ -31,24 +31,28 @@
 </head>
 
 <body class="font-sans antialiased">
-    <div class="flex min-h-screen bg-gray-200 " x-data="{ sidebarOpen: false }">
+    <div class="flex min-h-screen bg-gray-200" x-data="{ sidebarOpen: false }">
 
+        {{-- Sidebar --}}
         @include('layouts.sidebar')
 
         <div class="flex flex-col flex-1 overflow-hidden">
+            {{-- Header --}}
             @include('layouts.header')
-            {{-- Section content  --}}
-            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200 ">
+
+            {{-- Section content --}}
+            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
                 <div class="container px-6 py-8 mx-auto">
                     @yield('body')
                 </div>
             </main>
         </div>
 
-
+        {{-- JS Scripts --}}
         @yield('js')
-        <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
         @yield('scripts')
+    </div>
 </body>
+
 
 </html>

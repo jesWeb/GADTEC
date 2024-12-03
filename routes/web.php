@@ -19,6 +19,7 @@ use App\Http\Controllers\MultasController;
 use App\Http\Controllers\ServiciosController;
 use App\Http\Controllers\JsController;
 use App\Http\Controllers\AutorizanteController;
+use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\ProfileController;
 
 /*
@@ -58,11 +59,11 @@ Route::middleware('auth')->group(function () {
         Route::put('/vigilante/update2/{id_asignacion}', [VigilanteController::class, 'update2'])->name('update2');
     });
 });
-  
+
 
 // Rutas protegidas por el middleware 'auth'
 Route::middleware('auth')->group(function () {
-    
+
     // Route::middleware('role:Administrador|Moderador')->group(function () {
     //     Route::get('/gestion', [GestionController::class, 'index'])->name('Gestion');
     //     Route::get('/gestion/{id_asignacion}', [GestionController::class, 'show'])->name('gestion');
@@ -76,7 +77,6 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware('role:Administrador|Usuario')->group(function () {
         Route::resource('autorizante', AutorizanteController::class);
-
     });
 
     // Rutas para el Administrador
@@ -86,7 +86,14 @@ Route::middleware('auth')->group(function () {
          })->name("admin.dashboard");
         Route::get('/autorizar/update/{id_asignacion}', [GestionController::class, 'update'])->name('autorizar');
         Route::resource('usuarios', UsuariosController::class);
+
         Route::resource('Automovil', AutomovilController::class);
+        //file pond
+        Route::post('/temp-upload', [AutomovilController::class, 'tempUpload']);
+        Route::delete('/temp-remove/{file}', [AutomovilController::class, 'tempDelete']);
+        //  Route::get('/load-fotografias', [FileUploadController::class, 'index'])->name('load-fotografias');
+
+
         Route::resource('asignacion', AsignacionController::class);
         Route::resource('seguros', SegurosController::class);
         Route::resource('siniestros', SiniestrosController::class);

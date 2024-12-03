@@ -85,7 +85,7 @@
                                 <td class="px-4 py-2 border">
                                     {{ $tenencia->automovil->marca }} {{ $tenencia->automovil->modelo }}
                                 </td>
-                                <td class="px-4 py-2 border">{{ $tenencia->fecha_pago }}</td>
+                                <td class="px-4 py-2 border">{{ date('d/m/Y', strtotime($tenencia->fecha_pago)) }}</td>
                                 <td class="px-4 py-2 border">{{ $tenencia->origen }}</td>
                                 <td class="px-4 py-2 border">$ {{ $tenencia->monto }}</td>
                                 <td class="px-4 py-2 border">{{ $tenencia->año_correspondiente }}</td>

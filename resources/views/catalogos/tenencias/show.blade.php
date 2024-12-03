@@ -66,7 +66,7 @@
                         <!-- Detalles básicos -->
                         <div class="p-4 bg-white rounded-lg shadow-sm">
                             <p class="text-lg font-semibold text-gray-800">Fecha de pago:</p>
-                            <p class="text-gray-600">{{ $tenencia->fecha_pago }}</p>
+                            <p class="text-gray-600">{{ date('d/m/Y', strtotime($tenencia->fecha_pago)) }}</p>
                         </div>
 
                         <div class="p-4 bg-white rounded-lg shadow-sm">

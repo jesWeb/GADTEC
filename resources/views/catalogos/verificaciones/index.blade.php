@@ -100,9 +100,15 @@
                                 <td class="px-4 py-2 border">
                                     {{ $vr->automovil->marca }}-{{ $vr->automovil->submarca }}-{{ $vr->automovil->modelo }}
                                 </td>
-                                <td class="px-4 py-2 border">{{ $vr->fechaV }}</td>
-                                <td class="px-4 py-2 border">{{ $vr->fechaP }}</td>
-                                {{-- Acciones --}}
+                                <td class="px-4 py-2 border">
+                                     {{ \Carbon\Carbon::parse( $vr->fecha_verificacion )->locale('es')->format('d-m-Y') }}
+
+                                    </td>
+                                <td class="px-4 py-2 border">
+                                     {{ \Carbon\Carbon::parse($vr->proxima_verificacion )->locale('es')->format('d-m-Y') }}
+
+                                    </td>
+                                {{-- acciones --}}
                                 <td class="px-4 py-2 border">
                                     <div class="flex items-center space-x-2">
                                         <!-- Ver -->

@@ -1,13 +1,14 @@
 @extends('layouts.app')
 
 @section('body')
-<div class="px-6 py-2">
-    <!-- Mapa de sitio -->
-    <div class="flex justify-end mt-2 mb-4">
-        <nav class="text-sm text-gray-600">
+    <div class="px-6 py-2">
+        <!-- Mapa de sitio -->
+        <div class="flex justify-end mt-2 mb-4">
+            <nav class="text-sm text-gray-600">
                 <div class="flex items-center space-x-4">
                     <li class="flex items-center">
-                        <a href="{{ route('Gestion') }}" title="Ir a la gestión de vehículos" class="flex items-center text-gray-700 hover:text-gray-900">
+                        <a href="{{ route('Gestion') }}" title="Ir a la gestión de vehículos"
+                            class="flex items-center text-gray-700 hover:text-gray-900">
                             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -22,7 +23,8 @@
                     <p class="text-gray-500">/</p>
                     <!-- Catálogos -->
                     <li class="flex items-center">
-                        <a href="{{ $backRoute ?? route('catalogos.index') }}" title="Volver a Catálogos" class="text-gray-800 hover:text-gray-800">
+                        <a href="{{ $backRoute ?? route('catalogos.index') }}" title="Volver a Catálogos"
+                            class="text-gray-800 hover:text-gray-800">
                             Catálogos
                         </a>
                     </li>
@@ -30,7 +32,8 @@
                     <p class="text-gray-500">/</p>
                     <!-- Usuarios -->
                     <li class="flex items-center">
-                        <a href="{{route('Automovil.index')}}" title="Volver a la página de automoviles" class="text-gray-800 hover:text-gray-800">
+                        <a href="{{ route('Automovil.index') }}" title="Volver a la página de automoviles"
+                            class="text-gray-800 hover:text-gray-800">
                             Automóviles
                         </a>
                     </li>
@@ -39,14 +42,14 @@
                     <p class="text-gray-500">/</p>
                     <!-- Usuarios -->
                     <li class="flex items-center">
-                        <p  class="text-gray-800 hover:text-gray-800">
+                        <p class="text-gray-800 hover:text-gray-800">
                             Registrar Nuevo Automóvil
                         </p>
                     </li>
-                </ul>
-            </div>
-        </nav>
-    </div>
+                    </ul>
+                </div>
+            </nav>
+        </div>
         <div class="mt-4">
             <div class="p-6 bg-white rounded-md shadow-md">
                 <h2 class="text-xl font-semibold text-gray-700">Registro Autómovil</h2>
@@ -60,8 +63,10 @@
                             {{-- Marca --}}
                             <div class="w-full px-3 xl:w-1/2">
                                 <div class="xl:mb-5">
-                                    <label class="mb-3 block text-base font-medium text-[#07074D]" for="marca">Marca</label>
-                                    <input type="text" name="marca" placeholder="Ingresa la marca" title="Ingrese la marca del automóvil"
+                                    <label class="mb-3 block text-base font-medium text-[#07074D]"
+                                        for="marca">Marca</label>
+                                    <input type="text" name="marca" placeholder="Ingresa la marca"
+                                        title="Ingrese la marca del automóvil"
                                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                         required>
                                 </div>
@@ -71,7 +76,8 @@
                                 <div class="xl:mb-5">
                                     <label class="mb-3 block text-base font-medium text-[#07074D]"
                                         for="submarca">Submarca</label>
-                                    <input type="text" name="submarca" id="submarca" placeholder="Ingresa la submarca" title="Ingrese la submarca del automóvil"
+                                    <input type="text" name="submarca" id="submarca" placeholder="Ingresa la submarca"
+                                        title="Ingrese la submarca del automóvil"
                                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                         required>
                                 </div>
@@ -79,8 +85,10 @@
                             {{-- Modelo --}}
                             <div class="w-full px-3 xl:w-1/2">
                                 <div class="xl:mb-5">
-                                    <label class="mb-3 block text-base font-medium text-[#07074D]" for="modelo">Modelo</label>
-                                    <input type="number" name="modelo" placeholder="Inresa el modelo" title="Ingrese el modelo del automóvil"
+                                    <label class="mb-3 block text-base font-medium text-[#07074D]"
+                                        for="modelo">Modelo</label>
+                                    <input type="number" name="modelo" placeholder="Inresa el modelo"
+                                        title="Ingrese el modelo del automóvil"
                                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                         required>
                                     @error('modelo')
@@ -101,7 +109,8 @@
                                         class="w-full
                                         rounded-md border
                                         border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                        type="text" name="num_serie" placeholder="ejemplo: xxx-xxx-xxx" title="Ingrese el número de serie del automóvil" required>
+                                        type="text" name="num_serie" placeholder="ejemplo: xxx-xxx-xxx"
+                                        title="Ingrese el número de serie del automóvil" required>
                                 </div>
 
                             </div>
@@ -112,7 +121,8 @@
                                         for="num_motor">No.Motor</label>
                                     <input
                                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                        type="text" name="num_motor" required placeholder="ejemplo: xxx-xxx-xxx" title="Ingrese el número de motor del automóvil">
+                                        type="text" name="num_motor" required placeholder="ejemplo: xxx-xxx-xxx"
+                                        title="Ingrese el número de motor del automóvil">
                                 </div>
                             </div>
                             {{-- Num_NSI --}}
@@ -122,25 +132,25 @@
                                         for="num_nsi">NSI/Repube</label>
                                     <input
                                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                        type="text" placeholder="Introduce NSI" name="num_nsi" title="Ingrese el número de NSI o Repube" required>
+                                        type="text" placeholder="Introduce NSI" name="num_nsi"
+                                        title="Ingrese el número de NSI o Repube" required>
                                 </div>
 
                             </div>
                         </div>
-
                         <div class="px-3 py-3 border-b border-stroke dark:border-strokedark"></div>
 
-                        {{--  --}}
+                        {{--3row --}}
                         <div class="flex flex-col gap-5.5 xl:flex-row mt-4  mb-4">
                             {{-- Kilometraje --}}
                             <div class="w-full px-3 xl:w-1/2">
                                 <div class="xl:mb-5">
                                     <label class="mb-3 block text-base font-medium text-[#07074D]"
                                         for="kilometraje">Kilometraje</label>
-                                    <input
+                                    <input value="{{ old('kilometraje') }}"
                                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                        type="text" placeholder="Introduce el kilometraje" pattern="^\d*([,.]?\d+)?$" 
-                                        min="0" required name="kilometraje" title="Ingrese el kilometraje del vehículo">
+                                        type="text" placeholder="Introduce el kilometraje" pattern="^\d*([,.]?\d+)?$"
+                                        min="0" required name="kilometraje">
                                 </div>
 
                             </div>
@@ -149,10 +159,10 @@
                                 <div class="xl:mb-5">
                                     <label class="mb-3 block text-base font-medium text-[#07074D]"
                                         for="capacidad_combustible">Capacidad de combustible (Lts)</label>
-                                    <input
+                                    <input value="{{ old('capacidad_combustible') }}"
                                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                         type="number" name="capacidad_combustible" min="0" step="0.01"
-                                        placeholder=" Capacidad" required title="Ingrese la capacidad de combustible en litros">
+                                        placeholder=" Capacidad" required>
                                 </div>
 
                             </div>
@@ -163,34 +173,40 @@
                                         Tipo de combustible</label>
                                     <select name="tipo_combustible"
                                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                        required title="Selecciona el tipo de combustible del vehículo">
+                                        required>
                                         <option disabled selected>Selecciona una opcion </option>
-                                        <option value="Gasolina">Gasolina</option>
-                                        <option value="Diésel">Diésel</option>
-                                        <option value="Eléctrico">Eléctrico</option>
+                                        <option value="Gasolina"
+                                            {{ old('tipo_combustible' == 'Gasolina' ? 'selected' : '') }}>
+                                            Gasolina</option>
+                                        <option value="Diésel" {{ old('tipo_combustible' == 'Diésel' ? 'selected' : '') }}>
+                                            Diésel</option>
+                                        <option value="Eléctrico" {{ old('Eléctrico' == '' ? 'selected' : '') }}>Eléctrico
+                                        </option>
                                     </select>
                                 </div>
                             </div>
                         </div>
-                        {{-- 3 row nfo --}}
+                        {{-- 4 row nfo --}}
                         <div class="flex flex-col gap-5.5 xl:flex-row mb-5">
                             {{-- color --}}
                             <div class="w-full px-3 xl:w-1/2">
                                 <div class="xl:mb-5">
-                                    <label class="mb-3 block text-base font-medium text-[#07074D]" for="color">Color</label>
-                                    <input
+                                    <label class="mb-3 block text-base font-medium text-[#07074D]"
+                                        for="color">Color</label>
+                                    <input value="{{ old('color') }}"
                                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                        type="text" name="color" placeholder="Ingresa el color" title="Ingrese el color del automóvil">
+                                        type="text" name="color" placeholder="Ingresa el Color">
                                 </div>
                             </div>
                             {{-- No.Puertas --}}
                             <div class="w-full px-3 xl:w-1/2">
                                 <div class="xl:mb-5">
-                                    <label class="mb-3 block text-base font-medium text-[#07074D]" for="num_puertas">Numero de
+                                    <label class="mb-3 block text-base font-medium text-[#07074D]"
+                                        for="num_puertas">Numero de
                                         Puertas</label>
-                                    <input
+                                    <input value="{{ old('num_puertas') }}"
                                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                        type="text" name="num_puertas" placeholder="Ingresa número de puertas" title="Ingrese el número de puertas del automóvil">
+                                        type="text" name="num_puertas" placeholder="Ingresa Numero de puertas ">
                                 </div>
                             </div>
                             {{-- Utilidad --}}
@@ -198,28 +214,30 @@
                                 <div class="xl:mb-5">
                                     <label class="mb-3 block text-base font-medium text-[#07074D]" for="estatus">
                                         Condiciones</label>
-                                    <select name="estatus" title="Selecciona las condiciones del automóvil"
+                                    <select name="estatus"
                                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                         required>
                                         <option disabled selected>Selecciona una opcion </option>
-                                        <option value="Nuevo">Nuevo</option>
-                                        <option value="Usado">Usado</option>
+                                        <option value="Nuevo" {{ old('estatus' == 'Nuevo' ? 'selected' : '') }}>Nuevo
+                                        </option>
+                                        <option value="Usado" {{ old('estatus' == 'Usado' ? 'selected' : '') }}>Usado
+                                        </option>
 
                                     </select>
                                 </div>
                             </div>
                         </div>
                         <div class="px-2 py-2 border-b border-stroke dark:border-strokedark"></div>
-
+                        {{-- 5row --}}
                         <div class="flex flex-col gap-5.5 xl:flex-row xl:m-5 xl:mt-4 ">
                             {{-- Placas --}}
                             <div class="w-full px-3 xl:w-2/4">
                                 <div class="xl:mb-5">
                                     <label class="mb-3 block text-base font-medium text-[#07074D]"
                                         for="placas">Placas</label>
-                                    <input
+                                    <input value="{{ old('placas') }}"
                                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                        type="text" placeholder="Introduce placas"  title="Ingrese las placas del automóvil" required name="placas">
+                                        type="text" placeholder="Introduce Placas" required name="placas">
                                 </div>
                             </div>
                             {{-- fecha ingreso --}}
@@ -228,26 +246,33 @@
                                     <label for="fecha_registro" class="mb-3 block text-base font-medium text-[#07074D]">
                                         Fecha de Ingreso
                                     </label>
-                                    <input type="date" name="fecha_registro" title="Ingrese la fecha de ingreso del automóvil"
+                                    <input type="date" name="fecha_registro" value="{{ old('fecha_registro') }}"
                                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                                 </div>
                             </div>
                         </div>
-                        {{-- 4 row info --}}
+                        {{-- 6 row info --}}
                         <div class="flex flex-col gap-5.5 xl:flex-row xl:m-5 xl:mt-4 ">
                             {{-- tipo Auto --}}
                             <div class="w-full px-3 xl:w-2/4">
                                 <div class="xl:mb-5">
-                                    <label class="mb-3 block text-base font-medium text-[#07074D]" for="tipo_automovil"> Tipo
+                                    <label class="mb-3 block text-base font-medium text-[#07074D]" for="tipo_automovil">
+                                        Tipo
                                         de
                                         Automovil</label>
-                                    <select name="tipo_automovil" title="Selecciona el tipo de automóvil"
+                                    <select name="tipo_automovil"
                                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                         required>
                                         <option disabled selected>Selecciona una opción</option>
-                                        <option value="Automovil">Automóvil - Vehículo de pasajeros</option>
-                                        <option value="Camioneta">Camioneta - Vehículo de carga ligera</option>
-                                        <option value="Motocicleta">Motocicleta - Dos ruedas</option>
+                                        <option value="Automovil"{{ old('estatus' == 'Automovil' ? 'selected' : '') }}>
+                                            Automóvil -
+                                            Vehículo de pasajeros</option>
+                                        <option value="Camioneta"{{ old('estatus' == 'Camioneta' ? 'selected' : '') }}>
+                                            Camioneta -
+                                            Vehículo de carga ligera</option>
+                                        <option
+                                            value="Motocicleta"{{ old('estatus' == 'Motocicleta' ? 'selected' : '') }}>
+                                            Motocicleta - Dos ruedas</option>
                                     </select>
                                 </div>
                             </div>
@@ -256,12 +281,16 @@
                                 <div class="xl:mb-5">
                                     <label class="mb-3 block text-base font-medium text-[#07074D]" for="uso">
                                         Uso</label>
-                                    <select name="uso" title="Selecciona el uso del automóvil"
+                                    <select name="uso"
                                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                         required>
                                         <option disabled selected>Selecciona una opcion </option>
-                                        <option value="Personal">Personal</option>
-                                        <option value="Empresarial">Empresarial</option>
+                                        <option value="Personal"{{ old('estatus' == 'Personal' ? 'selected' : '') }}>
+                                            Personal
+                                        </option>
+                                        <option
+                                            value="Empresarial"{{ old('estatus' == 'Empresarial' ? 'selected' : '') }}>
+                                            Empresarial</option>
 
                                     </select>
                                 </div>
@@ -271,7 +300,7 @@
                                 <div class="xl:mb-5">
                                     <label class="mb-3 block text-base font-medium text-[#07074D]"
                                         for="responsable">Responsable</label>
-                                    <input type="text" name="responsable" title="Ingrese el responsable del automóvil"
+                                    <input type="text" name="responsable" value="{{ old('responsable') }}"
                                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                         required placeholder="Ingresa el nombre del responsable" />
                                 </div>
@@ -280,59 +309,30 @@
                         </div>
                         {{-- Observacines  --}}
                         <div class="w-full xl:m-5 xl:w-2/4 xl:mt-4 xl:mb-4">
-                            <label class="mb-3 block text-base font-medium text-[#07074D]" for="observaciones">Observaciones
+                            <label class="mb-3 block text-base font-medium text-[#07074D]"
+                                for="observaciones">Observaciones
                                 del
                                 vehiculo</label>
-                            <textarea placeholder="Observaciones ..." title="Ingrese las observaciones del automóvil"
+                            <textarea placeholder="Observaciones ..."
                                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                 name="observaciones"></textarea>
                         </div>
                         {{-- foto --}}
-
                         <div class="pt-4 mb-6">
                             <h3 class="mb-5 block text-xl font-semibold text-[#07074D]">
                                 Subir Archivos
                             </h3>
-                            <input type="file" name="fotografias" class="filepond" id="fotografias" multiple title="Ingrese fotografías del automóvil"  />
+                            <input type="file" name="fotografias[]" id="fotografias" multiple />
                         </div>
-
                     </div>
                     {{-- BTN --}}
                     <div class="flex justify-end gap-4 mt-4">
-                        <a href="{{ route('Automovil.index') }}" title="Cancelar registro"
+                        <a href="{{ route('Automovil.index') }}"
                             class="px-4 py-2 text-gray-700 bg-gray-200 rounded-md shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">Cancelar</a>
-                        <button type="submit" title="Registrar automóvil"
+                        <button type="submit"
                             class="px-4 py-2 text-white bg-indigo-600 rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">Registrar</button>
                     </div>
                 </form>
             </div>
-
         </div>
-    </div>
-    
-@endsection
-
-@section('js')
-    <script>
-        const inputElement = document.querySelector('input[id="fotografias"]');
-        FilePond.registerPlugin(FilePondPluginImagePreview);
-        const pond = FilePond.create(inputElement, {
-            allowMultiple: true,
-            maxFiles: 5,
-            acceptedFileTypes: ['image/jpeg', 'image/png', 'application/pdf'],
-            labelIdle: 'Arrastra y suelta los archivos o haz clic para seleccionarlos',
-            imagePreviewMinHeight: 20,
-            imagePreviewMaxFileSize: null,
-            server: {
-                process: {
-                    url: '{{ route('Automovil.store') }}',
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    }
-                },
-
-            }
-        });
-    </script>
-@endsection
+    @endsection

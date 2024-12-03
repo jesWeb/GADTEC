@@ -51,9 +51,9 @@
     <div class="p-6 bg-white border rounded-md shadow-md">
         {{-- Titulo --}}
         <h2 class="mb-5 text-xl font-semibold text-gray-700">Registro de Seguros</h2>
-        {{-- Formulario --}}
-        <form action="{{ route('seguros.store') }}" method="POST">
-            {{-- Este es un token que crea una protección en el formulario (csrf, tipo seguridad) --}}
+        {{-- formulario --}}
+        <form action="{{ route('seguros.store') }}" enctype="multipart/form-data" method="POST">
+            {{-- este es un toquen crea una proteccion en el formulario csrf tipo segridad --}}
             @csrf
 
             <div class="m-3 xl:p-10">
@@ -76,12 +76,14 @@
                     <div class="w-full px-3 xl:w-1/2">
                         <label class="mb-3 block text-base font-medium text-[#07074D]" for="aseguradora">Aseguradora</label>
                         <input
+                            value="{{ old('aseguradora') }}"
                             class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                             type="text" name="aseguradora" placeholder="Nombre de la aseguradora" title="Ingresa el nombre de la aseguradora" required>
                     </div>
                     <div class="w-full px-3 xl:w-1/2">
                         <label class="mb-3 block text-base font-medium text-[#07074D]" for="cobertura">Cobertura</label>
                         <input
+                        value="{{ old('cobertura') }}"
                             class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                             type="text" name="cobertura" placeholder="Ingresa la cobertura" title="Ingresa la cobertura del seguro" required>
                     </div>
@@ -91,8 +93,10 @@
                 <div class="flex flex-col gap-5.5 xl:flex-row mt-4">
                     {{-- Fecha de vigencia --}}
                     <div class="w-full px-3 xl:w-1/2">
-                        <label class="mb-3 block text-base font-medium text-[#07074D]" for="fecha_vigencia">Fecha de Vigencia del Seguro</label>
-                        <input type="date" name="fecha_vigencia" title="Selecciona la fecha de vigencia"
+                        <label class="mb-3 block text-base font-medium text-[#07074D]" for="fecha_vigencia">Fecha de
+                            Vigencia del seguro</label>
+                        <input type="date" name="fecha_vigencia"
+                        value="{{ old('fecha_vigencia') }}"
                             class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                             required />
                     </div>
@@ -100,21 +104,29 @@
                     <div class="w-full px-3 xl:w-1/2">
                         <label class="mb-3 block text-base font-medium text-[#07074D]" for="monto">Monto Asegurado</label>
                         <input
+                        value="{{ old('monto') }}"
                             class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                             name="monto" min="0" step="0.01" type="number" placeholder="$0.00 MXN" title="Ingresa el monto asegurado" required>
                     </div>
 
                 </div>
                 <div class="px-3 py-3 mt-3 border-b border-stroke dark:border-strokedark"></div>
-                {{-- Foto --}}
-                <div class="pt-4 mb-6">
-                    <label class="mb-5 block text-xl font-semibold text-[#07074D]">
+                {{-- foto --}}
+                {{-- <div class="pt-4 mb-6">
+                    <h3 class="mb-5 block text-xl font-semibold text-[#07074D]">
                         Subir Archivos
-                    </label>
-                    <div class="mb-8">
-                        <input type="file" name="poliza" id="poliza" class="sr-only" multiple />
-                        <label for="poliza"
-                            class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center" title="Selecciona los archivos a subir">
+                    </h3>
+                    <input type="file" name="poliza[]" id="poliza" multiple />
+                </div> --}}
+                {{-- foto --}}
+                <div class="pt-4 mb-6">
+                    <h3 class="mb-5 block text-xl font-semibold text-[#07074D]">
+                        Subir Archivos
+                    </h3>
+                    <input type="file" name="poliza[]" id="poliza" class="sr-only" multiple />
+                     <div class="mb-8">
+
+                        <label for="poliza" class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
                             <div>
                                 <span
                                     class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
@@ -129,7 +141,10 @@
                     </div>
                 </div>
 
+
+
             </div>
+
 
             <script>
                 const fileInput = document.getElementById('poliza');
@@ -144,8 +159,7 @@
 
                     for (let i = 0; i < fileCount; i++) {
                         const listItem = document.createElement('li');
-                        listItem.textContent = files[i].name; // Muestra el nombre del archivo
-                        fileNamesDisplay.appendChild(listItem);
+                        listItem.textContent = files[i].name;                         fileNamesDisplay.appendChild(listItem);
                     }
                 });
 

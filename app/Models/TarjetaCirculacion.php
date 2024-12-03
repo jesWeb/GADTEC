@@ -10,21 +10,26 @@ class TarjetaCirculacion extends Model
     use HasFactory;
 
     protected $table = 'tarjetas';
-    protected $primaryKey = 'id_tarjeta'; 
+    protected $primaryKey = 'id_tarjeta';
     protected $fillable = [
         'nombre',
-        'num_tarjeta', 
+        'num_tarjeta',
         'vehiculo_origen',
-        'fecha_expedicion', 
-        'fecha_vigencia', 
+        'fecha_expedicion',
+        'fecha_vigencia',
         'estatus',
         'id_automovil',
-        'fotografia_frontal',   
-        'activo'  
+        'fotografia_frontal',
+        'activo'
     ];
+
+    //convertir imagen a json
+    // protected $cats = [
+    //     'fotografia_frontal' => 'array',
+    // ];
 
     public function automovil() {
         return $this->belongsTo(Automoviles::class, 'id_automovil');
     }
-    
+
 }

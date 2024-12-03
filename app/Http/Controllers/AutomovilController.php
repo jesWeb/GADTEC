@@ -46,8 +46,7 @@ class AutomovilController extends Controller
     {
         // dd($request);
         //limpieza de comas en kilometraje
-        $kilometraje = str_replace(',' , '' , $request->input('kilometraje'));
-
+        $kilometraje = str_replace(',', '', $request->input('kilometraje'));
         $rules = [
             'marca' => 'required|string|max:20',
             'submarca' => 'required|string|max:20',
@@ -55,12 +54,12 @@ class AutomovilController extends Controller
                 'required',
                 'integer',
                 'min:1990',
-                 /*VaLIDACION DE MODELO *
-                  *creamos una func persiolaizada
+                /*VaLIDACION DE MODELO *
+                  *creamos una func
                   donde los atributos de $attribute recibe el parametreo del input y $value -> valor del campo
                   */
                 function ($attribute, $value, $fail) {
-                    //validamos que el año y mes por parte de la fecha de navegador sean enteros
+                    //validamos que el año y mes  parte de la fecha de navegador
                     $anioActual = (int) date('Y');
                     $proxMes = (int) date('m');
                     //valida que apartir del 7 mes se registren un ano mas
@@ -88,40 +87,46 @@ class AutomovilController extends Controller
             'fecha_registro' => 'nullable|date',
             'responsable' => 'nullable|string|max:50',
             'observaciones' => 'nullable|string|max:255',
-            'fotografias' => 'nullable|file|mimes:jpeg,png,jpg,pdf',
+            'fotografias' => 'nullable|array|max:5',
+            'fotografias.*' => 'file|mimes:jpeg,png,jpg,pdf|max:10240',
         ];
         $message = [
             'modelo.min' => 'El año del modelo debe ser como mínimo 1990 .',
             'modelo.required' => 'El campo Modelo es obligatorio.',
             'modelo.integer' => 'El año del modelo debe ser un número entero.',
+            'fotografias.mimes' => 'El archivo de fotografía debe ser de tipo: jpeg, png, jpg, pdf.',
+            'fotografias.max' => 'El archivo de fotografía no debe superar los 10MB.',
         ];
-
         //limpieza de kilometraje en el req
         $request->merge(['kilometraje' => $kilometraje]);
-        //validacion para guardar
+        //validacion request
         $request->validate($rules, $message);
-        $input = $request->all();
 
-        //validacion de las fotos
+        // Guardar fotografías
+        $fotografias  = [];
+
         if ($request->hasFile('fotografias')) {
-            // obtener el campo file definido en el formulario
-            $file = $request->file('fotografias');
-            // obtener el nombre dek archivo
-            $img = $file->getClientOriginalName();
-            //obtener fecha y hora
-            $ldate = date('Ymd_His_');
-            //concatena la fecha y hora con el nombre del Archivo (img)
-            $img2 = $ldate . $img;
-            //idicamos el nombre  y la ruta donde se almacena el archivo (img)
-            $file->move(public_path('img/carros'), $img2);
-            $input['fotografias'] = $img2;
+            $files = $request->file('fotografias');
+            //limitar a 5 fotos
+            $files = array_slice($files, 0, 5);
+
+            foreach ($request->file('fotografias') as $file) {
+                $imgAuto = date('Ymd_His_') . $file->getClientOriginalName();
+                $file->move(public_path('img/automoviles'), $imgAuto);
+                $fotografias[] = $imgAuto;
+            }
         }
-        //  return response()->json(['success'=>$img2]);
+        $input = $request->all();
+        //guardar en json la img
+        $input['fotografias'] = json_encode($fotografias);
 
         Automoviles::create($input);
 
         return redirect()->route('Automovil.index')->with('mensaje', 'Sea registrado con exito el Automovil');
     }
+
+
+
 
     /**
      * Display the specified resource.

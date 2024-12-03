@@ -42,7 +42,7 @@
 
             <span class="mx-3">Gestion</span>
 
-            
+
             </a>
             {{-- link Solicitudes --}}
             <div
