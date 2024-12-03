@@ -23,7 +23,7 @@
                     <li class="text-gray-500">/</li>
                     <!-- Solicitudes  -->
                     <li class="flex items-center">
-                        <p href="{{ route('servicios.index') }}" class="text-gray-800 hover:text-gray-800">
+                        <p href="{{ route('vigilante.index') }}" class="text-gray-800 hover:text-gray-800">
                             Vigilante
                         </p>
                     </li>
@@ -101,7 +101,7 @@
                             <!-- Botones de acciones -->
                             <td class="px-4 py-2 text-center border">
 
-                                
+                            
                                 @if(isset($asignacion->checkIns->first()->km_salida))
                                     @if($asignacion->checkIns->first()->km_llegada)
                                      <!-- Ver -->
@@ -132,9 +132,10 @@
                                     </a>
                                 @endif
                             </td>
-
+                       
                         </tr>
                     @endforeach
+                    
                 </tbody>
             </table>
         </div>

@@ -128,15 +128,7 @@
                                     required />
                             </div>
                         </div>
-                        {{-- Fecha  de devolución --}}
-                        <div class="w-full px-3 xl:w-1/2">
-                            <div class="mb-5">
-                                <label class="mb-3 block text-base font-medium text-[#07074D]"
-                                    for="fecha_estimada_dev">Fecha de Devolución</label>
-                                <input type="date" name="fecha_estimada_dev" title="Ingresa la fecha de posible devolución"
-                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                            </div>
-                        </div>
+                        
                         
                     </div>
 

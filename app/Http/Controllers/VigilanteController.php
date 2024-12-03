@@ -8,20 +8,26 @@ use App\Models\Usuarios;
 use Illuminate\Http\Request;
 
 class VigilanteController extends Controller
+
 {
+    
     // Mostrar la bitácora de asignaciones
     public function index()
     {
         // $vigilante = asignacion::with(['automovil', 'usuarios', 'checkIns'])->get();
-        $vigilante = Asignacion::with(['automovil', 'usuarios', 'checkIns'])
+        $vigilante = asignacion::with(['automovil', 'usuarios', 'checkIns'])
         ->where('estatus', '!=', 'reservado')
         ->get();
         return view('vigilante.index', compact('vigilante'));
+       
+
     }
 
     // Mostrar el formulario de edición
     public function edit($id)
     {
+        
+
         $asignacion = asignacion::findOrFail($id); // Obtener la asignación por ID
         $automoviles = Automoviles::all(); // Obtener todos los automóviles
         $usuarios = Usuarios::all(); // Obtener todos los usuarios
@@ -32,6 +38,8 @@ class VigilanteController extends Controller
     // Mostrar el formulario de edición 2
     public function edit2($id)
     {
+        
+
         $asignacion = asignacion::findOrFail($id); // Obtener la asignación por ID
         $automoviles = Automoviles::all(); // Obtener todos los automóviles
         $usuarios = Usuarios::all(); // Obtener todos los usuarios
@@ -44,28 +52,30 @@ class VigilanteController extends Controller
         // Validar la entrada
         $request->validate([
             'km_salida' => 'required|numeric',
-            'combustible_salida' => 'required|string'
+            'combustible_salida' => 'required|string',
+            
         ]);
         
         // Obtener la asignación
-        $asignacion = Asignacion::findOrFail($id_asignacion);
+        $asignacion = asignacion::findOrFail($id_asignacion);
+    
+        // Actualizar la hora de salida en la asignación
+        $asignacion->hora_salida = $request->hora_salida;
+        $asignacion->fecha_estimada_dev = $request->fecha_estimada_dev;
+        
+        // Cambiar el estatus de la asignación a "ocupado"
+        $asignacion->estatus = 'ocupado';
+        $asignacion->save();
     
         // Crear un nuevo check-in
         $checkIn = new CheckIn();
         $checkIn->km_salida = $request->km_salida;
         $checkIn->combustible_salida = $request->combustible_salida;
-        $checkIn->hora_salida = $asignacion->hora_salida; 
-
-        $asignacion->fecha_estimada_dev = $request->fecha_estimada_dev;
+        $checkIn->hora_salida = $request->hora_salida;  // Usar la hora de salida proporcionada en la solicitud
     
-        // Cambiar el estatus de la asignación a "ocupado"
-        $asignacion->estatus = 'ocupado';
-        
-        $asignacion->save();
-        
         // Relacionar el check-in con la asignación
         $asignacion->checkIns()->save($checkIn);
-    
+        
         return redirect()->route('vigilante.index')->with('success', 'Check-In creado exitosamente.');
     }
     
@@ -97,7 +107,6 @@ class VigilanteController extends Controller
     if (!$checkIn->fecha_llegada) {
         $checkIn->fecha_llegada = now();
     }
-
     
     // Obtener la asignación relacionada con el check-in
     $asignacion = $checkIn->asignacion;
@@ -108,8 +117,17 @@ class VigilanteController extends Controller
         $asignacion->estatus = 'disponible';
         $asignacion->save();
     }
+
+    
+    $query = asignacion::find($checkIn->id_asignacion);
+            $query ->automovil->estatusIn = 'disponible';
+
+        $query -> save();
+    
     // Guardar los cambios en el registro existente
     $checkIn->save();
+
+
 
     return redirect()->route('vigilante.index')->with('success', 'Check-In actualizado exitosamente.');
 }

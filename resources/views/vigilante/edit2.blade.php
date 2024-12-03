@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('body')
-<!-- Librería requerida para el formulario dinámico, está dentro de public -->
+<!-- Librería requerida para el kilometraje durante el viaje, está dentro de public -->
 <script type="text/javascript" src="{{ url('js/jquery-3.7.1.min.js') }}"></script>
 <div class="px-6 py-2">
         <!-- Mapa de sitio -->
@@ -44,7 +44,7 @@
             <div class="p-6 bg-white rounded-lg shadow-lg">
                 <h2 class="text-lg font-semibold text-gray-700 capitalize">Reporte Check-In</h2>
 
-                <form action="{{ route('update2', $asignacion->id_asignacion) }}" method="POST">
+                <form action="{{ route('update2', $asignacion->checkIns->first()->id_check) }}" method="POST">
                     @csrf
                     @method('PUT')
 
@@ -102,7 +102,6 @@
                                     <option value="1/4" {{ old('combustible_salida', $asignacion->checkIns->first()->combustible_salida) == '1/4' ? 'selected' : '' }}>1/4</option>
                                     <option value="1/2" {{ old('combustible_salida', $asignacion->checkIns->first()->combustible_salida) == '1/2' ? 'selected' : '' }}>1/2</option>
                                     <option value="3/4" {{ old('combustible_salida', $asignacion->checkIns->first()->combustible_salida) == '3/4' ? 'selected' : '' }}>3/4</option>
-                                    <option value="vacío" {{ old('combustible_salida', $asignacion->checkIns->first()->combustible_salida) == 'vacío' ? 'selected' : '' }}>Vacío</option>
                                     <option value="reserva" {{ old('combustible_salida', $asignacion->checkIns->first()->combustible_salida) == 'reserva' ? 'selected' : '' }}>Reserva</option>
                                     <option value="lleno" {{ old('combustible_salida', $asignacion->checkIns->first()->combustible_salida) == 'lleno' ? 'selected' : '' }}>Lleno</option>
                                 </select>

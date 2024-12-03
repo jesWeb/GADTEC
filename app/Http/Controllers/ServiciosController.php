@@ -88,32 +88,28 @@ class ServiciosController extends Controller
              $input['comprobante'] = $comprobante;
          }
      
-        // Obtener automovil
-        $automovil = Automoviles::find($request->id_automovil);
-        if ($automovil) {
-            // Obtener la fecha actual
-            $fechaActual = now()->format('Y-m-d'); 
+     // Obtener el automóvil relacionado
+     $automovil = Automoviles::find($request->id_automovil);
+     if (!$automovil) {
+         return redirect()->back()->withErrors(['id_automovil' => 'Automóvil no encontrado.']);
+     }
 
-            // Si el servicio es programado
-            if ($request->tipo_servicio == 'Programado') {
-                // Verificar si la próxima fecha de servicio es hoy
-                if ($request->prox_servicio && $request->prox_servicio == $fechaActual) {
-                    $automovil->estatusIn = 'Mantenimiento';  
-                    $automovil->save();  
-                }
-            } 
-            // Si el servicio es no programado
-            elseif ($request->tipo_servicio == 'No programado') {
-                // Verificar si la fecha de servicio es hoy
-                if ($request->fecha_servicio && $request->fecha_servicio == $fechaActual) {
-                    $automovil->estatusIn = 'En servicio';  
-                    $automovil->save();  
-                }
-            }
-        } else {
-            // Manejar el caso en que el automóvil no se encuentra
-            return redirect()->back()->withErrors(['id_automovil' => 'Automóvil no encontrado.']);
-        }
+     $fechaActual = now()->format('Y-m-d');
+
+    // Actualizar el estatus del automóvil según el tipo de servicio
+    if ($request->tipo_servicio == 'Programado' && $request->prox_servicio == $fechaActual) {
+        $automovil->estatusIn = 'Mantenimiento';  
+    } elseif ($request->tipo_servicio == 'No programado' && $request->fecha_servicio == $fechaActual) {
+        $automovil->estatusIn = 'En servicio';  
+    } else {
+        $automovil->estatusIn = 'Disponible';  
+    }
+ 
+     $automovil->save();  // Guardar cambios en el automóvil
+ 
+
+    // dd($request->fecha_servicio, $request->prox_servicio, $fechaActual);
+
 
     // Crear el servicio
     $servicio = Servicios::create($input);
