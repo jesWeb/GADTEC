@@ -16,18 +16,29 @@ class AsignacionController extends Controller
     {
 
 
-        $reservacion = asignacion::with('automovil', 'usuarios')->get();
+        $reservacion = asignacion::with('automovil', 'usuarios', 'checkIns')->get();
         return view('catalogos.asignacion.index', compact('reservacion'));
     }
 
     public function create()
     {
 
-        $auto = \DB::select("SELECT aut.id_automovil, aut.marca, aut.submarca, aut.modelo, aut.estatusIn, asi.estatus
-        FROM automoviles AS aut
-        LEFT JOIN asignacions AS asi ON aut.id_automovil = asi.id_automovil
-        WHERE aut.estatusIn = 'Disponible'
-        AND (asi.estatus IS NULL OR asi.estatus NOT IN ('Reservado', 'Ocupado', 'Autorizado'))");
+        $auto = \DB::select("SELECT
+            aut.id_automovil,
+            aut.marca,
+            aut.submarca,
+            aut.modelo,
+            aut.estatusIn
+        FROM
+            automoviles AS aut
+        WHERE
+            aut.estatusIn = 'Disponible'
+            AND aut.id_automovil NOT IN (
+                SELECT id_automovil
+                FROM asignacions
+                WHERE estatus IN ('Reservado', 'Ocupado', 'Autorizado')
+        )"
+    );
 
         $reservU = Usuarios::all();
         return view('catalogos.asignacion.create', compact('auto', 'reservU'));
@@ -41,8 +52,8 @@ class AsignacionController extends Controller
             'id_automovil' => 'required|exists:automoviles,id_automovil',
             'telefono' => 'required|numeric',
             'fecha_salida' => 'required|date',
-            'fecha_estimada_dev' => 'required|date',
-            'hora_salida' => 'required|date_format:H:i',
+            'hora_salida' => 'nullable|date_format:H:i',
+            'hora_llegada' => 'nullable|date_format:H:i',
             'lugar' => 'required|string',
             'motivo' => 'required|string',
             'no_licencia' => 'required|string',

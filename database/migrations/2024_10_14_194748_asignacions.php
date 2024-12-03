@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('fecha_asignacion')->nullable();
             $table->time('hora_salida')->nullable();
             $table->date('fecha_salida')->nullable();
-            $table->date('fecha_estimada_dev')->nullable();
+            $table->string('fecha_estimada_dev')->nullable();
             $table->string('no_licencia')->nullable();
             $table->enum('estatus', ['Reservado', 'Disponible', 'Ocupado', 'Autorizado'])->default('Reservado');
             $table->text('condiciones')->nullable();

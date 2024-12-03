@@ -63,7 +63,7 @@ class asignacion extends Model
     }
 
     public function checkIns()
-    {
-        return $this->hasMany(CheckIn::class, 'id_asignacion');
-    }
+{
+    return $this->hasMany(CheckIn::class, 'id_asignacion', 'id_asignacion');
+}
 }

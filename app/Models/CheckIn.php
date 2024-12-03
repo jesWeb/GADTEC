@@ -30,6 +30,6 @@ class CheckIn extends Model
 
     public function asignacion()
     {
-        return $this->belongsTo(Asignacion::class, 'id_asignacion');
+        return $this->belongsTo(asignacion::class, 'id_asignacion');
     }
 }

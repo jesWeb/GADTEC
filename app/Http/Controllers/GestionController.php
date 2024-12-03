@@ -17,12 +17,32 @@ class GestionController extends Controller
     public function __construct() {
         $this->middleware('auth:usuarios');
     }
+    
 
     public function index()
     {
         // $disponibilidad = asignacion::with('automovil')
         //     ->get();
-        $disponibilidad = Automoviles::with('asignacion')->get();
+        // $disponibilidad = \DB::select("SELECT * 
+        // FROM automoviles AS aut
+        // JOIN asignacions AS asi
+        // ON aut.id_automovil = asi.id_automovil
+        // WHERE asi.estatus IS NOT NULL 
+        // GROUP BY aut.id_automovil;");
+
+        $disponibilidad = DB::select("
+            SELECT aut.*, asi.id_asignacion, asi.estatus
+            FROM automoviles AS aut
+            LEFT JOIN asignacions AS asi
+            ON aut.id_automovil = asi.id_automovil
+            AND asi.id_asignacion = (
+                SELECT MAX(sub.id_asignacion)
+                FROM asignacions AS sub
+                WHERE sub.id_automovil = asi.id_automovil
+                AND sub.estatus IS NOT NULL
+            )
+        ");
+        
 
         // dd($disponibilidad);
         return view('modulos.Gestion.index', compact('disponibilidad'));
@@ -30,7 +50,7 @@ class GestionController extends Controller
 
     public function show(string $id)
     {
-        $dispo = asignacion::with('automovil')
+        $dispo = asignacion::with('automovil', 'checkIns')
             ->where('id_asignacion', $id)
             ->get();
         return view('modulos.Gestion.show', compact('dispo',));
@@ -40,11 +60,11 @@ class GestionController extends Controller
     public function update($id, Request $request)
     {
         $query = asignacion::find($id);
-            $query->estatus = 'Autorizado';
-        $query -> save();
-        
-        $disponibilidad = Automoviles::with('asignacion')->get();
-        return view('modulos.Gestion.index', compact('disponibilidad'));
+        $query->estatus = 'Autorizado';
+        $query->save();
+
+        // Redirigir a la vista de Gestión después de la actualización
+        return redirect()->route('Gestion');
     }
     // public function usu_salvar(UsuariosModel $id, Request $request){
     //     //dd($id);

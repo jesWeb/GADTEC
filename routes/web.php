@@ -53,7 +53,7 @@ Route::post('/reset-password', [PasswordResetLinkController::class, 'update'])->
 Route::middleware('auth')->group(function () {
     Route::middleware('role:Administrador|Moderador')->group(function () {
         Route::get('/gestion', [GestionController::class, 'index'])->name('Gestion');
-        Route::get('/gestion/{id_asignacion}', [GestionController::class, 'show'])->name('gestion');
+        Route::get('/gestion/{id_asignacion}', [GestionController::class, 'show'])->name('show.gestion');
         Route::resource('vigilante', VigilanteController::class);
         Route::get('/vigilante/edit2/{id}/', [VigilanteController::class, 'edit2'])->name('edit2');
         Route::put('/vigilante/update2/{id_asignacion}', [VigilanteController::class, 'update2'])->name('update2');
@@ -106,7 +106,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/administrador/vigilante/edit2/{id}/', [VigilanteController::class, 'edit2'])->name('edit2');
         Route::put('/admin/vigilante/update2/{id_asignacion}', [VigilanteController::class, 'update2'])->name('update2');
         Route::resource('/administrador/autorizante', AutorizanteController::class);
-        Route::get('administrador/gestion/{id_asignacion}', [GestionController::class, 'show'])->name('gestion');
+        Route::get('administrador/gestion/{id_asignacion}', [GestionController::class, 'show'])->name('show.gestion');
 
         Route::get('/catalogos', [CatalogosController::class, 'index'])->name('catalogos.index');
         Route::get('/estadisticas', [EstadisticasController::class, 'index'])->name('estadisticas');
@@ -127,7 +127,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/moderador/vigilante', [VigilanteController::class, 'index'])->name('moderador.vigilante');
         Route::get('/vigilante/edit2/{id}/', [VigilanteController::class, 'edit2'])->name('edit2');
         Route::put('/vigilante/update2/{id_asignacion}', [VigilanteController::class, 'update2'])->name('update2');
-        Route::get('/gestion/{id_asignacion}', [GestionController::class, 'show'])->name('gestion');
+
+
     });
 
     // Rutas para el Usuario
