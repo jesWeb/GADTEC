@@ -18,7 +18,10 @@ class siniestros extends Model
         'fecha_siniestro',
         'descripcion',
         'estatus',
-        'costo_danos_estimados',
+        'monto',
+        'porcentaje',
+        'aplica_deducible',
+        'resultado',
         'id_usuario',
         'observaciones',
     ];
