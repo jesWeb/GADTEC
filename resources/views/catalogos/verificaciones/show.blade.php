@@ -30,7 +30,7 @@
                     <!-- Verificaciones Vehiculares -->
                     <li class="flex items-center">
                         <a href="{{route('verificaciones.index')}}" title="Volver a la página de verificaciones" class="text-gray-800 hover:text-gray-800">
-                            Verificaciones 
+                            Verificaciones
                         </a>
                     </li>
 
@@ -48,7 +48,7 @@
     </div>
     <div class="container px-4 mx-auto">
         <div class="flex justify-center mt-12">
-            <div class="w-full max-w-3xl p-8 bg-white rounded-lg shadow-lg bg-gradient-to-r">            
+            <div class="w-full max-w-3xl p-8 bg-white rounded-lg shadow-lg bg-gradient-to-r">
                 <div class="text-center">
                     <h1 class="text-4xl font-extrabold text-gray-800">Detalle de Verificación</h1>
                     <p class="mt-2 text-lg text-gray-600">Información completa sobre la verificación seleccionada</p>
@@ -58,12 +58,23 @@
                     Detalles de Verificación -
                     {{ $MostrarVer->automovil->marca }} {{ $MostrarVer->automovil->submarca }}
                     {{ $MostrarVer->automovil->modelo }}</h2>
-            
+
             {{-- content --}}
             <article class="flex flex-wrap max-w-3xl mx-auto md:flex-nowrap group">
                 {{-- poliza Img --}}
-                <img class="w-full max-h-[400px] object-cover md:w-52"
-                    src="https://i.ibb.co/Kr4b0zJ/152013403-10158311889099633-8423107287930246533-o.jpg" alt="">
+                <div class="">
+                    <div class="">
+                        @php
+                            $fotografias = json_decode($MostrarVer->image, true);
+                        @endphp
+
+                        @if ($fotografias)
+                            @foreach ($fotografias as $foto)
+                                <img src="{{ asset('img/verificaciones/' . $foto) }}" class="w-full max-h-[400px] object-cover md:w-52" alt="seguro">
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
                 {{-- content info --}}
                 <div class="mt-6 ml-4 space-y-6">
                     <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -79,13 +90,13 @@
                             <h4 class="text-lg font-semibold text-gray-800">Holograma:</h4>
                             <span class="mt-2 text-base leading-relaxed text-gray-500 ">{{ $MostrarVer->holograma }}</span>
                         </div>
-                
+
 
                         <div class="p-4 bg-white rounded-lg shadow-sm">
                             <h4 class="text-lg font-semibold text-gray-800">Próxima Verificación:</h4>
                             <span class="mt-2 text-base leading-relaxed text-gray-500 ">{{ \Carbon\Carbon::parse( $MostrarVer->proxima_verificacion )->locale('es')->format('d-m-Y') }}</span>
                         </div>
-                
+
                         <div class="p-4 bg-white rounded-lg shadow-sm">
                             <h4 class="text-lg font-semibold text-gray-800">Observaciones de Verificación:</h4>
                             <span

@@ -105,16 +105,24 @@
                     </div>
 
                     {{-- 2ª fila de información --}}
-                    <div class="flex flex-col gap-5.5 mt-5 xl:flex-row">
-                        <div>
+                    <div class="flex flex-col gap-5.5 mt-4 mb-4 xl:flex-row">
+                        <div class="p-3 m-3">
                             <!-- Checkbox: ¿Aplica deducible? -->
-                            <label class="mb-3 block text-base font-medium text-[#07074D]" for="aplica_deducible">
-                                ¿Aplica deducible?
-                            </label>
+                            <div class="">
+                                <label class="mb- block text-base font-medium text-[#07074D]" for="aplica_deducible">
+                                    ¿Aplica deducible?
+                                </label>
 
-                            <input type="checkbox" name="aplica_deducible" id="aplica_deducible"  value="0"/>
-                            <input type="checkbox" name="aplica_deducible" id="aplica_deducible"  value="1"/>
 
+                                <span>
+                                    <input type="checkbox"  class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"  name="aplica_deducible" id="aplica_deducible"  value="1"/>
+                                    <span>
+
+                                        si
+                                    </span>
+                                </span>
+
+                            </div>
                             <!-- Contenedor del porcentaje -->
                             <div id="porcentaje-container" class="hidden">
                                 <label class="mb-3 block text-base font-medium text-[#07074D]" for="porcentaje">
@@ -128,7 +136,6 @@
                                     <option value="15">15%</option>
                                 </select>
                             </div>
-
                             <!-- Campo de monto -->
                             <div>
                                 <label class="mb-3 block text-base font-medium text-[#07074D]" for="monto">
@@ -137,7 +144,6 @@
                                 <input type="number" name="monto" id="monto" placeholder="Ejemplo: 15000"  pattern="^\d*([,.]?\d+)?$" min="0"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                             </div>
-
                             <!-- Campo de resultado -->
                             <div id="resultado-container" class="hidden">
                                 <label class="mb-3 block text-base font-medium text-[#07074D]" for="resultado">
@@ -193,7 +199,7 @@
                     </div>
 
                     {{-- Descripción --}}
-                    <div class="flex flex-col gap-5.5 xl:flex-row mt-6">
+                    <div class="flex flex-col gap-5.5 xl:flex-row mt-5">
                         <div class="w-full px-3 xl:w-1/2">
                             <label class="mb-3 block text-base font-medium text-[#07074D]" for="descripcion">Descripción
                                 del

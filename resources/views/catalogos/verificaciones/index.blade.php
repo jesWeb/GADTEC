@@ -94,6 +94,8 @@
                             <th class="px-4 py-2 text-left text-gray-600">Vehículo</th>
                             <th class="px-4 py-2 text-left text-gray-600">Fecha verificación</th>
                             <th class="px-4 py-2 text-left text-gray-600">Fecha próxima verificación</th>
+                            <th class="px-4 py-2 text-left text-gray-600">Fecha verificación 00</th>
+                            <th class="px-4 py-2 text-left text-gray-600">Fecha próxima verificación 00</th>
                             <th class="px-4 py-2 text-left text-gray-600">Acciones</th>
                         </tr>
                     </thead>
@@ -105,12 +107,43 @@
                                     {{ $vr->automovil->marca }}-{{ $vr->automovil->submarca }}-{{ $vr->automovil->modelo }}
                                 </td>
                                 <td class="px-4 py-2 border">
-                                    {{ \Carbon\Carbon::parse($vr->fecha_verificacion)->locale('es')->format('d-m-Y') }}
+
+                                    @if ($vr->fecha_verificacion && $vr->proxima_verificacion)
+                                        {{ \Carbon\Carbon::parse($vr->fecha_verificacion)->locale('es')->format('d-m-Y') }}
+                                    @else
+                                        {{ 'N/A' }}
+                                    @endif
+
+                                    {{-- {{ \Carbon\Carbon::parse($vr->fecha_verificacion)->locale('es')->format('d-m-Y') }} --}}
 
                                 </td>
                                 <td class="px-4 py-2 border">
-                                    {{ \Carbon\Carbon::parse($vr->proxima_verificacion)->locale('es')->format('d-m-Y') }}
 
+                                    @if ($vr->fecha_verificacion && $vr->proxima_verificacion)
+                                        {{ \Carbon\Carbon::parse($vr->proxima_verificacion)->format('d-m-Y') }}
+                                    @else
+                                        {{ 'N/A' }}
+                                    @endif
+
+                                    {{-- {{ \Carbon\Carbon::parse($vr->proxima_verificacion)->locale('es')->format('d-m-Y') }} --}}
+
+                                </td>
+                                <td class="px-4 py-2 border">
+                                    @if ($vr->fecha_verificacion_00 && $vr->proxima_verificacion_00)
+                                        {{ \Carbon\Carbon::parse($vr->fecha_verificacion_00)->locale('es')->format('d-m-Y') }}
+                                    @else
+                                        {{ 'N/A' }}
+                                    @endif
+                                    {{-- {{ \Carbon\Carbon::parse($vr->proxima_verificacion)->locale('es')->format('d-m-Y') }} --}}
+
+                                </td>
+                                <td class="px-4 py-2 border">
+                                    {{-- {{ \Carbon\Carbon::parse($vr->proxima_verificacion)->locale('es')->format('d-m-Y') }} --}}
+                                    @if ($vr->fecha_verificacion_00 && $vr->proxima_verificacion_00)
+                                        {{ \Carbon\Carbon::parse($vr->proxima_verificacion_00)->locale('es')->format('d-m-Y') }}
+                                    @else
+                                        {{ 'N/A' }}
+                                    @endif
                                 </td>
                                 {{-- acciones --}}
                                 <td class="px-4 py-2 border">
@@ -139,7 +172,7 @@
 
                                         <!-- Eliminar -->
                                         <form action="{{ route('verificaciones.destroy', $vr) }}" id="eliminacion-form"
-                                            class="inline">
+                                            method="POST" class="inline">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" onclick="deleteRegister(event)"

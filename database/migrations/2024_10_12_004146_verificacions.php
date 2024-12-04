@@ -12,9 +12,12 @@ return new class extends Migration
             $table->bigIncrements('id_verificacion');
             $table->unsignedBigInteger('id_automovil');
             $table->string('holograma');
-            $table->enum('engomado', ['Amarillo','Verde','Rosa' ,'Azul', 'Rojo', 'ninguno']);
-            // $table->enum('estadoV', ['EdoMex', 'Morelos', 'CDMX'])->default('ninguno');
-            $table->date('fecha_verificacion');
+            $table->enum('engomado', ['Amarillo','Verde','Rosa' ,'Azul', 'Rojo']);
+            $table->enum('estadoV', ['EdoMex', 'Morelos', 'CDMX']);
+            $table->string('motivo_00')->nullable();
+            $table->date('fecha_verificacion_00')->nullable();
+            $table->date('proxima_verificacion_00')->nullable();
+            $table->date('fecha_verificacion')->nullable();
             $table->date('proxima_verificacion')->nullable();
             $table->text('observaciones')->nullable();
             $table->string('image')->nullable();
