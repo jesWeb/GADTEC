@@ -22,9 +22,15 @@
                     <li class="text-gray-500">/</li>
                     <!-- Solicitudes  -->
                     <li class="flex items-center">
-                        <a href="{{ route('vigilante.index') }}" title="Volver a la página de vigilante"  class="text-gray-800 hover:text-gray-800">
-                            Vigilante
-                        </a>
+                        @if(auth()->user()->hasRole('Administrador'))
+                            <a href="{{ route('vigilante.index') }}" title="Volver a la página de vigilante"  class="text-gray-800 hover:text-gray-800">
+                                Vigilante
+                            </a>
+                        @elseif(auth()->user()->hasRole('Moderador'))
+                            <a href="{{ route('moderador.vigilante') }}" title="Volver a la página de vigilante"  class="text-gray-800 hover:text-gray-800">
+                                Vigilante
+                            </a>
+                        @endif
                     </li>
                     <!-- Separador -->
                     <li class="text-gray-500">/</li>
@@ -41,9 +47,12 @@
         <div class="mt-4">
             <div class="p-6 bg-white rounded-lg shadow-lg">
                 <h2 class="text-lg font-semibold text-gray-700 capitalize">Reporte Check-In</h2>
-
+            @if(auth()->user()->hasRole('Administrador'))
                 <form action="{{ route('vigilante.update', $asignacion->id_asignacion) }}" method="POST">
-                    @csrf
+            @elseif(auth()->user()->hasRole('Moderador'))
+                <form action="{{ route('update.vigilante', $asignacion->id_asignacion) }}" method="POST">
+            @endif
+                @csrf
                     @method('PUT')
 
                     <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -143,10 +152,18 @@
                     </div>
 
                     <div class="mt-6">
+                    @if(auth()->user()->hasRole('Administrador'))
                         <button type="submit" titile="Guardar datos de salida" class="inline-flex items-center px-4 py-2 text-white bg-yellow-600 border border-transparent rounded-md shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
                             Crear Check-In
                         </button>
                         <a href="{{ route('vigilante.index') }}" titile="Cancelar registro de datos" class="inline-flex items-center px-4 py-2 text-white bg-gray-700 border border-transparent rounded-md shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Cancelar</a>
+                    
+                    @elseif(auth()->user()->hasRole('Moderador'))
+                        <button type="submit" titile="Guardar datos de salida" class="inline-flex items-center px-4 py-2 text-white bg-yellow-600 border border-transparent rounded-md shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
+                            Crear Check-In
+                        </button>
+                        <a href="{{ route('moderador.vigilante') }}" titile="Cancelar registro de datos" class="inline-flex items-center px-4 py-2 text-white bg-gray-700 border border-transparent rounded-md shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Cancelar</a>
+                    @endif
                     </div>
                 </form>
             </div>

@@ -84,7 +84,7 @@ class MultasController extends Controller
             $ldate = date('Ymd_His_');
             $comprobante = $ldate . $comprobante;
 
-            $file->move(public_path('img'), $comprobante);
+            $file->move(public_path('img/multas'), $comprobante);
             $input['comprobante'] = $comprobante;
         }
 

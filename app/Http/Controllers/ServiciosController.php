@@ -153,9 +153,10 @@ class ServiciosController extends Controller
              'costo' => 'required|numeric',
              'lugar_servicio' => 'required|string|max:255',
              'comprobante' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
-             'id_automovil' => 'nullable|exists:automoviles,id_automovil'
+             'id_automovil' => 'nullable|exists:automoviles,id_automovil',
+             'estatusIn' => 'nullable|string'  // Asegúrate de validar el estatus
          ];
-         
+     
          $messages = [
              'tipo_servicio.required' => 'El campo tipo de servicio es requerido',
              'descripcion.required' => 'El campo descripción es requerido',
@@ -171,8 +172,13 @@ class ServiciosController extends Controller
          $input = $request->all();
          $servicio = Servicios::findOrFail($id);
      
-         // Guardar comprobante si hay archivo
+         // Verificar si se subió un nuevo archivo de comprobante
          if ($request->hasFile('comprobante')) {
+             // Eliminar archivo anterior si existe
+             if ($servicio->comprobante && file_exists(public_path('img/' . $servicio->comprobante))) {
+                 unlink(public_path('img/' . $servicio->comprobante));
+             }
+     
              $file = $request->file('comprobante');
              $comprobante =  $file->getClientOriginalName();
              $ldate = date('Ymd_His_');
@@ -182,30 +188,20 @@ class ServiciosController extends Controller
              $input['comprobante'] = $comprobante;
          }
      
-         // Obtener el automóvil relacionado
-         $automovil = Automoviles::find($request->id_automovil);
-         if (!$automovil) {
-             return redirect()->back()->withErrors(['id_automovil' => 'Automóvil no encontrado.']);
-         }
-    
-         $fechaActual = now()->format('Y-m-d');
-
-        // Actualizar el estatus del automóvil según el tipo de servicio
-        if ($request->tipo_servicio == 'Programado' && $request->prox_servicio == $fechaActual) {
-            $automovil->estatusIn = 'Mantenimiento';  
-        } elseif ($request->tipo_servicio == 'No programado' && $request->fecha_servicio == $fechaActual) {
-            $automovil->estatusIn = 'En servicio';  
-        } else {
-            $automovil->estatusIn = 'Disponible';  
-        }
-     
-         $automovil->save();  // Guardar cambios en el automóvil
-     
          // Actualizar el servicio
          $servicio->update($input);
      
-         return redirect()->route('servicios.index')->with('message', 'Se ha modificado correctamente el registro');
+         // Actualizar el estatus del automóvil
+         $automovil = Automoviles::find($request->id_automovil);
+         if ($automovil) {
+             $automovil->estatusIn = $request->estatusIn;
+             $automovil->save();
+         }
+     
+         return redirect()->route('servicios.index')->with('message', 'Servicio actualizado correctamente');
      }
+     
+     
      
 
     /**

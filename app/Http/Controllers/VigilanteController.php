@@ -27,7 +27,6 @@ class VigilanteController extends Controller
     public function edit($id)
     {
         
-
         $asignacion = asignacion::findOrFail($id); // Obtener la asignación por ID
         $automoviles = Automoviles::all(); // Obtener todos los automóviles
         $usuarios = Usuarios::all(); // Obtener todos los usuarios
@@ -76,7 +75,12 @@ class VigilanteController extends Controller
         // Relacionar el check-in con la asignación
         $asignacion->checkIns()->save($checkIn);
         
-        return redirect()->route('vigilante.index')->with('success', 'Check-In creado exitosamente.');
+        if (auth()->user()->hasRole('Administrador') ) {
+            return redirect()->route('vigilante.index')->with('success', 'Check-In actualizado exitosamente.');
+        } else  {
+            return redirect()->route('moderador.vigilante');
+            
+        }
     }
     
     
@@ -85,6 +89,11 @@ class VigilanteController extends Controller
 
   public function update2(Request $request, $id_check)
 {
+    if (auth()->user()->hasRole('Administrador') || auth()->user()->hasRole('Moderador')) {
+    } else {
+        abort(403, 'No tienes permiso para acceder a esta acción.');
+    }
+    
     $request->validate([
         'km_llegada' => 'nullable|numeric',
         'combustible_llegada' => 'nullable|string',
@@ -127,9 +136,14 @@ class VigilanteController extends Controller
     // Guardar los cambios en el registro existente
     $checkIn->save();
 
+    if (auth()->user()->hasRole('Administrador') ) {
+        return redirect()->route('vigilante.index')->with('success', 'Check-In actualizado exitosamente.');
+    } else  {
+        return redirect()->route('moderador.vigilante');
+        
+    }
 
-
-    return redirect()->route('vigilante.index')->with('success', 'Check-In actualizado exitosamente.');
+    
 }
 
 public function show(string $id)
@@ -142,6 +156,8 @@ public function show(string $id)
 
     // Pasar la variable $vigilante a la vista 'modulos.servicios.show'
     return view('vigilante.show', compact('vigilante'));
+
+    
 }
 
     

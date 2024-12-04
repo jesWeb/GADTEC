@@ -31,9 +31,19 @@ class GestionController extends Controller
         // GROUP BY aut.id_automovil;");
 
         $disponibilidad = DB::select("
-            SELECT aut.*, asi.id_asignacion, asi.estatus
-            FROM automoviles AS aut
-            LEFT JOIN asignacions AS asi
+        SELECT 
+            aut.*, 
+            asi.id_asignacion, 
+            asi.estatus AS estatus_asignacion,
+            aut.estatusIn,
+            -- Lógica para determinar el estatus final
+            CASE
+                WHEN asi.estatus IS NOT NULL THEN asi.estatus
+                WHEN aut.estatusIn IN ('Mantenimiento', 'En servicio') THEN aut.estatusIn
+                ELSE 'Disponible'
+            END AS estatus_final
+        FROM automoviles AS aut
+        LEFT JOIN asignacions AS asi
             ON aut.id_automovil = asi.id_automovil
             AND asi.id_asignacion = (
                 SELECT MAX(sub.id_asignacion)
@@ -41,7 +51,10 @@ class GestionController extends Controller
                 WHERE sub.id_automovil = asi.id_automovil
                 AND sub.estatus IS NOT NULL
             )
-        ");
+    ");
+    
+
+
         
 
         // dd($disponibilidad);
@@ -66,6 +79,7 @@ class GestionController extends Controller
         // Redirigir a la vista de Gestión después de la actualización
         return redirect()->route('Gestion');
     }
+
     // public function usu_salvar(UsuariosModel $id, Request $request){
     //     //dd($id);
     //     $id->update(

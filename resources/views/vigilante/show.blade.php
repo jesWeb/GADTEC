@@ -23,9 +23,15 @@
                     <li class="text-gray-500">/</li>
                     <!-- Solicitudes  -->
                     <li class="flex items-center">
-                        <a href="{{ route('vigilante.index') }}" title="Volver a la página de vigilante"  class="text-gray-800 hover:text-gray-800">
-                            Vigilante
-                        </a>
+                        @if(auth()->user()->hasRole('Administrador'))
+                            <a href="{{ route('vigilante.index') }}" title="Volver a la página de vigilante"  class="text-gray-800 hover:text-gray-800">
+                                Vigilante
+                            </a>
+                        @elseif(auth()->user()->hasRole('Moderador'))
+                            <a href="{{ route('moderador.vigilante') }}" title="Volver a la página de vigilante"  class="text-gray-800 hover:text-gray-800">
+                                Vigilante
+                            </a>
+                        @endif
                     </li>
                     <!-- Separador -->
                     <li class="text-gray-500">/</li>
@@ -104,8 +110,17 @@
         </div>
 
             <div class="flex justify-end mt-6 space-x-4">
-                <a href="{{ route('vigilante.index') }}" title="Volver al listado del vigilante"
-                class="inline-flex items-center justify-center px-4 py-2 text-white transition duration-200 bg-green-600 rounded-md hover:bg-green-700 focus:outline-none">Cerrar</a>
+                <!-- Botón cerrar -->
+                 
+                @if(auth()->user()->hasRole('Administrador'))
+                    <a href="{{ route('vigilante.index') }}" title="Volver al listado del vigilante"
+                    class="inline-flex items-center justify-center px-4 py-2 text-white transition duration-200 bg-green-600 rounded-md hover:bg-green-700 focus:outline-none">Cerrar</a>
+                @elseif(auth()->user()->hasRole('Moderador'))
+                    <a href="{{ route('moderador.vigilante') }}" title="Volver al listado del vigilante"
+                    class="inline-flex items-center justify-center px-4 py-2 text-white transition duration-200 bg-green-600 rounded-md hover:bg-green-700 focus:outline-none">Cerrar</a>
+                @endif
+             
+                
             </div>
     </div>
         

@@ -105,31 +105,67 @@
                                 @if(isset($asignacion->checkIns->first()->km_salida))
                                     @if($asignacion->checkIns->first()->km_llegada)
                                      <!-- Ver -->
-                                     <a href="{{ route('vigilante.show', $asignacion->id_asignacion) }}"
-                                            class="inline-flex items-center justify-center w-8 h-8 text-green-600 border border-green-600 rounded hover:bg-green-600 hover:text-white" 
-                                            title="Ver detalles de la verificación">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                stroke="currentColor" class="w-4 h-4">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M12 3C6.48 3 2 12 2 12s4.48 9 10 9 10-9 10-9-4.48-9-10-9zm0 12c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z" />
-                                            </svg>
-                                        </a>
+                                     @if(auth()->user()->hasRole('Administrador'))
+                                        <a href="{{ route('vigilante.admin', $asignacion->id_asignacion) }}"
+                                                class="inline-flex items-center justify-center w-8 h-8 text-green-600 border border-green-600 rounded hover:bg-green-600 hover:text-white" 
+                                                title="Ver detalles de la verificación">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                    stroke="currentColor" class="w-4 h-4">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M12 3C6.48 3 2 12 2 12s4.48 9 10 9 10-9 10-9-4.48-9-10-9zm0 12c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z" />
+                                                </svg>
+                                            </a>
+                                        @elseif(auth()->user()->hasRole('Moderador'))
+                                            <a href="{{ route('vigilante.show', $asignacion->id_asignacion) }}"
+                                                class="inline-flex items-center justify-center w-8 h-8 text-green-600 border border-green-600 rounded hover:bg-green-600 hover:text-white" 
+                                                title="Ver detalles de la verificación">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                    stroke="currentColor" class="w-4 h-4">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M12 3C6.48 3 2 12 2 12s4.48 9 10 9 10-9 10-9-4.48-9-10-9zm0 12c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z" />
+                                                </svg>
+                                            </a>
+                                        @endif
                                     @else
 
-                                    <a href="{{ route('edit2', $asignacion->id_asignacion) }}" class="inline-flex items-center justify-center w-8 h-8 text-green-600 border border-green-600 rounded hover:bg-green-600 hover:text-white" 
+                                    @if(auth()->user()->hasRole('Administrador'))
+                                        <a href="{{ route('admin.edit2', $asignacion->id_asignacion) }}" 
+                                        class="inline-flex items-center justify-center w-8 h-8 text-green-600 border border-green-600 rounded hover:bg-green-600 hover:text-white"
                                         title="Editar información de llegada del automóvil">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 3l5 5-1.5 1.5-5-5M3 21h18M3 21l8-8 5 5-8 8H3z" />
-                                        </svg>
-                                    </a>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                    d="M16 3l5 5-1.5 1.5-5-5M3 21h18M3 21l8-8 5 5-8 8H3z" />
+                                            </svg>
+                                        </a>
+                                    @elseif(auth()->user()->hasRole('Moderador'))
+                                        <a href="{{ route('moderador.edit2', $asignacion->id_asignacion) }}" 
+                                        class="inline-flex items-center justify-center w-8 h-8 text-green-600 border border-green-600 rounded hover:bg-green-600 hover:text-white"
+                                        title="Editar información de llegada del automóvil">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                    d="M16 3l5 5-1.5 1.5-5-5M3 21h18M3 21l8-8 5 5-8 8H3z" />
+                                            </svg>
+                                        </a>
                                     @endif
-                                @else  
+
+                                    @endif
+                                @else 
+                                
+                                @if(auth()->user()->hasRole('Administrador'))
                                     <a href="{{ route('vigilante.edit', $asignacion->id_asignacion) }}" class="inline-flex items-center justify-center w-8 h-8 text-yellow-600 border border-yellow-600 rounded hover:bg-yellow-600 hover:text-white" 
                                         title="Editar información de salida">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 3l5 5-1.5 1.5-5-5M3 21h18M3 21l8-8 5 5-8 8H3z" />
                                         </svg>
                                     </a>
+                                    @elseif(auth()->user()->hasRole('Moderador'))
+                                    <a href="{{ route('moderador.edit', $asignacion->id_asignacion) }}" class="inline-flex items-center justify-center w-8 h-8 text-yellow-600 border border-yellow-600 rounded hover:bg-yellow-600 hover:text-white" 
+                                        title="Editar información de salida">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 3l5 5-1.5 1.5-5-5M3 21h18M3 21l8-8 5 5-8 8H3z" />
+                                        </svg>
+                                    </a>
+                                    @endif
                                 @endif
                             </td>
                        

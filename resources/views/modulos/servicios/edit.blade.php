@@ -48,17 +48,17 @@
                     <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                         <!-- Selección de Automóvil -->
                         <div class="mb-4">
-                            <label for="id_automovil" class="block text-sm font-medium text-gray-700">Seleccionar Automóvil:</label>
-                            <select name="id_automovil" id="id_automovil" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" title="Selecciona el automóvil a actualizar">
-                                @foreach ($automoviles as $automovil)
-                                <option value="{{ $automovil->id_automovil }}" {{ (old('id_automovil') == $servicio->id_automovil) ? 'selected' : '' }}>
-                                    {{ $automovil->marca }} {{ $automovil->modelo }} ({{ $automovil->submarca }})
-                                </option>
-                                @endforeach
-                            </select>
-                            @error('id_automovil')
-                                <span class="text-sm text-red-600">{{ $message }}</span>
-                            @enderror
+                            <label for="id_automovil" class="mb-3 block text-base font-medium text-[#07074D]">Seleccionar Automóvil:</label>                                                  
+                                <select name="id_automovil" id="id_automovil" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" title="Actualizar automóvil">
+                                    @foreach ($automoviles as $automovil)
+                                        <option value="{{ $automovil->id_automovil }}" {{ (old('id_automovil', $servicio->id_automovil) == $automovil->id_automovil) ? 'selected' : '' }}>
+                                            {{ $automovil->marca }} {{ $automovil->modelo }} ({{ $automovil->submarca }})
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('id_automovil')
+                                    <span class="text-sm text-red-600">{{ $message }}</span>
+                                @enderror
                         </div>
                     
                         <!-- Tipo de Servicio -->

@@ -24,9 +24,15 @@
                     <li class="text-gray-500">/</li>
                     <!-- Solicitudes  -->
                     <li class="flex items-center">
-                        <a href="{{ route('vigilante.index') }}" title="Volver a la página de vigilante"  class="text-gray-800 hover:text-gray-800">
-                            Vigilante
-                        </a>
+                        @if(auth()->user()->hasRole('Administrador'))
+                            <a href="{{ route('vigilante.index') }}" title="Volver a la página de vigilante"  class="text-gray-800 hover:text-gray-800">
+                                Vigilante
+                            </a>
+                        @elseif(auth()->user()->hasRole('Moderador'))
+                            <a href="{{ route('moderador.vigilante') }}" title="Volver a la página de vigilante"  class="text-gray-800 hover:text-gray-800">
+                                Vigilante
+                            </a>
+                        @endif
                     </li>
                     <!-- Separador -->
                     <li class="text-gray-500">/</li>
@@ -44,7 +50,11 @@
             <div class="p-6 bg-white rounded-lg shadow-lg">
                 <h2 class="text-lg font-semibold text-gray-700 capitalize">Reporte Check-In</h2>
 
-                <form action="{{ route('update2', $asignacion->checkIns->first()->id_check) }}" method="POST">
+                @if(auth()->user()->hasRole('Administrador'))
+                    <form action="{{ route('admin.update2', $asignacion->checkIns->first()->id_check) }}" method="POST">
+                @elseif(auth()->user()->hasRole('Moderador'))
+                    <form action="{{ route('moderador.update2', $asignacion->checkIns->first()->id_check) }}" method="POST">
+                @endif
                     @csrf
                     @method('PUT')
 

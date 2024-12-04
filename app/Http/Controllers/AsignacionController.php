@@ -28,17 +28,17 @@ class AsignacionController extends Controller
             aut.marca, 
             aut.submarca, 
             aut.modelo, 
-            aut.estatusIn
+            aut.estatusIn,
+            asi.estatus
         FROM 
             automoviles AS aut
+        LEFT JOIN asignacions AS asi
+            ON aut.id_automovil = asi.id_automovil
+            AND asi.estatus IN ('Reservado', 'Ocupado', 'Autorizado')
         WHERE 
             aut.estatusIn = 'Disponible'
-            AND aut.id_automovil NOT IN (
-                SELECT id_automovil 
-                FROM asignacions 
-                WHERE estatus IN ('Reservado', 'Ocupado', 'Autorizado')
-        )"
-    );
+            AND asi.id_asignacion IS NULL"
+        );
 
         $reservU = Usuarios::all();
         return view('catalogos.asignacion.create', compact('auto', 'reservU'));

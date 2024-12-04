@@ -87,7 +87,7 @@ class UsuariosController extends Controller
             $img2 = $ldate . $img;
 
 
-            $file->move(public_path('img'), $img2);
+            $file->move(public_path('img/usuarios'), $img2);
 
             $input['foto'] = $img2;
         } else {
@@ -170,7 +170,7 @@ class UsuariosController extends Controller
             $img = $file->getClientOriginalName();
             $ldate = date('Ymd_His_');
             $img2 = $ldate . $img;
-            $file->move(public_path('img'), $img2);
+            $file->move(public_path('img/usuarios'), $img2);
     
             $input['foto'] = $img2;
         } else {
