@@ -140,7 +140,7 @@
                         </div>
                         <div class="px-3 py-3 border-b border-stroke dark:border-strokedark"></div>
 
-                        {{--3row --}}
+                        {{-- 3row --}}
                         <div class="flex flex-col gap-5.5 xl:flex-row mt-4  mb-4">
                             {{-- Kilometraje --}}
                             <div class="w-full px-3 xl:w-1/2">
@@ -317,13 +317,49 @@
                                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                 name="observaciones"></textarea>
                         </div>
+
                         {{-- foto --}}
                         <div class="pt-4 mb-6">
                             <h3 class="mb-5 block text-xl font-semibold text-[#07074D]">
                                 Subir Archivos
                             </h3>
-                            <input type="file" name="fotografias[]" id="fotografias" multiple />
+                            <input type="file" name="fotografias[]" id="fotografias" class="sr-only" multiple />
+                            <div class="mb-8">
+                                <label for="fotografias"
+                                    class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
+                                    <div>
+                                        <span
+                                            class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
+                                            Buscar
+                                        </span>
+                                        <div id="file-info" class="mt-4">
+                                            <span id="file-count">0 archivos seleccionados..</span>
+                                            <ul id="file-names" class="pl-5 list-disc"></ul>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
                         </div>
+
+                        <script>
+                            const fileInput = document.getElementById('fotografias');
+                            const fileCountDisplay = document.getElementById('file-count');
+                            const fileNamesDisplay = document.getElementById('file-names');
+
+                            fileInput.addEventListener('change', function() {
+                                const files = fileInput.files;
+                                const fileCount = files.length;
+                                fileCountDisplay.textContent = `${fileCount} archivos seleccionados`;
+                                fileNamesDisplay.innerHTML = '';
+
+                                for (let i = 0; i < fileCount; i++) {
+                                    const listItem = document.createElement('li');
+                                    listItem.textContent = files[i].name;
+                                    fileNamesDisplay.appendChild(listItem);
+                                }
+                            });
+                        </script>
+
                     </div>
                     {{-- BTN --}}
                     <div class="flex justify-end gap-4 mt-4">

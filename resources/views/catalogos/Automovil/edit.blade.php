@@ -287,30 +287,48 @@
                             class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                             name="observaciones"></textarea>
                     </div>
-                    {{-- foto --}}
-                    <div class="pt-4 mb-6">
-                        <label class="mb-5 block text-xl font-semibold text-[#07074D]">
-                            Subir Archivos
-                        </label>
-                        <div class="mb-8">
-                            <input type="file" name="fotografias" id="fotografias" class="sr-only" multiple   title="Actualizar fotografías del automóvil" />
-                            <label for="fotografias"
-                                class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
-                                <div>
-                                    <span
-                                        class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
-                                        Buscar
-                                    </span>
-                                    <div id="file-info" class="mt-4">
-                                        <span id="file-count">0 archivos seleccionados..</span>
-                                        <ul id="file-names" class="pl-5 list-disc"></ul>
+
+                        {{-- foto --}}
+                        <div class="pt-4 mb-6">
+                            <h3 class="mb-5 block text-xl font-semibold text-[#07074D]">
+                                Subir Archivos
+                            </h3>
+                            <input type="file" name="fotografias[]" id="fotografias" class="sr-only" multiple />
+                            <div class="mb-8">
+                                <label for="fotografias"
+                                    class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
+                                    <div>
+                                        <span
+                                            class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
+                                            Buscar
+                                        </span>
+                                        <div id="file-info" class="mt-4">
+                                            <span id="file-count">0 archivos seleccionados..</span>
+                                            <ul id="file-names" class="pl-5 list-disc"></ul>
+                                        </div>
                                     </div>
-                                </div>
-
-                            </label>
+                                </label>
+                            </div>
                         </div>
-                    </div>
 
+                        <script>
+                            const fileInput = document.getElementById('fotografias');
+                            const fileCountDisplay = document.getElementById('file-count');
+                            const fileNamesDisplay = document.getElementById('file-names');
+
+                            fileInput.addEventListener('change', function() {
+                                const files = fileInput.files;
+                                const fileCount = files.length;
+                                fileCountDisplay.textContent = `${fileCount} archivos seleccionados`;
+                                fileNamesDisplay.innerHTML = '';
+
+                                for (let i = 0; i < fileCount; i++) {
+                                    const listItem = document.createElement('li');
+                                    listItem.textContent = files[i].name;
+                                    fileNamesDisplay.appendChild(listItem);
+                                }
+                            });
+                        </script>
                     {{-- BTN --}}
                     <div class="flex justify-end mt-6 space-x-4">
                         <a href="{{ route('Automovil.index') }}" title="Cancelar edición" class="px-4 py-2 text-gray-700 bg-gray-200 rounded-md shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">Cancelar</a>
