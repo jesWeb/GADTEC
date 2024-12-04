@@ -102,11 +102,13 @@
 
             {{-- Enlace de Vigilante --}}
             <div class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 17.25h18M3 12h10.5M3 6.75h15" />
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 6.75V12M10.5 12V17.25M16.5 12V17.25" />
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="7" r="4" />
+                    <path d="M20 21c0-2.761-2.686-5-6-5H10c-3.314 0-6 2.239-6 5v1h16v-1z" />
+                    <rect x="9" y="15" width="6" height="1" rx="0.5" />
+                    <path d="M14 2h6v2h-6zM4 2h6v2H4z" />
                 </svg>
+
 
                 <x-nav-link :href="route('vigilante.index')" :active="request()->routeIs('vigilante.index')" title="Ver módulo de vigilante">
                     {{-- nombre del link --}}
@@ -163,10 +165,11 @@
 
         {{-- Enlace de Vigilante --}}
         <div class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3 17.25h18M3 12h10.5M3 6.75h15" />
-                <path stroke-linecap="round" stroke-linejoin="round" d="M5 6.75V12M10.5 12V17.25M16.5 12V17.25" />
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="7" r="4" />
+                <path d="M20 21c0-2.761-2.686-5-6-5H10c-3.314 0-6 2.239-6 5v1h16v-1z" />
+                <rect x="9" y="15" width="6" height="1" rx="0.5" />
+                <path d="M14 2h6v2h-6zM4 2h6v2H4z" />
             </svg>
 
             <x-nav-link :href="route('moderador.vigilante')" :active="request()->routeIs('moderador.vigilante')" title="Ver entradas y salidas de vehículos">

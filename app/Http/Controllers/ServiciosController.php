@@ -84,7 +84,7 @@ class ServiciosController extends Controller
              $ldate = date('Ymd_His_');
              $comprobante = $ldate . $comprobante;
      
-             $file->move(public_path('img'), $comprobante);
+             $file->move(public_path('img/servicios'), $comprobante);
              $input['comprobante'] = $comprobante;
          }
      
@@ -184,7 +184,7 @@ class ServiciosController extends Controller
              $ldate = date('Ymd_His_');
              $comprobante = $ldate . $comprobante;
      
-             $file->move(public_path('img'), $comprobante);
+             $file->move(public_path('img/servicios'), $comprobante);
              $input['comprobante'] = $comprobante;
          }
      

@@ -93,9 +93,9 @@
                             </td>
                             <td class="px-4 py-2 border">
                                 @if($multa->comprobante)
-                                    <img src="{{ asset('img/' . $multa->comprobante) }}"
+                                    <img src="{{ url('img/multas/' . $multa->comprobante) }}"
                                         alt="Comprobante" class="inline-flex items-center object-cover w-16 h-16 ">
-                                    <a href="{{ asset('img/' . $multa->comprobante) }}" target="_blank" class="text-blue-600 hover:underline" title="Ver comprobante de multa">Ver Comprobante</a>
+                                    <a href="{{ url('img/multas/' . $multa->comprobante) }}" target="_blank" class="text-gray-600 " title="Ver comprobante de multa">Ver Comprobante</a>
                                 @else
                                     <span class="text-gray-500">Sin comprobante</span>
                                 @endif

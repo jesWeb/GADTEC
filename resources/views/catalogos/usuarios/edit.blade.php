@@ -53,7 +53,7 @@
 
                 <!-- Imagen de Usuario a la derecha -->
                 <div>
-                    <img src="{{ asset('img/' . $usuario->foto) }}" alt="Foto de Usuario" class="object-cover w-16 h-16 border-4 border-indigo-500 rounded-full">
+                    <img src="{{ url('img/usuarios/' . $usuario->foto) }}" alt="Foto de Usuario" class="object-cover w-16 h-16 border-4 border-indigo-500 rounded-full">
                 </div>
             </div>
 

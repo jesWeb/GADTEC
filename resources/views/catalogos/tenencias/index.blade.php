@@ -97,7 +97,7 @@
                                 </td>
                                 <td class="px-4 py-2 border">
                                     @if ($tenencia->comprobante && $tenencia->comprobante !== 'N/A')
-                                        <img src="{{ asset('img/' . $tenencia->comprobante) }}" alt="Comprobante de tenencia"
+                                        <img src="{{ url('img/tenencias/' . $tenencia->comprobante) }}" alt="Comprobante de tenencia"
                                              class="object-cover w-16 h-16">
                                     @else
                                         <span class="text-gray-500">Sin comprobante</span>

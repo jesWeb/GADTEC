@@ -22,6 +22,8 @@ class CheckIn extends Model
         'combustible_llegada',
         'hora_llegada',
         'fecha_llegada', 
+        'fotografias_salida',
+        'fotografias_regreso'
     ];
 
     protected $casts = [

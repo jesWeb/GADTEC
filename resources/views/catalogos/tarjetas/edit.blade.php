@@ -142,7 +142,7 @@
                         <div class="col-span-2 mb-4">
                             <label for="fotografia_frontal" class="mb-3 block text-base font-medium text-[#07074D]">Fotografía Frontal:</label>
                             @if ($tarjeta->fotografia_frontal)
-                                <img src="{{ asset('img/' . $tarjeta->fotografia_frontal) }}" alt="fotografia_frontal" class="object-cover w-32 h-32 mt-2 rounded-md">
+                                <img src="{{ asset('img/tarjetas/' . $tarjeta->fotografia_frontal) }}" alt="fotografia_frontal" class="object-cover w-32 h-32 mt-2 rounded-md">
                             @else
                                 <p class="mt-2 text-sm text-gray-500">No hay comprobante cargado.</p>
                             @endif

@@ -68,18 +68,18 @@
                                 {{ $automovil->submarca }} {{ $automovil->modelo }}</p>
                             <!-- Carrusel de imágenes -->
                             <div class="w-full">
-    <div class="flex justify-start gap-4 p-4 overflow-x-auto">
-        @php
-            $fotografias = json_decode($automovil->fotografias, true);
-        @endphp
+                                <div class="flex justify-start gap-4 p-4 overflow-x-auto">
+                                    @php
+                                        $fotografias = json_decode($automovil->fotografias, true);
+                                    @endphp
 
-        @if ($fotografias)
-            @foreach ($fotografias as $foto)
-                <img src="{{ asset('img/automoviles/' . $foto) }}" alt="Imagen del Vehículo" class="w-20 h-auto transition-transform duration-300 transform rounded-lg shadow-md hover:scale-90 hover:shadow-lg">
-            @endforeach
-        @endif
-    </div>
-</div>
+                                    @if ($fotografias)
+                                        @foreach ($fotografias as $foto)
+                                            <img src="{{ asset('img/automoviles/' . $foto) }}" alt="Imagen del Vehículo" class="w-20 h-auto transition-transform duration-300 transform rounded-lg shadow-md hover:scale-90 hover:shadow-lg">
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
 
 
 

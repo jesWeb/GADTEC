@@ -144,7 +144,7 @@
                         <div>
                             <label class="block text-base font-medium text-[#07074D]" for="comprobante">Comprobante</label>
                             @if ($servicio->comprobante)
-                                <img src="{{ asset('img/' . $servicio->comprobante) }}" alt="comprobante" class="object-cover w-32 h-32 mt-2 rounded-md">
+                                <img src="{{ url('img/servicios/' . $servicio->comprobante) }}" alt="comprobante" class="object-cover w-32 h-32 mt-2 rounded-md">
                             @else
                                 <p class="mt-2 text-sm text-gray-500">No hay comprobante cargado.</p>
                             @endif

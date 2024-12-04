@@ -92,8 +92,14 @@
 
                         <!-- Fotografía -->
                         <div class="p-4 bg-white rounded-lg shadow-sm">
-                            <p class="text-lg font-semibold text-gray-800">Fotografía Frontal</p>
-                            <img src="{{ asset('img/' . $tarjeta->fotografia_frontal) }}" alt="Foto frontal" class="object-cover w-16 h-16 mt-4 rounded-lg">
+                            @if($tarjeta->comprobante=='')
+                                <p class="text-lg font-semibold text-gray-800">Fotografía Frontal</p>
+                                <img src="{{ url('img/tarjetas/' . $tarjeta->fotografia_frontal) }}" alt="Foto frontal" class="object-cover w-20 h-16 mt-4 rounded-lg">
+                                <a href="{{ url('img/tarjetas/' . $tarjeta->fotografia_frontal) }}" target="_blank" class="text-gray-500">Ver comprobante</a> 
+                            
+                            @else
+                                <p class="text-gray-600">No hay comprobante disponible</p>
+                            @endif
                         </div>
                     </div>
 

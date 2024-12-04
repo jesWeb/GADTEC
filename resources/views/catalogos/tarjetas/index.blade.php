@@ -97,7 +97,7 @@
                                 <td class="px-4 py-2 border">{{ $tarjeta->estatus }}</td>
                                 <td class="px-4 py-2 border">
                                     @if ($tarjeta->fotografia_frontal)
-                                        <img src="{{ asset('img/' . $tarjeta->fotografia_frontal) }}"
+                                        <img src="{{ url('img/tarjetas/' . $tarjeta->fotografia_frontal) }}"
                                             alt="Fotografía Frontal" class="object-cover w-16 h-16">
                                     @else
                                         <span class="text-gray-500">N/A</span>

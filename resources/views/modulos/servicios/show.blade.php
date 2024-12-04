@@ -81,8 +81,16 @@
                     </div>
 
                     <div class="p-6 bg-transparent rounded-lg shadow-sm">
-                        <p class="text-lg font-medium text-gray-800">Comprobante:</p>
-                        <img src="{{ asset('img/' . $servicio->comprobante) }}" alt="Comprobante de servicio" class="w-full h-auto rounded-md shadow-sm">
+                        @if($servicio->comprobante)
+                            <p class="text-lg font-medium text-gray-800">Comprobante:</p>
+                            <img src="{{ url('img/servicios/' . $servicio->comprobante) }}" alt="Comprobante de servicio" class="w-20 h-16 rounded-md shadow-sm">
+                            <a href="{{ url('img/servicios/' . $servicio->comprobante) }}" target="_blank" class="text-gray-600 " title="Ver comprobante">
+                                Ver Comprobante
+                            </a>
+                        @else
+                            <span class="text-gray-500">Sin comprobante</span>
+                        @endif
+                        
                     </div>
                 </div>
                 

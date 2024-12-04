@@ -102,7 +102,7 @@
                                 <td class="px-4 py-2 border">{{ $servicio->lugar_servicio }}</td>
                                 <td class="px-4 py-2 text-sm border">
                                     @if($servicio->comprobante)
-                                        <a href="{{ asset('img/' . $servicio->comprobante) }}" target="_blank" class="text-blue-600 hover:underline" title="Ver comprobante">
+                                        <a href="{{ url('img/servicios/' . $servicio->comprobante) }}" target="_blank" class="text-gray-600 " title="Ver comprobante">
                                             Ver Comprobante
                                         </a>
                                     @else

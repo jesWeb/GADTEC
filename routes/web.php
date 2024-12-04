@@ -64,6 +64,7 @@ Route::middleware('auth')->group(function () {
 
         // Rutas para la gestión de autorizantes
         Route::resource('/administrador/autorizante', AutorizanteController::class);
+        Route::get('/administrador/gestion/{id_automovil}', [GestionController::class, 'show'])->name('show.admin');
 
         // Rutas de Estadísticas y Reportes
         Route::get('/catalogos', [CatalogosController::class, 'index'])->name('catalogos.index');
@@ -104,7 +105,7 @@ Route::middleware('auth')->group(function () {
     // Rutas comunes para Administrador y Moderador
     Route::middleware('role:Administrador|Moderador')->group(function () {
         Route::get('/gestion', [GestionController::class, 'index'])->name('Gestion');
-        Route::get('/gestion/{id_asignacion}', [GestionController::class, 'show'])->name('show.gestion');
+        
     });
 
     // Rutas comunes para Administrador y Usuario

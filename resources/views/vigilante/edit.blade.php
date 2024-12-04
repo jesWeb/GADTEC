@@ -48,9 +48,9 @@
             <div class="p-6 bg-white rounded-lg shadow-lg">
                 <h2 class="text-lg font-semibold text-gray-700 capitalize">Reporte Check-In</h2>
             @if(auth()->user()->hasRole('Administrador'))
-                <form action="{{ route('vigilante.update', $asignacion->id_asignacion) }}" method="POST">
+                <form action="{{ route('vigilante.update', $asignacion->id_asignacion) }}" method="POST" enctype="multipart/form-data">
             @elseif(auth()->user()->hasRole('Moderador'))
-                <form action="{{ route('update.vigilante', $asignacion->id_asignacion) }}" method="POST">
+                <form action="{{ route('update.vigilante', $asignacion->id_asignacion) }}" method="POST" enctype="multipart/form-data">
             @endif
                 @csrf
                     @method('PUT')
@@ -113,7 +113,15 @@
                                     class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-200" 
                                     required>
                             </div>
-                            
+                            {{-- foto --}}
+                            <div>
+                                <h3 class="mb-5 block text-xl font-semibold text-[#07074D]">
+                                    Subir Archivos
+                                </h3>
+                                <input type="file" name="fotografias_regreso[]" id="fotografias_salida" multiple />
+
+
+                            </div>
 
 
  

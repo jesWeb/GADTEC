@@ -46,15 +46,27 @@
                                 {{ $dispo->placas ? $dispo->placas : 'No disponible' }}
                             </td>
                             <td class="px-4 py-2 text-center border">
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium 
-                                    {{ 
-                                        $dispo->estatus_final == 'Mantenimiento' ? 'bg-yellow-100 text-yellow-800' :
-                                        ($dispo->estatus_final == 'Disponible' ? 'bg-green-100 text-green-800' : 
-                                        ($dispo->estatus_final == 'No disponible' ? 'bg-gray-100 text-gray-800' : 
-                                        ($dispo->estatus_final == 'En servicio' ? 'bg-pink-100 text-pink-800' : '')))
-                                    }}">
-                                    {{ $dispo->estatus_final }}
-                                </span>
+                            @if ($dispo->estatus)
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium
+                                            {{ 
+                                                $dispo->estatus == 'Reservado' ? 'bg-orange-100 text-orange-800' : 
+                                                ($dispo->estatus == 'Ocupado' ? 'bg-red-100 text-red-800' :
+                                                ($dispo->estatus == 'Autorizado' ? 'bg-blue-100 text-blue-800' :
+                                                ($dispo->estatus == 'Disponible' ? 'bg-green-100 text-green-800' : ''))) 
+                                            }}">
+                                            {{ $dispo->estatus }}
+                                        </span>
+                                    @else
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium 
+                                            {{ 
+                                                $dispo->estatusIn == 'Mantenimiento' ? 'bg-yellow-100 text-yellow-800' :
+                                                ($dispo->estatusIn == 'Disponible' ? 'bg-green-100 text-green-800' : 
+                                                ($dispo->estatusIn == 'No disponible' ? 'bg-gray-100 text-gray-800' : 
+                                                ($dispo->estatusIn == 'En servicio' ? 'bg-pink-100 text-pink-800' : '')))
+                                            }}">
+                                            {{ $dispo->estatusIn }}
+                                        </span>
+                                    @endif
                             </td>
 
                             {{-- acciones --}}
@@ -62,8 +74,8 @@
                             <td class="px-4 py-2">
                                 <div class="flex items-center space-x-2 ">
                             
-                                    @if($dispo->estatus_final == 'Ocupado')
-                                        <a href="{{ route('show.gestion', ['id_asignacion' => $dispo->id_asignacion]) }}"
+                                    @if($dispo->estatus == 'Ocupado')
+                                        <a href="{{ route('show.admin', ['id_automovil' => $dispo->id_automovil]) }}"
                                             class="inline-flex items-center justify-center w-8 h-8 text-green-600 border border-green-600 rounded hover:bg-green-600 hover:text-white">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                 stroke="currentColor" class="w-4 h-4">
@@ -71,7 +83,7 @@
                                                     d="M12 3C6.48 3 2 12 2 12s4.48 9 10 9 10-9 10-9-4.48-9-10-9zm0 12c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z" />
                                             </svg>
                                         </a>
-                                    @elseif($dispo->estatus_final == 'Reservado')
+                                    @elseif($dispo->estatus == 'Reservado')
                                         <a href="{{ route('autorizar', $dispo->id_asignacion) }}"
                                             class="inline-flex items-center justify-center w-8 h-8 text-white border border-[#07074D] bg-indigo-600 rounded-md shadow-md hover:bg-indigo-700 hover:text-white hover:border-blue-950 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5">

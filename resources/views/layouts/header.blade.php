@@ -19,7 +19,7 @@
                     class="relative block w-8 h-8 ml-3 overflow-hidden rounded-full shadow focus:outline-none"
                     title="Cerrar sesión">
                 <img class="object-cover w-full h-full"
-                    src="{{ Auth::user()->foto ? asset('img/' . Auth::user()->foto) : 'shadow.png' }}"
+                    src="{{ Auth::user()->foto ? url('img/usuarios/' . Auth::user()->foto) : 'shadow.png' }}"
                     alt="Your avatar">
             </button>
         </div>

@@ -90,7 +90,7 @@
                             <tr class="hover:bg-gray-50">
                                 <td class="px-4 py-2 border">{{ $key + 1 }}</td>
                                 <td class="px-4 py-2 border">
-                                    <img src="{{ asset('img/' . $usuario->foto) }}" alt="Foto de usuario"
+                                    <img src="{{ url('img/usuarios/' . $usuario->foto) }}" alt="Foto de usuario"
                                         class="object-cover w-16 h-16">
                                 </td>
                                 <td class="px-4 py-2 border">{{ $usuario->num_empleado }}</td>

@@ -72,6 +72,8 @@ class VigilanteController extends Controller
         $checkIn->combustible_salida = $request->combustible_salida;
         $checkIn->hora_salida = $request->hora_salida;  // Usar la hora de salida proporcionada en la solicitud
     
+    
+        
         // Relacionar el check-in con la asignación
         $asignacion->checkIns()->save($checkIn);
         
@@ -133,6 +135,27 @@ class VigilanteController extends Controller
 
         $query -> save();
     
+
+
+       // Guardar fotografías de regreso
+        $fotografias_regreso = [];
+        if ($request->hasFile('fotografias_regreso')) {
+            $files = $request->file('fotografias_regreso');
+            // Limitar a 5 fotos
+            $files = array_slice($files, 0, 5);
+
+            foreach ($files as $file) {
+                $imgAuto = date('Ymd_His_') . $file->getClientOriginalName();
+                // Mover la imagen al directorio correspondiente
+                $file->move(public_path('img/checkin-regreso'), $imgAuto);
+                $fotografias_regreso[] = $imgAuto;  // Guardar nombre de archivo
+            }
+        }
+
+        // Convertir las rutas de las fotos a formato JSON
+        $input['fotografias_regreso'] = json_encode($fotografias_regreso);
+
+
     // Guardar los cambios en el registro existente
     $checkIn->save();
 

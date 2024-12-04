@@ -84,7 +84,7 @@ class TeneciasRefrendosController extends Controller
             $img2 = $ldate . $img;
 
             // Guarda la imagen en public/img
-            $file->move(public_path('img'), $img2);
+            $file->move(public_path('img/tenencias'), $img2);
 
             $input['comprobante'] = $img2;
         } else {

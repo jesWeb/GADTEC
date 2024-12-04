@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('body')
-<<<<<<< HEAD
 <div class="px-6 py-2">
         <!-- Mapa de sitio -->
         <div class="flex justify-end mt-2 mb-4">
@@ -45,23 +44,6 @@
                 <div class="text-center">
                     <h1 class="text-4xl font-extrabold text-gray-800">Detalle de Multa</h1>
                     <p class="mt-2 text-lg text-gray-600">Información completa sobre la multa seleccionada</p>
-=======
-<div class="container px-4 mx-auto">
-    <div class="flex justify-center mt-8">
-        <div class="w-full max-w-3xl p-8 bg-white shadow-lg rounded-xl">
-            <h1 class="pb-4 mb-6 text-4xl font-bold text-gray-800 border-b">Detalles de la Multa</h1>
-
-            <ol class="flex mb-6 space-x-2 text-sm text-gray-500">
-                <li class="breadcrumb-item">Inicio</li>
-                <li>/</li>
-                <li class="breadcrumb-item">Detalle Multa</li>
-            </ol>
-
-            <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
-                <div class="mb-4">
-                    <p class="text-xl font-medium text-gray-800">Vehículo:</p>
-                    <p class="text-2xl font-semibold text-green-600">{{ $multa->automovil->modelo }}</p>
->>>>>>> jesus
                 </div>
 
             <!-- Información de multas en dos columnas -->
@@ -76,17 +58,10 @@
                         <p class="text-lg text-gray-600">{{ $multa->tipo_multa }}</p>
                     </div>
 
-<<<<<<< HEAD
                     <div class="p-6 bg-transparent rounded-lg shadow-sm">
                         <p class="text-xl font-medium text-gray-800">Monto:</p>
                         <p class="text-lg text-gray-600">$ {{ $multa->monto }}</p>
                     </div>
-=======
-                <div class="mb-4">
-                    <p class="text-xl font-medium text-gray-800">Fecha de multa:</p>
-                    <p class="text-lg text-gray-600">  {{\Carbon\Carbon::parse( $multa->fecha_multa )->locale('es')->format('d-m-Y') }}</p>
-                </div>
->>>>>>> jesus
 
                     <div class="p-6 bg-transparent rounded-lg shadow-sm">
                         <p class="text-xl font-medium text-gray-800">Fecha de multa:</p>
@@ -105,8 +80,13 @@
                 
 
                     <div class="p-6 bg-transparent rounded-lg shadow-sm">
-                        <p class="text-xl font-medium text-gray-800">Comprobante:</p>
-                        <img src="{{ asset('img/' . $multa->comprobante) }}" alt="Comprobante de multa" class="w-full h-auto rounded-md shadow-sm">
+                        @if($multa->comprobante)
+                            <img src="{{ url('img/multas/' . $multa->comprobante) }}"
+                                alt="Comprobante" class="inline-flex items-center object-cover w-16 h-16 ">
+                            <a href="{{ url('img/multas/' . $multa->comprobante) }}" target="_blank" class="text-gray-600 " title="Ver comprobante de multa">Ver Comprobante</a>
+                        @else
+                            <span class="text-gray-500">Sin comprobante</span>
+                        @endif
                     </div>
 
                     <div class="p-6 bg-transparent rounded-lg shadow-sm">
