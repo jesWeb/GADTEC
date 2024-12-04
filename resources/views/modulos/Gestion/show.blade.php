@@ -60,7 +60,7 @@
                                             <td class="px-4 py-2 border">
                                                 @if ($salidas->nombre_chofer == 1 )
                                                     {{ $salidas->nombre_chofer }}
-                                                    
+
                                                 @else
                                                     <span class="text-gray-600">Sin chofer</span>
                                                 @endif
@@ -92,7 +92,7 @@
                                         <td class="px-4 py-2 border">
                                             @if ($salidas->nombre_chofer == 1 )
                                                 {{ $salidas->nombre_chofer }}
-                                                    
+
                                             @else
                                                 <span class="text-gray-600">Sin chofer</span>
                                             @endif
