@@ -53,12 +53,13 @@ class GestionController extends Controller
     //         )
     // ");
 
-    $disponibilidad = DB::select("SELECT aut.*, MAX(asi.estatus) AS estatus
-FROM automoviles AS aut
-LEFT JOIN asignacions AS asi ON aut.id_automovil = asi.id_automovil
-GROUP BY aut.id_automovil
-ORDER BY aut.marca");
-    
+    $disponibilidad = DB::select("
+    SELECT aut.*, asi.id_asignacion, MAX(asi.estatus) AS estatus
+    FROM automoviles AS aut
+    LEFT JOIN asignacions AS asi ON aut.id_automovil = asi.id_automovil
+    GROUP BY aut.id_automovil, asi.id_asignacion
+    ORDER BY aut.marca
+");
 
 
         

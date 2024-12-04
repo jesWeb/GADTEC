@@ -27,7 +27,9 @@ class CheckIn extends Model
     ];
 
     protected $casts = [
-        'fecha_llegada' => 'datetime', 
+        'fecha_llegada' => 'datetime',
+        'fotografias_salida' => 'array',
+        'fotografias_regreso' => 'array',
     ];
 
     public function asignacion()

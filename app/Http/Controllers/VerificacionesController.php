@@ -40,16 +40,22 @@ class VerificacionesController extends Controller
 
     public function store(Request $request)
     {
+        $request->merge([
+            'etiqueta_00' => $request->has('etiqueta_00') ? true : false
+        ]);
 
         // Validar entrada básica
         $request->validate([
             'id_automovil' => 'required|exists:automoviles,id_automovil',
             'engomado' => 'required|in:Verde,Amarillo,Rosa,Rojo,Azul',
-            'fechaV' => 'required|date',
+            'fechaV' => 'nullable|date|before_or_equal:today',
             'holograma' => 'required|string|max:255',
             'observaciones' => 'nullable|string',
             'image' => 'nullable|array|max:5',
-            'image.*' => 'file|mimes:jpg,png,jpeg|max:10240'
+            'image.*' => 'file|mimes:jpg,png,jpeg|max:10240',
+            'etiqueta_00' => 'nullable|boolean',
+            'motivo_00' => 'nullable|string|max:255',
+            'fecha_verificacion_00' => 'nullable|date|before_or_equal:today',
         ]);
 
         // Obtener el valor del engomado y la fecha
@@ -90,7 +96,7 @@ class VerificacionesController extends Controller
             $semestre = 'segundo';
         }
 
-        // Si no se encuentra un semestre válido, regresar con error
+        // Si no encuentra un semestre válido, regresar el error
         if (!$semestre) {
             return back()->withErrors([
                 'fechaV' => 'La fecha seleccionada no corresponde al engomado seleccionado.'
@@ -98,7 +104,27 @@ class VerificacionesController extends Controller
         }
 
         // Calcular la próxima fecha de verificación sumando 6 meses
-        $proximaVerificacion = $fechaV->copy()->addMonths(6);
+        // $proximaVerificacion = $fechaV->copy()->addMonths(6);
+
+        //verificar si es 00
+        $etiquetaDobleCero = $request->input('etiqueta_00');
+        if ($etiquetaDobleCero) {
+            $fechaV = null;
+            $proximaVerificacion = null;
+            // Obtener fecha  verificación ingresada por el usuario
+            $fechaVerificacionCero = Carbon::parse($request->input('fecha_verificacion_00'));
+            //  sumando 2 años a la fecha de verificación 00
+            $proximaVerificacion00 = $fechaVerificacionCero->copy()->addYears(2);
+
+            $motivoCero = $request->input('motivo_00');
+        } else {
+            //si no es 00 suma los 6b meses normales
+            $proximaVerificacion = $fechaV->copy()->addMonths(6);
+            $proximaVerificacion00 = null;
+
+            $motivoCero = null;
+        }
+
 
         //guardar fotografias
         $fotografias = [];
@@ -122,10 +148,13 @@ class VerificacionesController extends Controller
             'id_automovil' => $request->input('id_automovil'),
             'engomado' => $engomado,
             'holograma' => $request->input('holograma'),
-            'fecha_verificacion' => $fechaV->format('Y-m-d'),
-            'proxima_verificacion' => $proximaVerificacion->format('Y-m-d'),
+            'fecha_verificacion' => $etiquetaDobleCero ? null : ($fechaV ? $fechaV->format('Y-m-d') : null),
+            'proxima_verificacion' => $etiquetaDobleCero ? null : ($proximaVerificacion ? $proximaVerificacion->format('Y-m-d') : null),
             'observaciones' => $request->input('observaciones'),
             'image' => $input['image'],
+            'motivo_00' => $motivoCero,
+            'fecha_verificacion_00' => $etiquetaDobleCero ? $fechaVerificacionCero->format('Y-m-d') : null,
+            'proxima_verificacion_00' => $etiquetaDobleCero ? $proximaVerificacion00->format('Y-m-d') : null
         ]);
 
         return redirect()->route('verificaciones.index')->with('mensaje', 'Se ha registrado correctamente el registro');
