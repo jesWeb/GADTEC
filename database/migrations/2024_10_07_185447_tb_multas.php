@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('multas', function (Blueprint $table) {
             $table->bigIncrements('id_multa');
-            $table->string('tipo_multa', 100);
+            $table->enum('tipo_multa',  ['Federal', 'Estatal', 'Municipal'])->default('Estatal');
             $table->decimal('monto', 8, 2);
             $table->date('fecha_multa');
             $table->string('lugar', 100);
-            $table->enum('estatus', ['Pendiente', 'Pagada', 'Cancelada'])->default('Pendiente');
+            $table->enum('estatus', ['Pendiente', 'Pagada'])->default('Pendiente');
             $table->text('comprobante')->nullable();
             $table->text('observaciones')->nullable();
             $table->unsignedBigInteger('id_automovil');

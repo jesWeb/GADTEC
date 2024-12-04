@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class verificacion extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes;
 
 
     protected $table = 'verificacions';
@@ -16,14 +17,27 @@ class verificacion extends Model
 
     protected $fillable = [
         'id_automovil',
-        'holograma',
         'engomado',
-        'fechaV',
-        'fechaP',
+        'holograma',
+        'fecha_verificacion',
+        'proxima_verificacion',
         'observaciones',
-        'image'
+        'image',
+        'motivo_00',
+        'fecha_verificacion_00',
+        'proxima_verificacion_00'
     ];
-    public function automovil() {
+
+
+    protected $cats = [
+        'image' => 'array',
+    ];
+
+
+
+
+    public function automovil()
+    {
         return $this->belongsTo(Automoviles::class, 'id_automovil');
     }
 }

@@ -21,67 +21,30 @@ use App\Http\Controllers\JsController;
 use App\Http\Controllers\AutorizanteController;
 use App\Http\Controllers\ProfileController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Aquí es donde puedes registrar rutas web para tu aplicación.
-| Todas las rutas se cargan por medio del RouteServiceProvider.
-|
-*/
-
-
-
+// Rutas de autenticación
 Route::get('/', function () {
     return view('auth.login');
 });
 
-// Rutas de autenticación
-
+// Rutas de autenticación (Login, Logout y Restablecimiento de Contraseña)
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-
-// Rutas de restablecimiento de contraseña
 Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])->name('password.request');
 Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])->name('password.email');
 Route::get('/reset-password/{token}', [PasswordResetLinkController::class, 'edit'])->name('password.reset');
 Route::post('/reset-password', [PasswordResetLinkController::class, 'update'])->name('password.update');
 
-
 // Rutas protegidas por el middleware 'auth'
 Route::middleware('auth')->group(function () {
-    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-    Route::get('/gestion', function () {
-        return app(GestionController::class)->index();
-    })->name("Gestion");
-    Route::get('/gestion/{id_asignacion}', [GestionController::class, 'show'])->name('gestion');
-    
-    
-   // Rutas accesibles para los roles
-    Route::middleware('role:Administrador|Moderador')->group(function () {
-        Route::get('/gestion', [GestionController::class, 'index'])->name('Gestion');
-        Route::get('/gestion/{id_asignacion}', [GestionController::class, 'show'])->name('gestion');
-        Route::resource('vigilante', VigilanteController::class);
-        Route::get('/vigilante/edit2/{id}/', [VigilanteController::class, 'edit2'])->name('edit2');
-            Route::put('/vigilante/update2/{id_asignacion}', [VigilanteController::class, 'update2'])->name('update2');
-    
-    });
-
-    Route::middleware('role:Administrador|Usuario')->group(function () {
-        Route::resource('autorizante', AutorizanteController::class);
-
-    });
-
-
 
     // Rutas para el Administrador
     Route::middleware('role:Administrador')->group(function () {
-        Route::get('/dashboard', [GestionController::class, 'index'])->name('admin.dashboard');
+        // Dashboard del Administrador
+        Route::get('/dashboard', [GestionController::class, 'index'])->name("admin.dashboard");
+        
+        // Gestión de asignaciones y otros recursos
+        Route::get('/autorizar/update/{id_asignacion}', [GestionController::class, 'update'])->name('autorizar');
         Route::resource('usuarios', UsuariosController::class);
         Route::resource('Automovil', AutomovilController::class);
         Route::resource('asignacion', AsignacionController::class);
@@ -92,38 +55,61 @@ Route::middleware('auth')->group(function () {
         Route::resource('tenencias', TeneciasRefrendosController::class);
         Route::resource('multas', MultasController::class);
         Route::resource('servicios', ServiciosController::class);
+        
+        // Rutas para la gestión de vigilantes
         Route::resource('/administrador/vigilante', VigilanteController::class);
-        Route::get('/administrador/vigilante/edit2/{id}/', [VigilanteController::class, 'edit2'])->name('edit2');
-        Route::put('/admin/vigilante/update2/{id_asignacion}', [VigilanteController::class, 'update2'])->name('update2');
-        Route::resource('/administrador/autorizante', AutorizanteController::class);
-        Route::get('administrador/gestion/{id_asignacion}', [GestionController::class, 'show'])->name('gestion');
+        Route::get('/administrador/vigilante/edit2/{id}/', [VigilanteController::class, 'edit2'])->name('admin.edit2');
+        Route::put('/admin/vigilante/update2/{id_asignacion}', [VigilanteController::class, 'update2'])->name('admin.update2');
+        Route::get('/admin/vigilante/{id}', [VigilanteController::class, 'show'])->name('vigilante.admin');
 
+        // Rutas para la gestión de autorizantes
+        Route::resource('/administrador/autorizante', AutorizanteController::class);
+        Route::get('/administrador/gestion/{id_automovil}', [GestionController::class, 'show'])->name('show.admin');
+
+        // Rutas de Estadísticas y Reportes
         Route::get('/catalogos', [CatalogosController::class, 'index'])->name('catalogos.index');
-        Route::get('/estadisticas', [EstadisticasController::class, 'index']);
+        Route::get('/estadisticas', [EstadisticasController::class, 'index'])->name('estadisticas');
         Route::get('js_tipo_servicio', [JsController::class, 'js_tipo_servicio'])->name('js_tipo_servicio');
 
+        // Reportes PDF
         Route::get('/automoviles-pdf', [AutomovilController::class, 'generateReport'])->name('automoviles-pdf');
         Route::get('/multas-pdf', [MultasController::class, 'generateReport'])->name('multas-pdf');
         Route::get('/servicios-pdf', [ServiciosController::class, 'generateReport'])->name('servicios-pdf');
         Route::get('/usuarios-pdf', [UsuariosController::class, 'generateReport'])->name('usuarios-pdf');
 
+        // Rutas para los reportes de estadística de vehículos
         Route::get('/estadisticas/vehiculo/{id}/reporte', [EstadisticasController::class, 'generarReporte'])->name('estadisticas.generarReporte');
         Route::get('/estadisticas/vehiculo/{id}/reporte/descargar', [EstadisticasController::class, 'descargarReporte'])->name('estadisticas.descargarReporte');
     });
 
     // Rutas para el Moderador (Vigilante)
     Route::middleware('role:Moderador')->group(function () {
+        // Dashboard del Moderador
         Route::get('/moderador/dashboard', [GestionController::class, 'index'])->name('moderator.dashboard');
-        Route::resource('vigilante', VigilanteController::class);
-        Route::get('/vigilante/edit2/{id}/', [VigilanteController::class, 'edit2'])->name('edit2');
-        Route::put('/vigilante/update2/{id_asignacion}', [VigilanteController::class, 'update2'])->name('update2');
-        Route::get('/gestion/{id_asignacion}', [GestionController::class, 'show'])->name('gestion');
-    
+
+        // Gestión de vigilantes por parte del moderador
+        Route::get('/moderador/vigilante', [VigilanteController::class, 'index'])->name('moderador.vigilante');
+        Route::put('/vigilante/asignacion/{id_asignacion}', [VigilanteController::class, 'update'])->name('update.vigilante');
+        Route::get('/vigilante/edit/{id}/', [VigilanteController::class, 'edit'])->name('moderador.edit');
+        Route::get('/vigilante/edit2/{id}/', [VigilanteController::class, 'edit2'])->name('moderador.edit2');
+        Route::put('/vigilante/update2/{id_asignacion}', [VigilanteController::class, 'update2'])->name('moderador.update2');
+        Route::get('/vigilante/{id}', [VigilanteController::class, 'show'])->name('vigilante.show');
     });
 
     // Rutas para el Usuario
     Route::middleware('role:Usuario')->group(function () {
+        // Dashboard del Usuario
         Route::get('/user/dashboard', [AutorizanteController::class, 'index'])->name('user.dashboard');
-        // Agrega aquí otras rutas específicas para el usuario
+    });
+
+    // Rutas comunes para Administrador y Moderador
+    Route::middleware('role:Administrador|Moderador')->group(function () {
+        Route::get('/gestion', [GestionController::class, 'index'])->name('Gestion');
+        
+    });
+
+    // Rutas comunes para Administrador y Usuario
+    Route::middleware('role:Administrador|Usuario')->group(function () {
+        Route::resource('autorizante', AutorizanteController::class);
     });
 });

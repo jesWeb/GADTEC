@@ -11,11 +11,14 @@ return new class extends Migration
         Schema::create('verificacions', function (Blueprint $table) {
             $table->bigIncrements('id_verificacion');
             $table->unsignedBigInteger('id_automovil');
-            $table->string('holograma')->nullable();
-            $table->enum('engomado', ['Amarillo', 'azul', 'rojo', 'ninguno'])->default('ninguno');
+            $table->string('holograma');
+            $table->enum('engomado', ['Amarillo','Verde','Rosa' ,'Azul', 'Rojo']);
             $table->enum('estadoV', ['EdoMex', 'Morelos', 'CDMX']);
-            $table->date('fechaV')->nullable();
-            $table->date('fechaP')->nullable();
+            $table->string('motivo_00')->nullable();
+            $table->date('fecha_verificacion_00')->nullable();
+            $table->date('proxima_verificacion_00')->nullable();
+            $table->date('fecha_verificacion')->nullable();
+            $table->date('proxima_verificacion')->nullable();
             $table->text('observaciones')->nullable();
             $table->string('image')->nullable();
             //llave foranea
@@ -24,6 +27,7 @@ return new class extends Migration
             $table->softDeletes();
         });
     }
+
 
     public function down(): void
     {

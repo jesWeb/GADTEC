@@ -13,13 +13,15 @@ class CreateCheckInsTableV5 extends Migration
         Schema::create('check_ins', function (Blueprint $table) {
             $table->bigIncrements('id_check');
             $table->unsignedBigInteger('id_asignacion');
-            $table->decimal('km_salida', 8, 2)->nullable();
+            $table->float('km_salida', 8, 2)->nullable();
             $table->enum('combustible_salida', ['1/4', '1/2', '3/4', 'vacío', 'reserva', 'lleno'])->nullable();
-            $table->time('hora_salida')->nullable();
-            $table->decimal('km_llegada', 8, 2)->nullable();
-            $table->enum('combustible_llegada', ['1/4', '1/2', '3/4', 'vacío', 'reserva', 'lleno'])->nullable();
+            $table->string('hora_salida')->nullable();
+            $table->float('km_llegada', 8, 2)->nullable();
+            $table->enum('combustible_llegada', ['1/4', '1/2', '3/4', 'reserva', 'lleno'])->nullable();
             $table->time('hora_llegada')->nullable();
-            $table->date('fecha_llegada')->nullable();
+            $table->string('fecha_llegada')->nullable();
+            $table->string('fotografias_salida');
+            $table->string('fotografias_regreso')->nullable();
             $table->foreign('id_asignacion')->references('id_asignacion')->on('asignacions')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();

@@ -8,22 +8,42 @@ use App\Models\Usuarios;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
+
 class AsignacionController extends Controller
 {
 
     public function index()
     {
-        // $reservacion = asignacion::paginate(10);
-        $reservacion = asignacion::with('automovil','usuarios')->get();
+
+
+        $reservacion = asignacion::with('automovil', 'usuarios', 'checkIns')->get();
         return view('catalogos.asignacion.index', compact('reservacion'));
     }
 
     public function create()
     {
-        $auto = Automoviles::all();
+        
+        $auto = \DB::select("SELECT 
+            aut.id_automovil, 
+            aut.marca, 
+            aut.submarca, 
+            aut.modelo, 
+            aut.estatusIn,
+            asi.estatus
+        FROM 
+            automoviles AS aut
+        LEFT JOIN asignacions AS asi
+            ON aut.id_automovil = asi.id_automovil
+            AND asi.estatus IN ('Reservado', 'Ocupado', 'Autorizado')
+        WHERE 
+            aut.estatusIn = 'Disponible'
+            AND asi.id_asignacion IS NULL"
+        );
+
         $reservU = Usuarios::all();
         return view('catalogos.asignacion.create', compact('auto', 'reservU'));
     }
+
 
     public function store(Request $request)
     {
@@ -32,40 +52,32 @@ class AsignacionController extends Controller
             'id_automovil' => 'required|exists:automoviles,id_automovil',
             'telefono' => 'required|numeric',
             'fecha_salida' => 'required|date',
-            'hora_salida' => 'required',
+            'hora_salida' => 'nullable|date_format:H:i',
+            'hora_llegada' => 'nullable|date_format:H:i',
             'lugar' => 'required|string',
             'motivo' => 'required|string',
-            'estatus' => 'required|string',
             'no_licencia' => 'required|string',
             'condiciones' => 'nullable|string',
+            'autorizante' => 'nullable|string',
         ]);
-    
-        // Validación de existencia
-        $asigExt = asignacion::where('id_automovil', $request->id_automovil)
-            ->where('fecha_salida', $request->fecha_salida)
-            ->where('hora_salida', $request->hora_salida)
-            ->exists();
-    
-        if ($asigExt) {
-            return back()->withErrors(['error' => 'Ya existe una asignación para este auto en este horario.']);
-        }
-    
+
+        //verificar si ya esta a[partado]
+
+
         $newAsig = new asignacion($validated);
-        
-        // Asignar datos automáticamente
-        $newAsig->fecha_asignacion = date('Y-m-d');
-        $newAsig->fecha_estimada_dev = date('Y-m-d', strtotime('+5 days'));
-        
-    
-        // Si no se requiere chofer, asegurarse de que el campo `nombre_chofer` esté vacío
+
+        // Si no se requiere chofer, el campo nombre_chofer  debe estar vacío
         if (!$request->has('requierechofer')) {
             $newAsig->nombre_chofer = null;
         }
-    
+
         $newAsig->save();
-    
+
         return redirect()->route('asignacion.index')->with('success', 'Asignación creada con éxito.');
     }
+
+
+
 
     public function show($id)
     {
@@ -75,26 +87,28 @@ class AsignacionController extends Controller
 
     public function edit($id)
     {
-        // $EddtAsig = asignacion::findOrFail($id);
-        dd(asignacion::findOrFail($id)->toSql());
+        $EddtAsig = asignacion::findOrFail($id);
+        $reservU = Usuarios::all();  // Obtener todos los usuarios
 
-        return view('catalogos.asignacion.edit', compact('EddtAsig'));
+
+        return view('catalogos.asignacion.edit', compact('EddtAsig', 'reservU'));
     }
 
     public function update(Request $request, $id)
     {
-
         $EddtAsig = asignacion::findOrFail($id);
         $input = $request->all();
+        $reservU = Usuarios::all();  // Obtener todos los usuarios
         $EddtAsig->update($input);
 
-        return redirect()->route('asignacion.index')->with('message','Se ha actualizado el registro');
+        return redirect()->route('asignacion.index')->with('message', 'Se ha actualizado el registro');
     }
+
 
     public function destroy($id)
     {
         $DelAsg = asignacion::findOrFail($id);
         $DelAsg->delete();
-        return redirect()->route('asignacion.index')->with('eliminar','se ha eliminado el registro');
+        return redirect()->route('asignacion.index')->with('eliminar', 'se ha eliminado el registro');
     }
 }

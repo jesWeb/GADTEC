@@ -22,8 +22,6 @@ return new class extends Migration
             $table->unsignedBigInteger('id_automovil');
             $table->string('fotografia_frontal')->nullable();
             $table->boolean('activo')->default(0);  // borrado logico del sistema
-
-
             // Definición de la clave foránea (relación con automóviles)
             $table->foreign('id_automovil')->references('id_automovil')->on('automoviles')->onDelete('cascade');
             $table->timestamps();

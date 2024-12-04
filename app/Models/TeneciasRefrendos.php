@@ -17,7 +17,6 @@ class TeneciasRefrendos extends Model
         'monto',
         'año_correspondiente', 
         'estatus', 
-        'fecha_vencimiento',
         'comprobante',
         'observaciones',
         'activo',

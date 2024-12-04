@@ -22,14 +22,18 @@ class CheckIn extends Model
         'combustible_llegada',
         'hora_llegada',
         'fecha_llegada', 
+        'fotografias_salida',
+        'fotografias_regreso'
     ];
 
     protected $casts = [
-        'fecha_llegada' => 'datetime', 
+        'fecha_llegada' => 'datetime',
+        'fotografias_salida' => 'array',
+        'fotografias_regreso' => 'array',
     ];
 
     public function asignacion()
     {
-        return $this->belongsTo(Asignacion::class, 'id_asignacion');
+        return $this->belongsTo(asignacion::class, 'id_asignacion');
     }
 }

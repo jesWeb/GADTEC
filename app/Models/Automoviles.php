@@ -11,8 +11,8 @@ class Automoviles extends Model
 {
     use HasFactory, SoftDeletes;
 
-	protected $primaryKey = 'id_automovil';
-	protected $fillable = [
+    protected $primaryKey = 'id_automovil';
+    protected $fillable = [
         'marca',
         'submarca',
         'modelo',
@@ -28,44 +28,56 @@ class Automoviles extends Model
         'color',
         'num_puertas',
         'estatus',
+        'estatusIn',
         'fecha_registro',
         'responsable',
         'observaciones',
         'fotografias',
-        // 'activo',
     ];
 
+    //conevertir fotografias a json
+
+    protected $cats = [
+
+        'fotografias' => 'array',
+    ];
+
+
+
     //reacion uno a muchos
-    public function tarjetas() {
+    public function tarjetas()
+    {
         return $this->hasMany(TarjetaCirculacion::class, 'id_automovil');
     }
-    public function tenencias() {
+    public function tenencias()
+    {
         return $this->hasMany(TeneciasRefrendos::class, 'id_automovil');
     }
-    public function multas() {
+    public function multas()
+    {
         return $this->hasMany(Multas::class, 'id_automovil');
     }
-    public function servicios() {
+    public function servicios()
+    {
         return $this->hasMany(Servicios::class, 'id_automovil');
     }
 
-    public function verificacion(){
-        return  $this-> hasMany(verificacion::class,'id_automovil');
+    public function verificacion()
+    {
+        return  $this->hasMany(verificacion::class, 'id_automovil');
     }
 
-    public function asignacion(){
-        return $this->hasMany(asignacion::class,'id_automovil');
-    }
-    public function asignacionRev(){
-        return $this->belongsTo(asignacion::class,'id_asignacion');
-    }
-
-    public function siniestro(){
-        return $this->hasMany(siniestros::class,'id_automovil');
+    public function siniestro()
+    {
+        return $this->hasMany(siniestros::class, 'id_automovil');
     }
     //relacion uno a uno
-    public function seguro(){
-        return $this->hasOne(seguros::class,'id_automovil');
+    public function seguro()
+    {
+        return $this->hasOne(seguros::class, 'id_automovil');
     }
-
+    public function asignacion()
+    {
+        return $this->hasOne(asignacion::class, 'id_automovil');
+    }
 }

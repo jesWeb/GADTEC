@@ -55,7 +55,8 @@ class TarjetaCirculacionController extends Controller
             'fecha_vigencia' => 'required|date|after:fecha_expedicion',
             'estatus' => 'required|in:Vigente,Expirada,Suspendida',
             'id_automovil' => 'required|exists:automoviles,id_automovil',
-            'fotografia_frontal' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
+            'fotografias' => 'nullable|array|max:5',
+            'fotografia_frontal' => 'file|mimes:jpeg,png,jpg|max:10240'
         ];
 
         $messages = [
@@ -79,14 +80,15 @@ class TarjetaCirculacionController extends Controller
             $ldate = date('Ymd_His_');
             $imgFrontal = $ldate . $imgFrontal;
 
-            $file->move(public_path('img'), $imgFrontal);
+            $file->move(public_path('img/tarjetas'), $imgFrontal);
             $input['fotografia_frontal'] = $imgFrontal;
         }
-
 
         TarjetaCirculacion::create($input);
 
         return redirect()->route('tarjetas.index')->with('mensaje', 'Se ha creado correctamente el registro');
+
+
     }
 
     /**

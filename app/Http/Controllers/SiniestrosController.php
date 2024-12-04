@@ -41,18 +41,42 @@ class SiniestrosController extends Controller
     public function store(Request $request)
     {
 
-        $newSin = new siniestros();
-        $newSin->id_automovil = $request->input('id_automovil');
-        $newSin->fecha_siniestro = $request->input('fecha_siniestro');
-        $newSin->descripcion = $request->input('descripcion');
-         //limpieza de estring en costos
-        $costoDano = $request->input('costo_danos_estimados');
-        $newSin->costo_danos_estimados =  str_replace(',', '.',$costoDano);
-        $newSin->id_usuario = $request->input('id_usuario');
-        $newSin->observaciones = $request->input('observaciones');
+        // dd($request);
+        $rules = [
+            'id_automovil' => 'required|exists:automoviles,id_automovil',
+            'id_usuario' => 'required|exists:usuarios,id_usuario',
+            'monto' => 'required|numeric|min:0',
+            'porcentaje' => 'nullable|in:5,10,15',
+            'aplica_deducible' => 'nullable|boolean',
+            'fecha_siniestro' => 'required|date',
+            'reultado' => 'nullable|numeric|min:0',
+            'observaciones' => 'nullable|string|max:255',
+            'descripcion' => 'nullable|string|max:255',
+        ];
+
+        $request->validate($rules);
+        // $newSin->costo_danos_estimados =  str_replace(',', '.', $costoDano);
+        // ;
+
+        $montoSin = $request->input('monto');
+        $porcentajeSin = $request->input('porcentaje');
+        $aplica_deducible = $request->input('aplica_deducible') == 1 ? true : false;
+
+        if ($aplica_deducible) {
+            $operacionSin = $montoSin * ($porcentajeSin / 100);
+            $resultado = $montoSin - $operacionSin;
+        } else {
+            $resultado = $montoSin;
+        }
+
+        $input = $request->all();
+        $input['monto'] = $resultado;
+        // $input['resultado'] = $resultado;
 
         //guardamos datos en BD
-        $newSin->save();
+        siniestros::create($input);
+
+
 
         return redirect()->route('siniestros.index')->with('mensaje', 'Se ha creado Correctamente el registro');
     }
@@ -77,12 +101,50 @@ class SiniestrosController extends Controller
 
     public function update(Request $request,  $id)
     {
+        // $EddSin = siniestros::findOrFail($id);
+        // $input = $request->only(['fecha_siniestro', 'estatus', 'id_usuario', 'observaciones', 'descripcion']);
+        // $EddSin->update($input);
+        // return redirect()->route('siniestros.index')->with('message', 'Se ha modificado correctamente el Registro ');
+        // Buscar el registro a actualizar
         $EddSin = siniestros::findOrFail($id);
 
+        // Definir las reglas de validación
+        $rules = [
+            'id_automovil' => 'required|exists:automoviles,id_automovil',
+            'id_usuario' => 'required|exists:usuarios,id_usuario',
+            'monto' => 'required|numeric|min:0',
+            'porcentaje' => 'nullable|in:5,10,15',
+            'aplica_deducible' => 'nullable|boolean',
+            'fecha_siniestro' => 'required|date',
+            'reultado' => 'nullable|numeric|min:0',
+            'observaciones' => 'nullable|string|max:255',
+            'descripcion' => 'nullable|string|max:255',
+        ];
 
-        $input = $request->only(['fecha_siniestro', 'estatus', 'id_usuario', 'observaciones', 'descripcion']);
+        // Validar los datos de la solicitud
+        $request->validate($rules);
+
+        // Obtener los valores de la solicitud
+        $montoSin = $request->input('monto');
+        $porcentajeSin = $request->input('porcentaje');
+        $aplica_deducible = $request->input('aplica_deducible') == 1 ? true : false;
+
+        // Calcular el resultado si aplica deducible
+        if ($aplica_deducible) {
+            $operacionSin = $montoSin * ($porcentajeSin / 100);
+            $resultado = $montoSin - $operacionSin;
+        } else {
+            $resultado = $montoSin;
+        }
+
+        // Preparar los datos de la solicitud para la actualización
+        $input = $request->all();
+        $input['monto'] = $resultado;
+
+        // Actualizar el registro
         $EddSin->update($input);
-        return redirect()->route('siniestros.index')->with('message', 'Se ha modificado correctamente el Registro ');
+
+        return redirect()->route('siniestros.index')->with('message', 'Se ha modificado correctamente el Registro');
     }
 
 
