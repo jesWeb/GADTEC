@@ -21,11 +21,15 @@ class CheckIn extends Model
         'km_llegada',
         'combustible_llegada',
         'hora_llegada',
-        'fecha_llegada', 
+        'fecha_llegada',
+        'fotografias_salida',
+        'fotografias_regreso'
     ];
 
     protected $casts = [
-        'fecha_llegada' => 'datetime', 
+        'fecha_llegada' => 'datetime',
+        'fotografias_salida' => 'array',
+        'fotografias_regreso' => 'array',
     ];
 
     public function asignacion()

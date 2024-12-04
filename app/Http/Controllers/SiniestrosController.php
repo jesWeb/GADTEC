@@ -101,10 +101,50 @@ class SiniestrosController extends Controller
 
     public function update(Request $request,  $id)
     {
+        // $EddSin = siniestros::findOrFail($id);
+        // $input = $request->only(['fecha_siniestro', 'estatus', 'id_usuario', 'observaciones', 'descripcion']);
+        // $EddSin->update($input);
+        // return redirect()->route('siniestros.index')->with('message', 'Se ha modificado correctamente el Registro ');
+        // Buscar el registro a actualizar
         $EddSin = siniestros::findOrFail($id);
-        $input = $request->only(['fecha_siniestro', 'estatus', 'id_usuario', 'observaciones', 'descripcion']);
+
+        // Definir las reglas de validación
+        $rules = [
+            'id_automovil' => 'required|exists:automoviles,id_automovil',
+            'id_usuario' => 'required|exists:usuarios,id_usuario',
+            'monto' => 'required|numeric|min:0',
+            'porcentaje' => 'nullable|in:5,10,15',
+            'aplica_deducible' => 'nullable|boolean',
+            'fecha_siniestro' => 'required|date',
+            'reultado' => 'nullable|numeric|min:0',
+            'observaciones' => 'nullable|string|max:255',
+            'descripcion' => 'nullable|string|max:255',
+        ];
+
+        // Validar los datos de la solicitud
+        $request->validate($rules);
+
+        // Obtener los valores de la solicitud
+        $montoSin = $request->input('monto');
+        $porcentajeSin = $request->input('porcentaje');
+        $aplica_deducible = $request->input('aplica_deducible') == 1 ? true : false;
+
+        // Calcular el resultado si aplica deducible
+        if ($aplica_deducible) {
+            $operacionSin = $montoSin * ($porcentajeSin / 100);
+            $resultado = $montoSin - $operacionSin;
+        } else {
+            $resultado = $montoSin;
+        }
+
+        // Preparar los datos de la solicitud para la actualización
+        $input = $request->all();
+        $input['monto'] = $resultado;
+
+        // Actualizar el registro
         $EddSin->update($input);
-        return redirect()->route('siniestros.index')->with('message', 'Se ha modificado correctamente el Registro ');
+
+        return redirect()->route('siniestros.index')->with('message', 'Se ha modificado correctamente el Registro');
     }
 
 
