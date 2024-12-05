@@ -10,23 +10,18 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
-        rel="stylesheet" />
-    <!-- tooltip -->
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.js" defer></script>
-
-
-    {{-- Estilos de FilePond --}}
-    <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
-
-    <!-- Estilos y Scripts de  aplicación -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    {{-- Scripts adicionales --}}
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- FilePond JS -->
+    <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+    {{--  --}}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-
+    <!-- FilePond CSS -->
+    <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" />
 
 </head>
 
