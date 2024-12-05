@@ -48,13 +48,20 @@ class SiniestrosController extends Controller
             'monto' => 'required|numeric|min:0',
             'porcentaje' => 'nullable|in:5,10,15',
             'aplica_deducible' => 'nullable|boolean',
-            'fecha_siniestro' => 'required|date',
+            'fecha_siniestro' => 'required|date|before_or_equal:today',
             'reultado' => 'nullable|numeric|min:0',
             'observaciones' => 'nullable|string|max:255',
             'descripcion' => 'nullable|string|max:255',
         ];
+        $messages = [
+            'id_automovil' => 'Seleecciona un automovil',
+            'id_usuario' => 'Selecciona un usuario',
+            'monto' => 'el monto debe ser enteros y se parados por una coma',
+            'fecha_siniestro' => 'La fecha del Siniesro tiene que ser anterior ',
+            'descripcion' => 'Ingresa Una descripcion detallada del Siniestro',
+        ];
 
-        $request->validate($rules);
+        $request->validate($rules, $messages);
         // $newSin->costo_danos_estimados =  str_replace(',', '.', $costoDano);
         // ;
 
@@ -70,8 +77,9 @@ class SiniestrosController extends Controller
         }
 
         $input = $request->all();
-        $input['monto'] = $resultado;
-        // $input['resultado'] = $resultado;
+        $input['monto'] = $montoSin;
+        $input['resultado'] = $resultado;
+
 
         //guardamos datos en BD
         siniestros::create($input);
@@ -101,50 +109,24 @@ class SiniestrosController extends Controller
 
     public function update(Request $request,  $id)
     {
-        // $EddSin = siniestros::findOrFail($id);
-        // $input = $request->only(['fecha_siniestro', 'estatus', 'id_usuario', 'observaciones', 'descripcion']);
-        // $EddSin->update($input);
-        // return redirect()->route('siniestros.index')->with('message', 'Se ha modificado correctamente el Registro ');
-        // Buscar el registro a actualizar
         $EddSin = siniestros::findOrFail($id);
 
-        // Definir las reglas de validación
-        $rules = [
-            'id_automovil' => 'required|exists:automoviles,id_automovil',
-            'id_usuario' => 'required|exists:usuarios,id_usuario',
-            'monto' => 'required|numeric|min:0',
-            'porcentaje' => 'nullable|in:5,10,15',
-            'aplica_deducible' => 'nullable|boolean',
-            'fecha_siniestro' => 'required|date',
-            'reultado' => 'nullable|numeric|min:0',
-            'observaciones' => 'nullable|string|max:255',
-            'descripcion' => 'nullable|string|max:255',
-        ];
-
-        // Validar los datos de la solicitud
-        $request->validate($rules);
-
-        // Obtener los valores de la solicitud
         $montoSin = $request->input('monto');
         $porcentajeSin = $request->input('porcentaje');
-        $aplica_deducible = $request->input('aplica_deducible') == 1 ? true : false;
 
-        // Calcular el resultado si aplica deducible
-        if ($aplica_deducible) {
+        if ($porcentajeSin) {
             $operacionSin = $montoSin * ($porcentajeSin / 100);
-            $resultado = $montoSin - $operacionSin;
+            $resultado =  $operacionSin;
         } else {
             $resultado = $montoSin;
         }
 
-        // Preparar los datos de la solicitud para la actualización
-        $input = $request->all();
-        $input['monto'] = $resultado;
+        $input = $request->only(['fecha_siniestro', 'estatus', 'id_usuario', 'observaciones', 'descripcion','porcentaje','resultado']);
+        $input['monto'] = $montoSin;
+        $input['resultado'] = $resultado;
 
-        // Actualizar el registro
         $EddSin->update($input);
-
-        return redirect()->route('siniestros.index')->with('message', 'Se ha modificado correctamente el Registro');
+        return redirect()->route('siniestros.index')->with('message', 'Se ha modificado correctamente el Registro ');
     }
 
 

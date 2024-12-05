@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('body')
+
     <div class="px-6 py-2">
         <!-- Mapa de sitio -->
         <div class="flex justify-end mt-2 mb-4">
@@ -115,7 +116,9 @@
 
 
                                 <span>
-                                    <input type="checkbox"  class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"  name="aplica_deducible" id="aplica_deducible"  value="1"/>
+                                    <input type="checkbox"
+                                        class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                                        name="aplica_deducible" id="aplica_deducible" value="1" />
                                     <span>
 
                                         si
@@ -139,9 +142,10 @@
                             <!-- Campo de monto -->
                             <div>
                                 <label class="mb-3 block text-base font-medium text-[#07074D]" for="monto">
-                                    Ingresa el monto pagado:
+                                   Ingresa el monto:
                                 </label>
-                                <input type="number" name="monto" id="monto" placeholder="Ejemplo: 15000"  pattern="^\d*([,.]?\d+)?$" min="0"
+                                <input type="number" name="monto" id="monto" placeholder="Ejemplo: 15000"
+                                    pattern="^\d*([,.]?\d+)?$" min="0"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                             </div>
                             <!-- Campo de resultado -->
@@ -154,7 +158,6 @@
                             </div>
                         </div>
                         <script>
-
                             const aplicaDeducible = document.getElementById("aplica_deducible");
                             const porcentajeContainer = document.getElementById("porcentaje-container");
                             const porcentaje = document.getElementById("porcentaje");
@@ -162,8 +165,8 @@
                             const resultadoContainer = document.getElementById("resultado-container");
                             const resultado = document.getElementById("resultado");
 
-                            // Muestra yoculta el porcentaje cuando el checkbox activa
-                            aplicaDeducible.addEventListener("change", function () {
+                            // Muestra yo culta el porcentaje cuando el checkbox activa
+                            aplicaDeducible.addEventListener("change", function() {
                                 if (this.checked) {
                                     porcentajeContainer.classList.remove("hidden");
                                 } else {
@@ -180,7 +183,7 @@
 
                                 if (!isNaN(montoValue) && !isNaN(porcentajeValue)) {
                                     const deducible = montoValue * (porcentajeValue / 100);
-                                    const total = montoValue - deducible;
+                                    const total = deducible;
 
                                     resultado.value = total.toFixed(2);
                                     resultadoContainer.classList.remove("hidden");
@@ -193,8 +196,6 @@
                             // Eventos para recalcular resultado
                             porcentaje.addEventListener("change", calcularResultado);
                             monto.addEventListener("input", calcularResultado);
-
-
                         </script>
                     </div>
 
