@@ -106,7 +106,7 @@
                             <label for="monto" class="mb-3 block text-base font-medium text-[#07074D]">Monto Asegurado</label>
                             <input
                                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                value="{{ $EddSeg->monto }}" name="monto" id="monto" min="0" step="0.01" type="text" required
+                                value="{{ $EddSeg->monto }}" name="monto" id="monto" min="0" step="0.01" type="text"
                                 title="Actualizar el monto asegurado">
                         </div>
                         {{-- Estatus --}}
@@ -144,6 +144,25 @@
                             </label>
                         </div>
                     </div>
+
+                    <script>
+                            const fileInput = document.getElementById('poliza');
+                            const fileCountDisplay = document.getElementById('file-count');
+                            const fileNamesDisplay = document.getElementById('file-names');
+
+                            fileInput.addEventListener('change', function() {
+                                const files = fileInput.files;
+                                const fileCount = files.length;
+                                fileCountDisplay.textContent = `${fileCount} archivos seleccionados`;
+                                fileNamesDisplay.innerHTML = '';
+
+                                for (let i = 0; i < fileCount; i++) {
+                                    const listItem = document.createElement('li');
+                                    listItem.textContent = files[i].name;
+                                    fileNamesDisplay.appendChild(listItem);
+                                }
+                            });
+                        </script>
                 </div>
                 {{-- BTN --}}
                 <div class="flex justify-end mt-6 space-x-4">
