@@ -98,8 +98,8 @@
                                 <p class="text-gray-600">No hay comprobante disponible</p>
                                 
                             @else
-                            <img src="{{ url('img/tenencias/' . $tenencia->comprobante) }}" alt="Comprobante" class="object-cover w-20 h-16">
-                            <a href="{{ url('img/tenencias/' . $tenencia->comprobante) }}" target="_blank" class="text-gray-500">Ver comprobante</a> 
+                                <img src="{{ url('img/tenencias/' . $tenencia->comprobante) }}" alt="Comprobante" class="object-cover w-20 h-16">
+                                <a href="{{ url('img/tenencias/' . $tenencia->comprobante) }}" target="_blank" class="text-gray-500">Ver comprobante</a> 
                             @endif
                         </div>
                     </div>

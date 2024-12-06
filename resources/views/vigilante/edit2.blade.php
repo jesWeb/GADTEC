@@ -254,10 +254,10 @@
                     
                     @elseif(auth()->user()->hasRole('Moderador'))
                     <button type="submit" titile="Guardar datos de llegada"
-                                class="inline-flex items-center px-4 py-2 text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                                class="inline-flex items-center px-4 py-2 ml-2 text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
                                 Check-Out
                             </button>
-                        <a href="{{ route('moderador.vigilante') }}" titile="Cancelar registro de datos" class="inline-flex items-center px-4 py-2 text-white bg-gray-700 border border-transparent rounded-md shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Cancelar</a>
+                        <a href="{{ route('moderador.vigilante') }}" titile="Cancelar registro de datos" class="inline-flex items-center px-4 py-2 ml-2 text-white bg-gray-700 border border-transparent rounded-md shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Cancelar</a>
                     @endif
                         </div>
                     </form>
