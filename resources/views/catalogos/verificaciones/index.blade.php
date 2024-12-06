@@ -132,7 +132,7 @@
                                     @if ($vr->fecha_verificacion_00 && $vr->proxima_verificacion_00)
                                         {{ \Carbon\Carbon::parse($vr->fecha_verificacion_00)->locale('es')->format('d-m-Y') }}
                                     @else
-                                        {{ 'N/A' }}
+                                        {{ 'No aplica' }}
                                     @endif
                                     {{-- {{ \Carbon\Carbon::parse($vr->proxima_verificacion)->locale('es')->format('d-m-Y') }} --}}
 
@@ -142,7 +142,7 @@
                                     @if ($vr->fecha_verificacion_00 && $vr->proxima_verificacion_00)
                                         {{ \Carbon\Carbon::parse($vr->proxima_verificacion_00)->locale('es')->format('d-m-Y') }}
                                     @else
-                                        {{ 'N/A' }}
+                                        {{ 'No aplica' }}
                                     @endif
                                 </td>
                                 {{-- acciones --}}

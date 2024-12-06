@@ -68,7 +68,6 @@
                         <th class="px-4 py-2 text-left text-gray-600">Fecha</th>
                         <th class="px-4 py-2 text-left text-gray-600">Lugar</th>
                         <th class="px-4 py-2 text-left text-gray-600">Estatus</th>
-                        <th class="px-4 py-2 text-left text-gray-600">Comprobante</th>
                         <th class="px-4 py-2 text-left text-gray-600">Acciones</th>
                     </tr>
                 </thead>
@@ -91,15 +90,7 @@
                                     {{ $multa->estatus }}
                                 </span>
                             </td>
-                            <td class="px-4 py-2 border">
-                                @if($multa->comprobante)
-                                    <img src="{{ url('img/multas/' . $multa->comprobante) }}"
-                                        alt="Comprobante" class="inline-flex items-center object-cover w-16 h-16 ">
-                                    <a href="{{ url('img/multas/' . $multa->comprobante) }}" target="_blank" class="text-gray-600 " title="Ver comprobante de multa">Ver Comprobante</a>
-                                @else
-                                    <span class="text-gray-500">Sin comprobante</span>
-                                @endif
-                            </td>
+
                             <td class="px-4 py-2 border">
                                 <div class="flex items-center space-x-2">
                                     <!-- Ver -->

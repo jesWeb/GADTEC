@@ -138,21 +138,61 @@
                             @enderror
                         </div>
 
-                        <!-- Campo para subir fotografía frontal -->
-                        <div class="col-span-2 mb-4">
-                            <label for="fotografia_frontal" class="mb-3 block text-base font-medium text-[#07074D]">Fotografía Frontal:</label>
+                        <div class="mb-4">
                             @if ($tarjeta->fotografia_frontal)
-                                <img src="{{ asset('img/tarjetas/' . $tarjeta->fotografia_frontal) }}" alt="fotografia_frontal" class="object-cover w-32 h-32 mt-2 rounded-md">
+                                <img src="{{ asset('img/tarjetas/' . $tarjeta->fotografia_frontal) }}" alt="fotografia_frontal" class="object-cover w-16 h-16 mt-2 rounded-md">
+                                <a href="{{ url('img/tarjetas/' . $tarjeta->fotografia_frontal) }}" target="_blank" class="text-gray-500">Ver comprobante</a> 
                             @else
                                 <p class="mt-2 text-sm text-gray-500">No hay comprobante cargado.</p>
                             @endif
-                            <input type="file" name="fotografia_frontal" id="fotografia_frontal" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" 
-                            title="Actualizar la fotografía frontal de la tarjeta">
+
+                        </div>
+                        <!-- Campo para subir fotografía frontal -->
+                        <div class="col-span-2 mb-4">
+                            <label for="fotografia_frontal" class="mb-3 block text-base font-medium text-[#07074D]">Fotografía Frontal:</label>
+
+                            <div class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] mt-4 p-6 text-center">
+                                <input class="sr-only" type="file" name="fotografia_frontal" id="fotografia_frontal" accept="image/*" title="Actualizar la fotografía frontal de la tarjeta"/>
+                                <label for="fotografia_frontal" class="cursor-pointer">
+                                    <div class="flex flex-col items-center">
+                                        <span title="Actualizar la fotografía frontal de la tarjeta"
+                                            class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
+                                                Buscar
+                                        </span>
+                                        <!-- Información del archivo seleccionado -->
+                                        <div id="file-info" class="mt-4">
+                                            <span id="file-count">0 archivos seleccionados..</span>
+                                            <ul id="file-names" class="pl-5 list-disc"></ul>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                            
                             @error('fotografia_frontal')
                                 <span class="text-sm text-red-600">{{ $message }}</span>
                             @enderror
                         </div>
+
+                        <script>
+                            const fileInput = document.getElementById('fotografia_frontal');
+                            const fileCountDisplay = document.getElementById('file-count');
+                            const fileNamesDisplay = document.getElementById('file-names');
+
+                            fileInput.addEventListener('change', function() {
+                                const files = fileInput.files;
+                                const fileCount = files.length;
+                                fileCountDisplay.textContent = `${fileCount} archivos seleccionados`;
+                                fileNamesDisplay.innerHTML = '';
+
+                                for (let i = 0; i < fileCount; i++) {
+                                    const listItem = document.createElement('li');
+                                    listItem.textContent = files[i].name;
+                                    fileNamesDisplay.appendChild(listItem);
+                                }
+                            });
+                        </script>
                     </div>
+
                     
                     <!-- Botones -->
                     <div class="flex justify-end mt-6">

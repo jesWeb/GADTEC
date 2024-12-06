@@ -178,17 +178,104 @@ class VerificacionesController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validatedData = $request->all();
-        $ultimaFecha = \Carbon\Carbon::parse($validatedData['fechaV']);
-        $proximaV = $ultimaFecha->addMonths(6);
-        $input['fechaP'] = $proximaV->format('Y-m-d');
 
-        $EddVer = verificacion::findOrFail($id);
+        // Obtener la verificación existente
+        $EddVer = Verificacion::findOrFail($id);
+
+        // Obtener los valores de la solicitud y el engomado
+        $engomado = $request->input('engomado');
+        $fechaV = Carbon::parse($request->input('fechaV'));
+        $mes = $fechaV->month;
+
+        // Definir los rangos de meses según el engomado
+        $rangos = [
+            'Amarillo' => [
+                'primer' => [1, 2], // Enero, Febrero
+                'segundo' => [7, 8] // Julio, Agosto
+            ],
+            'Rosa' => [
+                'primer' => [2, 3], // Febrero, Marzo
+                'segundo' => [8, 9] // Agosto, Septiembre
+            ],
+            'Rojo' => [
+                'primer' => [3, 4], // Marzo, Abril
+                'segundo' => [9, 10] // Septiembre, Octubre
+            ],
+            'Verde' => [
+                'primer' => [4, 5], // Abril, Mayo
+                'segundo' => [10, 11] // Octubre, Noviembre
+            ],
+            'Azul' => [
+                'primer' => [5, 6], // Mayo, Junio
+                'segundo' => [11, 12] // Noviembre, Diciembre
+            ],
+        ];
+
+        // Determinar semestre válido
+        $semestre = null;
+        if (in_array($mes, $rangos[$engomado]['primer'])) {
+            $semestre = 'primer';
+        } elseif (in_array($mes, $rangos[$engomado]['segundo'])) {
+            $semestre = 'segundo';
+        }
+
+        // Verificar si el semestre es válido
+        if (!$semestre) {
+            return back()->withErrors([
+                'fechaV' => 'La fecha seleccionada no corresponde al engomado seleccionado.'
+            ])->withInput();
+        }
+
+        // Verificar si es un caso de 'etiqueta_00'
+        $etiquetaDobleCero = $request->input('etiqueta_00');
+        if ($etiquetaDobleCero) {
+            $fechaV = null;
+            $proximaVerificacion = null;
+            $fechaVerificacionCero = Carbon::parse($request->input('fecha_verificacion_00'));
+            $proximaVerificacion00 = $fechaVerificacionCero->copy()->addYears(2);
+
+            $motivoCero = $request->input('motivo_00');
+        } else {
+            $proximaVerificacion = $fechaV->copy()->addMonths(6);
+            $proximaVerificacion00 = null;
+
+            $motivoCero = null;
+        }
+
+        // Manejo de imágenes
+        $fotografias = $EddVer->image ? json_decode($EddVer->image, true) : [];
+
+        if ($request->hasFile('image')) {
+            $files = $request->file('image');
+            $files = array_slice($files, 0, 5); // Limitar a 5 imágenes
+            foreach ($files as $file) {
+                $imgVeri = date('Ymd_His_') . $file->getClientOriginalName();
+                $file->move(public_path('img/verificaciones'), $imgVeri);
+                $fotografias[] = $imgVeri;
+            }
+        }
+
+        // Actualizar el registro en la base de datos
         $input = $request->all();
-        $EddVer->update($input);
+        $input['image'] = json_encode($fotografias);
+
+        $EddVer->update([
+            'id_automovil' => $input['id_automovil'],
+            'engomado' => $input['engomado'],
+            'holograma' => $input['holograma'],
+            'fecha_verificacion' => $etiquetaDobleCero ? null : ($fechaV ? $fechaV->format('Y-m-d') : null),
+            'proxima_verificacion' => $etiquetaDobleCero ? null : ($proximaVerificacion ? $proximaVerificacion->format('Y-m-d') : null),
+            'observaciones' => $input['observaciones'],
+            'image' => $input['image'],
+            'motivo_00' => $motivoCero,
+            'fecha_verificacion_00' => $etiquetaDobleCero ? $fechaVerificacionCero->format('Y-m-d') : null,
+            'proxima_verificacion_00' => $etiquetaDobleCero ? $proximaVerificacion00->format('Y-m-d') : null
+        ]);
 
         return redirect()->route('verificaciones.index')->with('message', "Se ha actualizado correctamente el registro");
     }
+
+
 
     public function destroy($id)
     {

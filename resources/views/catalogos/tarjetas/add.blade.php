@@ -97,7 +97,7 @@
                         <div>
                             <label class="block text-base font-medium text-[#07074D]" for="vehiculo_origen">Vehículo de Origen</label>
                             <input class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                type="text" name="vehiculo_origen" value="{{ old('vehiculo_origen') }}" id="vehiculo_origen" placeholder="Ejemplo: Toyota Corolla" title="Ingresa el vehículo de origen">
+                                type="text" name="vehiculo_origen" value="{{ old('vehiculo_origen') }}" id="vehiculo_origen" placeholder="Ejemplo: Puebla" title="Ingresa el vehículo de origen">
                             <div id="VehiculoOrigenHelp" class="mt-1 text-sm text-red-600">
                                 @error('vehiculo_origen')<i>{{ $message }}</i>@enderror
                             </div>
@@ -134,17 +134,54 @@
                             </div>
                         </div>
 
+
                         <div>
-                            <label class="block text-base font-medium text-[#07074D]" for="fotografia_frontal">Fotografía Frontal</label>
-                            <input class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                type="file" name="fotografia_frontal" id="fotografia_frontal" accept="image/*" title="Selecciona una fotografía frontal de la tarjeta">
+                            <!-- Etiqueta para el campo -->
+                            <label class="block text-base font-medium text-[#07074D]" for="fotografia_frontal">
+                                Fotografía Frontal
+                            </label>
+                            <div class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] mt-4 p-6 text-center">
+                                <input class="sr-only" type="file" name="fotografia_frontal" id="fotografia_frontal" accept="image/*" title="Selecciona una fotografía frontal de la tarjeta" />
+                                <label for="fotografia_frontal" class="cursor-pointer">
+                                    <div class="flex flex-col items-center">
+                                        <span title="Selecciona una fotografía frontal de la tarjeta" 
+                                            class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
+                                                Buscar
+                                        </span>
+                                        <!-- Información del archivo seleccionado -->
+                                        <div id="file-info" class="mt-4">
+                                            <span id="file-count">0 archivos seleccionados..</span>
+                                            <ul id="file-names" class="pl-5 list-disc"></ul>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <!-- Mensaje de error -->
                             <div id="FotografiaFrontalHelp" class="mt-1 text-sm text-red-600">
                                 @error('fotografia_frontal')<i>{{ $message }}</i>@enderror
                             </div>
                         </div>
 
-                    </div>
+                        <script>
+                            const fileInput = document.getElementById('fotografia_frontal');
+                            const fileCountDisplay = document.getElementById('file-count');
+                            const fileNamesDisplay = document.getElementById('file-names');
 
+                            fileInput.addEventListener('change', function() {
+                                const files = fileInput.files;
+                                const fileCount = files.length;
+                                fileCountDisplay.textContent = `${fileCount} archivos seleccionados`;
+                                fileNamesDisplay.innerHTML = '';
+
+                                for (let i = 0; i < fileCount; i++) {
+                                    const listItem = document.createElement('li');
+                                    listItem.textContent = files[i].name;
+                                    fileNamesDisplay.appendChild(listItem);
+                                }
+                            });
+                        </script>
+                    </div>
                     <div class="flex justify-end mt-6">
                         <button type="submit" class="px-6 py-2 text-gray-200 bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700" title="Guardar los datos de la tarjeta">Guardar</button>
                         <a href="{{ route('tarjetas.index') }}">
