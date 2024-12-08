@@ -25,7 +25,7 @@ class VigilanteController extends Controller
     // Mostrar el formulario de edición
     public function edit($id)
     {
-        
+
         $asignacion = asignacion::findOrFail($id); // Obtener la asignación por ID
         $automoviles = Automoviles::all(); // Obtener todos los automóviles
         $usuarios = Usuarios::all(); // Obtener todos los usuarios
@@ -99,7 +99,7 @@ class VigilanteController extends Controller
             return redirect()->route('vigilante.index')->with('success', 'Check-In actualizado exitosamente.');
         } else  {
             return redirect()->route('moderador.vigilante');
-            
+
         }
     }
 
@@ -174,13 +174,13 @@ class VigilanteController extends Controller
 
 
 
-        $checkIn->save();
+
 
         if (auth()->user()->hasRole('Administrador') ) {
             return redirect()->route('vigilante.index')->with('success', 'Check-In actualizado exitosamente.');
         } else  {
             return redirect()->route('moderador.vigilante');
-            
+
         }
     }
 
