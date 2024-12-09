@@ -53,13 +53,19 @@ class GestionController extends Controller
     //         )
     // ");
 
-    $disponibilidad = DB::select("SELECT aut.*, MAX(asi.id_asignacion) AS id_asignacion,
-     MAX(asi.estatus) AS estatus
-    FROM automoviles AS aut
-    LEFT JOIN asignacions AS asi
-    ON aut.id_automovil = asi.id_automovil
-    GROUP BY aut.id_automovil
-    ORDER BY aut.marca");
+    $disponibilidad = \DB::select("SELECT aut.*,asi.id_asignacion, asi.estatus
+FROM automoviles AS aut
+LEFT JOIN
+    (SELECT id_automovil, id_asignacion, estatus
+     FROM asignacions
+     WHERE (id_automovil, id_asignacion) IN (
+            SELECT  id_automovil, MAX(id_asignacion)
+            FROM asignacions
+            GROUP BY id_automovil
+        )
+    ) AS asi
+ON aut.id_automovil = asi.id_automovil
+ORDER BY aut.marca");
 
 
 
@@ -72,10 +78,17 @@ class GestionController extends Controller
 
     public function show(string $id)
     {
+<<<<<<< HEAD
         $dispo = db::select("SELECT
             aut.marca,
             aut.submarca,
             aut.modelo,
+=======
+        $dispo = \DB::select("SELECT
+            aut.marca,
+            aut.submarca,
+            aut.modelo,
+>>>>>>> jesus
             asi.id_asignacion,
             asi.fecha_salida AS fecha,
             CONCAT(usu.nombre, ' ', usu.app, ' ', usu.apm) AS solicitante,
@@ -91,7 +104,11 @@ class GestionController extends Controller
         INNER JOIN usuarios AS usu ON asi.id_usuario = usu.id_usuario
         WHERE aut.id_automovil = $id");
 
+<<<<<<< HEAD
         $auto = db::select("SELECT CONCAT(aut.marca, ' ', aut.submarca, ' ', aut.modelo)
+=======
+        $auto = \DB::select("SELECT CONCAT(aut.marca, ' ', aut.submarca, ' ', aut.modelo)
+>>>>>>> jesus
         AS automovil
         FROM automoviles AS aut
         WHERE aut.id_automovil=$id");

@@ -29,7 +29,7 @@
             <div class="flex justify-between mb-3">
                 @foreach ($auto as $aut)
                     <h1 class="text-lg font-semibold text-gray-700 capitalize">
-                        {{ $aut->automovil }} 
+                        {{ $aut->automovil }} - Historial de Asignaciones
                     </h1>
                 @endforeach
             </div>
