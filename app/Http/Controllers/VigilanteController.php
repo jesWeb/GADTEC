@@ -53,7 +53,7 @@ class VigilanteController extends Controller
             'km_salida' => 'required|numeric',
             'combustible_salida' => 'required|string',
             'fotografias_salida' =>  'nullable|array|max:5',
-            'fotografias_salida.*' => 'file|mimes:jpeg,png,jpg|max:6000',
+            'fotografias_salida.*' => 'file|mimes:jpeg,png,jpg',
 
         ]);
 
@@ -95,6 +95,9 @@ class VigilanteController extends Controller
         // Relacionar el check-in con la asignación
         $asignacion->checkIns()->save($checkIn);
 
+        // Guardar los cambios en el registro existente
+        $checkIn->save();
+
         if (auth()->user()->hasRole('Administrador') ) {
             return redirect()->route('vigilante.index')->with('success', 'Check-In actualizado exitosamente.');
         } else  {
@@ -128,7 +131,7 @@ class VigilanteController extends Controller
             'km_llegada' => 'nullable|numeric',
             'combustible_llegada' => 'nullable|string',
             'fotografias_llegada' =>  'nullable|array|max:5',
-            'fotografias_llegada.*' => 'file|mimes:jpeg,png,jpg|max:6000', //30 mb
+            'fotografias_llegada.*' => 'file|mimes:jpeg,png,jpg', //30 mb
 
         ]);
 

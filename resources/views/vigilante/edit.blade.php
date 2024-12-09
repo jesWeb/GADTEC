@@ -258,7 +258,7 @@
 
     <script>
         $(document).ready(function () {
-            const maxFileSize = 6 * 1024 * 1024;
+            const maxFileSize = 20 * 1024 * 1024;
 
             $('#fotografias_salida').on('change', function () {
                 const file = this.files[0]; // archivo seleccionado
