@@ -200,7 +200,7 @@
                             <span class="mt-2 text-sm text-red-600">Tamaño limitado a 5 MB</span>
                             <br>
                             <span class="text-sm">Solo archivos: jpeg,png,jpg</span>
-                            <input type="file" name="fotografias_salida[]" id="fotografias_salida" class="sr-only"
+                            <input type="file" name="fotografias_salida[]" id="fotografias_salida" class="sr-only" accept="image/*"
                                 multiple />
                             <p id="errorMessage" class="text-red-600 error"></p>
                             <div class="mb-8">

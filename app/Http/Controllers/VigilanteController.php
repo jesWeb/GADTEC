@@ -171,7 +171,7 @@ class VigilanteController extends Controller
         if ($request->hasFile('fotografias_regreso')) {
             $files = $request->file('fotografias_regreso');
             //limitar a 5 fotos
-            $files = array_slice($files, 0, 5);
+            $files = array_slice($files, 0, 8);
 
             foreach ($request->file('fotografias_regreso') as $file) {
                 $imgOut = date('Ymd_His_') . $file->getClientOriginalName();

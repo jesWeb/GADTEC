@@ -206,7 +206,7 @@
                                 <br>
                                 <span class="text-sm">Solo archivos: jpeg,png,jpg</span>
 
-                            <input type="file" name="fotografias_regreso[]" id="fotografias_regreso" class="sr-only"
+                            <input type="file" name="fotografias_regreso[]" id="fotografias_regreso" class="sr-only" accept="image/*"
                                 multiple />
                             <p id="errorMessage" class="error"></p>
                             <div class="mb-8">

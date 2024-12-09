@@ -170,24 +170,6 @@
 
                         @if ($fotografiasSalida)
                             @foreach ($fotografiasSalida as $foto)
-<<<<<<< HEAD
-                                <img src="{{ asset('img/salidas/' . $foto) }}" alt="{{ $vigilante->automovil->marca }}{{ $vigilante->automovil->submarca}}{{ $vigilante->automovil->modelo }}"
-                                    class="object-cover w-full h-full transition-transform duration-300 transform rounded-lg shadow-md hover:scale-90 hover:shadow-lg">
-                            @endforeach
-                        @else
-                        @endif
-
-
-                    </div>
-                </div>
-
-
-
-                <!-- Fotografías de regreso -->
-                <div class="flex flex-col w-1/2 ml-4">
-                    <h1 class="p-4 text-lg font-semibold text-center text-gray-700">Fotografías de regreso del automóvil
-                    </h1>
-=======
                                 <img src="{{ asset('img/salidas/' . $foto) }}" alt="Imagen del Vehículo" class="object-cover w-full h-full transition-transform duration-300 transform rounded-lg shadow-md hover:scale-90 hover:shadow-lg">
                             @endforeach
                         @endif
@@ -199,13 +181,11 @@
                 <!-- Fotografías de regreso -->
                 <div class="flex flex-col w-1/2 ml-4">
                     <h1 class="p-4 text-lg font-semibold text-center text-gray-700">Fotografías de regreso del automóvil</h1>
->>>>>>> mitzi
                     <div class="flex gap-4 p-4 ml-4 overflow-x-auto">
                         @php
                             $fotografiasRegreso = json_decode($checkIn->fotografias_regreso, true);
                         @endphp
 
-<<<<<<< HEAD
 
                         @if ($fotografiasRegreso)
                             @foreach ($fotografiasRegreso as $foto)
@@ -216,13 +196,11 @@
                             <p>No hay fotografias Cargadas </p>
                         @endif
 
-=======
                         @if ($fotografiasRegreso)
                             @foreach ($fotografiasRegreso as $foto)
                                 <img src="{{ asset('img/llegadas/' . $foto) }}" alt="Imagen del Vehículo" class="object-cover w-full h-full transition-transform duration-300 transform rounded-lg shadow-md hover:scale-90 hover:shadow-lg">
                             @endforeach
                         @endif
->>>>>>> mitzi
                     </div>
                 </div>
             </div>
