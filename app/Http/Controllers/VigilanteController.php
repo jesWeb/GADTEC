@@ -25,7 +25,7 @@ class VigilanteController extends Controller
     // Mostrar el formulario de edición
     public function edit($id)
     {
-        
+
         $asignacion = asignacion::findOrFail($id); // Obtener la asignación por ID
         $automoviles = Automoviles::all(); // Obtener todos los automóviles
         $usuarios = Usuarios::all(); // Obtener todos los usuarios
@@ -52,9 +52,8 @@ class VigilanteController extends Controller
         $request->validate([
             'km_salida' => 'required|numeric',
             'combustible_salida' => 'required|string',
-            'fotografias_salida' =>  'nullable|array|max:5',
-            'fotografias_salida.*' => 'file|mimes:jpeg,png,jpg,pdf|max:10240',
-
+            'fotografias_salida.*' => 'image|mimes:jpeg,png,jpg|max:30720',
+            'fotografias_salida' =>  'array|max:5',
         ]);
 
         // Obtener la asignación
@@ -99,7 +98,7 @@ class VigilanteController extends Controller
             return redirect()->route('vigilante.index')->with('success', 'Check-In actualizado exitosamente.');
         } else  {
             return redirect()->route('moderador.vigilante');
-            
+
         }
     }
 
@@ -172,15 +171,11 @@ class VigilanteController extends Controller
         // Guardar los cambios en el registro existente
         $checkIn->save();
 
-
-
-        $checkIn->save();
-
         if (auth()->user()->hasRole('Administrador') ) {
             return redirect()->route('vigilante.index')->with('success', 'Check-In actualizado exitosamente.');
         } else  {
             return redirect()->route('moderador.vigilante');
-            
+
         }
     }
 
