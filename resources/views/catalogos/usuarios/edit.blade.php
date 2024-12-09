@@ -185,24 +185,48 @@
                             }
                         </script>
 
-
                         <!-- Selección de Imagen -->
                         <div class="flex flex-col items-center space-y-4">
-                            <label for="foto" class="block text-base font-medium text-gray-700">Seleccionar Imagen</label>
-
-                            <div class="relative w-40 h-40 overflow-hidden transition duration-300 ease-in-out border border-gray-300 border-dashed rounded-lg shadow-lg cursor-pointer bg-gray-50 hover:bg-gray-100 hover:shadow-xl">
-                                <input type="file" title="Actualizar la foto del usuario" name="foto" id="foto" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer">
-                                <div class="flex flex-col items-center justify-center h-full text-gray-500 transition duration-300 ease-in-out hover:text-indigo-600">
-                                    <!-- Icono de Cámara -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l2-2m0 0h3.5l1-1h7l1 1H19l2 2m-2 10V8H5v10a2 2 0 002 2h10a2 2 0 002-2zM12 12a3 3 0 110-6 3 3 0 010 6z" />
-                                    </svg>
-                                    <span class="text-sm font-medium">Subir imagen</span>
+                                <label for="foto" class="block text-base font-medium text-gray-700">Seleccionar Imagen</label>
+                                <div class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] mt-4 p-6 text-center">
+                                    <input type="file" name="foto" id="foto" accept="image/*"
+                                        class="absolute inset-0 opacity-0 cursor-pointer" title="Actualizar la foto del usuario">
+                                        <label for="foto" class="cursor-pointer">
+                                            <div class="flex flex-col items-center">
+                                                <span title="Selecciona una fotografía frontal de la tarjeta" 
+                                                    class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
+                                                        Buscar
+                                                </span>
+                                                
+                                                <div id="file-info" class="mt-4">
+                                                    <span id="file-count">0 archivos seleccionados..</span>
+                                                    <ul id="file-names" class="pl-5 list-disc"></ul>
+                                                </div>
+                                            </div>
+                                        </label>
+                                </div>
+                                <div class="mt-1 text-sm text-red-600">
+                                    @error('foto')<i>{{ $message }}</i>@enderror
                                 </div>
                             </div>
+                            <script>
+                                const fileInput = document.getElementById('foto');
+                                const fileCountDisplay = document.getElementById('file-count');
+                                const fileNamesDisplay = document.getElementById('file-names');
 
-                            @error('foto') <span class="text-sm text-red-600">{{ $message }}</span> @enderror
-                        </div>
+                                fileInput.addEventListener('change', function() {
+                                    const files = fileInput.files;
+                                    const fileCount = files.length;
+                                    fileCountDisplay.textContent = `${fileCount} archivos seleccionados`;
+                                    fileNamesDisplay.innerHTML = '';
+
+                                    for (let i = 0; i < fileCount; i++) {
+                                        const listItem = document.createElement('li');
+                                        listItem.textContent = files[i].name;
+                                        fileNamesDisplay.appendChild(listItem);
+                                    }
+                                });
+                            </script>
 
                         <!-- Selección de Estatus -->
                         <div>

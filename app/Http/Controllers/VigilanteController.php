@@ -52,8 +52,9 @@ class VigilanteController extends Controller
         $request->validate([
             'km_salida' => 'required|numeric',
             'combustible_salida' => 'required|string',
-            'fotografias_salida.*' => 'image|mimes:jpeg,png,jpg|max:30720',
-            'fotografias_salida' =>  'array|max:5',
+            'fotografias_salida' =>  'nullable|array|max:5',
+            'fotografias_salida.*' => 'file|mimes:jpeg,png,jpg|max:6000',
+
         ]);
 
         // Obtener la asignación
@@ -108,11 +109,26 @@ class VigilanteController extends Controller
 
     public function update2(Request $request, $id_check)
     {
+
+        // {{ route('admin.edit2', $asignacion->id_asignacion) }}
+
+        // if($request->file('fotografias_regreso') != ''){
+        //     $file = $request->file('fotografias_regreso');
+        //     $sizeInBytes = $file->getSize(); // Obtiene el tamaño del archivo en bytes
+        //     $sizeInKilobytes = $sizeInBytes / 6000; // Convierte el tamaño a KB, si es necesario
+
+        // dd($sizeInKilobytes);
+        //     if($sizeInBytes > 6000){
+        //         return redirect()->route("admin.edit2", ['id_asignacion' => $id_check]);
+        //     }
+
+        // }
+
         $request->validate([
             'km_llegada' => 'nullable|numeric',
             'combustible_llegada' => 'nullable|string',
             'fotografias_llegada' =>  'nullable|array|max:5',
-            'fotografias_llegada.*' => 'file|mimes:jpeg,png,jpg,pdf|max:10240',
+            'fotografias_llegada.*' => 'file|mimes:jpeg,png,jpg|max:6000', //30 mb
 
         ]);
 

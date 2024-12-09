@@ -80,10 +80,7 @@
                             <span class="mt-2 text-base leading-relaxed text-gray-500 ">{{ $asignacionV->motivo }}</span>
                         </div>
                     
-                        <div class="p-4 bg-white rounded-lg shadow-sm">
-                            <h4 class="text-lg font-semibold text-gray-800">Requiere chofer:</h4>
-                            <span class="mt-2 text-base leading-relaxed text-gray-500 ">{{ $asignacionV->requierechofer }}</span>
-                        </div>
+
                         <div class="p-4 bg-white rounded-lg shadow-sm">
                             <h4 class="text-lg font-semibold text-gray-800">Nombre del chofer:</h4>
                             <span class="mt-2 text-base leading-relaxed text-gray-500 ">{{ $asignacionV->nombre_chofer}}</span>
@@ -93,11 +90,6 @@
                             <span class="mt-2 text-base leading-relaxed text-gray-500 ">{{ $asignacionV->no_licencia}}</span>
                         </div>
                 
-                    
-                        <div class="p-4 bg-white rounded-lg shadow-sm">
-                            <h4 class="text-lg font-semibold text-gray-800">Autorizante:</h4>
-                            <span class="mt-2 text-base leading-relaxed text-gray-500 ">{{ $asignacionV->autorizante }}</span>
-                        </div>
                     
                     <div class="p-4 bg-white rounded-lg shadow-sm">
                         <h4 class="text-lg font-semibold text-gray-800">Requerimientos (adicionales):</h4>

@@ -122,14 +122,48 @@
                                 </div>
                             </div>
 
+                           
+
                             <div>
                                 <label class="block text-base font-medium text-[#07074D]" for="comprobante">Comprobante</label>
-                                <input class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" 
-                                    type="file" name="comprobante" id="comprobante" accept="image/*" title="Selecciona un archivo de comprobante">
-                                <div id="FotografiaFrontalHelp" class="mt-1 text-sm text-red-600">
+                                    <div class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] mt-4 p-6 text-center">
+                                    <input class="sr-only" type="file" name="comprobante" id="comprobante"accept="image/*" title="Sube el comprobante del pago en formato de imagen" />
+                                    <label for="comprobante" class="cursor-pointer">
+                                        <div class="flex flex-col items-center">
+                                            <span title="Adjunta un archivo de imagen del comprobante de la multa"
+                                                class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
+                                                    Buscar
+                                            </span>
+                                            
+                                            <div id="file-info" class="mt-4">
+                                                <span id="file-count">0 archivos seleccionados..</span>
+                                                <ul id="file-names" class="pl-5 list-disc"></ul>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="mt-1 text-sm text-red-600">
                                     @error('comprobante')<i>{{ $message }}</i>@enderror
                                 </div>
                             </div>
+                            <script>
+                                const fileInput = document.getElementById('comprobante');
+                                const fileCountDisplay = document.getElementById('file-count');
+                                const fileNamesDisplay = document.getElementById('file-names');
+
+                                fileInput.addEventListener('change', function() {
+                                    const files = fileInput.files;
+                                    const fileCount = files.length;
+                                    fileCountDisplay.textContent = `${fileCount} archivos seleccionados`;
+                                    fileNamesDisplay.innerHTML = '';
+
+                                    for (let i = 0; i < fileCount; i++) {
+                                        const listItem = document.createElement('li');
+                                        listItem.textContent = files[i].name;
+                                        fileNamesDisplay.appendChild(listItem);
+                                    }
+                                });
+                            </script>
 
                         </div>
 

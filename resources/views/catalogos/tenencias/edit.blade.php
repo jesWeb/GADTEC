@@ -119,20 +119,6 @@
                         </div>
 
                         <div>
-                            <label class="block text-base font-medium text-[#07074D]" for="comprobante">Comprobante</label>
-                            @if ($tenencia->comprobante)
-                                <img src="{{ url('img/tenencias/' . $tenencia->comprobante) }}" alt="Comprobante" class="object-cover w-32 h-32 mt-2 rounded-md">
-                            @else
-                                <p class="mt-2 text-sm text-gray-500">No hay comprobante cargado.</p>
-                            @endif
-                            <input class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" 
-                                type="file" name="comprobante" id="comprobante" accept="image/*" title="Actualizar comprobante">
-                            <div id="FotografiaFrontalHelp" class="mt-1 text-sm text-red-600">
-                                @error('comprobante')<i>{{ $message }}</i>@enderror
-                            </div>
-                        </div>
-
-                        <div>
                             <label class="block text-base font-medium text-[#07074D]" for="observaciones">Observaciones</label>
                             <input class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" 
                                 type="text" name="observaciones" value="{{ old('observaciones', $tenencia->observaciones) }}" id="observaciones" title="Actualizar observaciones">
@@ -140,6 +126,57 @@
                                 @error('observaciones')<i>{{ $message }}</i>@enderror
                             </div>
                         </div>
+
+                        <div>
+                            @if ($tenencia->comprobante)
+                                <img src="{{ url('img/tenencias/' . $tenencia->comprobante) }}" alt="Comprobante" class="object-cover w-16 h-16 rounded-md">
+                                <a href="{{ url('img/tenencias/' . $tenencia->comprobante) }}" target="_blank" class="text-gray-500">Ver comprobante</a> 
+                            @else
+                                <p class="mt-2 text-sm text-gray-500">No hay comprobante cargado.</p>
+                            @endif
+                        </div>
+                        <div>
+                            <label class="block text-base font-medium text-[#07074D]" for="comprobante">Comprobante</label>
+                                <div class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] mt-4 p-6 text-center">
+                                <input class="sr-only" type="file" name="comprobante" id="comprobante"accept="image/*" title="Sube el comprobante del pago en formato de imagen" />
+                                <label for="comprobante" class="cursor-pointer">
+                                    <div class="flex flex-col items-center">
+                                        <span title="Actualizar comprobante"
+                                            class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
+                                                Buscar
+                                        </span>
+                                        
+                                        <div id="file-info" class="mt-4">
+                                            <span id="file-count">0 archivos seleccionados..</span>
+                                            <ul id="file-names" class="pl-5 list-disc"></ul>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="mt-1 text-sm text-red-600">
+                                @error('comprobante')<i>{{ $message }}</i>@enderror
+                            </div>
+                        </div>
+                        <script>
+                            const fileInput = document.getElementById('comprobante');
+                            const fileCountDisplay = document.getElementById('file-count');
+                            const fileNamesDisplay = document.getElementById('file-names');
+
+                            fileInput.addEventListener('change', function() {
+                                const files = fileInput.files;
+                                const fileCount = files.length;
+                                fileCountDisplay.textContent = `${fileCount} archivos seleccionados`;
+                                fileNamesDisplay.innerHTML = '';
+
+                                for (let i = 0; i < fileCount; i++) {
+                                    const listItem = document.createElement('li');
+                                    listItem.textContent = files[i].name;
+                                    fileNamesDisplay.appendChild(listItem);
+                                }
+                            });
+                        </script>
+
+                        
 
                     </div>
                     <div class="flex justify-end mt-6">

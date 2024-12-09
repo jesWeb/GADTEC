@@ -75,6 +75,7 @@
                                 @if ($fotografias)
                                     @foreach ($fotografias as $foto)
                                         <img src="{{ asset('img/poliza/' . $foto) }}" class="w-full max-h-[400px] object-cover md:w-52" alt="seguro">
+                                        <a href="{{ asset('img/poliza/' . $foto) }}" target="_blank" class="text-gray-500" title="Ver archivo de seguro">Ver archivo de seguro</a> 
                                     @endforeach
                                 @endif
                             </div>
