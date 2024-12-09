@@ -78,17 +78,10 @@ ORDER BY aut.marca");
 
     public function show(string $id)
     {
-<<<<<<< HEAD
-        $dispo = db::select("SELECT
-            aut.marca,
-            aut.submarca,
-            aut.modelo,
-=======
         $dispo = \DB::select("SELECT
             aut.marca,
             aut.submarca,
             aut.modelo,
->>>>>>> jesus
             asi.id_asignacion,
             asi.fecha_salida AS fecha,
             CONCAT(usu.nombre, ' ', usu.app, ' ', usu.apm) AS solicitante,
@@ -104,11 +97,7 @@ ORDER BY aut.marca");
         INNER JOIN usuarios AS usu ON asi.id_usuario = usu.id_usuario
         WHERE aut.id_automovil = $id");
 
-<<<<<<< HEAD
-        $auto = db::select("SELECT CONCAT(aut.marca, ' ', aut.submarca, ' ', aut.modelo)
-=======
         $auto = \DB::select("SELECT CONCAT(aut.marca, ' ', aut.submarca, ' ', aut.modelo)
->>>>>>> jesus
         AS automovil
         FROM automoviles AS aut
         WHERE aut.id_automovil=$id");
