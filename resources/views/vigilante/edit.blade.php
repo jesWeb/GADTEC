@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('body')
+ <!-- Librería requerida para validacion del tamaño de la img, está dentro de public -->
+ <script type="text/javascript" src="{{ url('js/jquery-3.7.1.min.js') }}"></script>
     <div class="px-6 py-2">
         <!-- Mapa de sitio -->
         <div class="flex justify-end mt-2 mb-4">
@@ -195,8 +197,12 @@
                             <h3 class="mb-5 block text-xl font-semibold text-[#07074D]">
                                 Subir Archivos
                             </h3>
+                            <span class="mt-2 text-sm text-red-600">Tamaño limitado a 5 MB</span>
+                            <br>
+                            <span class="text-sm">Solo archivos: jpeg,png,jpg</span>
                             <input type="file" name="fotografias_salida[]" id="fotografias_salida" class="sr-only"
                                 multiple />
+                            <p id="errorMessage" class="text-red-600 error"></p>
                             <div class="mb-8">
                                 <label for="fotografias_salida"
                                     class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
@@ -232,17 +238,16 @@
                             });
                         </script>
                     <div class="mt-6">
-                    @if(auth()->user()->hasRole('Administrador'))
-                        <button type="submit" titile="Guardar datos de salida" class="inline-flex items-center px-4 py-2 text-white bg-yellow-600 border border-transparent rounded-md shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
+                   
+                        <button type="submit" id="submitBtn" disabled titile="Guardar datos de salida" class="inline-flex items-center px-4 py-2 text-white bg-yellow-600 border border-transparent rounded-md shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
                             Crear Check-In
                         </button>
-                        <a href="{{ route('vigilante.index') }}" titile="Cancelar registro de datos" class="inline-flex items-center px-4 py-2 text-white bg-gray-700 border border-transparent rounded-md shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Cancelar</a>
-                    
-                    @elseif(auth()->user()->hasRole('Moderador'))
-                        <button type="submit" titile="Guardar datos de salida" class="inline-flex items-center px-4 py-2 text-white bg-yellow-600 border border-transparent rounded-md shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
-                            Crear Check-In
-                        </button>
-                        <a href="{{ route('moderador.vigilante') }}" titile="Cancelar registro de datos" class="inline-flex items-center px-4 py-2 text-white bg-gray-700 border border-transparent rounded-md shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Cancelar</a>
+                        @if(auth()->user()->hasRole('Administrador'))
+                            <a href="{{ route('vigilante.index') }}" titile="Cancelar registro de datos"
+                                class="inline-flex items-center px-4 py-2 ml-2 text-white bg-gray-700 border border-transparent rounded-md shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Cancelar</a>
+                        @elseif(auth()->user()->hasRole('Moderador')) 
+                                <a href="{{ route('moderador.vigilante') }}" titile="Cancelar registro de datos" class="inline-flex items-center px-4 py-2 ml-2 text-white bg-gray-700 border border-transparent rounded-md shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Cancelar</a>
+            
                     @endif
                     </div>
                 </form>
@@ -250,4 +255,32 @@
         </div>
     </div>
     </div>
+
+    <script>
+        $(document).ready(function () {
+            const maxFileSize = 6 * 1024 * 1024; 
+
+            $('#fotografias_salida').on('change', function () {
+                const file = this.files[0]; // archivo seleccionado
+
+                if (file) {
+                    if (file.size > maxFileSize) {
+                        // desactivar el boton
+                        $('#errorMessage').text('El archivo supera el tamaño máximo permitido de 6 MB.');
+                        $('#submitBtn').prop('disabled', true);
+                    } else {
+                        // activar el botón
+                        $('#errorMessage').text('');
+                        $('#submitBtn').prop('disabled', false);
+                    }
+                } else {
+                    // no hay archivo seleccionado desactiva el boton
+                    $('#errorMessage').text('');
+                    $('#submitBtn').prop('disabled', true);
+                }
+            });
+        });
+    </script>
 @endsection
+
+

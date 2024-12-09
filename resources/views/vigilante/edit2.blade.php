@@ -202,8 +202,13 @@
                             <h3 class="mb-5 block text-xl font-semibold text-[#07074D]">
                                 Subir Archivos
                             </h3>
+                                <span class="mt-2 text-sm text-red-600">Tamaño limitado a 5 MB</span>
+                                <br>
+                                <span class="text-sm">Solo archivos: jpeg,png,jpg</span>
+
                             <input type="file" name="fotografias_regreso[]" id="fotografias_regreso" class="sr-only"
                                 multiple />
+                            <p id="errorMessage" class="error"></p>
                             <div class="mb-8">
                                 <label for="fotografias_regreso"
                                     class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
@@ -211,14 +216,20 @@
                                         <span
                                             class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
                                             Buscar
+                                            
                                         </span>
+                                        
                                         <div id="file-info" class="mt-4">
+                                            
                                             <span id="file-count">0 archivos seleccionados..</span>
+                                            
                                             <ul id="file-names" class="pl-5 list-disc"></ul>
                                         </div>
                                     </div>
+                                    
                                 </label>
                             </div>
+                            
                         </div>
 
                         <script>
@@ -243,21 +254,17 @@
                         
                             
 
-                                @if(auth()->user()->hasRole('Administrador'))
-                                <button type="submit" titile="Guardar datos de llegada"
+                        
+                            <button type="submit" id="submitBtn"  disabled titile="Guardar datos de llegada"
                                 class="inline-flex items-center px-4 py-2 text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
                                 Check-Out
                             </button>
+                        @if(auth()->user()->hasRole('Administrador'))
                             <a href="{{ route('vigilante.index') }}" titile="Cancelar registro de datos"
                                 class="inline-flex items-center px-4 py-2 ml-2 text-white bg-gray-700 border border-transparent rounded-md shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Cancelar</a>
-                        
-                    
-                    @elseif(auth()->user()->hasRole('Moderador'))
-                    <button type="submit" titile="Guardar datos de llegada"
-                                class="inline-flex items-center px-4 py-2 ml-2 text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-                                Check-Out
-                            </button>
-                        <a href="{{ route('moderador.vigilante') }}" titile="Cancelar registro de datos" class="inline-flex items-center px-4 py-2 ml-2 text-white bg-gray-700 border border-transparent rounded-md shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Cancelar</a>
+                        @elseif(auth()->user()->hasRole('Moderador')) 
+                                <a href="{{ route('moderador.vigilante') }}" titile="Cancelar registro de datos" class="inline-flex items-center px-4 py-2 ml-2 text-white bg-gray-700 border border-transparent rounded-md shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Cancelar</a>
+            
                     @endif
                         </div>
                     </form>
@@ -278,6 +285,32 @@
             }
 
             $('#km_salida, #km_llegada').on('input', calcularKm);
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            const maxFileSize = 6 * 1024 * 1024; // Límite de tamaño en bytes (6 MB)
+
+            $('#fotografias_regreso').on('change', function () {
+                const file = this.files[0]; // archivo seleccionado
+
+                if (file) {
+                    if (file.size > maxFileSize) {
+                        // desactivar el botón
+                        $('#errorMessage').text('El archivo supera el tamaño máximo permitido de 6 MB.');
+                        $('#submitBtn').prop('disabled', true);
+                    } else {
+                        // activar el botón
+                        $('#errorMessage').text('');
+                        $('#submitBtn').prop('disabled', false);
+                    }
+                } else {
+                    // no hay archivo seleccionado desactivar el botón
+                    $('#errorMessage').text('');
+                    $('#submitBtn').prop('disabled', true);
+                }
+            });
         });
     </script>
 @endsection
