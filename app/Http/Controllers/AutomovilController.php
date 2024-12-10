@@ -149,7 +149,25 @@ class AutomovilController extends Controller
     public function update(Request $request, $id)
     {
         $EddCar = Automoviles::findOrFail($id);
+
+        // Guardar fotografías
+        $fotografias  = [];
+
+        if ($request->hasFile('fotografias')) {
+            $files = $request->file('fotografias');
+            //limitar a 5 fotos
+            $files = array_slice($files, 0, 5);
+
+            foreach ($request->file('fotografias') as $file) {
+                $imgAuto = date('Ymd_His_') . $file->getClientOriginalName();
+                $file->move(public_path('img/automoviles'), $imgAuto);
+                $fotografias[] = $imgAuto;
+            }
+        }
         $input = $request->all();
+        //guardar en json la img
+        $input['fotografias'] = json_encode($fotografias);
+
         $EddCar->update($input);
         return redirect()->route('Automovil.index')->with('message', 'Se ha modificado correctamente el Registro');
     }

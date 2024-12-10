@@ -75,14 +75,11 @@
 
                                     @if ($fotografias)
                                         @foreach ($fotografias as $foto)
-                                            <img src="{{ asset('img/automoviles/' . $foto) }}" alt="Imagen del Vehículo" class="w-20 h-auto transition-transform duration-300 transform rounded-lg shadow-md hover:scale-90 hover:shadow-lg">
+                                        <img src="{{ asset('img/automoviles/' . $foto) }}" alt="Imagen del Vehículo" class="w-20 h-auto transition-transform duration-300 transform rounded-lg shadow-md hover:scale-90 hover:shadow-lg">
                                         @endforeach
                                     @endif
                                 </div>
                             </div>
-
-
-
 
                             <!-- Detalles del automóvil usando grid -->
                             <div class="grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4">
