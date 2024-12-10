@@ -262,7 +262,9 @@
                                         Automovil</label>
                                     <select name="tipo_automovil"
                                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                        required>
+                                        required
+                                        value="{{ old('tipo_automovil') }}"
+                                        >
                                         <option disabled selected>Selecciona una opción</option>
                                         <option value="Automovil"{{ old('estatus' == 'Automovil' ? 'selected' : '') }}>
                                             Automóvil -
@@ -282,6 +284,7 @@
                                     <label class="mb-3 block text-base font-medium text-[#07074D]" for="uso">
                                         Uso</label>
                                     <select name="uso"
+                                     value="{{ old('uso') }}"
                                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                         required>
                                         <option disabled selected>Selecciona una opcion </option>
@@ -313,7 +316,9 @@
                                 for="observaciones">Observaciones
                                 del
                                 vehiculo</label>
-                            <textarea placeholder="Observaciones ..."
+                            <textarea
+                                 value="{{ old('observaciones') }}"
+                            placeholder="Observaciones ..."
                                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                 name="observaciones"></textarea>
                         </div>
