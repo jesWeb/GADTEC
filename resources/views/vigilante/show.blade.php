@@ -123,40 +123,7 @@
             </div>
 
 
-       <!-- Check-In Details -->
-<div class="mt-6">
-    <h3 class="text-lg font-semibold text-gray-700">Datos de Check-In</h3>
-    @if($vigilante->checkIns->isNotEmpty())
-        <div class="overflow-x-auto">
-            <table class="min-w-full bg-white border border-gray-200 divide-y divide-gray-200">
-                <thead class="bg-gray-100">
-                    <tr>
-                        <th class="px-4 py-2 text-left text-gray-600">KM Salida</th>
-                        <th class="px-4 py-2 text-left text-gray-600">Combustible Salida</th>
-                        <th class="px-4 py-2 text-left text-gray-600">Hora Salida</th>
-                        <th class="px-4 py-2 text-left text-gray-600">KM Llegada</th>
-                        <th class="px-4 py-2 text-left text-gray-600">Combustible Llegada</th>
-                        <th class="px-4 py-2 text-left text-gray-600">Hora Llegada</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($vigilante->checkIns as $checkIn)
-                        <tr>
-                            <td class="px-4 py-2 border">{{ $checkIn->km_salida ?? 'N/A' }}</td>
-                            <td class="px-4 py-2 border">{{ $checkIn->combustible_salida ?? 'N/A' }}</td>
-                            <td class="px-4 py-2 border">{{ $checkIn->hora_salida ? date('H:i', strtotime($checkIn->hora_salida)) : 'N/A' }}</td>
-                            <td class="px-4 py-2 border">{{ $checkIn->km_llegada ?? 'N/A' }}</td>
-                            <td class="px-4 py-2 border">{{ $checkIn->combustible_llegada ?? 'N/A' }}</td>
-                            <td class="px-4 py-2 border">{{ $checkIn->hora_llegada ? date('H:i', strtotime($checkIn->hora_llegada)) : 'N/A' }}</td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    @else
-        <p class="text-red-600">No hay datos de check-ins registrados.</p>
-    @endif
-</div>
+
 
 
         <div class="flex items-start justify-center gap-8">

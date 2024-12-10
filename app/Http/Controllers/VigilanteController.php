@@ -179,7 +179,7 @@ class VigilanteController extends Controller
             foreach ($request->file('fotografias_regreso') as $file) {
                 $imgOut = date('Ymd_His_') . $file->getClientOriginalName();
                 $file->move(public_path('img/llegadas'), $imgOut);
-                $fotografias[] = $imgOut;
+                $fotografias.array_push($file);
             }
         }
 

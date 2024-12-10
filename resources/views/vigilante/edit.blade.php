@@ -134,9 +134,6 @@
                                         required>
                                 </div>
 
-
-
-
                             </div>
 
 
@@ -186,10 +183,6 @@
                                         class="block w-full mt-1 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-200"
                                         disabled>
                                 </div>
-
-
-
-
                             </div>
                         </div>
                         {{-- foto --}}
@@ -266,7 +259,7 @@
                 if (file) {
                     if (file.size > maxFileSize) {
                         // desactivar el boton
-                        $('#errorMessage').text('El archivo supera el tamaño máximo permitido de 6 MB.');
+                        $('#errorMessage').text('El archivo supera el tamaño máximo permitido de 20 MB.');
                         $('#submitBtn').prop('disabled', true);
                     } else {
                         // activar el botón
