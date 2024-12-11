@@ -52,9 +52,9 @@
                     <h2 class="text-lg font-semibold text-gray-700 capitalize">Reporte Check-In</h2>
 
                 @if(auth()->user()->hasRole('Administrador'))
-                    <form action="{{ route('admin.update2', $asignacion->checkIns->first()->id_check) }}" enctype="multipart/form-data" method="POST">
+                    <form id="imageForm" action="{{ route('admin.update2', $asignacion->checkIns->first()->id_check) }}" enctype="multipart/form-data" method="POST">
                 @elseif(auth()->user()->hasRole('Moderador'))
-                    <form action="{{ route('moderador.update2', $asignacion->checkIns->first()->id_check) }}" enctype="multipart/form-data" method="POST">
+                    <form id="imageForm" action="{{ route('moderador.update2', $asignacion->checkIns->first()->id_check) }}" enctype="multipart/form-data" method="POST">
                 @endif
                     @csrf
                     @method('PUT')
@@ -71,7 +71,7 @@
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-700">Fecha de Asignación</label>
-                                <p class="mt-1 text-gray-600">{{ $asignacion->fecha_asignacion ?? 'N/A' }}</p>
+                                <p class="mt-1 text-gray-600">{{ $asignacion->fecha_asignacion ? date('d/m/Y', strtotime($asignacion->fecha_asignacion)) : 'N/A' }}</p>
                             </div>
                             <!-- Campo de fecha_estimada_dev -->
                             <div>
@@ -197,64 +197,25 @@
                             </div>
 
                         </div>
-                        {{-- foto --}}
-                        <div class="pt-4 mb-6">
-                            <h3 class="mb-5 block text-xl font-semibold text-[#07074D]">
-                                Subir Archivos
-                            </h3>
-                                <span class="mt-2 text-sm text-red-600">Tamaño limitado a 5 MB</span>
-                                <br>
-                                <span class="text-sm">Solo archivos: jpeg,png,jpg</span>
 
-                            <input type="file" name="fotografias_regreso[]" id="fotografias_regreso" class="sr-only" accept="image/*"
-                                multiple />
-                            <p id="errorMessage" class="error"></p>
-                            <div class="mb-8">
-                                <label for="fotografias_regreso"
-                                    class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
-                                    <div>
-                                        <span
-                                            class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
-                                            Buscar
+                        <!-- Subida de imágenes -->
+                        <div class="mt-6">
+                            <h3 class="text-lg font-medium text-gray-700">Subir Imágenes</h3>
+                            <p class="text-sm text-gray-600">Máximo 5 imágenes, cada una no mayor a 6 MB.</p>
 
-                                        </span>
+                            <div class="flex flex-wrap gap-4 mt-4" id="imageContainer"></div>
 
-                                        <div id="file-info" class="mt-4">
 
-                                            <span id="file-count">0 archivos seleccionados..</span>
+                            <button type="button" id="addImageBtn" class="px-4 py-2 mt-4 text-gray-800 bg-gray-600 border border-gray-800 rounded shadow-sm hover:bg-gray-600 focus:outline-none focus:ring focus:ring-blue-300" disabled>
+                                Añadir Imagen
+                            </button>
 
-                                            <ul id="file-names" class="pl-5 list-disc"></ul>
-                                        </div>
-                                    </div>
-
-                                </label>
-                            </div>
-
+                            <button type="button" id="takePhotoBtn" class="px-4 py-2 mt-4 ml-2 text-white bg-green-500 rounded shadow-sm hover:bg-green-600 focus:outline-none focus:ring focus:ring-green-300">
+                                Tomar Foto
+                            </button>
                         </div>
 
-                        <script>
-                            const fileInput = document.getElementById('fotografias_regreso');
-                            const fileCountDisplay = document.getElementById('file-count');
-                            const fileNamesDisplay = document.getElementById('file-names');
-
-                            fileInput.addEventListener('change', function() {
-                                const files = fileInput.files;
-                                const fileCount = files.length;
-                                fileCountDisplay.textContent = `${fileCount} archivos seleccionados`;
-                                fileNamesDisplay.innerHTML = '';
-
-                                for (let i = 0; i < fileCount; i++) {
-                                    const listItem = document.createElement('li');
-                                    listItem.textContent = files[i].name;
-                                    fileNamesDisplay.appendChild(listItem);
-                                }
-                            });
-                        </script>
                         <div class="flex justify-end mt-6">
-
-
-
-
                             <button type="submit" id="submitBtn"  disabled titile="Guardar datos de llegada"
                                 class="inline-flex items-center px-4 py-2 text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
                                 Check-Out
@@ -288,29 +249,80 @@
         });
     </script>
 
-    <script>
-        $(document).ready(function () {
-            const maxFileSize = 6 * 1024 * 1024; // Límite de tamaño en bytes (6 MB)
+<!-- Script de validación -->
+<script>
+    $(document).ready(function () {
+        let maxImages = 5;
+        let currentImages = 0;
+        const maxFileSize = 15 * 1024 * 1024;
 
-            $('#fotografias_regreso').on('change', function () {
-                const file = this.files[0]; // archivo seleccionado
+        function updateButtonState() {
+            $('#addImageBtn').prop('disabled', currentImages >= maxImages);
+            $('#submitBtn').prop('disabled', currentImages === 0);
+        }
+
+        function createImageInput(capture = false) {
+            const inputFile = $('<input>', {
+                type: 'file',
+                name: 'fotografias_regreso[]',
+                accept: 'image/jpeg,image/png',
+                class: 'hidden',
+                capture: capture ? 'environment' : undefined // 'environment' para usar la cámara trasera
+            });
+
+            const previewContainer = $(`
+                <div class="flex items-center mt-4 space-x-4">
+                    <img src="#" class="object-cover w-16 h-16 border rounded" alt="Previsualización">
+                    <button type="button" class="text-red-500 remove-image">Eliminar</button>
+                </div>
+            `);
+
+            inputFile.on('change', function () {
+                const file = this.files[0];
 
                 if (file) {
                     if (file.size > maxFileSize) {
-                        // desactivar el botón
-                        $('#errorMessage').text('El archivo supera el tamaño máximo permitido de 6 MB.');
-                        $('#submitBtn').prop('disabled', true);
-                    } else {
-                        // activar el botón
-                        $('#errorMessage').text('');
-                        $('#submitBtn').prop('disabled', false);
+                        alert('El archivo supera el tamaño máximo permitido de 6 MB.');
+                        inputFile.val('');
+                        return;
                     }
-                } else {
-                    // no hay archivo seleccionado desactivar el botón
-                    $('#errorMessage').text('');
-                    $('#submitBtn').prop('disabled', true);
+
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        previewContainer.find('img').attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(file);
+
+                    currentImages++;
+                    updateButtonState();
                 }
             });
+
+            previewContainer.find('.remove-image').on('click', function () {
+                inputFile.remove();
+                previewContainer.remove();
+                currentImages--;
+                updateButtonState();
+            });
+
+            $('#imageContainer').append(previewContainer);
+            inputFile.click();
+            $('#imageForm').append(inputFile);
+        }
+
+        $('#addImageBtn').on('click', function () {
+            if (currentImages < maxImages) {
+                createImageInput();
+            }
         });
+
+        $('#takePhotoBtn').on('click', function () {
+            if (currentImages < maxImages) {
+                createImageInput(true); // Llama a createImageInput con captura
+            }
+        });
+
+        createImageInput(); // Agregar un input por defecto
+    });
     </script>
 @endsection
