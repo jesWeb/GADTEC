@@ -66,7 +66,7 @@
                         <!-- N° Empleado -->
                         <div>
                             <label for="num_empleado" class="block text-base font-medium text-gray-700">N° Empleado</label>
-                            <input type="text" name="num_empleado" id="num_empleado"  value="{{ old('num_empleado', $usuario->num_empleado) }}" 
+                            <input type="text" name="num_empleado" id="num_empleado"  value="{{ old('num_empleado', $usuario->num_empleado) }}"
                                 placeholder="ejemplo: 12345" class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                                 value="{{ old('num_empleado') }}"
                                 title="Actualiza el número de empleado"
@@ -77,7 +77,7 @@
                         <!-- Nombre -->
                         <div>
                             <label for="nombre" class="block text-base font-medium text-gray-700">Nombre</label>
-                            <input type="text" name="nombre" id="nombre" value="{{ old('nombre', $usuario->nombre) }}"  
+                            <input type="text" name="nombre" id="nombre" value="{{ old('nombre', $usuario->nombre) }}"
                             placeholder="ejemplo: Juan"  title="Actualiza el nombre del usuario"
                             class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" value="{{ old('nombre') }}">
                             @error('nombre') <span class="text-sm text-red-600">{{ $message }}</span> @enderror
@@ -86,7 +86,7 @@
                         <!-- Apellido Paterno -->
                         <div>
                             <label for="app" class="block text-base font-medium text-gray-700">Apellido Paterno</label>
-                            <input type="text" name="app" id="app" value="{{ old('app', $usuario->app) }}"  
+                            <input type="text" name="app" id="app" value="{{ old('app', $usuario->app) }}"
                             placeholder="ejemplo: Pérez" title="Actualiza el apellido paterno"
                             class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" value="{{ old('app') }}">
                             @error('app') <span class="text-sm text-red-600">{{ $message }}</span> @enderror
@@ -95,7 +95,7 @@
                         <!-- Apellido Materno -->
                         <div>
                             <label for="apm" class="block text-base font-medium text-gray-700">Apellido Materno</label>
-                            <input type="text" name="apm" id="apm" value="{{ old('apm', $usuario->apm) }}"  
+                            <input type="text" name="apm" id="apm" value="{{ old('apm', $usuario->apm) }}"
                             placeholder="ejemplo: López" title="Actualiza el apellido materno"
                             class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" value="{{ old('apm') }}">
                             @error('apm') <span class="text-sm text-red-600">{{ $message }}</span> @enderror
@@ -136,7 +136,7 @@
                             class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
                                 <option value="Administrador" {{ $usuario->rol == 'Administrador' ? 'selected' : '' }}>Administrador</option>
                                 <option value="Moderador" {{ $usuario->rol == 'Moderador' ? 'selected' : '' }}>Moderador</option>
-                                <option value="Vigilante" {{ $usuario->rol == 'Usuario' ? 'selected' : '' }}>Usuario</option>
+
                             </select>
                         </div>
 
@@ -151,7 +151,7 @@
                         <!-- Usuario -->
                         <div>
                             <label for="usuario" class="block text-base font-medium text-gray-700">Usuario</label>
-                            <input type="text" name="usuario" id="usuario" value="{{ old('usuario', $usuario->usuario) }}" 
+                            <input type="text" name="usuario" id="usuario" value="{{ old('usuario', $usuario->usuario) }}"
                             placeholder="Nombre de Usuario" title="Actualiza el nombre de usuario" class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" value="{{ old('usuario') }}">
                             @error('usuario') <span class="text-sm text-red-600">{{ $message }}</span> @enderror
                         </div>
@@ -193,11 +193,11 @@
                                         class="absolute inset-0 opacity-0 cursor-pointer" title="Actualizar la foto del usuario">
                                         <label for="foto" class="cursor-pointer">
                                             <div class="flex flex-col items-center">
-                                                <span title="Selecciona una fotografía frontal de la tarjeta" 
+                                                <span title="Selecciona una fotografía frontal de la tarjeta"
                                                     class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
                                                         Buscar
                                                 </span>
-                                                
+
                                                 <div id="file-info" class="mt-4">
                                                     <span id="file-count">0 archivos seleccionados..</span>
                                                     <ul id="file-names" class="pl-5 list-disc"></ul>
@@ -238,8 +238,8 @@
                             </select>
                         </div>
 
-                        
-                        
+
+
                     </div>
 
                     <hr class="my-6">

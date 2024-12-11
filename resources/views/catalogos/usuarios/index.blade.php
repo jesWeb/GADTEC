@@ -61,10 +61,8 @@
 
                     </div>
                 </form>
-                <!-- Botones de Imprimir y Nuevo Registro -->
+                <!-- Botones de Imprimir -->
                 <div class="flex justify-end ml-2 space-x-2">
-                    <a href="{{ route('usuarios-pdf') }}" target="_blank" teal title="Imprimir reporte"
-                        class="inline-block px-4 py-2 text-white bg-green-600 rounded hover:bg-green-700">Imprimir</a>
                     <a href="usuarios/create" title="Generar nuevo registro de usuario"
                         class="inline-block px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Nuevo registro</a>
                 </div>
@@ -129,10 +127,8 @@
                                         </a>
 
                                         <!-- Eliminar -->
-                                        <form action="usuarios/{{ $usuario->id_usuario }}" method="POST"
+                                        <form action="usuarios/{{ $usuario}}" method="POST"
                                             id="eliminacion-form" class="inline">
-                                            @csrf
-                                            @method('delete')
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" onclick="deleteRegister(event)" title="Borrar usuario"
