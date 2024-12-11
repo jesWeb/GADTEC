@@ -61,8 +61,10 @@
 
                     </div>
                 </form>
-                <!-- Botones de Imprimir -->
+                <!-- Botones de Imprimir y Nuevo Registro -->
                 <div class="flex justify-end ml-2 space-x-2">
+                    <a href="{{ route('usuarios-pdf') }}" target="_blank" teal title="Imprimir reporte"
+                        class="inline-block px-4 py-2 text-white bg-green-600 rounded hover:bg-green-700">Imprimir</a>
                     <a href="usuarios/create" title="Generar nuevo registro de usuario"
                         class="inline-block px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Nuevo registro</a>
                 </div>
@@ -127,11 +129,12 @@
                                         </a>
 
                                         <!-- Eliminar -->
-                                        <form action="usuarios/{{ $usuario}}" method="POST"
-                                            id="eliminacion-form" class="inline">
+
+                                        <form action="usuarios/{{ $usuario->id_usuario }}" method="POST"
+                                            id="{{ $usuario->id_usuario }}" name="del_{{ $usuario->id_usuario }}" class="inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" onclick="deleteRegister(event)" title="Borrar usuario"
+                                            <button name="del_{{ $usuario->id_usuario }}" type="submit" onclick="deleteRegister(event, '{{ $usuario->id_usuario }}')" title="Borrar usuario"
                                                 class="inline-flex items-center justify-center w-8 h-8 text-red-600 border border-red-600 rounded hover:bg-red-600 hover:text-white">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                     stroke="currentColor" class="w-4 h-4">
@@ -174,7 +177,7 @@
         </script>
     @endif
     {{-- alerta de eliminacion --}}
-    @if (session('eliminar') == 'se ha eliminado correctamente El automovil')
+    @if (session('eliminar') == 'se ha eliminado correctamente usuario')
         <script>
             Swal.fire({
                 title: "Eliminado!",
@@ -184,11 +187,12 @@
         </script>
     @endif
     <script>
-        function deleteRegister() {
+        function deleteRegister(event, formId) {
             event.preventDefault();
-            const btndelete = document.getElementById("eliminacion-form");
+
+            const btndelete = document.getElementById(formId);
             Swal.fire({
-                title: "Estas seguro de Eliminar el registro?",
+                title: "Estas seguro de eliminar el registro?",
                 text: "¡No podrás revertir esto!",
                 icon: "warning",
                 showCancelButton: true,
@@ -200,7 +204,7 @@
                     btndelete.submit();
                     Swal.fire({
                         title: "¡Eliminado!",
-                        text: "El automóvil ha sido eliminado correctamente.",
+                        text: "El usuario ha sido eliminado correctamente.",
                         icon: "success"
                     });
                 }
