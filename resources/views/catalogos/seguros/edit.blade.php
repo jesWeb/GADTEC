@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('body')
+<!-- Librería requerida para validacion del tamaño de la img, está dentro de public -->
+<script type="text/javascript" src="{{ url('js/jquery-3.7.1.min.js') }}"></script>
 <div class="px-6 py-2">
     <!-- Mapa de sitio -->
     <div class="flex justify-end mt-2 mb-4">
@@ -50,7 +52,7 @@
 
         <div class="p-6 bg-white border rounded-md shadow-md">
             {{-- formulario --}}
-            <form action="{{ route('seguros.update', $EddSeg->id_seguro) }}" method="POST" enctype="multipart/form-data">
+            <form id="imageForm" action="{{ route('seguros.update', $EddSeg->id_seguro) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PATCH')
                 <div class="m-3 xl:p-10">
@@ -122,47 +124,45 @@
                             </select>
                         </div>
                     </div>
+                    <div>
+                        <h4 
+                        class="p-4 text-lg font-semibold text-center text-gray-700">Imagenes de seguro</h4>
+                            <div class="flex gap-4 p-4 ml-4 overflow-x-auto">
+                                @php
+                                    $fotografias = json_decode($EddSeg->poliza, true);
+                                @endphp
+
+                                @if ($fotografias)
+                                    @foreach ($fotografias as $foto)
+                                        <img src="{{ url('img/poliza/' . $foto) }}" class="w-16 h-auto transition-transform duration-300 transform rounded-lg shadow-md hover:scale-90 hover:shadow-lg" alt="seguro">
+                                        <a href="{{ url('img/poliza/' . $foto) }}" target="_blank" class="text-gray-500" title="Ver archivo de seguro">Ver imagen</a> 
+                                    @endforeach
+                                @endif
+                            </div>
+                    </div>
                     <div class="px-3 py-3 mt-3 border-b border-stroke dark:border-strokedark"></div>
-                    {{-- Foto --}}
+                    {{-- foto --}}
                     <div class="pt-4 mb-6">
-                        <label for="poliza" class="mb-5 block text-xl font-semibold text-[#07074D]">
-                            Subir Archivo Póliza
-                        </label>
+                        <h3 class="mb-5 block text-xl font-semibold text-[#07074D]">
+                            Subir Imágenes
+                        </h3>
+                        <p class="text-sm text-gray-600">Máximo 5 imágenes</p>
+                        <div class="flex flex-wrap gap-4 mt-4 pt-4 mb-6" id="imageContainer"></div>
+                        <input type="file" name="poliza[]" id="poliza" accept="image/*" class="sr-only" />
                         <div class="mb-8">
-                            <input type="file" name="poliza" id="poliza" class="sr-only" multiple />
-                            <label for="poliza" title="Actualizar el archivo de la póliza"
+                            <label for="poliza"  id="addImageBtn"
                                 class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
                                 <div>
-                                    <span class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
+                                    <span 
+                                        class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
                                         Buscar
                                     </span>
-                                    <div id="file-info" class="mt-4">
-                                        <span id="file-count">0 archivos seleccionados..</span>
-                                        <ul id="file-names" class="pl-5 list-disc"></ul>
-                                    </div>
+                                    
                                 </div>
                             </label>
                         </div>
                     </div>
-
-                    <script>
-                            const fileInput = document.getElementById('poliza');
-                            const fileCountDisplay = document.getElementById('file-count');
-                            const fileNamesDisplay = document.getElementById('file-names');
-
-                            fileInput.addEventListener('change', function() {
-                                const files = fileInput.files;
-                                const fileCount = files.length;
-                                fileCountDisplay.textContent = `${fileCount} archivos seleccionados`;
-                                fileNamesDisplay.innerHTML = '';
-
-                                for (let i = 0; i < fileCount; i++) {
-                                    const listItem = document.createElement('li');
-                                    listItem.textContent = files[i].name;
-                                    fileNamesDisplay.appendChild(listItem);
-                                }
-                            });
-                        </script>
+                    
                 </div>
                 {{-- BTN --}}
                 <div class="flex justify-end mt-6 space-x-4">
@@ -174,4 +174,76 @@
             </form>
         </div>
     </div>
+
+
+     <!-- Script de validación -->
+     <script>
+        $(document).ready(function() {
+            let maxImages = 5;
+            let currentImages = 0;
+            const maxFileSize = 15 * 1024 * 1024;
+
+        
+
+            function createImageInput(capture = false) {
+                const inputFile = $('<input>', {
+                    type: 'file',
+                    name: 'poliza[]',
+                    accept: 'image/jpeg,image/png',
+                    class: 'hidden',
+                    capture: capture ? 'environment' :
+                        undefined // 'environment' para usar la cámara trasera
+                });
+
+                const previewContainer = $(`
+            <div class="flex items-center mt-4 space-x-4">
+                <img src="#" class="object-cover w-16 h-16 border rounded" alt="Previsualización">
+                <button type="button" class="text-red-500 remove-image">Eliminar</button>
+            </div>
+        `);
+
+                inputFile.on('change', function() {
+                    const file = this.files[0];
+
+                    if (file) {
+                        if (file.size > maxFileSize) {
+                            alert('El archivo supera el tamaño máximo permitido de 6 MB.');
+                            inputFile.val('');
+                            return;
+                        }
+
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            previewContainer.find('img').attr('src', e.target.result);
+                        };
+                        reader.readAsDataURL(file);
+
+                        currentImages++;
+                        updateButtonState();
+                    }
+                });
+
+                previewContainer.find('.remove-image').on('click', function() {
+                    inputFile.remove();
+                    previewContainer.remove();
+                    currentImages--;
+                    updateButtonState();
+                });
+
+                $('#imageContainer').append(previewContainer);
+                inputFile.click();
+                $('#imageForm').append(inputFile);
+            }
+
+            $('#addImageBtn').on('click', function() {
+                if (currentImages < maxImages) {
+                    createImageInput(true);
+                }
+            });
+
+            
+
+            createImageInput(); // Agregar un input por defecto
+        });
+    </script>
 @endsection

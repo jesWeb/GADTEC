@@ -51,8 +51,8 @@ class VerificacionesController extends Controller
             'fechaV' => 'nullable|date|before_or_equal:today',
             'holograma' => 'required|string|max:255',
             'observaciones' => 'nullable|string',
-            'image' => 'nullable|array|max:5',
-            'image.*' => 'file|mimes:jpg,png,jpeg|max:10240',
+            'image' => 'nullable|array|max:10',
+            'image.*' => 'file|mimes:jpg,png,jpeg',
             'etiqueta_00' => 'nullable|boolean',
             'motivo_00' => 'nullable|string|max:255',
             'fecha_verificacion_00' => 'nullable|date|before_or_equal:today',
@@ -126,21 +126,46 @@ class VerificacionesController extends Controller
         }
 
 
-        //guardar fotografias
+        // //guardar fotografias
+        // $fotografias = [];
+
+        // if ($request->hasFile('image')) {
+        //     $files = $request->file('image');
+        //     //limitar a 5
+        //     $files = array_slice($files, 0, 5);
+        //     foreach ($request->file('image') as $file) {
+        //         $imgVeri = date('Ymd_His_') . $file->getClientOriginalName();
+        //         $file->move(public_path('img/verificaciones'), $imgVeri);
+        //         $fotografias[] = $imgVeri;
+        //     }
+        // }
+
+        // //guardar en json la img
+        // $input['image'] = json_encode($fotografias);
+
+        //guardar fotos
         $fotografias = [];
+        $maxTotalSize = 50 * 1024 * 1024; // 50 MB
+        $totalSize = 0;
 
         if ($request->hasFile('image')) {
             $files = $request->file('image');
-            //limitar a 5
-            $files = array_slice($files, 0, 5);
-            foreach ($request->file('image') as $file) {
-                $imgVeri = date('Ymd_His_') . $file->getClientOriginalName();
-                $file->move(public_path('img/verificaciones'), $imgVeri);
-                $fotografias[] = $imgVeri;
+            $files = array_slice($files, 0, 5); // Limitar a 5 fotos
+    
+            foreach ($files as $file) {
+                $totalSize += $file->getSize();
+                if ($totalSize > $maxTotalSize) {
+                    return back()->with('error', 'El tamaño total de las imágenes supera los 50 MB.');
+                }
+    
+                // Guardar el archivo en el directorio público
+                $imgVerificacion = date('Ymd_His_') . $file->getClientOriginalName();
+                $file->move(public_path('img/verificaciones'), $imgVerificacion);
+                $fotografias[] = $imgVerificacion;
             }
         }
 
-        //guardar en json la img
+        //$input Guardar en json la imagen
         $input['image'] = json_encode($fotografias);
 
         // Guardar la verificación
@@ -175,6 +200,7 @@ class VerificacionesController extends Controller
         $automoviles = Automoviles::all();
         return view('catalogos.verificaciones.edit', compact('EddVer', 'automoviles'));
     }
+
 
     public function update(Request $request, $id)
     {
@@ -243,17 +269,29 @@ class VerificacionesController extends Controller
         }
 
         // Manejo de imágenes
-        $fotografias = $EddVer->image ? json_decode($EddVer->image, true) : [];
+        // $fotografias = $EddVer->image ? json_decode($EddVer->image, true) : [];
+        $fotografias = [];
+
+        $maxTotalSize = 50 * 1024 * 1024; // 50 MB
+        $totalSize = 0;
 
         if ($request->hasFile('image')) {
             $files = $request->file('image');
-            $files = array_slice($files, 0, 5); // Limitar a 5 imágenes
+            $files = array_slice($files, 0, 5); // Limitar a 5 fotos
+
             foreach ($files as $file) {
-                $imgVeri = date('Ymd_His_') . $file->getClientOriginalName();
-                $file->move(public_path('img/verificaciones'), $imgVeri);
-                $fotografias[] = $imgVeri;
+                $totalSize += $file->getSize();
+                if ($totalSize > $maxTotalSize) {
+                    return back()->with('error', 'El tamaño total de las imágenes supera los 50 MB.');
+                }
+
+                // Guardar el archivo en el directorio público
+                $imgVerificacion = date('Ymd_His_') . $file->getClientOriginalName();
+                $file->move(public_path('img/verificaciones'), $imgVerificacion);
+                $fotografias[] = $imgVerificacion;
             }
         }
+
 
         // Actualizar el registro en la base de datos
         $input = $request->all();
@@ -274,8 +312,6 @@ class VerificacionesController extends Controller
 
         return redirect()->route('verificaciones.index')->with('message', "Se ha actualizado correctamente el registro");
     }
-
-
 
     public function destroy($id)
     {
