@@ -254,11 +254,11 @@
         const btnAlert = document.getElementById('btn-calendar');
         btnAlert.addEventListener('click', () => {
             Swal.fire({
-                title: "Calendario  de verificacion",
-                imageUrl: "/img/Verificacion.png",
+                title: "Calendario  de verificación",
+                imageUrl: "/img/verificaciones/Verificacion.png",
                 imageWidth: 480,
                 imageHeight: 320,
-                imageAlt: "Custom image"
+                imageAlt: "Calendario de verificación"
             });
         });
     </script>

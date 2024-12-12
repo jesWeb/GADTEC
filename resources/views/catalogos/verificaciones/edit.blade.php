@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('body')
+ <!-- Librería requerida para validacion del tamaño de la img, está dentro de public -->
+ <script type="text/javascript" src="{{ url('js/jquery-3.7.1.min.js') }}"></script>
     <div class="px-6 py-2">
         <!-- Mapa de sitio -->
         <div class="flex justify-end mt-2 mb-4">
@@ -57,7 +59,7 @@
                 Actualizar Verificación
             </h2>
             {{-- Formulario --}}
-            <form action="{{ route('verificaciones.update', $EddVer->id_verificacion) }}" method="post" enctype='multipart/form-data'>
+            <form id="imageForm" action="{{ route('verificaciones.update', $EddVer->id_verificacion) }}" method="post" enctype='multipart/form-data'>
                 @csrf
                 @method('PATCH')
                 <div class="m-3 xl:p-10 xl:m-5">
@@ -189,44 +191,48 @@
                         <textarea name="observaciones" id="observaciones" placeholder="Observaciones..."
                             class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">{{ old('observaciones', $EddVer->observaciones) }}</textarea>
                     </div>
+                    <div>
+                        <h4 
+                        class="p-4 text-lg font-semibold text-center text-gray-700">Imagenes de seguro</h4>
+                        @if($EddVer->image != '') 
+                            <div class="flex gap-4 p-4 ml-4 overflow-x-auto">
+                                @php
+                                    $fotografias = json_decode($EddVer->image, true);
+                                @endphp
 
-                    {{-- Foto --}}
+                                @if ($fotografias)
+                                    @foreach ($fotografias as $foto)
+                                        <img src="{{ url('img/verificaciones/' . $foto) }}" class="w-16 h-auto transition-transform duration-300 transform rounded-lg shadow-md hover:scale-90 hover:shadow-lg" alt="seguro">
+                                        <a href="{{ url('img/verificaciones/' . $foto) }}" target="_blank" class="text-gray-500" title="Ver archivo de seguro">Ver imagen</a> 
+                                    @endforeach
+                                @endif
+                            </div>
+                        @else
+                            <p class="text-gray-500">Sin imagenes</p>
+                        @endif
+                    </div>
+
+                    {{-- foto --}}
                     <div class="pt-4 mb-6">
                         <h3 class="mb-5 block text-xl font-semibold text-[#07074D]">
-                            Subir Archivos
+                            Subir Imágenes
                         </h3>
-                        <input type="file" name="image[]" id="image" class="sr-only" multiple />
+                        <p class="text-sm text-gray-600">Máximo 5 imágenes</p>
+                        <div class="flex flex-wrap gap-4 mt-4 pt-4 mb-6" id="imageContainer"></div>
+                        <input type="file" name="image[]" id="image" accept="image/*" class="sr-only" />
                         <div class="mb-8">
-                            <label for="image" class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
+                            <label for="image"  id="addImageBtn"
+                                class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
                                 <div>
-                                    <span class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">Buscar</span>
-                                    <div id="file-info" class="mt-4">
-                                        <span id="file-count">0 archivos seleccionados..</span>
-                                        <ul id="file-names" class="pl-5 list-disc"></ul>
-                                    </div>
+                                    <span 
+                                        class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
+                                        Buscar
+                                    </span>
+                                    
                                 </div>
                             </label>
                         </div>
                     </div>
-
-                    <script>
-                        const fileInput = document.getElementById('image');
-                        const fileCountDisplay = document.getElementById('file-count');
-                        const fileNamesDisplay = document.getElementById('file-names');
-
-                        fileInput.addEventListener('change', function () {
-                            const files = fileInput.files;
-                            const fileCount = files.length;
-                            fileCountDisplay.textContent = `${fileCount} archivos seleccionados`;
-                            fileNamesDisplay.innerHTML = '';
-
-                            for (let i = 0; i < fileCount; i++) {
-                                const listItem = document.createElement('li');
-                                listItem.textContent = files[i].name;
-                                fileNamesDisplay.appendChild(listItem);
-                            }
-                        });
-                    </script>
 
                     <!-- Botones -->
                     <div class="flex justify-end gap-4 mt-4">
@@ -234,7 +240,7 @@
                             Cancelar
                         </a>
                         <button type="submit" class="px-4 py-2 text-white bg-indigo-600 rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                            Registrar
+                            Guardar
                         </button>
                     </div>
                 </div>
@@ -243,4 +249,76 @@
 
     </div>
     </div>
+
+
+     <!-- Script de validación -->
+     <script>
+        $(document).ready(function() {
+            let maxImages = 5;
+            let currentImages = 0;
+            const maxFileSize = 15 * 1024 * 1024;
+
+        
+
+            function createImageInput(capture = false) {
+                const inputFile = $('<input>', {
+                    type: 'file',
+                    name: 'image[]',
+                    accept: 'image/jpeg,image/png',
+                    class: 'hidden',
+                    capture: capture ? 'environment' :
+                        undefined // 'environment' para usar la cámara trasera
+                });
+
+                const previewContainer = $(`
+            <div class="flex items-center mt-4 space-x-4">
+                <img src="#" class="object-cover w-16 h-16 border rounded" alt="Previsualización">
+                <button type="button" class="text-red-500 remove-image">Eliminar</button>
+            </div>
+        `);
+
+                inputFile.on('change', function() {
+                    const file = this.files[0];
+
+                    if (file) {
+                        if (file.size > maxFileSize) {
+                            alert('El archivo supera el tamaño máximo permitido de 6 MB.');
+                            inputFile.val('');
+                            return;
+                        }
+
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            previewContainer.find('img').attr('src', e.target.result);
+                        };
+                        reader.readAsDataURL(file);
+
+                        currentImages++;
+                        updateButtonState();
+                    }
+                });
+
+                previewContainer.find('.remove-image').on('click', function() {
+                    inputFile.remove();
+                    previewContainer.remove();
+                    currentImages--;
+                    updateButtonState();
+                });
+
+                $('#imageContainer').append(previewContainer);
+                inputFile.click();
+                $('#imageForm').append(inputFile);
+            }
+
+            $('#addImageBtn').on('click', function() {
+                if (currentImages < maxImages) {
+                    createImageInput(true);
+                }
+            });
+
+            
+
+            createImageInput(); // Agregar un input por defecto
+        });
+    </script>
 @endsection

@@ -62,24 +62,24 @@
                         Aseguradora -
                         {{ $seguroS->automovil->marca }} {{ $seguroS->automovil->submarca }}
                         {{ $seguroS->automovil->modelo }}</h2>
-
-                    {{-- content --}}
-                    <article class="flex flex-wrap max-w-3xl mx-auto md:flex-nowrap group">
                         {{-- poliza Img --}}
-                        <div class="">
-                            <div class="">
+                        <div class="w-full">
+                            <div class="flex justify-start gap-4 p-4 overflow-x-auto">
                                 @php
                                     $fotografias = json_decode($seguroS->poliza, true);
                                 @endphp
 
                                 @if ($fotografias)
                                     @foreach ($fotografias as $foto)
-                                        <img src="{{ url('img/poliza/' . $foto) }}" class="w-full max-h-[400px] object-cover md:w-52" alt="seguro">
-                                        <a href="{{ url('img/poliza/' . $foto) }}" target="_blank" class="text-gray-500" title="Ver archivo de seguro">Ver archivo de seguro</a> 
+                                        <img src="{{ url('img/poliza/' . $foto) }}" class="object-cover w-20 h-auto transition-transform duration-300 transform rounded-lg shadow-md hover:scale-90 hover:shadow-lg" alt="seguro">
+                                        <a href="{{ url('img/poliza/' . $foto) }}" target="_blank" class="object-cover  text-gray-500" title="Ver archivo de seguro">Ver imagen</a> 
                                     @endforeach
                                 @endif
                             </div>
                         </div>
+                    {{-- content --}}
+                    <article class="flex flex-wrap max-w-3xl mx-auto md:flex-nowrap group">
+                        
                         {{-- content info --}}
                         <div class="mt-6 ml-4 space-y-6">
                             <div class="grid grid-cols-1 gap-6 md:grid-cols-2">

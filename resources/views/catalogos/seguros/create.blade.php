@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('body')
+ <!-- Librería requerida para validacion del tamaño de la img, está dentro de public -->
+ <script type="text/javascript" src="{{ url('js/jquery-3.7.1.min.js') }}"></script>
     <div class="px-6 py-2">
         <!-- Mapa de sitio -->
         <div class="flex justify-end mt-2 mb-4">
@@ -55,7 +57,7 @@
             {{-- Titulo --}}
             <h2 class="mb-5 text-xl font-semibold text-gray-700">Registro de Seguros</h2>
             {{-- formulario --}}
-            <form action="{{ route('seguros.store') }}" enctype="multipart/form-data" method="POST">
+            <form id="imageForm" action="{{ route('seguros.store') }}" enctype="multipart/form-data" method="POST">
                 {{-- este es un toquen crea una proteccion en el formulario csrf tipo segridad --}}
                 @csrf
 
@@ -120,50 +122,33 @@
                     {{-- foto --}}
                     <div class="pt-4 mb-6">
                         <h3 class="mb-5 block text-xl font-semibold text-[#07074D]">
-                            Subir Archivos
+                            Subir Imágenes
                         </h3>
-                        <input type="file" name="poliza[]" id="poliza" class="sr-only" multiple />
+                        <p class="text-sm text-gray-600">Máximo 5 imágenes</p>
+                        <div class="flex flex-wrap gap-4 mt-4 pt-4 mb-6" id="imageContainer"></div>
+                        <input type="file" name="poliza[]" id="poliza" accept="image/*" class="sr-only" />
                         <div class="mb-8">
-
-                            <label for="poliza"
+                            <label for="poliza"  id="addImageBtn"
                                 class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
                                 <div>
-                                    <span
+                                    <span 
                                         class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
                                         Buscar
                                     </span>
-                                    <div id="file-info" class="mt-4">
-                                        <span id="file-count">0 archivos seleccionados..</span>
-                                        <ul id="file-names" class="pl-5 list-disc"></ul>
-                                    </div>
+                                    
                                 </div>
                             </label>
                         </div>
                     </div>
+                    
+                    
 
 
 
                 </div>
 
 
-                <script>
-                    const fileInput = document.getElementById('poliza');
-                    const fileCountDisplay = document.getElementById('file-count');
-                    const fileNamesDisplay = document.getElementById('file-names');
-
-                    fileInput.addEventListener('change', function() {
-                        const files = fileInput.files;
-                        const fileCount = files.length;
-                        fileCountDisplay.textContent = `${fileCount} archivos seleccionados`;
-                        fileNamesDisplay.innerHTML = '';
-
-                        for (let i = 0; i < fileCount; i++) {
-                            const listItem = document.createElement('li');
-                            listItem.textContent = files[i].name;
-                            fileNamesDisplay.appendChild(listItem);
-                        }
-                    });
-                </script>
+               
 
                 {{-- Botones --}}
                 <div class="flex justify-end gap-4 mt-4">
@@ -178,4 +163,79 @@
             </form>
         </div>
     </div>
+
+
+    <!-- Script de validación -->
+    <script>
+        $(document).ready(function() {
+            let maxImages = 5;
+            let currentImages = 0;
+            const maxFileSize = 15 * 1024 * 1024;
+
+        
+
+            function createImageInput(capture = false) {
+                const inputFile = $('<input>', {
+                    type: 'file',
+                    name: 'poliza[]',
+                    accept: 'image/jpeg,image/png',
+                    class: 'hidden',
+                    capture: capture ? 'environment' :
+                        undefined // 'environment' para usar la cámara trasera
+                });
+
+                const previewContainer = $(`
+            <div class="flex items-center mt-4 space-x-4">
+                <img src="#" class="object-cover w-16 h-16 border rounded" alt="Previsualización">
+                <button type="button" class="text-red-500 remove-image">Eliminar</button>
+            </div>
+        `);
+
+                inputFile.on('change', function() {
+                    const file = this.files[0];
+
+                    if (file) {
+                        if (file.size > maxFileSize) {
+                            alert('El archivo supera el tamaño máximo permitido de 6 MB.');
+                            inputFile.val('');
+                            return;
+                        }
+
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            previewContainer.find('img').attr('src', e.target.result);
+                        };
+                        reader.readAsDataURL(file);
+
+                        currentImages++;
+                        updateButtonState();
+                    }
+                });
+
+                previewContainer.find('.remove-image').on('click', function() {
+                    inputFile.remove();
+                    previewContainer.remove();
+                    currentImages--;
+                    updateButtonState();
+                });
+
+                $('#imageContainer').append(previewContainer);
+                inputFile.click();
+                $('#imageForm').append(inputFile);
+            }
+
+            $('#addImageBtn').on('click', function() {
+                if (currentImages < maxImages) {
+                    createImageInput(true);
+                }
+            });
+
+            
+
+            createImageInput(); // Agregar un input por defecto
+        });
+    </script>
 @endsection
+
+
+   
