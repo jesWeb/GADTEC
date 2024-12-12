@@ -17,23 +17,23 @@ class GestionController extends Controller
     public function __construct() {
         $this->middleware('auth:usuarios');
     }
-    
+
 
     public function index()
     {
         // $disponibilidad = asignacion::with('automovil')
         //     ->get();
-        // $disponibilidad = \DB::select("SELECT * 
+        // $disponibilidad = \DB::select("SELECT *
         // FROM automoviles AS aut
         // JOIN asignacions AS asi
         // ON aut.id_automovil = asi.id_automovil
-        // WHERE asi.estatus IS NOT NULL 
+        // WHERE asi.estatus IS NOT NULL
         // GROUP BY aut.id_automovil;");
 
     //     $disponibilidad = DB::select("
-    //     SELECT 
-    //         aut.*, 
-    //         asi.id_asignacion, 
+    //     SELECT
+    //         aut.*,
+    //         asi.id_asignacion,
     //         asi.estatus AS estatus_asignacion,
     //         aut.estatusIn,
     //         -- Lógica para determinar el estatus final
@@ -55,7 +55,7 @@ class GestionController extends Controller
 
     $disponibilidad = \DB::select("SELECT aut.*,asi.id_asignacion, asi.estatus
 FROM automoviles AS aut
-LEFT JOIN 
+LEFT JOIN
     (SELECT id_automovil, id_asignacion, estatus
      FROM asignacions
      WHERE (id_automovil, id_asignacion) IN (
@@ -70,7 +70,7 @@ ORDER BY aut.marca");
 
 
 
-        
+
 
         // dd($disponibilidad);
         return view('modulos.Gestion.index', compact('disponibilidad'));
@@ -78,18 +78,18 @@ ORDER BY aut.marca");
 
     public function show(string $id)
     {
-        $dispo = \DB::select("SELECT 
-            aut.marca, 
-            aut.submarca, 
-            aut.modelo, 
+        $dispo = \DB::select("SELECT
+            aut.marca,
+            aut.submarca,
+            aut.modelo,
             asi.id_asignacion,
-            asi.fecha_salida AS fecha, 
-            CONCAT(usu.nombre, ' ', usu.app, ' ', usu.apm) AS solicitante, 
-            asi.nombre_chofer AS chofer, 
-            che.hora_salida, 
+            asi.fecha_salida AS fecha,
+            CONCAT(usu.nombre, ' ', usu.app, ' ', usu.apm) AS solicitante,
+            asi.nombre_chofer AS chofer,
+            che.hora_salida,
             che.hora_llegada,
-            che.km_llegada AS kilometraje, 
-            che.combustible_llegada AS combustible, 
+            che.km_llegada AS kilometraje,
+            che.combustible_llegada AS combustible,
             asi.estatus
         FROM automoviles AS aut
         INNER JOIN asignacions AS asi ON aut.id_automovil = asi.id_automovil
@@ -97,7 +97,7 @@ ORDER BY aut.marca");
         INNER JOIN usuarios AS usu ON asi.id_usuario = usu.id_usuario
         WHERE aut.id_automovil = $id");
 
-        $auto = \DB::select("SELECT CONCAT(aut.marca, ' ', aut.submarca, ' ', aut.modelo) 
+        $auto = \DB::select("SELECT CONCAT(aut.marca, ' ', aut.submarca, ' ', aut.modelo)
         AS automovil
         FROM automoviles AS aut
         WHERE aut.id_automovil=$id");

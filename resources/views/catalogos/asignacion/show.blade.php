@@ -64,7 +64,7 @@
                         <div class="p-4 bg-white rounded-lg shadow-sm">
                             <h4 class="text-lg font-semibold text-gray-800">Fecha de salida:</h4>
                             <span
-                                class="mt-2 text-base leading-relaxed text-gray-500 ">{{ $asignacionV->fecha_salida }}</span>
+                                class="mt-2 text-base leading-relaxed text-gray-500 ">{{date('d-m-Y',strtotime( $asignacionV->fecha_salida))}}</span>
                         </div>
                         <div class="p-4 bg-white rounded-lg shadow-sm">
                             <h4 class="text-lg font-semibold text-gray-800">Hora de salida:</h4>
@@ -79,7 +79,7 @@
                             <h4 class="text-lg font-semibold text-gray-800">Motivo:</h4>
                             <span class="mt-2 text-base leading-relaxed text-gray-500 ">{{ $asignacionV->motivo }}</span>
                         </div>
-                    
+
 
                         <div class="p-4 bg-white rounded-lg shadow-sm">
                             <h4 class="text-lg font-semibold text-gray-800">Nombre del chofer:</h4>
@@ -89,8 +89,8 @@
                             <h4 class="text-lg font-semibold text-gray-800">No.Licencia:</h4>
                             <span class="mt-2 text-base leading-relaxed text-gray-500 ">{{ $asignacionV->no_licencia}}</span>
                         </div>
-                
-                    
+
+
                     <div class="p-4 bg-white rounded-lg shadow-sm">
                         <h4 class="text-lg font-semibold text-gray-800">Requerimientos (adicionales):</h4>
                         <span class="mt-2 text-base leading-relaxed text-gray-500 ">{{ $asignacionV->requierechofer }}</span>

@@ -53,7 +53,6 @@ DB_USERNAME=usuario     # Cambia 'usuario' por tu usuario de MySQL (en XAMPP sue
 DB_PASSWORD=contraseña  # Cambia 'contraseña' por tu contraseña de MySQL (en XAMPP suele estar vacía por defecto)
 ```
 
-
 ## Genera la clave de la aplicación:
 - php artisan key:generate
 
@@ -87,7 +86,7 @@ Por ejemplo:
 Reemplaza 192.168.1.104 con la IP correspondiente de tu computadora en la red.
 
 
-## ## Credenciales de Acceso
+## Credenciales de Acceso
 Los usuarios generados por el seeder tienen los siguientes datos de inicio de sesión:
 
 | Rol           | Usuario       | Contraseña       |

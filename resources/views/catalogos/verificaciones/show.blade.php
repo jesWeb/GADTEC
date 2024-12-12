@@ -70,7 +70,7 @@
 
                         @if ($fotografias)
                             @foreach ($fotografias as $foto)
-                                <img src="{{ asset('img/verificaciones/' . $foto) }}" class="w-full max-h-[400px] object-cover md:w-52" alt="seguro">
+                                <img src="{{ url('img/verificaciones/' . $foto) }}" class="w-full max-h-[400px] object-cover md:w-52" alt="seguro">
                             @endforeach
                         @endif
                     </div>

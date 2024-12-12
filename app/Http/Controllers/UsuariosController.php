@@ -12,13 +12,14 @@ class UsuariosController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request) {
+    public function index(Request $request)
+    {
         // $usuarios = Usuarios::all();
 
         // Inicializar la consulta
         $query = Usuarios::query();
 
-        if ($request->has('search') && $request->input('search')!= '') {
+        if ($request->has('search') && $request->input('search') != '') {
             $search = $request->input('search');
             // Aplicar la búsqueda a la consulta
             $query->where(function ($q) use ($search) {
@@ -40,19 +41,21 @@ class UsuariosController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create() {
+    public function create()
+    {
         return view('catalogos.usuarios.add');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $rules = [
             'nombre' => 'required',
             'app' => 'required',
             'fn' => 'required',
-            'rol'=> 'required',
+            'rol' => 'required',
             'email' => 'required|email',
             'usuario' => 'required',
             'pass' => 'required',
@@ -101,7 +104,8 @@ class UsuariosController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id) {
+    public function show(string $id)
+    {
         $usuario = Usuarios::findOrFail($id);
         return view('catalogos.usuarios.show', compact('usuario'));
     }
@@ -109,7 +113,8 @@ class UsuariosController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id) {
+    public function edit(string $id)
+    {
         $usuario = Usuarios::findOrFail($id);
         return view('catalogos.usuarios.edit', compact('usuario'));
     }
@@ -117,19 +122,20 @@ class UsuariosController extends Controller
     /**
      * Update the specified resource in storage.
      */
-  
-     public function update(Request $request, string $id) {
+
+    public function update(Request $request, string $id)
+    {
         $rules = [
             'nombre' => 'required',
             'app' => 'required',
             'fn' => 'required',
-            'rol'=> 'required',
+            'rol' => 'required',
             'email' => 'required|email',
             'usuario' => 'required',
             'pass' => 'nullable',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ];
-    
+
         $messages = [
             'nombre.required' => 'El campo nombre es requerido',
             'app.required' => 'El campo apellido paterno es requerido',
@@ -142,19 +148,19 @@ class UsuariosController extends Controller
             'foto.mimes' => 'El archivo debe ser de tipo jpeg, png, jpg o gif',
             'foto.max' => 'El tamaño máximo de la imagen es 2MB',
         ];
-    
+
         $request->validate($rules, $messages);
-    
+
         // Buscar al usuario
         $usuario = Usuarios::findOrFail($id);
         $input = $request->except('pass'); // Excluye el campo pass del input
-    
+
         // Verificar si se proporcionó una nueva contraseña
         if ($request->filled('pass')) {
             // Encriptar la nueva contraseña
             $input['pass'] = Hash::make($request->pass);
         }
-    
+
         // Manejo de la foto
         if ($request->hasFile('foto')) {
             // Eliminar la imagen antigua si existe
@@ -164,32 +170,32 @@ class UsuariosController extends Controller
                     unlink($oldImagePath); // Elimina la imagen anterior
                 }
             }
-    
+
             // Subir la nueva imagen
             $file = $request->file('foto');
             $img = $file->getClientOriginalName();
             $ldate = date('Ymd_His_');
             $img2 = $ldate . $img;
             $file->move(public_path('img/usuarios'), $img2);
-    
+
             $input['foto'] = $img2;
         } else {
             // Si no se proporciona una nueva foto, mantener la foto actual
             $input['foto'] = $usuario->foto;
         }
-    
+
         // Actualizar el usuario con los nuevos datos
         $usuario->update($input);
-    
+
         return redirect()->route('usuarios.index')->with('message', 'Se ha modificado correctamente el registro');
     }
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id) {
+    public function destroy($id)
+    {
         $usuario = Usuarios::findOrFail($id);
         $usuario->delete();
         return redirect()->route('usuarios.index')->with('danger', 'Se ha eliminado correctamente el registro');
     }
-
 }

@@ -20,13 +20,13 @@ return new class extends Migration
             $table->set('empresa', ['GÄTSIMED', 'DYDETEC', 'Empresa 3'])->default('GÄTSIMED');    // no recomiendo tenerlo aqui por si hay mas empresas tabla aparte
             $table->date('fn');
             $table->set('sex', ['Femenino', 'Masculino'])->default('Femenino');
-            $table->enum('rol', ['Administrador', 'Moderador', 'Usuario'])->default('Administrador');
+            $table->enum('rol', ['Administrador', 'Moderador'])->default('Administrador');
             $table->string('gen', 50);
             $table->text('foto');
-            $table->string('email')->unique(); 
+            $table->string('email')->unique();
             $table->string('usuario', 255)->unique();
             $table->text('pass');
-            $table->text('estatus')->nullable();    // registro => activo|inactivo
+            $table->enum('estatus', ['Activo', 'Inactivo'])->default('Activo');    // registro => activo|inactivo
             $table->boolean('activo')->default(1);  // borrado logico del sistema
             $table->timestamps();
             $table->softDeletes();

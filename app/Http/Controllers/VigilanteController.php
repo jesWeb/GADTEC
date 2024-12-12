@@ -45,16 +45,16 @@ class VigilanteController extends Controller
         return view('vigilante.edit2', compact('asignacion', 'automoviles', 'usuarios'));
     }
 
+
+
     public function update(Request $request, $id_asignacion)
     {
-        // dd($request);
         // Validar la entrada
         $request->validate([
             'km_salida' => 'required|numeric',
             'combustible_salida' => 'required|string',
-            'fotografias_salida' =>  'nullable|array|max:5',
-            'fotografias_salida.*' => 'file|mimes:jpeg,png,jpg|max:6000',
-
+            'fotografias_salida' => 'nullable|array|max:20',
+            'fotografias_salida.*' => 'file|mimes:jpeg,png,jpg', // Máx 10 MB por archivo
         ]);
 
         // Obtener la asignación
@@ -72,67 +72,54 @@ class VigilanteController extends Controller
         $checkIn = new CheckIn();
         $checkIn->km_salida = $request->km_salida;
         $checkIn->combustible_salida = $request->combustible_salida;
-        // Usar la hora de salida proporcionada en la solicitud
         $checkIn->hora_salida = $request->hora_salida;
-        //fots
+
+        // Manejo de las fotografías
         $fotografias = [];
+        $maxTotalSize = 50 * 1024 * 1024; // 30 MB
+        $totalSize = 0;
 
         if ($request->hasFile('fotografias_salida')) {
             $files = $request->file('fotografias_salida');
-            //limitar a 5 fotos
-            $files = array_slice($files, 0, 5);
-            foreach ($request->file('fotografias_salida') as $file) {
+            $files = array_slice($files, 0, 5); // Limitar a 5 fotos
+
+            foreach ($files as $file) {
+                $totalSize += $file->getSize();
+                if ($totalSize > $maxTotalSize) {
+                    return back()->with('error', 'El tamaño total de las imágenes supera los 30 MB.');
+                }
+
+                // Guardar el archivo en el directorio público
                 $imgIn = date('Ymd_His_') . $file->getClientOriginalName();
                 $file->move(public_path('img/salidas'), $imgIn);
                 $fotografias[] = $imgIn;
             }
         }
 
-        //guardar en json la img
+        // Guardar las imágenes en formato JSON
         $checkIn['fotografias_salida'] = json_encode($fotografias);
-
 
         // Relacionar el check-in con la asignación
         $asignacion->checkIns()->save($checkIn);
 
-        if (auth()->user()->hasRole('Administrador') ) {
+        // Redirigir según el rol del usuario
+        if (auth()->user()->hasRole('Administrador')) {
             return redirect()->route('vigilante.index')->with('success', 'Check-In actualizado exitosamente.');
-        } else  {
+        } else {
             return redirect()->route('moderador.vigilante');
-
         }
     }
 
 
-
-
-
     public function update2(Request $request, $id_check)
     {
-
-        // {{ route('admin.edit2', $asignacion->id_asignacion) }}
-
-        // if($request->file('fotografias_regreso') != ''){
-        //     $file = $request->file('fotografias_regreso');
-        //     $sizeInBytes = $file->getSize(); // Obtiene el tamaño del archivo en bytes
-        //     $sizeInKilobytes = $sizeInBytes / 6000; // Convierte el tamaño a KB, si es necesario
-
-        // dd($sizeInKilobytes);
-        //     if($sizeInBytes > 6000){
-        //         return redirect()->route("admin.edit2", ['id_asignacion' => $id_check]);
-        //     }
-
-        // }
-
+        // Validar la entrada
         $request->validate([
             'km_llegada' => 'nullable|numeric',
             'combustible_llegada' => 'nullable|string',
-            'fotografias_llegada' =>  'nullable|array|max:5',
-            'fotografias_llegada.*' => 'file|mimes:jpeg,png,jpg|max:6000', //30 mb
-
+            'fotografias_regreso' => 'nullable|array|max:5',
+            'fotografias_regreso.*' => 'file|mimes:jpeg,png,jpg|max:10240', // Máximo 10 MB por archivo
         ]);
-
-        // dd($request->all());
 
         // Obtener el check-in existente
         $checkIn = CheckIn::findOrFail($id_check);
@@ -142,59 +129,60 @@ class VigilanteController extends Controller
         $checkIn->combustible_llegada = $request->combustible_llegada;
         $checkIn->hora_llegada = $request->hora_llegada;
 
-
         // Asignar la fecha de llegada si aún no está establecida
         if (!$checkIn->fecha_llegada) {
             $checkIn->fecha_llegada = now();
         }
 
-        // Obtener la asignación relacionada con el check-in
+        // Obtener la asignación relacionada
         $asignacion = $checkIn->asignacion;
-
-        $asignacion->fecha_estimada_dev = $request->fecha_estimada_dev;
         if ($asignacion) {
-            // Cambiar el estatus de la asignación a "disponible"
+            $asignacion->fecha_estimada_dev = $request->fecha_estimada_dev;
             $asignacion->estatus = 'disponible';
             $asignacion->save();
         }
 
+        // Cambiar el estatus del automóvil
+        if ($asignacion && $asignacion->automovil) {
+            $asignacion->automovil->estatusIn = 'disponible';
+            $asignacion->automovil->save();
+        }
 
-        $query = asignacion::find($checkIn->id_asignacion);
-        $query->automovil->estatusIn = 'disponible';
-
-        $query->save();
-
-
-        //fots
+        // Manejo de las fotografías
         $fotografias = [];
+        $maxTotalSize = 50 * 1024 * 1024; // 50 MB
+        $totalSize = 0;
 
         if ($request->hasFile('fotografias_regreso')) {
             $files = $request->file('fotografias_regreso');
-            //limitar a 5 fotos
-            $files = array_slice($files, 0, 8);
+            $files = array_slice($files, 0, 5); // Limitar a 5 fotos
 
-            foreach ($request->file('fotografias_regreso') as $file) {
-                $imgOut = date('Ymd_His_') . $file->getClientOriginalName();
-                $file->move(public_path('img/llegadas'), $imgOut);
-                $fotografias[] = $imgOut;
+            foreach ($files as $file) {
+                $totalSize += $file->getSize();
+                if ($totalSize > $maxTotalSize) {
+                    return back()->with('error', 'El tamaño total de las imágenes supera los 50 MB.');
+                }
+
+                // Guardar el archivo
+                $imgIn = date('Ymd_His_') . $file->getClientOriginalName();
+                $file->move(public_path('img/llegadas'), $imgIn);
+                $fotografias[] = $imgIn;
             }
         }
 
-        //guardar en json la img
-        $checkIn['fotografias_regreso'] = json_encode($fotografias);
+        // Guardar las imágenes en formato JSON
+        $checkIn->fotografias_regreso = json_encode($fotografias);
 
-
-        // Guardar los cambios en el registro existente
+        // Guardar los cambios en el check-in
         $checkIn->save();
 
-        if (auth()->user()->hasRole('Administrador') ) {
+        // Redirigir según el rol del usuario
+        if (auth()->user()->hasRole('Administrador')) {
             return redirect()->route('vigilante.index')->with('success', 'Check-In actualizado exitosamente.');
-        } else  {
+        } else {
             return redirect()->route('moderador.vigilante');
-
         }
     }
-
     public function show(string $id)
     {
         // Obtener la asignación por su ID

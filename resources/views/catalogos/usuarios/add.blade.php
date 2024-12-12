@@ -141,7 +141,7 @@
                                     title="Selecciona el rol del usuario">
                                     <option value="Administrador" selected>Administrador</option>
                                     <option value="Moderador">Moderador</option>
-                                    <option value="Usuario">Usuario</option>
+
                                 </select>
                             </div>
 
@@ -188,11 +188,11 @@
                                         class="absolute inset-0 opacity-0 cursor-pointer" title="Selecciona una imagen de perfil">
                                         <label for="foto" class="cursor-pointer">
                                             <div class="flex flex-col items-center">
-                                                <span title="Selecciona una fotografía frontal de la tarjeta" 
+                                                <span title="Selecciona una fotografía frontal de la tarjeta"
                                                     class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
                                                         Buscar
                                                 </span>
-                                                
+
                                                 <div id="file-info" class="mt-4">
                                                     <span id="file-count">0 archivos seleccionados..</span>
                                                     <ul id="file-names" class="pl-5 list-disc"></ul>
@@ -232,6 +232,6 @@
                                 class="px-5 py-3 text-gray-700 bg-gray-200 rounded-md shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">Cancelar</a>
                         </div>
                     </form>
-                </div> 
+                </div>
 </div>
     @endsection

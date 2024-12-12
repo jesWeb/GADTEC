@@ -53,8 +53,7 @@
             <div class="p-6 bg-white rounded-md shadow-md">
                 <h2 class="text-xl font-semibold text-gray-700">Editar Automovil </h2>
                 {{--  --}}
-                <form action="{{ route('Automovil.update', $EddCar->id_automovil) }}" method="POST"
-                    enctype="multipart/form-data">
+                <form action="{{ route('Automovil.update', $EddCar->id_automovil) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PATCH')
                     <div class="m-3 xl:p-10">
@@ -366,8 +365,8 @@
                             <button type="submit" title="Actualizar automóvil"
                                 class="px-4 py-2 text-white bg-indigo-600 rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">Actualizar</button>
                         </div>
+                    </div>
                 </form>
-
             </div>
         </div>
     </div>

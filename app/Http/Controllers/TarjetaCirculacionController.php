@@ -147,7 +147,7 @@ class TarjetaCirculacionController extends Controller
         if ($request->hasFile('fotografia_frontal')) {
             $file = $request->file('fotografia_frontal');
             $imgFrontal = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('img'), $imgFrontal);
+            $file->move(public_path('img/tarjetas'), $imgFrontal);
             $input['fotografia_frontal'] = $imgFrontal;
         } else {
             $input['fotografia_frontal'] = $tarjeta->fotografia_frontal;

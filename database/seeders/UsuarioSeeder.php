@@ -53,23 +53,6 @@ class UsuarioSeeder extends Seeder
             'activo' => 1,
         ]);
 
-        // Insertar un usuario más con contraseña encriptada
-        Usuarios::create([
-            'num_empleado' => '11223',
-            'nombre' => 'Carlos',
-            'app' => 'Martínez',
-            'apm' => 'Sánchez',
-            'empresa' => 'Empresa 3',
-            'fn' => '1995-06-12',
-            'sex' => 'Masculino',
-            'rol' => 'Usuario',
-            'gen' => 'Masculino',
-            'foto' => 'shadow.png',
-            'email' => 'carlos.martinez@example.com',
-            'usuario' => 'usuario', // Nombre de usuario
-            'pass' => Hash::make('usuario789'), // Contraseña encriptada
-            'estatus' => 'Activo',
-            'activo' => 1,
-        ]);
+
     }
 }

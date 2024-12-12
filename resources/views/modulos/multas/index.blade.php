@@ -79,7 +79,7 @@
                                 {{ $multa->automovil->marca }} {{ $multa->automovil->modelo }}
                             </td>
                             <td class="px-4 py-2 border">{{ $multa->tipo_multa }}</td>
-                            <td class="px-4 py-2 border"> {{ $multa->monto }}</td>
+                            <td class="px-4 py-2 border">$ {{ $multa->monto }}</td>
                             <td class="px-4 py-2 border">
                                 {{\Carbon\Carbon::parse( $multa->fecha_multa )->locale('es')->format('d-m-Y') }}
                                 </td>

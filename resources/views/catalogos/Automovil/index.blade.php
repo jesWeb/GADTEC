@@ -59,9 +59,7 @@
             </form>
 
             <div class="flex justify-end ml-2 space-x-2">
-                <a href="{{ route('automoviles-pdf') }}" target="_blank" title="Imprimir reporte"
-                    class="inline-block px-4 py-2 text-white bg-green-600 rounded hover:bg-green-700">Imprimir</a>
-                <a href="{{ route('Automovil.create') }}" title="Agregar un nuevo registro de automóvil"
+             <a href="{{ route('Automovil.create') }}" title="Agregar un nuevo registro de automóvil"
                     class="inline-block px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Nuevo registro</a>
             </div>
         </div>
