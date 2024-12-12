@@ -197,21 +197,21 @@
                         </h3>
                         <p class="text-sm text-gray-600">Máximo 5 imágenes</p>
                         <div class="flex flex-wrap gap-4 mt-4 pt-4 mb-6" id="imageContainer"></div>
-                        <input type="file" name="image[]" id="image" accept="image/*" class="sr-only" />
+                        <input type="file" name="image[]" id="image" accept="image/*" class="sr-only" multiple />
                         <div class="mb-8">
                             <label for="image"  id="addImageBtn"
                                 class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
                                 <div>
-                                    <span 
+                                    <span
                                         class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
                                         Buscar
                                     </span>
-                                    
+
                                 </div>
                             </label>
                         </div>
                     </div>
-                    
+
 
 
                 <!-- Botones -->
@@ -240,7 +240,7 @@
             let currentImages = 0;
             const maxFileSize = 15 * 1024 * 1024;
 
-        
+
 
             function createImageInput(capture = false) {
                 const inputFile = $('<input>', {
@@ -298,7 +298,7 @@
                 }
             });
 
-            
+
 
             createImageInput(); // Agregar un input por defecto
         });
