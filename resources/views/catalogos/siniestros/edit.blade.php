@@ -119,6 +119,7 @@
                                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
 
                         </div>
+                        @if ($EddSin->aplica_deducible)
                         <div class="w-full px-3 xl:w-1/2">
                             <!-- Contenedor del porcentaje -->
                             <div>
@@ -127,9 +128,9 @@
                                 </label>
                                 <select name="porcentaje" id="porcentaje"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-
+                                    <option disabled selected>Selecciona una opción...</option>
                                     <option value="5"
-                                        {{ old('porcentaje', $EddSin->porcentaje) == '5' || empty(old('porcentaje')) && empty($EddSin->porcentaje) ? 'selected' : ''  }}>
+                                        {{ old('porcentaje', $EddSin->porcentaje) == '5' ? 'selected' : '' }}>
                                         5%
                                     </option>
                                     <option value="10"
@@ -152,9 +153,92 @@
                                     class="w-full rounded-md border border-[#e0e0e0] bg-gray-100 py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                             </div>
                         </div>
+                        @else
+                        <div class="w-full p-3 px-3 m-3 xl:w-1/2">
+                            <!-- Checkbox: ¿Aplica deducible? -->
+                            <div class="">
+                                <label class="mb- block text-base font-medium text-[#07074D]" for="aplica_deducible">
+                                    ¿Aplica deducible?
+                                </label>
+                                <span>
+                                    <input type="checkbox"
+                                        class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                                        name="aplica_deducible" id="aplica_deducible" value="1" />
+                                    <span>
+                                        si
+                                    </span>
+                                </span>
+                            </div>
+
+                            <!-- Contenedor del porcentaje -->
+                            <div id="porcentaje-container" class="hidden">
+                                <label class="mb-3 block text-base font-medium text-[#07074D]" for="porcentaje">
+                                    Porcentaje:
+                                </label>
+                                <select name="porcentaje" id="porcentaje"
+                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                                    <option disabled selected>Selecciona una opción...</option>
+                                    <option value="5">5%</option>
+                                    <option value="10">10%</option>
+                                    <option value="15">15%</option>
+                                </select>
+                            </div>
+
+                            <!-- Campo de resultado -->
+                            <div id="resultado-container" class="hidden">
+                                <label class="mb-3 block text-base font-medium text-[#07074D]" for="resultado">
+                                    Resultado:
+                                </label>
+                                <input type="text" id="resultado" name="resultado" readonly
+                                    class="w-full rounded-md border border-[#e0e0e0] bg-gray-100 py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                            </div>
+                            <script>
+                                const aplicaDeducible = document.getElementById("aplica_deducible");
+                                const porcentajeContainer = document.getElementById("porcentaje-container");
+                                const porcentaje = document.getElementById("porcentaje");
+                                const monto = document.getElementById("monto");
+                                const resultadoContainer = document.getElementById("resultado-container");
+                                const resultado = document.getElementById("resultado");
+
+                                // Muestra yo culta el porcentaje cuando el checkbox activa
+                                aplicaDeducible.addEventListener("change", function() {
+                                    if (this.checked) {
+                                        porcentajeContainer.classList.remove("hidden");
+                                    } else {
+                                        porcentajeContainer.classList.add("hidden");
+                                        resultadoContainer.classList.add("hidden");
+                                        resultado.value = "";
+                                    }
+                                });
+
+                                // Calcular resultado cuando el porcentaje cambia o el monto se modifica
+                                function calcularResultado() {
+                                    const montoValue = parseFloat(monto.value);
+                                    const porcentajeValue = parseFloat(porcentaje.value);
+
+                                    if (!isNaN(montoValue) && !isNaN(porcentajeValue)) {
+                                        const deducible = montoValue * (porcentajeValue / 100);
+                                        const total = deducible;
+
+                                        resultado.value = total.toFixed(2);
+                                        resultadoContainer.classList.remove("hidden");
+                                    } else {
+                                        resultadoContainer.classList.add("hidden");
+                                        resultado.value = "";
+                                    }
+                                }
+
+                                // Eventos para recalcular resultado
+                                porcentaje.addEventListener("change", calcularResultado);
+                                monto.addEventListener("input", calcularResultado);
+                            </script>
+                        </div>
+                        @endif
+
+
+
                     </div>
                     <script>
-
                         const porcentaje = document.getElementById("porcentaje");
                         const monto = document.getElementById("monto");
                         const resultado = document.getElementById("resultado");

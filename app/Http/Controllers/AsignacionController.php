@@ -22,20 +22,20 @@ class AsignacionController extends Controller
 
     public function create()
     {
-        
-        $auto = \DB::select("SELECT 
-            aut.id_automovil, 
-            aut.marca, 
-            aut.submarca, 
-            aut.modelo, 
+
+        $auto = \DB::select("SELECT
+            aut.id_automovil,
+            aut.marca,
+            aut.submarca,
+            aut.modelo,
             aut.estatusIn,
             asi.estatus
-        FROM 
+        FROM
             automoviles AS aut
         LEFT JOIN asignacions AS asi
             ON aut.id_automovil = asi.id_automovil
             AND asi.estatus IN ('Reservado', 'Ocupado', 'Autorizado')
-        WHERE 
+        WHERE
             aut.estatusIn = 'Disponible'
             AND asi.id_asignacion IS NULL"
         );
@@ -55,22 +55,22 @@ class AsignacionController extends Controller
             'hora_salida' => 'nullable|date_format:H:i',
             'hora_llegada' => 'nullable|date_format:H:i',
             'lugar' => 'required|string',
+            'requierechofer' => 'nullable',
+            'nombre_chofer' => 'nullable|string',
             'motivo' => 'required|string',
             'no_licencia' => 'required|string',
             'condiciones' => 'nullable|string',
             'autorizante' => 'nullable|string',
         ]);
 
-        //verificar si ya esta a[partado]
-
+        //verificar si ya esta apartado
 
         $newAsig = new asignacion($validated);
 
         // Si no se requiere chofer, el campo nombre_chofer  debe estar vacío
-        if (!$request->has('requierechofer')) {
-            $newAsig->nombre_chofer = null;
-        }
-
+        // if (!$request->has('requierechofer')) {
+        //     $newAsig->nombre_chofer = 'N/A';
+        // }
         $newAsig->save();
 
         return redirect()->route('asignacion.index')->with('success', 'Asignación creada con éxito.');
@@ -88,20 +88,19 @@ class AsignacionController extends Controller
     public function edit($id)
     {
         $EddtAsig = asignacion::findOrFail($id);
-        $reservU = Usuarios::all();  // Obtener todos los usuarios
+        $usuarios = Usuarios::all();
 
 
-        return view('catalogos.asignacion.edit', compact('EddtAsig', 'reservU'));
+        return view('catalogos.asignacion.edit', compact('EddtAsig', 'usuarios'));
     }
 
     public function update(Request $request, $id)
     {
         $EddtAsig = asignacion::findOrFail($id);
         $input = $request->all();
-        $reservU = Usuarios::all();  // Obtener todos los usuarios
         $EddtAsig->update($input);
 
-        return redirect()->route('asignacion.index')->with('message', 'Se ha actualizado el registro');
+        return redirect()->route('asignacion.index')->with('mensaje', 'Se ha actualizado el registro');
     }
 
 

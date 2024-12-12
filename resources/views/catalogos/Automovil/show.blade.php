@@ -76,7 +76,7 @@
                                     @if ($fotografias)
                                         @foreach ($fotografias as $foto)
                                         <img src="{{ url('img/automoviles/' . $foto) }}" alt="Imagen del Vehículo" class="w-20 h-auto transition-transform duration-300 transform rounded-lg shadow-md hover:scale-90 hover:shadow-lg">
-                                        <a href="{{ url('img/automoviles/' . $foto) }}" target="_blank" class="text-gray-500" title="Ver foto de automóvil">Ver foto</a> 
+                                        <a href="{{ url('img/automoviles/' . $foto) }}" target="_blank" class="text-gray-500" title="Ver foto de automóvil">Ver foto</a>
                                         @endforeach
                                     @endif
                                 </div>

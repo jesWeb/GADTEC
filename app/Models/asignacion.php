@@ -20,22 +20,21 @@ class asignacion extends Model
         'telefono',
         'requierechofer',
         'nombre_chofer',
-        'lugar', // destino
-        'motivo', // motivo de la reserva
+        'lugar',
+        'motivo',
         'fecha_salida',
         'hora_salida',
         'fecha_estimada_dev',
         'no_licencia',
         'estatus',
         'condiciones',
-        'observaciones',
         'autorizante'
     ];
 
     // Asegura que la fecha de asignación y la fecha estimada de devolución se asignen automáticamente
     protected $dates = [
         'fecha_asignacion',
-       
+
     ];
 
     // Método para obtener la fecha de asignación automáticamente

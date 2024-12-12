@@ -76,7 +76,7 @@
                                     for="telefono">Teléfono</label>
                                 <input title="Ingresa teléfono" type="text" name="telefono"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                    placeholder="729 237 0990" required />
+                                    placeholder="Numero Telefonico" required />
                             </div>
                         </div>
                     </div>
@@ -110,7 +110,7 @@
                         <div class="w-full px-3 xl:w-1/2">
                             <div class="mb-5">
                                 <label class="mb-3 block text-base font-medium text-[#07074D]" for="motivo">Motivo</label>
-                                <input type="text" name="motivo" title="Ingresa el motivo" placeholder="Ingresa el motivo" 
+                                <input type="text" name="motivo" title="Ingresa el motivo" placeholder="Ingresa el motivo"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                     required/>
                             </div>
@@ -128,8 +128,8 @@
                                     required />
                             </div>
                         </div>
-                        
-                        
+
+
                     </div>
 
                     <div class="px-3 py-3 border-b border-stroke dark:border-strokedark"></div>
@@ -174,7 +174,7 @@
                                     required />
                             </div>
                         </div>
-                        
+
                     </div>
                     <div class="flex flex-col gap-5 mt-3 xl:flex-row">
                         {{-- Condiciones --}}
@@ -192,7 +192,7 @@
                 </div>
                 {{-- BTN --}}
                 <div class="flex justify-end gap-4 mt-4">
-                    <a href="{{ route('asignacion.index') }}" title="Cancelar registro" 
+                    <a href="{{ route('asignacion.index') }}" title="Cancelar registro"
                         class="px-4 py-2 text-gray-700 bg-gray-200 rounded-md shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">Cancelar</a>
                     <button type="submit"  title="Registrar solicitud"
                         class="px-4 py-2 text-white bg-indigo-600 rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">Registrar</button>

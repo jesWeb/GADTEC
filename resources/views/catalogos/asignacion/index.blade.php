@@ -31,7 +31,7 @@
         <div class="p-6 bg-white rounded-md shadow-md">
             <h2 class="text-lg font-semibold text-gray-700 capitalize">Solicitud de Vehículo</h2>
             <div class="mb-4 text-right">
-                <a href="{{ route('asignacion.create') }}"class="inline-block px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700" 
+                <a href="{{ route('asignacion.create') }}"class="inline-block px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700"
                 title="Generar nueva solicitud">Nueva Solicitud</a>
             </div>
             <div class="overflow-x-auto rounded-lg shadow">
@@ -54,15 +54,15 @@
                                 <td class="px-4 py-2 border">{{ $key + 1 }}</td>
                                 <td class="px-4 py-2 border">
                                 {{ $reserv->automovil->marca }} {{$reserv->automovil->submarca }} {{ $reserv->automovil->modelo}}
-                                </td>                           
+                                </td>
                                 <td class="px-4 py-2 border">{{ $reserv->usuarios->nombre}} {{ $reserv->usuarios->app}} {{ $reserv->usuarios->apm}}</td>
-                                <td class="px-4 py-2 border">{{ \Carbon\Carbon::parse($reserv->fecha_salida)->locale('es')->format('d-m-Y') }}</td>
-                                <td class="px-4 py-2 border">{{ \Carbon\Carbon::parse($reserv->hora_salida)->format('h:i A') }}</td>
+                                <td class="px-4 py-2 border">{{ date('d-m-Y',strtotime($reserv->fecha_salida))}}</td>
+                                <td class="px-4 py-2 border">{{ date('h:i a',strtotime(($reserv->hora_salida)))}}</td>
                                 <td class="px-4 py-2 border">{{ $reserv->lugar }}</td>
                                 @if($reserv->checkIns->isNotEmpty() && $reserv->checkIns->first()->km_llegada)
                                     <td class="px-4 py-2 border">Entregado</td>
-                                @else 
-                                    <td class="px-4 py-2 border">{{ $reserv->estatus}}</td> 
+                                @else
+                                    <td class="px-4 py-2 border">{{ $reserv->estatus}}</td>
                                 @endif
                                 {{-- acciones --}}
                                 <td class="px-4 py-2 border">
@@ -76,7 +76,7 @@
                                         </a>
                                         @if($reserv->estatus != 'Disponible' && $reserv->estatus != 'Ocupado')
                                             <!-- Editar -->
-                                            <a href="{{ route('asignacion.edit', $reserv->id_asignacion) }}" 
+                                            <a href="{{ route('asignacion.edit', $reserv->id_asignacion) }}"
                                                 class="inline-flex items-center justify-center w-8 h-8 text-yellow-600 border border-yellow-600 rounded hover:bg-yellow-600 hover:text-white"
                                                 title="Editar solicitud">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4">
@@ -123,7 +123,7 @@
         </script>
     @endif
     {{-- alerta de editar --}}
-    @if ($updateMessaje = Session::get('message'))
+    @if ($updateMessaje = Session::get('mensaje'))
         <script>
             Swal.fire({
                 title: "Informacion  Actualizada",
