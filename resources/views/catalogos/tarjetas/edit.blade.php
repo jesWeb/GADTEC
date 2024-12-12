@@ -140,7 +140,7 @@
 
                         <div class="mb-4">
                             @if ($tarjeta->fotografia_frontal)
-                                <img src="{{ asset('img/tarjetas/' . $tarjeta->fotografia_frontal) }}" alt="fotografia_frontal" class="object-cover w-16 h-16 mt-2 rounded-md">
+                                <img src="{{ url('img/tarjetas/' . $tarjeta->fotografia_frontal) }}" alt="fotografia_frontal" class="object-cover w-16 h-16 mt-2 rounded-md">
                                 <a href="{{ url('img/tarjetas/' . $tarjeta->fotografia_frontal) }}" target="_blank" class="text-gray-500">Ver comprobante</a> 
                             @else
                                 <p class="mt-2 text-sm text-gray-500">No hay comprobante cargado.</p>
