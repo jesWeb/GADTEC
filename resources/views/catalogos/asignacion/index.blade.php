@@ -57,7 +57,7 @@
                                 </td>
                                 <td class="px-4 py-2 border">{{ $reserv->usuarios->nombre}} {{ $reserv->usuarios->app}} {{ $reserv->usuarios->apm}}</td>
                                 <td class="px-4 py-2 border">{{ date('d-m-Y',strtotime($reserv->fecha_salida))}}</td>
-                                <td class="px-4 py-2 border">{{ date('H:i',strtotime(($reserv->hora_salida)))}}</td>
+                                <td class="px-4 py-2 border">{{ date('h:i a',strtotime(($reserv->hora_salida)))}}</td>
                                 <td class="px-4 py-2 border">{{ $reserv->lugar }}</td>
                                 @if($reserv->checkIns->isNotEmpty() && $reserv->checkIns->first()->km_llegada)
                                     <td class="px-4 py-2 border">Entregado</td>
@@ -123,7 +123,7 @@
         </script>
     @endif
     {{-- alerta de editar --}}
-    @if ($updateMessaje = Session::get('message'))
+    @if ($updateMessaje = Session::get('mensaje'))
         <script>
             Swal.fire({
                 title: "Informacion  Actualizada",

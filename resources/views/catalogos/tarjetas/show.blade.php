@@ -49,7 +49,7 @@
     </div>
     <div class="container px-4 mx-auto">
         <div class="flex justify-center mt-12">
-            <div class="w-full max-w-3xl p-8 bg-white rounded-lg shadow-lg bg-gradient-to-r">            
+            <div class="w-full max-w-3xl p-8 bg-white rounded-lg shadow-lg bg-gradient-to-r">
                 <!-- Encabezado -->
                 <div class="text-center">
                     <h1 class="text-4xl font-extrabold text-gray-800">Detalle de Tarjeta de Circulación</h1>
@@ -95,20 +95,20 @@
                             @if($tarjeta->comprobante=='')
                                 <p class="text-lg font-semibold text-gray-800">Fotografía Frontal</p>
                                 <img src="{{ url('img/tarjetas/' . $tarjeta->fotografia_frontal) }}" alt="Foto frontal" class="object-cover w-20 h-16 mt-4 rounded-lg">
-                                <a href="{{ url('img/tarjetas/' . $tarjeta->fotografia_frontal) }}" target="_blank" class="text-gray-500">Ver comprobante</a> 
-                            
+                                <a href="{{ url('img/tarjetas/' . $tarjeta->fotografia_frontal) }}" target="_blank" class="text-gray-500">Ver comprobante</a>
+
                             @else
                                 <p class="text-gray-600">No hay comprobante disponible</p>
                             @endif
                         </div>
                     </div>
 
-                    
+
                 </div>
 
                 <!-- Botón de regreso -->
                 <div class="flex justify-end mt-8">
-                    <a href="{{ route('tarjetas.index') }}" 
+                    <a href="{{ route('tarjetas.index') }}"
                     class="inline-flex items-center px-5 py-3 text-sm font-semibold text-white transition duration-200 bg-green-500 rounded-lg shadow bg-gradient-to-r to-green-600 hover:bg-green-600 focus:outline-none"
                     title="Volver al listado de tarjetas">
                         <i class="mr-2 fa-solid fa-arrow-left"></i> Volver
