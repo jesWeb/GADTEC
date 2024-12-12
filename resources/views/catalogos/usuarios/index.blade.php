@@ -61,13 +61,7 @@
 
                     </div>
                 </form>
-                <!-- Botones de Imprimir y Nuevo Registro -->
-                <div class="flex justify-end ml-2 space-x-2">
-                    <a href="{{ route('usuarios-pdf') }}" target="_blank" teal title="Imprimir reporte"
-                        class="inline-block px-4 py-2 text-white bg-green-600 rounded hover:bg-green-700">Imprimir</a>
-                    <a href="usuarios/create" title="Generar nuevo registro de usuario"
-                        class="inline-block px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Nuevo registro</a>
-                </div>
+                
 
             </div>
             <div class="overflow-x-auto rounded-lg shadow">

@@ -131,10 +131,9 @@
                             <label for="poliza"  id="addImageBtn"
                                 class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
                                 <div>
-                                    <span 
-                                        class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
+                                    <button type="button" name="poliza[]" id="poliza" accept="image/*"  class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
                                         Buscar
-                                    </span>
+                                    </button>
                                     
                                 </div>
                             </label>
