@@ -100,7 +100,7 @@
                             @else
                                 <p class="text-sm text-gray-500">Sin imagen</p>
                             @endif
-                            
+
                         </div>
                     </div>
 
