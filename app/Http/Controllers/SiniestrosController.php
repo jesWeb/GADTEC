@@ -81,6 +81,8 @@ class SiniestrosController extends Controller
         $input['resultado'] = $resultado;
 
 
+
+
         //guardamos datos en BD
         siniestros::create($input);
 

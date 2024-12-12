@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('body')
 
+@section('body')
     <div class="px-6 py-2">
         <!-- Mapa de sitio -->
         <div class="flex justify-end mt-2 mb-4">
@@ -107,25 +107,31 @@
 
                     {{-- 2ª fila de información --}}
                     <div class="flex flex-col gap-5.5 mt-4 mb-4 xl:flex-row">
-                        <div class="p-3 m-3">
+                        <!-- Campo de monto -->
+                        <div class="w-full px-3 xl:w-1/2">
+                            <label class="mb-3 block text-base font-medium text-[#07074D]" for="monto">
+                                Ingresa el monto:
+                            </label>
+                            <input type="number" name="monto" id="monto" placeholder="Ejemplo: 15000"
+                                pattern="^\d*([,.]?\d+)?$" min="0"
+                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                        </div>
+                        <div class="w-full p-3 px-3 m-3 xl:w-1/2">
                             <!-- Checkbox: ¿Aplica deducible? -->
                             <div class="">
                                 <label class="mb- block text-base font-medium text-[#07074D]" for="aplica_deducible">
                                     ¿Aplica deducible?
                                 </label>
-
-
                                 <span>
                                     <input type="checkbox"
                                         class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
                                         name="aplica_deducible" id="aplica_deducible" value="1" />
                                     <span>
-
                                         si
                                     </span>
                                 </span>
-
                             </div>
+
                             <!-- Contenedor del porcentaje -->
                             <div id="porcentaje-container" class="hidden">
                                 <label class="mb-3 block text-base font-medium text-[#07074D]" for="porcentaje">
@@ -139,15 +145,7 @@
                                     <option value="15">15%</option>
                                 </select>
                             </div>
-                            <!-- Campo de monto -->
-                            <div>
-                                <label class="mb-3 block text-base font-medium text-[#07074D]" for="monto">
-                                   Ingresa el monto:
-                                </label>
-                                <input type="number" name="monto" id="monto" placeholder="Ejemplo: 15000"
-                                    pattern="^\d*([,.]?\d+)?$" min="0"
-                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                            </div>
+
                             <!-- Campo de resultado -->
                             <div id="resultado-container" class="hidden">
                                 <label class="mb-3 block text-base font-medium text-[#07074D]" for="resultado">
@@ -237,17 +235,3 @@
         </div>
     </div>
 @endsection
-
-
-
-{{--
-<script>
-    document.getElementById("aplica_deducible").addEventListener("change", function() {
-        const porcentajeContainer = document.getElementById("porcentaje-container");
-        if (this.checked) {
-            porcentajeContainer.classList.remove("hidden");
-        } else {
-            porcentajeContainer.classList.add("hidden");
-        }
-    });
-</script> --}}
