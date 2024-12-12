@@ -126,23 +126,6 @@ class VerificacionesController extends Controller
         }
 
 
-        // //guardar fotografias
-        // $fotografias = [];
-
-        // if ($request->hasFile('image')) {
-        //     $files = $request->file('image');
-        //     //limitar a 5
-        //     $files = array_slice($files, 0, 5);
-        //     foreach ($request->file('image') as $file) {
-        //         $imgVeri = date('Ymd_His_') . $file->getClientOriginalName();
-        //         $file->move(public_path('img/verificaciones'), $imgVeri);
-        //         $fotografias[] = $imgVeri;
-        //     }
-        // }
-
-        // //guardar en json la img
-        // $input['image'] = json_encode($fotografias);
-
         //guardar fotos
         $fotografias = [];
         $maxTotalSize = 50 * 1024 * 1024; // 50 MB
