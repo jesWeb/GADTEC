@@ -54,7 +54,7 @@ class VigilanteController extends Controller
             'km_salida' => 'required|numeric',
             'combustible_salida' => 'required|string',
             'fotografias_salida' => 'nullable|array|max:20',
-            'fotografias_salida.*' => 'file|mimes:jpeg,png,jpg', // Máx 10 MB por archivo
+            'fotografias_salida.*' => 'file|mimes:jpeg,png,jpg',
         ]);
 
         // Obtener la asignación
@@ -76,7 +76,7 @@ class VigilanteController extends Controller
 
         // Manejo de las fotografías
         $fotografias = [];
-        $maxTotalSize = 50 * 1024 * 1024; // 30 MB
+        $maxTotalSize = 75 * 1024 * 1024; //  maximo a 75 MB
         $totalSize = 0;
 
         if ($request->hasFile('fotografias_salida')) {
@@ -117,8 +117,8 @@ class VigilanteController extends Controller
         $request->validate([
             'km_llegada' => 'nullable|numeric',
             'combustible_llegada' => 'nullable|string',
-            'fotografias_regreso' => 'nullable|array|max:5',
-            'fotografias_regreso.*' => 'file|mimes:jpeg,png,jpg|max:10240', // Máximo 10 MB por archivo
+            'fotografias_regreso' => 'nullable|array|max:20',
+            'fotografias_regreso.*' => 'file|mimes:jpeg,png,jpg', // Máximo 10 MB por archivo
         ]);
 
         // Obtener el check-in existente
@@ -150,7 +150,7 @@ class VigilanteController extends Controller
 
         // Manejo de las fotografías
         $fotografias = [];
-        $maxTotalSize = 50 * 1024 * 1024; // 50 MB
+        $maxTotalSize = 75 * 1024 * 1024; // 75 MB
         $totalSize = 0;
 
         if ($request->hasFile('fotografias_regreso')) {

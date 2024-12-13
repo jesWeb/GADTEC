@@ -138,6 +138,8 @@
                         @if ($fotografiasSalida)
                             @foreach ($fotografiasSalida as $foto)
                                 <img src="{{ url('img/salidas/' . $foto) }}" alt="Imagen del Vehículo" class="object-cover w-full h-full transition-transform duration-300 transform rounded-lg shadow-md hover:scale-90 hover:shadow-lg">
+                                <a href="{{ url('img/salidas/' . $foto) }}" target="_blank" class="text-gray-500" title="Ver archivo de seguro">Ver imagen</a>
+
                             @endforeach
                         @endif
                     </div>
@@ -163,11 +165,6 @@
                             <p>No hay fotografias Cargadas </p>
                         @endif
 
-                        @if ($fotografiasRegreso)
-                            @foreach ($fotografiasRegreso as $foto)
-                                <img src="{{ url('img/llegadas/' . $foto) }}" alt="Imagen del Vehículo" class="object-cover w-full h-full transition-transform duration-300 transform rounded-lg shadow-md hover:scale-90 hover:shadow-lg">
-                            @endforeach
-                        @endif
                     </div>
                 </div>
             </div>
