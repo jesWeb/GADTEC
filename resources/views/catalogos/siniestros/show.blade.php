@@ -81,7 +81,7 @@
                                 <div class="p-4 bg-white rounded-lg shadow-sm">
                                     <h4 class="text-lg font-semibold text-gray-800">Estatus:</h4>
                                     <span
-                                        class="mt-2 text-lg leading-relaxed text-gray-500 ">{{ $ViewSini->estatus }}</span>
+                                        class="inline-flex items-center px-2.5 py-0.5 mt-0.5 rounded-full text-sm font-medium {{ $ViewSini->estatus == 'Pendiente' ? 'bg-blue-100 text-green-800' : 'bg-red-100 text-red-800' }}">{{ $ViewSini->estatus }}</span>
                                 </div>
                                 <div class="p-4 bg-white rounded-lg shadow-sm">
                                     <h4 class="text-lg font-semibold text-gray-800">Responsable: </h4>

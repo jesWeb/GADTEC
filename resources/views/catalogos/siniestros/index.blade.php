@@ -54,7 +54,7 @@
                                     class="w-full px-4 py-2 text-gray-700 border rounded-l-md focus:outline-none md:w-48"
                                     value="{{ request('search') }}" title="Buscar por siniestro">
                                 <button type="submit"
-                                    class="flex items-center px-4 py-2 ml-1 text-white bg-blue-600 border-l-0 rounded-r-md hover:bg-blue-700 focus:outline-none" 
+                                    class="flex items-center px-4 py-2 ml-1 text-white bg-blue-600 border-l-0 rounded-r-md hover:bg-blue-700 focus:outline-none"
                                     title="Realizar búsqueda">
                                     Buscar
                                 </button>
@@ -94,7 +94,11 @@
                                     </td>
                                 <td class="px-4 py-2 border">{{ $sin->usuarios->nombre }} {{ $sin->usuarios->app }}
                                     {{ $sin->usuarios->apm }}</td>
-                                <td class="px-4 py-2 border" title="Estatus del siniestro">{{ $sin->estatus }}</td>
+                                <td class="px-4 py-2 border" title="Estatus del siniestro">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium {{ $sin->estatus == 'Pendiente' ? 'bg-blue-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                    {{ $sin->estatus }}
+                                    </span>
+                                </td>
                                 {{-- acciones --}}
                                 <td class="px-4 py-2 border">
                                     <div class="flex items-center space-x-2">

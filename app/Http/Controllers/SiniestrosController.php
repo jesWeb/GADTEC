@@ -57,7 +57,7 @@ class SiniestrosController extends Controller
             'id_automovil' => 'Seleecciona un automovil',
             'id_usuario' => 'Selecciona un usuario',
             'monto' => 'el monto debe ser enteros y se parados por una coma',
-            'fecha_siniestro' => 'La fecha del Siniesro tiene que ser anterior ',
+            'fecha_siniestro' => 'La fecha del Siniesro tiene que ser anterior',
             'descripcion' => 'Ingresa Una descripcion detallada del Siniestro',
         ];
 
@@ -111,7 +111,19 @@ class SiniestrosController extends Controller
 
     public function update(Request $request,  $id)
     {
+
         $EddSin = siniestros::findOrFail($id);
+
+        $rules = [
+            'fecha_siniestro' => 'required|date|before_or_equal:today',
+        ];
+        $messages = [
+            'fecha_siniestro' => 'La fecha del Siniesro tiene que ser anterior',
+
+        ];
+
+        $request->validate($rules, $messages);
+
 
         $montoSin = $request->input('monto');
         $porcentajeSin = $request->input('porcentaje');
@@ -123,7 +135,7 @@ class SiniestrosController extends Controller
             $resultado = $montoSin;
         }
 
-        $input = $request->only(['fecha_siniestro', 'estatus', 'id_usuario', 'observaciones', 'descripcion','porcentaje','resultado']);
+        $input = $request->only(['fecha_siniestro', 'estatus', 'id_usuario', 'observaciones', 'descripcion', 'porcentaje', 'resultado']);
         $input['monto'] = $montoSin;
         $input['resultado'] = $resultado;
 
