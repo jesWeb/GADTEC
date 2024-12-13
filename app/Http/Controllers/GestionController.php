@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\DB;
 class GestionController extends Controller
 {
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth:usuarios');
     }
 
@@ -30,30 +31,30 @@ class GestionController extends Controller
         // WHERE asi.estatus IS NOT NULL
         // GROUP BY aut.id_automovil;");
 
-    //     $disponibilidad = DB::select("
-    //     SELECT
-    //         aut.*,
-    //         asi.id_asignacion,
-    //         asi.estatus AS estatus_asignacion,
-    //         aut.estatusIn,
-    //         -- Lógica para determinar el estatus final
-    //         CASE
-    //             WHEN asi.estatus IS NOT NULL THEN asi.estatus
-    //             WHEN aut.estatusIn IN ('Mantenimiento', 'En servicio') THEN aut.estatusIn
-    //             ELSE 'Disponible'
-    //         END AS estatus_final
-    //     FROM automoviles AS aut
-    //     LEFT JOIN asignacions AS asi
-    //         ON aut.id_automovil = asi.id_automovil
-    //         AND asi.id_asignacion = (
-    //             SELECT MAX(sub.id_asignacion)
-    //             FROM asignacions AS sub
-    //             WHERE sub.id_automovil = asi.id_automovil
-    //             AND sub.estatus IS NOT NULL
-    //         )
-    // ");
+        //     $disponibilidad = DB::select("
+        //     SELECT
+        //         aut.*,
+        //         asi.id_asignacion,
+        //         asi.estatus AS estatus_asignacion,
+        //         aut.estatusIn,
+        //         -- Lógica para determinar el estatus final
+        //         CASE
+        //             WHEN asi.estatus IS NOT NULL THEN asi.estatus
+        //             WHEN aut.estatusIn IN ('Mantenimiento', 'En servicio') THEN aut.estatusIn
+        //             ELSE 'Disponible'
+        //         END AS estatus_final
+        //     FROM automoviles AS aut
+        //     LEFT JOIN asignacions AS asi
+        //         ON aut.id_automovil = asi.id_automovil
+        //         AND asi.id_asignacion = (
+        //             SELECT MAX(sub.id_asignacion)
+        //             FROM asignacions AS sub
+        //             WHERE sub.id_automovil = asi.id_automovil
+        //             AND sub.estatus IS NOT NULL
+        //         )
+        // ");
 
-    $disponibilidad = \DB::select("SELECT aut.*,asi.id_asignacion, asi.estatus
+        $disponibilidad = \DB::select("SELECT aut.*,asi.id_asignacion, asi.estatus
 FROM automoviles AS aut
 LEFT JOIN
     (SELECT id_automovil, id_asignacion, estatus

@@ -134,7 +134,9 @@
                                 </div>
                                 <div class="p-4 bg-white rounded-lg shadow-sm">
                                     <p class="text-lg font-semibold text-gray-800">Fecha de Ingreso:</p>
-                                    <p class="text-gray-600">{{ $automovil->fecha_registro }}</p>
+                                    <p class="text-gray-600">
+                                        {{ date('d-m-Y',strtotime($automovil->fecha_registro)) }}
+                                    </p>
                                 </div>
                                 <div class="p-4 bg-white rounded-lg shadow-sm">
                                     <p class="text-lg font-semibold text-gray-800">Tipo de Automóvil:</p>
