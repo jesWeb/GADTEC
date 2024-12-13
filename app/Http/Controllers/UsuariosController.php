@@ -161,12 +161,11 @@ class UsuariosController extends Controller
             $input['pass'] = Hash::make($request->pass);
         }
 
-    
         // Manejo de la foto
         if ($request->hasFile('foto')) {
             // Eliminar la imagen antigua si existe
             if ($usuario->foto && $usuario->foto != "shadow.png") {
-                $oldImagePath = public_path('img/usuarios' . $usuario->foto);
+                $oldImagePath = public_path('img/' . $usuario->foto);
                 if (file_exists($oldImagePath)) {
                     unlink($oldImagePath); // Elimina la imagen anterior
                 }
@@ -190,18 +189,6 @@ class UsuariosController extends Controller
 
         return redirect()->route('usuarios.index')->with('message', 'Se ha modificado correctamente el registro');
     }
-
-    public function update2(Request $request, string $id)
-    {
-        $usuario = Usuarios::findOrFail($id);
-        $input = $request->except('foto');
-            // Eliminar foto
-            $input['foto'] = "shadow.png";
-
-        // Actualizar el usuario 
-        $usuario->update($input);
-        return redirect()->route('usuarios.index');
-    }
     /**
      * Remove the specified resource from storage.
      */
@@ -211,6 +198,4 @@ class UsuariosController extends Controller
         $usuario->delete();
         return redirect()->route('usuarios.index')->with('danger', 'Se ha eliminado correctamente el registro');
     }
-
-    
 }
