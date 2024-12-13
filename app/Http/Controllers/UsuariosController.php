@@ -161,7 +161,7 @@ class UsuariosController extends Controller
             $input['pass'] = Hash::make($request->pass);
         }
 
-    
+
         // Manejo de la foto
         if ($request->hasFile('foto')) {
             // Eliminar la imagen antigua si existe
@@ -198,7 +198,7 @@ class UsuariosController extends Controller
             // Eliminar foto
             $input['foto'] = "shadow.png";
 
-        // Actualizar el usuario 
+        // Actualizar el usuario
         $usuario->update($input);
         return redirect()->route('usuarios.index');
     }

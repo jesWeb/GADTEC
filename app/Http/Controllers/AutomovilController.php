@@ -88,7 +88,7 @@ class AutomovilController extends Controller
             'responsable' => 'nullable|string|max:50',
             'observaciones' => 'nullable|string|max:255',
             'fotografias' => 'nullable|array|max:5',
-            'fotografias.*' => 'file|mimes:jpeg,png,jpg,pdf|max:10240',
+            'fotografias.*' => 'file|mimes:jpeg,png,jpg,pdf',
         ];
         $message = [
             'modelo.min' => 'El año del modelo debe ser como mínimo 1990 .',

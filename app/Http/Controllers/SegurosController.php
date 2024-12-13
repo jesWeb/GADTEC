@@ -49,12 +49,16 @@ class SegurosController extends Controller
             'aseguradora' => 'required|string',
             'cobertura' => 'required|string',
             'monto' => 'required|string',
-            'fecha_vigencia' => 'required|date',
+            'fecha_vigencia' => 'required|date|after:today',
             'poliza' => 'nullable|array|max:10',
             'poliza.*' => 'file|mimes:jpeg,png,jpg,pdf',
         ];
         //validacion
-        $request->validate($rules);
+        $mensagge  = [
+             'fecha_vigencia' => 'La fecha seleccionada tiene que ser posterior a la fecha de hoy',
+        ];
+        //validacion
+        $request->validate($rules,$mensagge);
 
         //guardar fotos
         $fotografias = [];
@@ -64,13 +68,13 @@ class SegurosController extends Controller
         if ($request->hasFile('poliza')) {
             $files = $request->file('poliza');
             $files = array_slice($files, 0, 5); // Limitar a 5 fotos
-    
+
             foreach ($files as $file) {
                 $totalSize += $file->getSize();
                 if ($totalSize > $maxTotalSize) {
                     return back()->with('error', 'El tamaño total de las imágenes supera los 50 MB.');
                 }
-    
+
                 // Guardar el archivo en el directorio público
                 $imgPoliza = date('Ymd_His_') . $file->getClientOriginalName();
                 $file->move(public_path('img/poliza'), $imgPoliza);
@@ -78,7 +82,7 @@ class SegurosController extends Controller
             }
         }
 
-       
+
 
         $input = $request->all();
         //$input Guardar en json la imagen
@@ -99,7 +103,7 @@ class SegurosController extends Controller
     }
 
     public function edit(Request $request, $id)
-    {    
+    {
         $EddSeg = seguros::findOrFail($id);
         $automoviles = Automoviles::all();
 
@@ -109,9 +113,9 @@ class SegurosController extends Controller
     public function update(Request $request,  $id)
     {
         $request->validate([
-            
+
             'poliza' => 'nullable|array|max:10',
-            'poliza.*' => 'file|mimes:jpeg,png,jpg,pdf', 
+            'poliza.*' => 'file|mimes:jpeg,png,jpg,pdf',
         ]);
 
         $EddSeg = seguros::findOrFail($id);
