@@ -93,5 +93,5 @@ Los usuarios generados por el seeder tienen los siguientes datos de inicio de se
 |---------------|---------------|------------------|
 | Administrador | admin         | admin123         |
 | Moderador     | moderador     | moderador546     |
-| Usuario       | usuario       | usuario789       |
+
 

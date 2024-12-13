@@ -253,10 +253,10 @@
                     <hr class="my-6">
 
                     <div class="flex justify-end mt-6">
-                        <button type="submit" title="Actualizar los datos del usuario" class="px-6 py-2 text-gray-200 bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">Guardar</button>
-                        <a href="{{ route('usuarios.index') }}" title="Cancelar la edición">
-                            <button type="button" class="px-6 py-2 ml-2 font-semibold bg-gray-200 rounded-md hover:bg-red-200 focus:outline-none focus:bg-red-700">Cancelar</button>
-                        </a>
+                    <a href="{{ route('usuarios.index') }}" title="Cancelar registro"
+                        class="px-5 py-3 text-gray-700 bg-gray-200 rounded-md shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">Cancelar</a>
+                        
+                        <button type="submit" title="Actualizar los datos del usuario"  class="px-5 py-3 text-white ml-2 bg-indigo-600 rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">Guardar</button>
                     </div>
                 </form>
             </div>

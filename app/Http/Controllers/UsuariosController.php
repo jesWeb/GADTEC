@@ -59,7 +59,7 @@ class UsuariosController extends Controller
             'email' => 'required|email',
             'usuario' => 'required',
             'pass' => 'required',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg', 
         ];
 
         $messages = [
@@ -73,7 +73,6 @@ class UsuariosController extends Controller
             'pass.required' => 'El campo contraseña es requerido',
             'foto.image' => 'El archivo debe ser una imagen',
             'foto.mimes' => 'El archivo debe ser de tipo jpeg, png, jpg o gif',
-            'foto.max' => 'El tamaño máximo de la imagen es 2MB',
         ];
 
         $request->validate($rules, $messages);
@@ -133,20 +132,21 @@ class UsuariosController extends Controller
             'email' => 'required|email',
             'usuario' => 'required',
             'pass' => 'nullable',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg',
         ];
 
         $messages = [
             'nombre.required' => 'El campo nombre es requerido',
             'app.required' => 'El campo apellido paterno es requerido',
+            'apm.required' => 'El campo apellido materno es requerido',
             'fn.required' => 'El campo fecha de nacimiento es requerido',
+            'empresa.required' => 'El campo empresa es requerido',
             'rol.required' => 'El campo rol es requerido',
             'email.required' => 'El campo e-mail es requerido',
             'email.email' => 'El formato del e-mail es incorrecto',
             'usuario.required' => 'El campo usuario es requerido',
             'foto.image' => 'El archivo debe ser una imagen',
             'foto.mimes' => 'El archivo debe ser de tipo jpeg, png, jpg o gif',
-            'foto.max' => 'El tamaño máximo de la imagen es 2MB',
         ];
 
         $request->validate($rules, $messages);
@@ -161,11 +161,12 @@ class UsuariosController extends Controller
             $input['pass'] = Hash::make($request->pass);
         }
 
+    
         // Manejo de la foto
         if ($request->hasFile('foto')) {
             // Eliminar la imagen antigua si existe
             if ($usuario->foto && $usuario->foto != "shadow.png") {
-                $oldImagePath = public_path('img/' . $usuario->foto);
+                $oldImagePath = public_path('img/usuarios' . $usuario->foto);
                 if (file_exists($oldImagePath)) {
                     unlink($oldImagePath); // Elimina la imagen anterior
                 }
@@ -189,6 +190,18 @@ class UsuariosController extends Controller
 
         return redirect()->route('usuarios.index')->with('message', 'Se ha modificado correctamente el registro');
     }
+
+    public function update2(Request $request, string $id)
+    {
+        $usuario = Usuarios::findOrFail($id);
+        $input = $request->except('foto');
+            // Eliminar foto
+            $input['foto'] = "shadow.png";
+
+        // Actualizar el usuario 
+        $usuario->update($input);
+        return redirect()->route('usuarios.index');
+    }
     /**
      * Remove the specified resource from storage.
      */
@@ -198,4 +211,6 @@ class UsuariosController extends Controller
         $usuario->delete();
         return redirect()->route('usuarios.index')->with('danger', 'Se ha eliminado correctamente el registro');
     }
+
+    
 }
