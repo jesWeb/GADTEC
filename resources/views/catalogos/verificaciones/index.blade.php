@@ -40,11 +40,9 @@
             </nav>
         </div>
         <div class="p-6 bg-white rounded-md shadow-md">
-
             <div class="flex justify-between mb-3">
                 <h2 class="mb-4 text-lg font-semibold text-gray-700 capitalize">Verificaciones Vehiculares</h2>
             </div>
-
             <div class="mb-2">
                 <div class="flex justify-between">
                     <form action="{{ route('verificaciones.index') }}" method="GET"
@@ -108,41 +106,33 @@
                                 </td>
                                 <td class="px-4 py-2 border">
 
-                                    @if ($vr->fecha_verificacion && $vr->proxima_verificacion)
-                                        {{ \Carbon\Carbon::parse($vr->fecha_verificacion)->locale('es')->format('d-m-Y') }}
+                                    @if ($vr->fecha_verificacion )
+                                        {{ date('d-m-Y',strtotime($vr->fecha_verificacion)) }}
                                     @else
                                         {{ 'N/A' }}
                                     @endif
 
-                                    {{-- {{ \Carbon\Carbon::parse($vr->fecha_verificacion)->locale('es')->format('d-m-Y') }} --}}
-
                                 </td>
                                 <td class="px-4 py-2 border">
 
-                                    @if ($vr->fecha_verificacion && $vr->proxima_verificacion)
-                                        {{ \Carbon\Carbon::parse($vr->proxima_verificacion)->format('d-m-Y') }}
+                                    @if ($vr->fecha_verificacion)
+                                        {{ date('d-m-Y',strtotime($vr->proxima_verificacion))}}
                                     @else
                                         {{ 'N/A' }}
                                     @endif
-
-                                    {{-- {{ \Carbon\Carbon::parse($vr->proxima_verificacion)->locale('es')->format('d-m-Y') }} --}}
-
                                 </td>
                                 <td class="px-4 py-2 border">
-                                    @if ($vr->fecha_verificacion_00 && $vr->proxima_verificacion_00)
-                                        {{ \Carbon\Carbon::parse($vr->fecha_verificacion_00)->locale('es')->format('d-m-Y') }}
+                                    @if ($vr->fecha_verificacion_00 )
+                                        {{ date('d-m-Y',strtotime($vr->fecha_verificacion_00)) }}
                                     @else
-                                        {{ 'No aplica' }}
+                                        {{ 'N/A' }}
                                     @endif
-                                    {{-- {{ \Carbon\Carbon::parse($vr->proxima_verificacion)->locale('es')->format('d-m-Y') }} --}}
-
                                 </td>
                                 <td class="px-4 py-2 border">
-                                    {{-- {{ \Carbon\Carbon::parse($vr->proxima_verificacion)->locale('es')->format('d-m-Y') }} --}}
-                                    @if ($vr->fecha_verificacion_00 && $vr->proxima_verificacion_00)
-                                        {{ \Carbon\Carbon::parse($vr->proxima_verificacion_00)->locale('es')->format('d-m-Y') }}
+                                    @if ($vr->fecha_verificacion_00)
+                                    {{ date('d-m-Y',strtotime($vr->proxima_verificacion_00)) }}
                                     @else
-                                        {{ 'No aplica' }}
+                                        {{ 'N/A' }}
                                     @endif
                                 </td>
                                 {{-- acciones --}}
@@ -232,19 +222,25 @@
         </script>
     @endif
     <script>
-        function deleteRegister() {
+         function deleteRegister() {
             event.preventDefault();
-            const form = event.target.closest('form');
+            const btndelete = document.getElementById("eliminacion-form");
             Swal.fire({
-                title: '¿Estás seguro?',
-                text: "¡No podrás deshacer esta acción!",
-                icon: 'warning',
+                title: "Estas seguro de Eliminar el registro?",
+                text: "¡No podrás revertir esto!",
+                icon: "warning",
                 showCancelButton: true,
-                confirmButtonText: 'Sí, eliminar',
-                cancelButtonText: 'Cancelar'
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si, borrar!"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    form.submit();
+                    btndelete.submit();
+                    Swal.fire({
+                        title: "¡Eliminado!",
+                        text: "El automóvil ha sido eliminado correctamente.",
+                        icon: "success"
+                    });
                 }
             });
         }
@@ -255,7 +251,7 @@
         btnAlert.addEventListener('click', () => {
             Swal.fire({
                 title: "Calendario  de verificación",
-                imageUrl: "/img/verificaciones/Verificacion.png",
+                imageUrl: '{{url('img/verificaciones/VerificaSemestre.png')}}',
                 imageWidth: 480,
                 imageHeight: 320,
                 imageAlt: "Calendario de verificación"

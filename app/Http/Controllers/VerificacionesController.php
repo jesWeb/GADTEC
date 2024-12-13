@@ -21,7 +21,8 @@ class VerificacionesController extends Controller
                 $q->where('id_automovil', 'LIKE', "%{$search}%")
                     ->orWhere('holograma', 'LIKE', "%{$search}%")
                     ->orWhere('engomado', 'LIKE', "%{$search}%")
-                    ->orWhere('fechaV', 'LIKE', "%{$search}%")
+                    ->orWhere('fecha_verificacion', 'LIKE', "%{$search}%")
+                    ->orWhere('fecha_verificacion_00', 'LIKE', "%{$search}%")
                     ->orWhereHas('automovil', function ($q) use ($search) {
                         $q->where('marca', 'LIKE', "%{$search}%")
                             ->orWhere('submarca', 'LIKE', "%{$search}%")
@@ -50,6 +51,7 @@ class VerificacionesController extends Controller
             'engomado' => 'required|in:Verde,Amarillo,Rosa,Rojo,Azul',
             'fechaV' => 'nullable|date|before_or_equal:today',
             'holograma' => 'required|string|max:255',
+            'estadoV' => 'required|in:EdoMex,Morelos,CDMX',
             'observaciones' => 'nullable|string',
             'image' => 'nullable|array|max:10',
             'image.*' => 'file|mimes:jpg,png,jpeg',
@@ -134,13 +136,13 @@ class VerificacionesController extends Controller
         if ($request->hasFile('image')) {
             $files = $request->file('image');
             $files = array_slice($files, 0, 5); // Limitar a 5 fotos
-    
+
             foreach ($files as $file) {
                 $totalSize += $file->getSize();
                 if ($totalSize > $maxTotalSize) {
                     return back()->with('error', 'El tamaño total de las imágenes supera los 50 MB.');
                 }
-    
+
                 // Guardar el archivo en el directorio público
                 $imgVerificacion = date('Ymd_His_') . $file->getClientOriginalName();
                 $file->move(public_path('img/verificaciones'), $imgVerificacion);
