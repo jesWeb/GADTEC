@@ -205,12 +205,12 @@
 
                         <div class="flex flex-wrap gap-4 mt-4" id="imageContainer"></div>
 
-
+{{--
                         <button id="addImageBtn"
                             class="px-4 py-2 mt-4 text-gray-800 bg-gray-600 border border-gray-800 rounded shadow-sm hover:bg-gray-600 focus:outline-none focus:ring focus:ring-blue-300"
                             disabled>
                             Añadir Imagen
-                        </button>
+                        </button> --}}
 
                         <button type="button" id="takePhotoBtn"
                             class="px-4 py-2 mt-4 ml-2 text-white bg-green-500 rounded shadow-sm hover:bg-green-600 focus:outline-none focus:ring focus:ring-green-300">

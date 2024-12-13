@@ -95,7 +95,7 @@
                             <p class="text-lg font-semibold text-gray-800">Fotografía Frontal</p>
                             @if($tarjeta->fotografia_frontal != '')
                                 <img src="{{ url('img/tarjetas/' . $tarjeta->fotografia_frontal) }}" alt="Foto frontal" class="object-cover w-20 h-16 mt-4 rounded-lg">
-                                <a href="{{ url('img/tarjetas/' . $tarjeta->fotografia_frontal) }}" target="_blank" class="text-gray-500">Ver comprobante</a> 
+                                <a href="{{ url('img/tarjetas/' . $tarjeta->fotografia_frontal) }}" target="_blank" class="text-gray-500">Ver comprobante</a>
 
                             @else
                                 <p class="text-sm text-gray-500">Sin imagen</p>

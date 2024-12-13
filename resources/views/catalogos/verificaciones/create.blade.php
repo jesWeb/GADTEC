@@ -197,21 +197,33 @@
                         </h3>
                         <p class="text-sm text-gray-600">Máximo 5 imágenes</p>
                         <div class="flex flex-wrap gap-4 mt-4 pt-4 mb-6" id="imageContainer"></div>
-                        
+<<<<<<< HEAD
+                        <input type="file" name="image[]" id="image" accept="image/*" class="sr-only" multiple />
+=======
+
+>>>>>>> mitzi
                         <div class="mb-8">
                             <label for="image"  id="addImageBtn"
                                 class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
                                 <div>
+<<<<<<< HEAD
+                                    <span
+                                        class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
+                                        Buscar
+                                    </span>
+
+=======
                                 <button type="button" id="addImageBtn" name="image[]" id="image" accept="image/*"  class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
                                     Buscar
                                 </button>
-                                    
-                                    
+
+
+>>>>>>> mitzi
                                 </div>
                             </label>
                         </div>
                     </div>
-                    
+
 
 
                 <!-- Botones -->
@@ -246,7 +258,7 @@
                     name: 'image[]',
                     accept: 'image/jpeg,image/png',
                     class: 'hidden',
-                    
+
                 });
 
                 const previewContainer = $(`
@@ -295,7 +307,7 @@
                 }
             });
 
-            
+
 
             createImageInput(); // Agregar un input por defecto
         });
