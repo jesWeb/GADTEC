@@ -125,8 +125,8 @@
                             Subir Imágenes
                         </h3>
                         <p class="text-sm text-gray-600">Máximo 5 imágenes</p>
-                        <div class="flex flex-wrap gap-4 mt-4 pt-4 mb-6" id="imageContainer"></div>
-                        <input type="file" name="poliza[]" id="poliza" accept="image/*" class="sr-only" />
+                        <div class="flex flex-wrap gap-4 pt-4 mt-4 mb-6" id="imageContainer"></div>
+                        <input type="file" name="poliza[]" id="poliza" accept="image/*"  class="sr-only" />
                         <div class="mb-8">
                             <label for="poliza"  id="addImageBtn"
                                 class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
@@ -134,20 +134,20 @@
                                     <button type="button" name="poliza[]" id="poliza" accept="image/*"  class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
                                         Buscar
                                     </button>
-                                    
+
                                 </div>
                             </label>
                         </div>
                     </div>
-                    
-                    
+
+
 
 
 
                 </div>
 
 
-               
+
 
                 {{-- Botones --}}
                 <div class="flex justify-end gap-4 mt-4">
@@ -171,7 +171,7 @@
             let currentImages = 0;
             const maxFileSize = 15 * 1024 * 1024;
 
-        
+
 
             function createImageInput(capture = false) {
                 const inputFile = $('<input>', {
@@ -229,7 +229,7 @@
                 }
             });
 
-            
+
 
             createImageInput(); // Agregar un input por defecto
         });
@@ -237,4 +237,3 @@
 @endsection
 
 
-   
