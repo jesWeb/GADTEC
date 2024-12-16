@@ -206,21 +206,20 @@
 
                     {{-- foto --}}
                     <div class="pt-4 mb-6">
-                        <h3 class="mb-5 block text-xl font-semibold text-[#07074D]">
+                        <h3 class="mb-2 block text-xl font-semibold text-[#07074D]">
                             Subir Imágenes
                         </h3>
                         <p class="text-sm text-gray-600">Máximo 5 imágenes</p>
                         <div class="flex flex-wrap gap-4 pt-4 mt-4 mb-6" id="imageContainer"></div>
+                        <input type="file" name="image[]" id="image" accept="image/*" class="sr-only" multiple />
                         <div class="mb-8">
                             <label for="image" id="addImageBtn"
                                 class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
                                 <div>
-                                    <button type="button" id="addImageBtn" name="image[]" id="image"
-                                        accept="image/*"
+                                    <span
                                         class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
                                         Buscar
-                                    </button>
-
+                                    </span>
 
                                 </div>
                             </label>
@@ -312,7 +311,7 @@
 
 
 
-            createImageInput(); // Agregar un input por defecto
+        createImageInput(); // Agregar un input por defecto
         });
     </script>
 @endsection

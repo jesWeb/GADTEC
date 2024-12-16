@@ -232,21 +232,22 @@
 
                 </div>
 
-                <!-- Observaciones -->
-                <div class="w-full xl:m-5 xl:w-2/4 xl:mt-4 xl:mb-4">
-                    <label class="mb-3 block text-base font-medium text-[#07074D]" for="observaciones">
-                        Observaciones del vehículo
-                    </label>
-                    <textarea name="observaciones" id="observaciones" placeholder="Observaciones..."
-                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">{{ old('observaciones', $EddVer->observaciones) }}</textarea>
-                </div>
-                <div>
-                    <h4 class="p-4 text-lg font-semibold text-center text-gray-700">Imagenes de seguro</h4>
-                    @if ($EddVer->image != '')
-                    <div class="flex gap-4 p-4 ml-4 overflow-x-auto">
-                        @php
-                        $fotografias = json_decode($EddVer->image, true);
-                        @endphp
+                    <!-- Observaciones -->
+                    <div class="w-full xl:m-5 xl:w-2/4 xl:mt-4 xl:mb-4">
+                        <label class="mb-3 block text-base font-medium text-[#07074D]" for="observaciones">
+                            Observaciones del vehículo
+                        </label>
+                        <textarea name="observaciones" id="observaciones" placeholder="Observaciones..."
+                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">{{ old('observaciones', $EddVer->observaciones) }}</textarea>
+                    </div>
+                    <div>
+                        <h4
+                        class="p-4 text-lg font-semibold text-center text-gray-700">Imagenes de Verificaciones</h4>
+                        @if($EddVer->image != '')
+                            <div class="flex gap-4 p-4 ml-4 overflow-x-auto">
+                                @php
+                                    $fotografias = json_decode($EddVer->image, true);
+                                @endphp
 
                         @if ($fotografias)
                         @foreach ($fotografias as $foto)

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Automoviles;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
-use Carbon\Carbon;
+
 
 class AutomovilController extends Controller
 {
@@ -150,20 +150,29 @@ class AutomovilController extends Controller
     {
         $EddCar = Automoviles::findOrFail($id);
 
-        // Guardar fotografías
-        $fotografias  = [];
+        // Manejo de imágenes
+        $fotografias = $EddCar->fotografias ? json_decode($EddCar->fotografias, true) : [];
+
+        $maxTotalSize = 50 * 1024 * 1024; // 50 MB
+        $totalSize = 0;
 
         if ($request->hasFile('fotografias')) {
             $files = $request->file('fotografias');
-            //limitar a 5 fotos
-            $files = array_slice($files, 0, 5);
+            $files = array_slice($files, 0, 5); // Limitar a 5 fotos
 
-            foreach ($request->file('fotografias') as $file) {
+            foreach ($files as $file) {
+                $totalSize += $file->getSize();
+                if ($totalSize > $maxTotalSize) {
+                    return back()->with('error', 'El tamaño total de las imágenes supera los 50 MB.');
+                }
+
+                // Guardar el archivo en el directorio público
                 $imgAuto = date('Ymd_His_') . $file->getClientOriginalName();
                 $file->move(public_path('img/automoviles'), $imgAuto);
                 $fotografias[] = $imgAuto;
             }
         }
+
         $input = $request->all();
         //guardar en json la img
         $input['fotografias'] = json_encode($fotografias);

@@ -1,6 +1,8 @@
 @extends('layouts.app') <!-- Extiende el layout principal -->
 
 @section('body')
+<!-- Librería requerida para el formulario dinámico, está dentro de public -->
+<script type="text/javascript" src="{{ url('js/jquery-3.7.1.min.js') }}"></script>
 <div class="px-6 py-2">
         <!-- Mapa de sitio -->
         <div class="flex justify-end mt-2 mb-4">
@@ -42,7 +44,7 @@
             <div class="p-6 bg-white rounded-lg shadow-lg">
                 <h2 class="text-lg font-semibold text-gray-700 capitalize">Edición de Servicio</h2>
 
-                <form action="{{ route('servicios.update' , $servicio->id_servicio) }}" method="POST" enctype="multipart/form-data">
+                <form id="imageForm" action="{{ route('servicios.update' , $servicio->id_servicio) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
@@ -141,72 +143,131 @@
                        
 
                         <!-- Comprobante -->
-                        <div>
-                            @if ($servicio->comprobante)
-                                <img src="{{ url('img/servicios/' . $servicio->comprobante) }}" alt="comprobante" class="object-cover w-32 h-32 mt-2 rounded-md">
-                                <a href="{{ url('img/servicios/' . $servicio->comprobante) }}" target="_blank" class="text-gray-600 " title="Ver comprobante">
-                                    Ver Comprobante
-                                </a>
-                            @else
-                                <p class="mt-2 text-sm text-gray-500">No hay comprobante cargado.</p>
-                            @endif
+                        <div class="mb-2">
+                            <h4 
+                            class="p-4 text-lg font-semibold text-center text-gray-700">Imagenes de comprobantes</h4>
+                            @if($servicio->comprobante != '') 
+                                <div class="flex gap-4 p-4 ml-4 overflow-x-auto">
+                                    @php
+                                        $fotografias = json_decode($servicio->comprobante, true);
+                                    @endphp
+
+                                    @if ($fotografias)
+                                        @foreach ($fotografias as $foto)
+                                            <img src="{{ url('img/servicios/' . $foto) }}" class="w-16 h-auto transition-transform duration-300 transform rounded-lg shadow-md hover:scale-90 hover:shadow-lg" alt="seguro">
+                                            <a href="{{ url('img/servicios/' . $foto) }}" target="_blank" class="text-gray-500" title="Ver archivo de de tenencia">Ver imagen</a> 
+                                        @endforeach
+                                    @else
+                                        <p class="text-sm text-gray-500">Sin imagen</p>
+                                    @endif
+                                </div>
                             
+                            @endif
                         </div>
-                        <div>
-                                <label class="block text-base font-medium text-[#07074D]" for="comprobante">Comprobante</label>
-                                    <div class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] mt-4 p-6 text-center">
-                                    <input class="sr-only" type="file" name="comprobante" id="comprobante"accept="image/*" title="Sube el comprobante del pago en formato de imagen" />
-                                    <label for="comprobante" class="cursor-pointer">
-                                        <div class="flex flex-col items-center">
-                                            <span title="Actualiza el comprobante del servicio"
-                                                class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
-                                                    Buscar
-                                            </span>
-                                            
-                                            <div id="file-info" class="mt-4">
-                                                <span id="file-count">0 archivos seleccionados..</span>
-                                                <ul id="file-names" class="pl-5 list-disc"></ul>
-                                            </div>
-                                        </div>
-                                    </label>
-                                </div>
-                                <div class="mt-1 text-sm text-red-600">
-                                    @error('comprobante')<i>{{ $message }}</i>@enderror
-                                </div>
+                        
+                        {{-- foto --}}
+                        <div class="pt-4 mb-6">
+                            <h3 class="mb-5 block text-xl font-semibold text-[#07074D]">
+                                Subir Imágenes
+                            </h3>
+                            <p class="text-sm text-gray-600">Máximo 5 imágenes</p>
+                            <div class="flex flex-wrap gap-4 mt-4 pt-4 mb-6" id="imageContainer"></div>
+                            <div class="mb-8">
+                                <label for="comprobante"  id="addImageBtn"
+                                    class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
+                                    <div>
+                                        <button type="button" name="comprobante[]" id="comprobante" accept="image/*"  class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
+                                            Buscar
+                                        </button>
+                                        
+                                    </div>
+                                </label>
                             </div>
-                            <script>
-                                const fileInput = document.getElementById('comprobante');
-                                const fileCountDisplay = document.getElementById('file-count');
-                                const fileNamesDisplay = document.getElementById('file-names');
-
-                                fileInput.addEventListener('change', function() {
-                                    const files = fileInput.files;
-                                    const fileCount = files.length;
-                                    fileCountDisplay.textContent = `${fileCount} archivos seleccionados`;
-                                    fileNamesDisplay.innerHTML = '';
-
-                                    for (let i = 0; i < fileCount; i++) {
-                                        const listItem = document.createElement('li');
-                                        listItem.textContent = files[i].name;
-                                        fileNamesDisplay.appendChild(listItem);
-                                    }
-                                });
-                            </script>
+                        </div>
+  
                     
                     </div>
 
                     <!-- Botones -->
                     <div class="flex justify-end mt-6 space-x-4">
-                        <button type="submit" class="px-4 py-2 text-white bg-indigo-600 rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500" title="Guardar los cambios del servicio">Guardar</button>
                         <a href="{{ route('servicios.index') }}" class="px-4 py-2 text-gray-700 bg-gray-200 rounded-md shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300" title="Cancelar los cambios">Cancelar</a>
+                        <button type="submit" class="px-4 py-2 text-white bg-indigo-600 rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500" title="Guardar los cambios del servicio">Guardar</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-@endsection
 
+
+<!-- Script de validación -->
+    <script>
+        $(document).ready(function() {
+            let maxImages = 5;
+            let currentImages = 0;
+            const maxFileSize = 15 * 1024 * 1024;
+
+            function createImageInput(capture = false) {
+                const inputFile = $('<input>', {
+                    type: 'file',
+                    name: 'comprobante[]',
+                    accept: 'image/jpeg,image/png',
+                    class: 'hidden',
+
+                });
+
+                const previewContainer = $(`
+            <div class="flex items-center mt-4 space-x-4">
+                <img src="#" class="object-cover w-16 h-16 border rounded" alt="Previsualización">
+                <button type="button" class="text-red-500 remove-image">Eliminar</button>
+            </div>
+        `);
+
+                inputFile.on('change', function() {
+                    const file = this.files[0];
+
+                    if (file) {
+                        if (file.size > maxFileSize) {
+                            alert('El archivo supera el tamaño máximo permitido de 10 MB.');
+                            inputFile.val('');
+                            return;
+                        }
+
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            previewContainer.find('img').attr('src', e.target.result);
+                        };
+                        reader.readAsDataURL(file);
+
+                        currentImages++;
+                        updateButtonState();
+                    }
+                });
+
+                previewContainer.find('.remove-image').on('click', function() {
+                    inputFile.remove();
+                    previewContainer.remove();
+                    currentImages--;
+                    updateButtonState();
+                });
+
+                $('#imageContainer').append(previewContainer);
+                inputFile.click();
+                $('#imageForm').append(inputFile);
+            }
+
+            $('#addImageBtn').on('click', function() {
+                if (currentImages < maxImages) {
+                    createImageInput(true);
+                }
+            });
+
+
+
+            createImageInput(); // Agregar un input por defecto
+        });
+    </script>
+@endsection
 <script>
     // Al cargar la página, verificamos si el tipo de servicio es "Programado" o "No programado"
     window.onload = function() {
@@ -234,3 +295,4 @@
         };
     };
 </script>
+

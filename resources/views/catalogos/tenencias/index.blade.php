@@ -74,7 +74,6 @@
                             <th class="px-4 py-2 text-left text-gray-600">Monto</th>
                             <th class="px-4 py-2 text-left text-gray-600">Año Correspondiente</th>
                             <th class="px-4 py-2 text-left text-gray-600">Estatus</th>
-                            <th class="px-4 py-2 text-left text-gray-600">Comprobante</th>
                             <th class="px-4 py-2 text-left text-gray-600">Acciones</th>
                         </tr>
                     </thead>
@@ -95,14 +94,7 @@
                                         {{ $tenencia->estatus }}
                                     </span>
                                 </td>
-                                <td class="px-4 py-2 border">
-                                    @if ($tenencia->comprobante && $tenencia->comprobante !== 'N/A')
-                                        <img src="{{ url('img/tenencias/' . $tenencia->comprobante) }}" alt="Comprobante de tenencia"
-                                             class="object-cover w-16 h-16">
-                                    @else
-                                        <span class="text-gray-500">Sin comprobante</span>
-                                    @endif
-                                </td>
+                                
                                 <td class="px-4 py-2 border">
                                     <div class="flex items-center space-x-2">
                                         <a href="tenencias/{{ $tenencia->id_tenencia }}" 

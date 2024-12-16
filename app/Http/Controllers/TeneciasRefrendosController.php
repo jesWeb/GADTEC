@@ -44,6 +44,10 @@ class TeneciasRefrendosController extends Controller
     public function create()
     {
         //
+        // $automoviles = \DB::select("SELECT *
+	    // FROM automoviles AS aut
+	    // LEFT JOIN tenencias AS ten ON ten.id_automovil = aut.id_automovil
+	    // WHERE ten.estatus IS NULL OR ten.estatus != 'vigente'");
         $automoviles = Automoviles::all();
         return view('catalogos.tenencias.add', compact('automoviles'));
     }
@@ -58,7 +62,8 @@ class TeneciasRefrendosController extends Controller
             'origen' =>'required',
             'monto' =>'required',
             'año_correspondiente' =>'required',
-            'comprobante' =>'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'comprobante' =>'nullable|array|max:5',
+            'comprobante.*' =>'nullable|image|mimes:jpeg,png,jpg',
             'id_automovil' =>'required'
 
         ];
@@ -71,25 +76,37 @@ class TeneciasRefrendosController extends Controller
             'año_correspondiente.required' => 'El campo año correspondiente es requerido',
             'comprobante.file' => 'El archivo debe ser una imagen',
             'comprobante.mimes' => 'El archivo debe ser de tipo jpeg, png, jpg o gif',
-            'comprobate.max' => 'El tamaño máximo de la imagen es 2MB',
         ];
         $request->validate($rules, $messages);
 
         $input = $request->all();
 
+        // Manejo de imágenes
+        $fotografias = [];
+
+        $maxTotalSize = 50 * 1024 * 1024; // 50 MB
+        $totalSize = 0;
+
         if ($request->hasFile('comprobante')) {
-            $file = $request->file('comprobante');
-            $img = $file->getClientOriginalName();
-            $ldate = date('Ymd_His_');
-            $img2 = $ldate . $img;
+            $files = $request->file('comprobante');
+            $files = array_slice($files, 0, 5); // Limitar a 5 fotos
 
-            // Guarda la imagen en public/img
-            $file->move(public_path('img/tenencias'), $img2);
+            foreach ($files as $file) {
+                $totalSize += $file->getSize();
+                if ($totalSize > $maxTotalSize) {
+                    return back()->with('error', 'El tamaño total de las imágenes supera los 50 MB.');
+                }
 
-            $input['comprobante'] = $img2;
-        } else {
-            $input['comprobante'] = "N/A";
+                // Guardar el archivo en el directorio público
+                $imgAuto = date('Ymd_His_') . $file->getClientOriginalName();
+                $file->move(public_path('img/tenencias'), $imgAuto);
+                $fotografias[] = $imgAuto;
+            }
         }
+
+        $input = $request->all();
+        //guardar en json la img
+        $input['comprobante'] = json_encode($fotografias);
 
 
         TeneciasRefrendos::create($input);
@@ -126,7 +143,8 @@ class TeneciasRefrendosController extends Controller
             'origen' =>'required',
             'monto' =>'required',
             'año_correspondiente' =>'required',
-            'comprobante' =>'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'comprobante' =>'nullable|array|max:5',
+            'comprobante.*' =>'nullable|image|mimes:jpeg,png,jpg,gif',
             'id_automovil' =>'required'
         ];
 
@@ -138,27 +156,37 @@ class TeneciasRefrendosController extends Controller
             'año_correspondiente.required' => 'El campo año correspondiente es requerido',
             'comprobante.file' => 'El archivo debe ser una imagen',
             'comprobante.mimes' => 'El archivo debe ser de tipo jpeg',
-            'comprobante.max' => 'El tamaño máximo de la imagen es 2MB',
         ];
         $request->validate($rules, $messages);
         $tenencia = TeneciasRefrendos::findOrFail($id);
 
-        $input = $request->all();
+
+        // Manejo de imágenes
+        $fotografias = $tenencia->comprobante ? json_decode($tenencia->comprobante, true) : [];
+
+        $maxTotalSize = 50 * 1024 * 1024; // 50 MB
+        $totalSize = 0;
 
         if ($request->hasFile('comprobante')) {
-            $file = $request->file('comprobante');
-            $img = $file->getClientOriginalName();
-            $ldate = date('Ymd_His_');
-            $img2 = $ldate. $img;
+            $files = $request->file('comprobante');
+            $files = array_slice($files, 0, 5); // Limitar a 5 fotos
 
-            // Guarda la imagen en public/img
-            $file->move(public_path('img/tenencias'), $img2);
+            foreach ($files as $file) {
+                $totalSize += $file->getSize();
+                if ($totalSize > $maxTotalSize) {
+                    return back()->with('error', 'El tamaño total de las imágenes supera los 50 MB.');
+                }
 
-            $input['comprobante'] = $img2;
-        } else {
-            // Asigna "N/A" si no se ha subido un nuevo comprobante y el actual es nulo o vacío
-            $input['comprobante'] = $tenencia->comprobante ?: 'N/A';
+                // Guardar el archivo en el directorio público
+                $imgTenencia = date('Ymd_His_') . $file->getClientOriginalName();
+                $file->move(public_path('img/tenencias'), $imgTenencia);
+                $fotografias[] = $imgTenencia;
+            }
         }
+
+        $input = $request->all();
+        //guardar en json la img
+        $input['comprobante'] = json_encode($fotografias);
 
         $tenencia->update($input);
         return redirect()->route('tenencias.index')->with('message', 'Se ha modificado correctamente el registro');

@@ -77,7 +77,6 @@
                             <th class="px-4 py-2 text-left text-gray-600">Fecha de Expedición</th>
                             <th class="px-4 py-2 text-left text-gray-600">Fecha de Vigencia</th>
                             <th class="px-4 py-2 text-left text-gray-600">Estatus</th>
-                            <th class="px-4 py-2 text-left text-gray-600">Fotografía</th>
                             <th class="px-4 py-2 text-left text-gray-600">Acciones</th>
                         </tr>
                     </thead>
@@ -94,15 +93,14 @@
                                 <td class="px-4 py-2 border">{{ $tarjeta->vehiculo_origen }}</td>
                                 <td class="px-4 py-2 border">{{ date('d/m/Y', strtotime($tarjeta->fecha_expedicion)) }}</td>
                                 <td class="px-4 py-2 border">{{ date('d/m/Y', strtotime($tarjeta->fecha_vigencia)) }}</td>
-                                <td class="px-4 py-2 border">{{ $tarjeta->estatus }}</td>
                                 <td class="px-4 py-2 border">
-                                    @if ($tarjeta->fotografia_frontal)
-                                        <img src="{{ url('img/tarjetas/' . $tarjeta->fotografia_frontal) }}"
-                                            alt="Fotografía Frontal" class="object-cover w-16 h-16">
-                                    @else
-                                        <span class="text-gray-500">N/A</span>
-                                    @endif
+                                    <span
+                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium
+                                        {{ $tarjeta->estatus == 'Vigente' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                        {{ $tarjeta->estatus }}
+                                    </span>
                                 </td>
+                                
 
                                 <td class="px-4 py-2 border">
                                     <div class="flex items-center space-x-2">
@@ -187,20 +185,23 @@
     @endif
 
     <script>
-        function deleteRegister(event) {
+      function deleteRegister() {
             event.preventDefault();
+            const btndelete = document.getElementById("eliminacion-form");
             Swal.fire({
-                title: "¿Seguro que deseas eliminar esta tarjeta?",
-                text: "Una vez eliminada, no podrás recuperarla.",
+                title: "¿Estás seguro de eliminar el registro?",
+                text: "¡No podrás revertir esto!",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonText: "Sí, eliminar",
-                cancelButtonText: "Cancelar"
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Sí, borrar!"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    document.getElementById('eliminacion-form').submit();
+                    btndelete.submit();
                 }
             });
         }
+    </script>
     </script>
 @endsection

@@ -6,7 +6,7 @@ use App\Models\asignacion;
 use App\Models\Automoviles;
 use App\Models\Usuarios;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
+
 
 
 class AsignacionController extends Controller
@@ -16,14 +16,33 @@ class AsignacionController extends Controller
     {
 
 
-        $reservacion = asignacion::with('automovil', 'usuarios', 'checkIns')->get();
+        $reservacion = \DB::select("SELECT
+            asi.id_asignacion,
+            asi.estatus,
+            asi.lugar,
+            asi.hora_salida,
+            CONCAT(usu.app, ' ', usu.apm, ', ', usu.nombre) AS usuario,
+            asi.fecha_salida,
+            che.km_llegada,
+            CONCAT(aut.marca, ' ', aut.submarca, ' ', aut.modelo) AS automovil
+        FROM
+            asignacions AS asi
+        JOIN
+            usuarios AS usu ON asi.id_usuario = usu.id_usuario
+        JOIN
+            automoviles AS aut ON asi.id_automovil = aut.id_automovil
+        LEFT JOIN
+            check_ins AS che ON che.id_asignacion = asi.id_asignacion;
+        ");
+
         return view('catalogos.asignacion.index', compact('reservacion'));
     }
 
     public function create()
     {
 
-        $auto = \DB::select("SELECT
+        $auto = \DB::select(
+        "SELECT
             aut.id_automovil,
             aut.marca,
             aut.submarca,

@@ -6,7 +6,6 @@ use App\Models\Servicios;
 use App\Models\Multas;
 use App\Models\asignacion;
 use App\Models\Automoviles;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 

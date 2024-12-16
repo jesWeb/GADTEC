@@ -46,7 +46,6 @@ Route::middleware('auth')->group(function () {
         // Gestión de asignaciones y otros recursos
         Route::get('/autorizar/update/{id_asignacion}', [GestionController::class, 'update'])->name('autorizar');
         Route::resource('usuarios', UsuariosController::class);
-        Route::get('/eliminar/{id_usuario}', [UsuariosController::class, 'update2'])->name('usuario');
         Route::resource('Automovil', AutomovilController::class);
         Route::resource('asignacion', AsignacionController::class);
         Route::resource('seguros', SegurosController::class);

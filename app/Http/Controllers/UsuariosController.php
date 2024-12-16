@@ -59,7 +59,7 @@ class UsuariosController extends Controller
             'email' => 'required|email',
             'usuario' => 'required',
             'pass' => 'required',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg', 
         ];
 
         $messages = [
@@ -212,5 +212,5 @@ class UsuariosController extends Controller
         return redirect()->route('usuarios.index')->with('danger', 'Se ha eliminado correctamente el registro');
     }
 
-
+    
 }

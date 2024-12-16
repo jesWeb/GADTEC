@@ -76,7 +76,7 @@
                         <tr class="hover:bg-gray-50">
                             <td class="px-4 py-2 border">{{ $key + 1 }}</td>
                             <td class="px-4 py-2 border">
-                                {{ $multa->automovil->marca }} {{ $multa->automovil->modelo }}
+                                {{ $multa->automovil }} 
                             </td>
                             <td class="px-4 py-2 border">{{ $multa->tipo_multa }}</td>
                             <td class="px-4 py-2 border">$ {{ $multa->monto }}</td>

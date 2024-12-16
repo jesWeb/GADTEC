@@ -49,21 +49,22 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
-                        @foreach($reservacion as $key => $reserv)
+                    @foreach($reservacion as $key => $reserv)
                             <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-2 border">{{ $key + 1 }}</td>
-                                <td class="px-4 py-2 border">
-                                {{ $reserv->automovil->marca }} {{$reserv->automovil->submarca }} {{ $reserv->automovil->modelo}}
-                                </td>
-                                <td class="px-4 py-2 border">{{ $reserv->usuarios->nombre}} {{ $reserv->usuarios->app}} {{ $reserv->usuarios->apm}}</td>
-                                <td class="px-4 py-2 border">{{ date('d-m-Y',strtotime($reserv->fecha_salida))}}</td>
-                                <td class="px-4 py-2 border">{{ date('h:i a',strtotime(($reserv->hora_salida)))}}</td>
-                                <td class="px-4 py-2 border">{{ $reserv->lugar }}</td>
-                                @if($reserv->checkIns->isNotEmpty() && $reserv->checkIns->first()->km_llegada)
-                                    <td class="px-4 py-2 border">Entregado</td>
-                                @else
-                                    <td class="px-4 py-2 border">{{ $reserv->estatus}}</td>
-                                @endif
+                            	<td class="px-4 py-2 border">{{ $key + 1 }}</td>
+                            	<td class="px-4 py-2 border">
+                            	{{ $reserv->automovil }}
+                                </td>                          
+                            	<td class="px-4 py-2 border">{{ $reserv->usuario }}</td>
+                            	<td class="px-4 py-2 border">{{ date('d-m-Y',strtotime($reserv->fecha_salida))}}</td>
+                            	<td class="px-4 py-2 border">{{ date('h:i a',strtotime(($reserv->hora_salida)))}}</td>
+                            	<td class="px-4 py-2 border">{{ $reserv->lugar }}</td>
+                                @if($reserv->km_llegada && $reserv->km_llegada)
+                                	<td class="px-4 py-2 border">Entregado</td>
+                            	@else
+                                	<td class="px-4 py-2 border">{{ $reserv->estatus}}</td>
+                            	@endif
+                            
                                 {{-- acciones --}}
                                 <td class="px-4 py-2 border">
                                     <div class="flex justify-center space-x-2">

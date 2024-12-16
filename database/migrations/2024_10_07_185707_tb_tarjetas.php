@@ -20,7 +20,7 @@ return new class extends Migration
             $table->date('fecha_vigencia');
             $table->enum('estatus', ['Vigente', 'Expirada', 'Suspendida'])->default('Vigente');
             $table->unsignedBigInteger('id_automovil');
-            $table->string('fotografia_frontal')->nullable();
+            $table->string('fotografia_frontal', 1500)->nullable();
             $table->boolean('activo')->default(0);  // borrado logico del sistema
             // Definición de la clave foránea (relación con automóviles)
             $table->foreign('id_automovil')->references('id_automovil')->on('automoviles')->onDelete('cascade');

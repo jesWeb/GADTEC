@@ -106,12 +106,16 @@
                             <div>
                                 <label for="empresa" class="block text-base font-medium text-gray-700">Selección de Empresa</label>
                                 <select name="empresa" id="empresa"
-                                    class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                     title="Selecciona una empresa">
-                                    <option value="GÄTSIMED" selected>GÄTSIMED</option>
+                                    <option disabled selected>Selecciona una opción</option>
+                                    <option value="GÄTSIMED">GÄTSIMED</option>
                                     <option value="DYDETEC">DYDETEC</option>
                                     <option value="Empresa 3">Empresa 3</option>
                                 </select>
+                                @error('empresa')
+                                <span class="text-sm text-red-600">{{ $message }}</span>
+                                @enderror
                             </div>
 
                             <!-- Fecha de Nacimiento -->
@@ -120,29 +124,39 @@
                                 <input type="date" name="fn" id="fn" value="{{ old('fn') }}"
                                     class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                                     title="Ingresa la fecha de nacimiento">
+                                    @error('fn')
+                                        <span class="text-sm text-red-600">{{ $message }}</span>
+                                    @enderror
                             </div>
 
                             <!-- Selección de Sexo -->
                             <div>
                                 <label for="gen" class="block text-base font-medium text-gray-700">Selección de Sexo</label>
                                 <select name="gen" id="gen" value="{{ old('gen') }}"
-                                    class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                     title="Selecciona el sexo">
-                                    <option value="Femenino" selected>Femenino</option>
+                                    <option disabled selected>Selecciona una opción </option>
+                                    <option value="Femenino">Femenino</option>
                                     <option value="Masculino">Masculino</option>
                                 </select>
+                                @error('gn')
+                                <span class="text-sm text-red-600">{{ $message }}</span>
+                                @enderror
                             </div>
 
                             <!-- Selección de Rol -->
                             <div>
                                 <label for="rol" class="block text-base font-medium text-gray-700">Selección de Rol</label>
                                 <select name="rol" id="rol"
-                                    class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                                    title="Selecciona el rol del usuario">
-                                    <option value="Administrador" selected>Administrador</option>
+                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                    title="Selecciona el rol del usuario" required>
+                                    <option disabled selected>Selecciona una opción </option>
+                                    <option value="Administrador">Administrador</option>
                                     <option value="Moderador">Moderador</option>
-
                                 </select>
+                                @error('rol')
+                                <span class="text-sm text-red-600">{{ $message }}</span>
+                                @enderror
                             </div>
 
                             <!-- E-Mail -->
@@ -226,10 +240,11 @@
 
                         <!-- Botones -->
                         <div class="flex justify-end mt-8 space-x-4">
-                            <button type="submit"  title="Registrar usuario"
-                                class="px-5 py-3 text-white bg-indigo-600 rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">Guardar</button>
+                            
                             <a href="{{ route('usuarios.index') }}" title="Cancelar registro"
                                 class="px-5 py-3 text-gray-700 bg-gray-200 rounded-md shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">Cancelar</a>
+                                <button type="submit"  title="Registrar usuario"
+                                class="px-5 py-3 text-white bg-indigo-600 rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">Registrar</button>
                         </div>
                     </form>
                 </div>

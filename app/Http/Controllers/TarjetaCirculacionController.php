@@ -38,7 +38,11 @@ class TarjetaCirculacionController extends Controller
      */
     public function create()
     {
-        $automoviles = Automoviles::all();
+        $automoviles = \DB::select("SELECT *
+            FROM automoviles AS aut
+            LEFT JOIN tarjetas AS tar ON tar.id_automovil = aut.id_automovil
+            WHERE tar.estatus IS NULL OR tar.estatus != 'vigente'");
+
         return view('catalogos.tarjetas.add', compact('automoviles'));
     }
 
@@ -53,10 +57,9 @@ class TarjetaCirculacionController extends Controller
             'vehiculo_origen' => 'required|string|max:100',
             'fecha_expedicion' => 'required|date',
             'fecha_vigencia' => 'required|date|after:fecha_expedicion',
-            'estatus' => 'required|in:Vigente,Expirada,Suspendida',
             'id_automovil' => 'required|exists:automoviles,id_automovil',
-            'fotografias' => 'nullable|array|max:5',
-            'fotografia_frontal' => 'file|mimes:jpeg,png,jpg|max:10240'
+            'fotografia_frontal' => 'nullable|array|max:5',
+            'fotografia_frontal.*' => 'file|mimes:jpeg,png,jpg'
         ];
 
         $messages = [
@@ -65,7 +68,6 @@ class TarjetaCirculacionController extends Controller
             'vehiculo_origen.required' => 'El campo vehículo origen es requerido',
             'fecha_expedicion.required' => 'La fecha de expedición es requerida',
             'fecha_vigencia.required' => 'La fecha de vigencia es requerida',
-            'estatus.required' => 'El campo estatus es requerido',
             'id_automovil.required' => 'El campo automóvil es requerido',
         ];
 
@@ -73,17 +75,43 @@ class TarjetaCirculacionController extends Controller
 
         $input = $request->all();
 
-        // Guardar fotografía frontal
-        if ($request->hasFile('fotografia_frontal')) {
-            $file = $request->file('fotografia_frontal');
-            $imgFrontal = $file->getClientOriginalName();
-            $ldate = date('Ymd_His_');
-            $imgFrontal = $ldate . $imgFrontal;
+        // // Guardar fotografía frontal
+        // if ($request->hasFile('fotografia_frontal')) {
+        //     $file = $request->file('fotografia_frontal');
+        //     $imgFrontal = $file->getClientOriginalName();
+        //     $ldate = date('Ymd_His_');
+        //     $imgFrontal = $ldate . $imgFrontal;
 
-            $file->move(public_path('img/tarjetas'), $imgFrontal);
-            $input['fotografia_frontal'] = $imgFrontal;
-        }
+        //     $file->move(public_path('img/tarjetas'), $imgFrontal);
+        //     $input['fotografia_frontal'] = $imgFrontal;
+        // }
 
+
+         //guardar fotos
+         $fotografias = [];
+         $maxTotalSize = 50 * 1024 * 1024; // 50 MB
+         $totalSize = 0;
+ 
+         if ($request->hasFile('fotografia_frontal')) {
+             $files = $request->file('fotografia_frontal');
+             $files = array_slice($files, 0, 5); // Limitar a 5 fotos
+     
+             foreach ($files as $file) {
+                 $totalSize += $file->getSize();
+                 if ($totalSize > $maxTotalSize) {
+                     return back()->with('error', 'El tamaño total de las imágenes supera los 50 MB.');
+                 }
+     
+                 // Guardar el archivo en el directorio público
+                 $imgVerificacion = date('Ymd_His_') . $file->getClientOriginalName();
+                 $file->move(public_path('img/tarjetas'), $imgVerificacion);
+                 $fotografias[] = $imgVerificacion;
+             }
+         }
+ 
+         //$input Guardar en json la imagen
+         $input['fotografia_frontal'] = json_encode($fotografias);
+ 
         TarjetaCirculacion::create($input);
 
         return redirect()->route('tarjetas.index')->with('mensaje', 'Se ha creado correctamente el registro');
@@ -125,7 +153,7 @@ class TarjetaCirculacionController extends Controller
             'fecha_vigencia' => 'required|date|after:fecha_expedicion',
             'estatus' => 'required|in:Vigente,Expirada,Suspendida',
             'id_automovil' => 'required|exists:automoviles,id_automovil',
-            'fotografia_frontal' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
+            'fotografia_frontal' => 'nullable|image|mimes:jpeg,png,jpg'
         ];
 
         $messages = [
@@ -143,17 +171,30 @@ class TarjetaCirculacionController extends Controller
 
         $input = $request->all();
 
-        // Guardar fotografía frontal
+       // Manejo de imágenes 
+        $fotografias = $tarjeta->fotografia_frontal ? json_decode($tarjeta->fotografia_frontal, true) : [];
+
+        $maxTotalSize = 50 * 1024 * 1024; // 50 MB
+        $totalSize = 0;
+
         if ($request->hasFile('fotografia_frontal')) {
-            $file = $request->file('fotografia_frontal');
-            $imgFrontal = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('img/tarjetas'), $imgFrontal);
-            $input['fotografia_frontal'] = $imgFrontal;
-        } else {
-            $input['fotografia_frontal'] = $tarjeta->fotografia_frontal;
+            $files = $request->file('fotografia_frontal');
+            $files = array_slice($files, 0, 5); // Limitar a 5 fotos
+
+            foreach ($files as $file) {
+                $totalSize += $file->getSize();
+                if ($totalSize > $maxTotalSize) {
+                    return back()->with('error', 'El tamaño total de las imágenes supera los 50 MB.');
+                }
+
+                // Guardar el archivo en el directorio público
+                $imgFrontal = date('Ymd_His_') . $file->getClientOriginalName();
+                $file->move(public_path('img/tarjetas'), $imgFrontal);
+                $fotografias[] = $imgFrontal;
+            }
         }
 
-
+        $input['fotografia_frontal'] = json_encode($fotografias);
         $tarjeta->update($input);
 
         return redirect()->route('tarjetas.index')->with('message', 'Se ha modificado correctamente el registro');

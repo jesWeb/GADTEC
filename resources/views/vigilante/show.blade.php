@@ -158,7 +158,7 @@
 
                         @if ($fotografiasRegreso)
                             @foreach ($fotografiasRegreso as $foto)
-                                <img src="{{ url('img/llegadas/' . $foto) }}" alt="{{ $vigilante->automovil->marca }}"
+                                <img src="{{ asset('img/llegadas/' . $foto) }}" alt="Fotos de regreso"
                                     class="object-cover w-full h-full transition-transform duration-300 transform rounded-lg shadow-md hover:scale-90 hover:shadow-lg">
                             @endforeach
                         @else

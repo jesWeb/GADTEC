@@ -14,29 +14,57 @@ class ServiciosController extends Controller
      */
     public function index(Request $request)
     {
-        //
-        $query = Servicios::with('automovil');
-
-        // Verificar si hay una búsqueda
+        // Base de la consulta SQL
+        $sql = "SELECT
+                    serv.id_servicio,
+                    serv.tipo_servicio,
+                    serv.descripcion,
+                    serv.fecha_servicio,
+                    serv.prox_servicio,
+                    serv.costo,
+                    serv.lugar_servicio,
+                    CONCAT(aut.marca, ' ', aut.submarca, ' ', aut.modelo) AS automovil
+                FROM
+                    servicios AS serv
+                JOIN
+                    automoviles AS aut ON serv.id_automovil = aut.id_automovil";
+    
+        // Condiciones dinámicas para buscar
+        $conditions = [];
+        $parameters = [];
+    
         if ($request->has('search') && $request->input('search') != '') {
             $search = $request->input('search');
-            $query->where(function($q) use ($search) {
-                $q->where('tipo_servicio', 'LIKE', "%{$search}%")
-                ->orWhere('descripcion', 'LIKE', "%{$search}%")
-                ->orWhere('costo', 'LIKE', "%{$search}%")
-                ->orWhere('lugar_servicio', 'LIKE', "%{$search}%")
-                ->orWhereHas('automovil', function ($q) use ($search) {
-                    $q->where('marca', 'LIKE', "%{$search}%")
-                        ->orWhere('submarca', 'LIKE', "%{$search}%")
-                        ->orWhere('modelo', 'LIKE', "%{$search}%");
-                });
-            });
+            $conditions[] = "(serv.tipo_servicio LIKE :search1 OR 
+                              serv.descripcion LIKE :search2 OR 
+                              serv.costo LIKE :search3 OR 
+                              serv.lugar_servicio LIKE :search4 OR 
+                              aut.marca LIKE :search5 OR 
+                              aut.submarca LIKE :search6 OR 
+                              aut.modelo LIKE :search7)";
+            $parameters = [
+                'search1' => "%{$search}%",
+                'search2' => "%{$search}%",
+                'search3' => "%{$search}%",
+                'search4' => "%{$search}%",
+                'search5' => "%{$search}%",
+                'search6' => "%{$search}%",
+                'search7' => "%{$search}%",
+            ];
         }
-
-        $servicios = $query->get();
+    
+        // Agregar condiciones a la consulta de busqueda
+        if (!empty($conditions)) {
+            $sql .= " WHERE " . implode(' AND ', $conditions);
+        }
+    
+        // Variable para visualizar en tb
+        $servicios = \DB::select($sql, $parameters);
+    
+        
         return view('modulos.servicios.index', compact('servicios'));
-
     }
+    
 
     /**
      * Store a newly created resource in storage.
@@ -59,7 +87,8 @@ class ServiciosController extends Controller
              'prox_servicio' => 'nullable|date',
              'costo' => 'nullable|numeric',
              'lugar_servicio' => 'required|string|max:255',
-             'comprobante' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
+             'comprobante' => 'nullable|array|max:5',
+             'comprobante.*' => 'nullable|file|mimes:jpeg,png,jpg',
              'id_automovil' => 'nullable|exists:automoviles,id_automovil'
          ];
 
@@ -77,16 +106,31 @@ class ServiciosController extends Controller
          $request->validate($rules, $messages);
          $input = $request->all();
 
-         // Guardar comprobante
-         if ($request->hasFile('comprobante')) {
-             $file = $request->file('comprobante');
-             $comprobante =  $file->getClientOriginalName();
-             $ldate = date('Ymd_His_');
-             $comprobante = $ldate . $comprobante;
+         $fotografias = [];
 
-             $file->move(public_path('img/servicios'), $comprobante);
-             $input['comprobante'] = $comprobante;
-         }
+        $maxTotalSize = 50 * 1024 * 1024; // 50 MB
+        $totalSize = 0;
+
+        if ($request->hasFile('comprobante')) {
+            $files = $request->file('comprobante');
+            $files = array_slice($files, 0, 5); // Limitar a 5 fotos
+
+            foreach ($files as $file) {
+                $totalSize += $file->getSize();
+                if ($totalSize > $maxTotalSize) {
+                    return back()->with('error', 'El tamaño total de las imágenes supera los 50 MB.');
+                }
+
+                // Guardar el archivo en el directorio público
+                $imgAuto = date('Ymd_His_') . $file->getClientOriginalName();
+                $file->move(public_path('img/servicios'), $imgAuto);
+                $fotografias[] = $imgAuto;
+            }
+        }
+
+
+        //guardar en json la img
+        $input['comprobante'] = json_encode($fotografias);
 
      // Obtener el automóvil relacionado
      $automovil = Automoviles::find($request->id_automovil);
@@ -152,9 +196,10 @@ class ServiciosController extends Controller
              'prox_servicio' => 'nullable|date',
              'costo' => 'required|numeric',
              'lugar_servicio' => 'required|string|max:255',
-             'comprobante' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
+             'comprobante' => 'nullable|array|max:5',
+             'comprobante.*' => 'nullable|file|mimes:jpeg,png,jpg',
              'id_automovil' => 'nullable|exists:automoviles,id_automovil',
-             'estatusIn' => 'nullable|string'  // Asegúrate de validar el estatus
+             'estatusIn' => 'nullable|string'  
          ];
 
          $messages = [
@@ -172,21 +217,31 @@ class ServiciosController extends Controller
          $input = $request->all();
          $servicio = Servicios::findOrFail($id);
 
-         // Verificar si se subió un nuevo archivo de comprobante
-         if ($request->hasFile('comprobante')) {
-             // Eliminar archivo anterior si existe
-             if ($servicio->comprobante && file_exists(public_path('img/' . $servicio->comprobante))) {
-                 unlink(public_path('img/' . $servicio->comprobante));
-             }
+        $fotografias = $servicio->comprobante ? json_decode($servicio->comprobante, true) : [];
 
-             $file = $request->file('comprobante');
-             $comprobante =  $file->getClientOriginalName();
-             $ldate = date('Ymd_His_');
-             $comprobante = $ldate . $comprobante;
+        $maxTotalSize = 50 * 1024 * 1024; // 50 MB
+        $totalSize = 0;
 
-             $file->move(public_path('img/servicios'), $comprobante);
-             $input['comprobante'] = $comprobante;
-         }
+        if ($request->hasFile('comprobante')) {
+            $files = $request->file('comprobante');
+            $files = array_slice($files, 0, 5); // Limitar a 5 fotos
+
+            foreach ($files as $file) {
+                $totalSize += $file->getSize();
+                if ($totalSize > $maxTotalSize) {
+                    return back()->with('error', 'El tamaño total de las imágenes supera los 50 MB.');
+                }
+
+                // Guardar el archivo en el directorio público
+                $imgAuto = date('Ymd_His_') . $file->getClientOriginalName();
+                $file->move(public_path('img/servicios'), $imgAuto);
+                $fotografias[] = $imgAuto;
+            }
+        }
+
+
+        //guardar en json la img
+        $input['comprobante'] = json_encode($fotografias);
 
          // Actualizar el servicio
          $servicio->update($input);

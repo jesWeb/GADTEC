@@ -80,13 +80,27 @@
                 
 
                     <div class="p-6 bg-transparent rounded-lg shadow-sm">
-                        @if($multa->comprobante)
-                            <img src="{{ url('img/multas/' . $multa->comprobante) }}"
-                                alt="Comprobante" class="inline-flex items-center object-cover w-16 h-16 ">
-                            <a href="{{ url('img/multas/' . $multa->comprobante) }}" target="_blank" class="text-gray-600 " title="Ver comprobante de multa">Ver Comprobante</a>
-                        @else
-                            <span class="text-gray-500">Sin comprobante</span>
-                        @endif
+                    <div class="mb-2">
+                            <h4 
+                            class="p-4 text-lg font-semibold text-center text-gray-700">Imagenes de tenencias</h4>
+                            @if($multa->comprobante != '') 
+                                <div class="flex gap-4 p-4 ml-4 overflow-x-auto">
+                                    @php
+                                        $fotografias = json_decode($multa->comprobante, true);
+                                    @endphp
+
+                                    @if ($fotografias)
+                                        @foreach ($fotografias as $foto)
+                                            <img src="{{ url('img/multas/' . $foto) }}" class="w-16 h-auto transition-transform duration-300 transform rounded-lg shadow-md hover:scale-90 hover:shadow-lg" alt="seguro">
+                                            <a href="{{ url('img/multas/' . $foto) }}" target="_blank" class="text-gray-500" title="Ver archivo de de tenencia">Ver imagen</a> 
+                                        @endforeach
+                                    @else
+                                        <p class="text-sm text-gray-500">Sin imagen</p>
+                                    @endif
+                                </div>
+                            
+                            @endif
+                        </div>
                     </div>
 
                     <div class="p-6 bg-transparent rounded-lg shadow-sm">
