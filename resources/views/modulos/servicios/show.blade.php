@@ -81,15 +81,23 @@
                     </div>
 
                     <div class="p-6 bg-transparent rounded-lg shadow-sm">
-                        @if($servicio->comprobante)
-                            <p class="text-lg font-medium text-gray-800">Comprobante:</p>
-                            <img src="{{ url('img/servicios/' . $servicio->comprobante) }}" alt="Comprobante de servicio" class="w-20 h-16 rounded-md shadow-sm">
-                            <a href="{{ url('img/servicios/' . $servicio->comprobante) }}" target="_blank" class="text-gray-600 " title="Ver comprobante">
-                                Ver Comprobante
-                            </a>
-                        @else
-                            <span class="text-gray-500">Sin comprobante</span>
-                        @endif
+                            @if($servicio->comprobante != '') 
+                                <div class="flex gap-4 p-4 ml-4 overflow-x-auto">
+                                    @php
+                                        $fotografias = json_decode($servicio->comprobante, true);
+                                    @endphp
+
+                                    @if ($fotografias)
+                                        @foreach ($fotografias as $foto)
+                                            <img src="{{ url('img/servicios/' . $foto) }}" class="w-16 h-auto transition-transform duration-300 transform rounded-lg shadow-md hover:scale-90 hover:shadow-lg" alt="seguro">
+                                            <a href="{{ url('img/servicios/' . $foto) }}" target="_blank" class="text-gray-500" title="Ver archivo de de tenencia">Ver imagen</a> 
+                                        @endforeach
+                                    @else
+                                        <p class="text-sm text-gray-500">Sin imagen</p>
+                                    @endif
+                                </div>
+                            
+                            @endif
                         
                     </div>
                 </div>

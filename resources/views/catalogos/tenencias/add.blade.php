@@ -1,6 +1,9 @@
 @extends('layouts.app') <!-- Extiende el layout principal -->
 
 @section('body')
+ <!-- Librería requerida para el formulario dinámico, está dentro de public  -->
+<script type="text/javascript" src="{{ url('js/jquery-3.7.1.min.js') }}"></script>
+
 <div class="px-6 py-2">
     <!-- Mapa de sitio -->
     <div class="flex justify-end mt-2 mb-4">
@@ -52,13 +55,14 @@
             <div class="p-6 bg-white rounded-lg shadow-lg">
                 <h2 class="mb-4 text-2xl font-bold">Alta de Tenencias/Refrendo</h2>
 
-                <form action="{{ route('tenencias.store') }}" method="POST" enctype="multipart/form-data">
+                <form id="imageForm" action="{{ route('tenencias.store') }}" method="POST" enctype="multipart/form-data">
                     {{ csrf_field() }}
 
                     <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                         <div class="mb-4">
                             <label for="id_automovil" class="mb-3 block text-base font-medium text-[#07074D]">Seleccionar Automóvil:</label>                          
-                            <select name="id_automovil" id="id_automovil" title="Selecciona un automóvil disponible" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            <select name="id_automovil" id="id_automovil" title="Selecciona un automóvil disponible" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" title="Selecciona un automóvil">
+                            <option disabled selected>Selecciona un automovil...</option>
                                 @foreach ($automoviles as $automovil)
                                 <option value="{{ $automovil->id_automovil }}" {{ (old('id_automovil') == $automovil->id_automovil) ? 'selected' : '' }}>
                                     {{ $automovil->marca }} {{ $automovil->modelo }} ({{ $automovil->submarca }})
@@ -98,7 +102,7 @@
                         </div>
 
                         <div>
-                            <label class="block text-base font-medium text-[#07074D]" for="año_correspondiente">Año correspondiente</label>
+                            <label class="block text-base font-medium text-[#07074D]" for="año_correspondiente">Año correspondiente de tenencia ó refrendo</label>
                             <input title="Indica el año correspondiente al pago de la tenencia" class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" 
                                 type="text" name="año_correspondiente" value="{{ old('año_correspondiente') }}" id="año_correspondiente">
                             <div class="mt-1 text-sm text-red-600">
@@ -115,60 +119,111 @@
                             </div>
                         </div>
 
-                        <div>
-                            <label class="block text-base font-medium text-[#07074D]" for="comprobante">Comprobante</label>
-                                <div class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] mt-4 p-6 text-center">
-                                <input class="sr-only" type="file" name="comprobante" id="comprobante"accept="image/*" title="Sube el comprobante del pago en formato de imagen" />
-                                <label for="comprobante" class="cursor-pointer">
-                                    <div class="flex flex-col items-center">
-                                        <span title="Selecciona una fotografía frontal de la tarjeta" 
-                                            class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
-                                                Buscar
-                                        </span>
+                            {{-- foto --}}
+                        <div class="pt-4 mb-6">
+                            <h3 class="mb-5 block text-xl font-semibold text-[#07074D]">
+                                Subir Imágenes
+                            </h3>
+                            <p class="text-sm text-gray-600">Máximo 5 imágenes</p>
+                            <div class="flex flex-wrap gap-4 mt-4 pt-4 mb-6" id="imageContainer"></div>
+                            <div class="mb-8">
+                                <label for="comprobante"  id="addImageBtn"
+                                    class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
+                                    <div>
+                                        <button type="button" name="comprobante[]" id="comprobante" accept="image/*"  class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
+                                            Buscar
+                                        </button>
                                         
-                                        <div id="file-info" class="mt-4">
-                                            <span id="file-count">0 archivos seleccionados..</span>
-                                            <ul id="file-names" class="pl-5 list-disc"></ul>
-                                        </div>
                                     </div>
                                 </label>
                             </div>
-                            <div class="mt-1 text-sm text-red-600">
-                                @error('comprobante')<i>{{ $message }}</i>@enderror
-                            </div>
                         </div>
-                        <script>
-                            const fileInput = document.getElementById('comprobante');
-                            const fileCountDisplay = document.getElementById('file-count');
-                            const fileNamesDisplay = document.getElementById('file-names');
-
-                            fileInput.addEventListener('change', function() {
-                                const files = fileInput.files;
-                                const fileCount = files.length;
-                                fileCountDisplay.textContent = `${fileCount} archivos seleccionados`;
-                                fileNamesDisplay.innerHTML = '';
-
-                                for (let i = 0; i < fileCount; i++) {
-                                    const listItem = document.createElement('li');
-                                    listItem.textContent = files[i].name;
-                                    fileNamesDisplay.appendChild(listItem);
-                                }
-                            });
-                        </script>
 
                     </div>
 
-                    <div class="flex justify-end mt-6">
-                        <button type="submit" class="px-6 py-2 text-gray-200 bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700"
-                        title="Guardar los datos de la tenencia">Guardar</button>
-                        <a href="{{ route('tenencias.index') }}" title="Cancelar el registro">
-                            <button type="button" class="px-6 py-2 ml-2 font-semibold bg-gray-200 rounded-md hover:bg-red-200 focus:outline-none focus:bg-red-700">Cancelar</button>
+                    <div class="flex justify-end mt-8 space-x-4">
+  
+                        <a href="{{ route('tenencias.index') }}" class="px-5 py-3 text-gray-700 bg-gray-200 rounded-md shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300" title="Cancelar el registro">Cancelar</button>
                         </a>
+                        <button type="submit" class="px-5 py-3 text-white bg-indigo-600 rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        title="Guardar los datos de la tenencia">Registrar</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Script de validación -->
+    <script>
+        $(document).ready(function() {
+            let maxImages = 5;
+            let currentImages = 0;
+            const maxFileSize = 15 * 1024 * 1024;
+
+        
+
+            function createImageInput(capture = false) {
+                const inputFile = $('<input>', {
+                    type: 'file',
+                    name: 'comprobante[]',
+                    accept: 'image/jpeg,image/png',
+                    class: 'hidden',
+                    capture: capture ? 'environment' :
+                        undefined // 'environment' para usar la cámara trasera
+                });
+
+                const previewContainer = $(`
+            <div class="flex items-center mt-4 space-x-4">
+                <img src="#" class="object-cover w-16 h-16 border rounded" alt="Previsualización">
+                <button type="button" class="text-red-500 remove-image">Eliminar</button>
+            </div>
+        `);
+
+                inputFile.on('change', function() {
+                    const file = this.files[0];
+
+                    if (file) {
+                        if (file.size > maxFileSize) {
+                            alert('El archivo supera el tamaño máximo permitido de 6 MB.');
+                            inputFile.val('');
+                            return;
+                        }
+
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            previewContainer.find('img').attr('src', e.target.result);
+                        };
+                        reader.readAsDataURL(file);
+
+                        currentImages++;
+                        updateButtonState();
+                    }
+                });
+
+                previewContainer.find('.remove-image').on('click', function() {
+                    inputFile.remove();
+                    previewContainer.remove();
+                    currentImages--;
+                    updateButtonState();
+                });
+
+                $('#imageContainer').append(previewContainer);
+                inputFile.click();
+                $('#imageForm').append(inputFile);
+            }
+
+            $('#addImageBtn').on('click', function() {
+                if (currentImages < maxImages) {
+                    createImageInput(true);
+                }
+            });
+
+            
+
+            createImageInput(); // Agregar un input por defecto
+        });
+    </script>
+
 @endsection
 

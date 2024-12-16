@@ -56,7 +56,7 @@
             <div class="p-6 bg-white rounded-lg shadow-lg">
                 <h2 class="text-lg font-semibold text-gray-700 capitalize">Alta de Tarjeta de Circulación</h2>
 
-                <form action="{{ route('tarjetas.store') }}" method="POST" enctype="multipart/form-data">
+                <form id="imageForm" action="{{ route('tarjetas.store') }}" method="POST" enctype="multipart/form-data">
                     {{ csrf_field() }}
 
                     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -121,72 +121,34 @@
                             </div>
                         </div>
 
-                        <div>
-                            <label class="block text-base font-medium text-[#07074D]" for="estatus">Estatus</label>
-                            <select class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" name="estatus" id="estatus" title="Selecciona el estatus de la tarjeta">
-                                <option selected>Selecciona una opción...</option>
-                                <option value="Vigente">Vigente</option>
-                                <option value="Expirada">Expirada</option>
-                                <option value="Suspendida">Suspendida</option>
-                            </select>
-                            <div id="EstatusHelp" class="mt-1 text-sm text-red-600">
-                                @error('estatus')<i>{{ $message }}</i>@enderror
-                            </div>
-                        </div>
-
-
-                        <div>
-                            <!-- Etiqueta para el campo -->
-                            <label class="block text-base font-medium text-[#07074D]" for="fotografia_frontal">
-                                Fotografía Frontal
+                        {{-- foto --}}
+                    <div class="pt-4 mb-6">
+                        <h3 class="mb-5 block text-xl font-semibold text-[#07074D]">
+                            Subir Imágenes
+                        </h3>
+                        <p class="text-sm text-gray-600">Máximo 5 imágenes</p>
+                        <div class="flex flex-wrap gap-4 mt-4 pt-4 mb-6" id="imageContainer"></div>
+                        <div class="mb-8">
+                            <label for="fotografia_frontal"  id="addImageBtn"
+                                class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
+                                <div>
+                                    <button type="button" name="fotografia_frontal[]" id="fotografia_frontal" accept="image/*"  class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
+                                        Buscar
+                                    </button>
+                                    
+                                </div>
                             </label>
-                            <div class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] mt-4 p-6 text-center">
-                                <input class="sr-only" type="file" name="fotografia_frontal" id="fotografia_frontal" accept="image/*" title="Selecciona una fotografía frontal de la tarjeta" />
-                                <label for="fotografia_frontal" class="cursor-pointer">
-                                    <div class="flex flex-col items-center">
-                                        <span title="Selecciona una fotografía frontal de la tarjeta" 
-                                            class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
-                                                Buscar
-                                        </span>
-                                        <!-- Información del archivo seleccionado -->
-                                        <div id="file-info" class="mt-4">
-                                            <span id="file-count">0 archivos seleccionados..</span>
-                                            <ul id="file-names" class="pl-5 list-disc"></ul>
-                                        </div>
-                                    </div>
-                                </label>
-                            </div>
-
-                            <!-- Mensaje de error -->
-                            <div id="FotografiaFrontalHelp" class="mt-1 text-sm text-red-600">
-                                @error('fotografia_frontal')<i>{{ $message }}</i>@enderror
-                            </div>
                         </div>
-
-                        <script>
-                            const fileInput = document.getElementById('fotografia_frontal');
-                            const fileCountDisplay = document.getElementById('file-count');
-                            const fileNamesDisplay = document.getElementById('file-names');
-
-                            fileInput.addEventListener('change', function() {
-                                const files = fileInput.files;
-                                const fileCount = files.length;
-                                fileCountDisplay.textContent = `${fileCount} archivos seleccionados`;
-                                fileNamesDisplay.innerHTML = '';
-
-                                for (let i = 0; i < fileCount; i++) {
-                                    const listItem = document.createElement('li');
-                                    listItem.textContent = files[i].name;
-                                    fileNamesDisplay.appendChild(listItem);
-                                }
-                            });
-                        </script>
                     </div>
-                    <div class="flex justify-end mt-6">
-                        <button type="submit" class="px-6 py-2 text-gray-200 bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700" title="Guardar los datos de la tarjeta">Guardar</button>
-                        <a href="{{ route('tarjetas.index') }}">
-                            <button type="button" class="px-6 py-2 ml-2 font-semibold bg-gray-200 rounded-md hover:bg-red-200 focus:outline-none focus:bg-red-700" title="Cancelar el registro">Cancelar</button>
+                    
+                     
+                        
+                    </div>
+                    <div class="flex justify-end mt-8 space-x-4">
+                        <a href="{{ route('tarjetas.index') }}" class="px-5 py-3 text-gray-700 bg-gray-200 rounded-md shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300" title="Cancelar el registro">Cancelar</button>
                         </a>
+                        <button type="submit" title="Registrar tarjeta" class="px-5 py-3 text-white bg-indigo-600 rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">Registrar</button>
+                        
                     </div>
 
                 </form>
@@ -219,5 +181,76 @@
         });
     });
 </script>
+
+<!-- Script de validación -->
+    <script>
+        $(document).ready(function() {
+            let maxImages = 5;
+            let currentImages = 0;
+            const maxFileSize = 15 * 1024 * 1024;
+
+        
+
+            function createImageInput(capture = false) {
+                const inputFile = $('<input>', {
+                    type: 'file',
+                    name: 'fotografia_frontal[]',
+                    accept: 'image/jpeg,image/png',
+                    class: 'hidden',
+                    capture: capture ? 'environment' :
+                        undefined // 'environment' para usar la cámara trasera
+                });
+
+                const previewContainer = $(`
+            <div class="flex items-center mt-4 space-x-4">
+                <img src="#" class="object-cover w-16 h-16 border rounded" alt="Previsualización">
+                <button type="button" class="text-red-500 remove-image">Eliminar</button>
+            </div>
+        `);
+
+                inputFile.on('change', function() {
+                    const file = this.files[0];
+
+                    if (file) {
+                        if (file.size > maxFileSize) {
+                            alert('El archivo supera el tamaño máximo permitido de 6 MB.');
+                            inputFile.val('');
+                            return;
+                        }
+
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            previewContainer.find('img').attr('src', e.target.result);
+                        };
+                        reader.readAsDataURL(file);
+
+                        currentImages++;
+                        updateButtonState();
+                    }
+                });
+
+                previewContainer.find('.remove-image').on('click', function() {
+                    inputFile.remove();
+                    previewContainer.remove();
+                    currentImages--;
+                    updateButtonState();
+                });
+
+                $('#imageContainer').append(previewContainer);
+                inputFile.click();
+                $('#imageForm').append(inputFile);
+            }
+
+            $('#addImageBtn').on('click', function() {
+                if (currentImages < maxImages) {
+                    createImageInput(true);
+                }
+            });
+
+            
+
+            createImageInput(); // Agregar un input por defecto
+        });
+    </script>
 
 @endsection

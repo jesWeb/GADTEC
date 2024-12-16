@@ -193,7 +193,7 @@
                     </div>
                     <div>
                         <h4 
-                        class="p-4 text-lg font-semibold text-center text-gray-700">Imagenes de seguro</h4>
+                        class="p-4 text-lg font-semibold text-center text-gray-700">Imagenes de Verificaciones</h4>
                         @if($EddVer->image != '') 
                             <div class="flex gap-4 p-4 ml-4 overflow-x-auto">
                                 @php

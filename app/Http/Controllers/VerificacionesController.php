@@ -253,7 +253,7 @@ class VerificacionesController extends Controller
 
         // Manejo de imágenes
         // $fotografias = $EddVer->image ? json_decode($EddVer->image, true) : [];
-        $fotografias = [];
+        $fotografias = $EddVer->image ? json_decode($EddVer->image, true) : [];
 
         $maxTotalSize = 50 * 1024 * 1024; // 50 MB
         $totalSize = 0;

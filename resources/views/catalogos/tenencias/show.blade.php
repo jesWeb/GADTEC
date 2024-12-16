@@ -94,12 +94,22 @@
             
                         <div class="p-4 bg-white rounded-lg shadow-sm">
                             <p class="text-lg font-semibold text-gray-800">Comprobante:</p>
-                            @if($tenencia->comprobante=='')
-                                <p class="text-gray-600">No hay comprobante disponible</p>
-                                
-                            @else
-                                <img src="{{ url('img/tenencias/' . $tenencia->comprobante) }}" alt="Comprobante" class="object-cover w-20 h-16">
-                                <a href="{{ url('img/tenencias/' . $tenencia->comprobante) }}" target="_blank" class="text-gray-500">Ver comprobante</a> 
+                            @if($tenencia->comprobante != '') 
+                                <div class="flex gap-4 p-4 ml-4 overflow-x-auto">
+                                    @php
+                                        $fotografias = json_decode($tenencia->comprobante, true);
+                                    @endphp
+
+                                    @if ($fotografias)
+                                        @foreach ($fotografias as $foto)
+                                            <img src="{{ url('img/tenencias/' . $foto) }}" class="w-16 h-auto transition-transform duration-300 transform rounded-lg shadow-md hover:scale-90 hover:shadow-lg" alt="seguro">
+                                            <a href="{{ url('img/tenencias/' . $foto) }}" target="_blank" class="text-gray-500" title="Ver archivo de de tenencia">Ver imagen</a> 
+                                        @endforeach
+                                    @else
+                                        <p class="text-sm text-gray-500">Sin imagen</p>
+                                    @endif
+                                </div>
+                            
                             @endif
                         </div>
                     </div>

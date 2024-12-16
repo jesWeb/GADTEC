@@ -199,21 +199,25 @@
                         </div>
 
                         <!-- Subida de imágenes -->
-                        <div class="mt-6">
-                            <h3 class="text-lg font-medium text-gray-700">Subir Imágenes</h3>
-                            <p class="text-sm text-gray-600">Máximo 5 imágenes, cada una no mayor a 6 MB.</p>
-
-                            <div class="flex flex-wrap gap-4 mt-4" id="imageContainer"></div>
-
-
-                            <button type="button" id="addImageBtn" class="px-4 py-2 mt-4 text-gray-800 bg-gray-600 border border-gray-800 rounded shadow-sm hover:bg-gray-600 focus:outline-none focus:ring focus:ring-blue-300" disabled>
-                                Añadir Imagen
-                            </button>
-
-                            <button type="button" id="takePhotoBtn" class="px-4 py-2 mt-4 ml-2 text-white bg-green-500 rounded shadow-sm hover:bg-green-600 focus:outline-none focus:ring focus:ring-green-300">
-                                Tomar Foto
-                            </button>
+                        <div class="pt-4 mb-6">
+                            <h3 class="mb-5 block text-xl font-semibold text-[#07074D]">
+                                Subir Imágenes
+                            </h3>
+                            <p class="text-sm text-gray-600">Máximo 5 imágenes</p>
+                            <div class="flex flex-wrap gap-4 mt-4 pt-4 mb-6" id="imageContainer"></div>
+                            <div class="mb-8">
+                                <label for="fotografias_regreso"  id="takePhotoBtn"
+                                    class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
+                                    <div>
+                                        <button type="button" name="fotografias_regreso[]" id="fotografias_regreso" accept="image/*"  class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
+                                            Buscar
+                                        </button>
+                                        
+                                    </div>
+                                </label>
+                            </div>
                         </div>
+
 
                         <div class="flex justify-end mt-6">
                             <button type="submit" id="submitBtn"  disabled titile="Guardar datos de llegada"

@@ -87,20 +87,32 @@
                         <!-- Estatus -->
                         <div class="p-4 bg-white rounded-lg shadow-sm ">
                             <p class="text-lg font-semibold text-gray-800">Estatus</p>
-                            <p class="text-gray-600">{{ $tarjeta->estatus }}</p>
+                            <span
+                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium
+                                    {{ $tarjeta->estatus == 'Vigente' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                    {{ $tarjeta->estatus }}
+                            </span>
                         </div>
 
                         <!-- Fotografía -->
                         <div class="p-4 bg-white rounded-lg shadow-sm">
                             <p class="text-lg font-semibold text-gray-800">Fotografía Frontal</p>
-                            @if($tarjeta->fotografia_frontal != '')
-                                <img src="{{ url('img/tarjetas/' . $tarjeta->fotografia_frontal) }}" alt="Foto frontal" class="object-cover w-20 h-16 mt-4 rounded-lg">
-                                <a href="{{ url('img/tarjetas/' . $tarjeta->fotografia_frontal) }}" target="_blank" class="text-gray-500">Ver comprobante</a>
+                            <div class="w-full">
+                            <div class="flex justify-start gap-4 p-4 overflow-x-auto">
+                            @php
+                                    $fotografias = json_decode($tarjeta->fotografia_frontal, true);
+                                @endphp
 
-                            @else
-                                <p class="text-sm text-gray-500">Sin imagen</p>
-                            @endif
-
+                                @if ($fotografias != '')
+                                    @foreach ($fotografias as $foto)
+                                        <img src="{{ url('img/tarjetas/' . $foto) }}" class="w-16 h-auto transition-transform duration-300 transform rounded-lg shadow-md hover:scale-90 hover:shadow-lg" alt="seguro">
+                                        <a href="{{ url('img/tarjetas/' . $foto) }}" target="_blank" class="text-gray-500" title="Ver archivo de de tarjeta">Ver imagen</a> 
+                                    @endforeach
+                                @else
+                                    <p>Sin imagen</p>
+                                @endif
+                                </div>
+                            </div>
                         </div>
                     </div>
 

@@ -69,7 +69,6 @@
                             <th class="px-4 py-2 text-left text-gray-600">Próximo Servicio</th>
                             <th class="px-4 py-2 text-left text-gray-600">Costo</th>
                             <th class="px-4 py-2 text-left text-gray-600">Lugar de Servicio</th>
-                            <th class="px-4 py-2 text-left text-gray-600">Comprobante</th>
                             <th class="px-4 py-2 text-left text-gray-600">Acciones</th>
                         </tr>
                     </thead>
@@ -78,8 +77,7 @@
                             <tr class="hover:bg-gray-50">
                                 <td class="px-4 py-2 border">{{ $key + 1 }}</td>
                                 <td class="px-4 py-2 border">
-                                    {{ $servicio->automovil->marca }} {{ $servicio->automovil->submarca }}
-                                    {{ $servicio->automovil->modelo }}
+                                    {{ $servicio->automovil }} 
                                 </td>
                                 <td class="px-4 py-2 border">{{ $servicio->tipo_servicio }}</td>
                                 <td class="px-4 py-2 border">{{ $servicio->descripcion }}</td>
@@ -100,15 +98,7 @@
                                 </td>
                                 <td class="px-4 py-2 border">${{ $servicio->costo }}</td>
                                 <td class="px-4 py-2 border">{{ $servicio->lugar_servicio }}</td>
-                                <td class="px-4 py-2 text-sm border">
-                                    @if($servicio->comprobante)
-                                        <a href="{{ url('img/servicios/' . $servicio->comprobante) }}" target="_blank" class="text-gray-600 " title="Ver comprobante">
-                                            Ver Comprobante
-                                        </a>
-                                    @else
-                                        <span class="text-gray-500">Sin comprobante</span>
-                                    @endif
-                                </td>
+                               
                                 <td class="px-4 py-2 border">
                                     <div class="flex items-center space-x-2">
                                         <!-- Ver -->
