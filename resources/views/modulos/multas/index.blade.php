@@ -107,19 +107,19 @@
                                         </svg>
                                     </a>
 
-                                    <!-- Eliminar -->
-                                    <form action="multas/{{ $multa->id_multa }}" method="POST"  id="eliminacion-form" class="inline">
-                                        @csrf
+                                    <form action="multas/{{ $multa->id_multa }}"method="POST"
+                                            id="eliminacion-form" class="inline-block">
+                                            @csrf
                                             @method('DELETE')
-                                        <button type="submit" onclick="deleteRegister(event)"
-                                        class="inline-flex items-center justify-center w-8 h-8 text-red-600 border border-red-600 rounded hover:bg-red-600 hover:text-white" title="Borrar esta multa">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                            stroke="currentColor" class="w-4 h-4">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M19 7H5M10 11v6m4-6v6M7 7h10l-1-1H8l-1 1z" />
-                                        </svg>
-                                    </button>
-                                    </form>
+                                            <button type="submit" onclick="deleteRegister(event)" title="Borrar multa"
+                                                class="inline-flex items-center justify-center w-8 h-8 text-red-600 border border-red-600 rounded hover:bg-red-600 hover:text-white">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                    stroke="currentColor" class="w-4 h-4">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M19 7H5M10 11v6m4-6v6M7 7h10l-1-1H8l-1 1z" />
+                                                </svg>
+                                            </button>
+                                        </form>
                                 </div>
                             </td>
                         </tr>
@@ -167,7 +167,7 @@
     <script>
         function deleteRegister() {
             event.preventDefault();
-            const btndelete = document.getElementById("eliminacion-form")
+            const btndelete = document.getElementById("eliminacion-form");
             Swal.fire({
                 title: "¿Estás seguro de eliminar este registro?",
                 text: "¡Este cambio no se puede deshacer!",

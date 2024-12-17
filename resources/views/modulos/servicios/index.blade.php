@@ -75,7 +75,7 @@
                     <tbody class="divide-y divide-gray-100">
                         @foreach ($servicios as $key => $servicio)
                             <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-2 border">{{ $key + 1 }}</td>
+                                <td class="px-4 py-2 border">{{ $servicio->id_servicio }}</td>
                                 <td class="px-4 py-2 border">
                                     {{ $servicio->automovil }} 
                                 </td>
@@ -120,10 +120,10 @@
 
                                         <!-- Eliminar -->
                                         <form action="servicios/{{ $servicio->id_servicio }}" method="POST"
-                                            id="eliminacion-form" class="inline">
+                                            id="{{ $servicio->id_servicio }}" name="del_{{ $servicio->id_servicio }}" class="inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" onclick="deleteRegister(event)"
+                                            <button type="submit" name="del_{{ $servicio->id_servicio }}" onclick="deleteRegister(event, '{{ $servicio->id_servicio }}')"
                                                 class="inline-flex items-center justify-center w-8 h-8 text-red-600 border border-red-600 rounded hover:bg-red-600 hover:text-white" title="Eliminar servicio">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                     stroke="currentColor" class="w-4 h-4">
@@ -176,21 +176,26 @@
         </script>
     @endif
     <script>
-        function deleteRegister() {
+        function deleteRegister(event, formId) {
             event.preventDefault();
-            const btndelete = document.getElementById("eliminacion-form");
+
+            const btndelete = document.getElementById(formId);
             Swal.fire({
-                title: "¿Estás seguro de eliminar el registro?",
-                text: "¡Esta acción no se puede deshacer!",
+                title: "Estas seguro de eliminar el registro?",
+                text: "¡No podrás revertir esto!",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#d33",
-                cancelButtonColor: "#3085d6",
-                confirmButtonText: "Sí, eliminarlo",
-                cancelButtonText: "Cancelar"
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si, borrar!"
             }).then((result) => {
                 if (result.isConfirmed) {
                     btndelete.submit();
+                    Swal.fire({
+                        title: "¡Eliminado!",
+                        text: "El servicio ha sido eliminado correctamente.",
+                        icon: "success"
+                    });
                 }
             });
         }

@@ -15,7 +15,6 @@ class MultasController extends Controller
      */
     public function index(Request $request)
     {
-        // consulta para tabla
         $sql = "SELECT
                     mul.id_multa,
                     mul.estatus,
@@ -27,21 +26,23 @@ class MultasController extends Controller
                 FROM
                     multas AS mul
                 JOIN
-                    automoviles AS aut ON mul.id_automovil = aut.id_automovil";
-    
-        // Condiciones dinámicas para buscar
+                    automoviles AS aut ON mul.id_automovil = aut.id_automovil
+                WHERE
+                    mul.deleted_at IS NULL";
+
+        // Condiciones dinámicas para búsqueda
         $conditions = [];
         $parameters = [];
-    
+
         if ($request->has('search') && $request->input('search') != '') {
             $search = $request->input('search');
             $conditions[] = "(mul.tipo_multa LIKE :search1 OR 
-                              mul.lugar LIKE :search2 OR 
-                              mul.estatus LIKE :search3 OR 
-                              mul.fecha_multa LIKE :search4 OR 
-                              aut.marca LIKE :search5 OR 
-                              aut.submarca LIKE :search6 OR 
-                              aut.modelo LIKE :search7)";
+                            mul.lugar LIKE :search2 OR 
+                            mul.estatus LIKE :search3 OR 
+                            mul.fecha_multa LIKE :search4 OR 
+                            aut.marca LIKE :search5 OR 
+                            aut.submarca LIKE :search6 OR 
+                            aut.modelo LIKE :search7)";
             $parameters = [
                 'search1' => "%{$search}%",
                 'search2' => "%{$search}%",
@@ -52,17 +53,19 @@ class MultasController extends Controller
                 'search7' => "%{$search}%",
             ];
         }
-    
-        // condiciones para buscar
+
+        // Si hay condiciones de búsqueda, agregar al WHERE
         if (!empty($conditions)) {
-            $sql .= " WHERE " . implode(' AND ', $conditions);
+            $sql .= " AND " . implode(' AND ', $conditions);
         }
-    
-        // variable para visualizar en tb
+
+        // Ejecutar la consulta SQL
         $multas = \DB::select($sql, $parameters);
-    
+
+        // Retornar vista con resultados
         return view('modulos.multas.index', compact('multas'));
     }
+
     
     
 
@@ -86,7 +89,7 @@ class MultasController extends Controller
             'fecha_multa' =>'required|date',
             'lugar' =>'required|string|max:100',
             'estatus' =>'required|in:Pendiente,Pagada',
-            'comprobante' => 'required|array|max:5',
+            'comprobante' => 'nullable|array|max:5',
             'comprobante.*' => 'nullable|file|mimes:jpeg,png,jpg',
             'observaciones' => 'nullable|string|max:255',
             'id_automovil' => 'nullable|exists:automoviles,id_automovil'
@@ -229,13 +232,19 @@ class MultasController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
-        $multa = Multas::findOrFail($id);
+        $multa = Multas::find($id);
+
+        if (!$multa) {
+            return response()->json(['error' => 'Multa no encontrada'], 404);
+        }
         $multa->delete();
-        return redirect()->route('multas.index')->with('eliminar', 'Se ha eliminado correctamente el registro');
+
+        return redirect()->route('multas.index')->with('success', 'Multa eliminada correctamente');
     }
+
+
 
     /**
      * Generar reporte de multas.
