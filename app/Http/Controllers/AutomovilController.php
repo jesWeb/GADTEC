@@ -53,7 +53,7 @@ class AutomovilController extends Controller
             'modelo' => [
                 'required',
                 'integer',
-                'min:1990',
+
                 /*VaLIDACION DE MODELO *
                   *creamos una func
                   donde los atributos de $attribute recibe el parametreo del input y $value -> valor del campo
@@ -66,7 +66,7 @@ class AutomovilController extends Controller
                     $maxAnio = ($proxMes >= 7) ? $anioActual + 1 : $anioActual;
 
                     // Validación personalizada del año
-                    if ($value < 2000 || $value > $maxAnio) {
+                    if ($value >= 1990 &&  $value >=  2000 || $value > $maxAnio) {
                         // Usamos la función $fail para devolver el error
                         $fail("El valor del Modelo debe ser entre 1990 y " . $maxAnio . ".");
                     }
