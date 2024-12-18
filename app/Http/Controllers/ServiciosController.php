@@ -28,19 +28,19 @@ class ServiciosController extends Controller
                     servicios AS serv
                 JOIN
                     automoviles AS aut ON serv.id_automovil = aut.id_automovil";
-    
+
         // Condiciones dinámicas para buscar
         $conditions = [];
         $parameters = [];
-    
+
         if ($request->has('search') && $request->input('search') != '') {
             $search = $request->input('search');
-            $conditions[] = "(serv.tipo_servicio LIKE :search1 OR 
-                              serv.descripcion LIKE :search2 OR 
-                              serv.costo LIKE :search3 OR 
-                              serv.lugar_servicio LIKE :search4 OR 
-                              aut.marca LIKE :search5 OR 
-                              aut.submarca LIKE :search6 OR 
+            $conditions[] = "(serv.tipo_servicio LIKE :search1 OR
+                              serv.descripcion LIKE :search2 OR
+                              serv.costo LIKE :search3 OR
+                              serv.lugar_servicio LIKE :search4 OR
+                              aut.marca LIKE :search5 OR
+                              aut.submarca LIKE :search6 OR
                               aut.modelo LIKE :search7)";
             $parameters = [
                 'search1' => "%{$search}%",
@@ -52,19 +52,19 @@ class ServiciosController extends Controller
                 'search7' => "%{$search}%",
             ];
         }
-    
+
         // Agregar condiciones a la consulta de busqueda
         if (!empty($conditions)) {
             $sql .= " WHERE " . implode(' AND ', $conditions);
         }
-    
+
         // Variable para visualizar en tb
         $servicios = \DB::select($sql, $parameters);
-    
-        
+
+
         return view('modulos.servicios.index', compact('servicios'));
     }
-    
+
 
     /**
      * Store a newly created resource in storage.
@@ -148,15 +148,11 @@ class ServiciosController extends Controller
     } else {
         $automovil->estatusIn = 'Disponible';
     }
-
      $automovil->save();  // Guardar cambios en el automóvil
 
-
     // dd($request->fecha_servicio, $request->prox_servicio, $fechaActual);
-
-
     // Crear el servicio
-    $servicio = Servicios::create($input);
+    Servicios::create($input);
 
     return redirect()->route('servicios.index')->with('mensaje', 'Se ha creado correctamente el registro');
 
@@ -199,7 +195,7 @@ class ServiciosController extends Controller
              'comprobante' => 'nullable|array|max:5',
              'comprobante.*' => 'nullable|file|mimes:jpeg,png,jpg',
              'id_automovil' => 'nullable|exists:automoviles,id_automovil',
-             'estatusIn' => 'nullable|string'  
+             'estatusIn' => 'nullable|string'
          ];
 
          $messages = [

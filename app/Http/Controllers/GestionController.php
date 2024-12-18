@@ -21,57 +21,22 @@ class GestionController extends Controller
 
     public function index()
     {
-        // $disponibilidad = asignacion::with('automovil')
-        //     ->get();
-        // $disponibilidad = \DB::select("SELECT *
-        // FROM automoviles AS aut
-        // JOIN asignacions AS asi
-        // ON aut.id_automovil = asi.id_automovil
-        // WHERE asi.estatus IS NOT NULL
-        // GROUP BY aut.id_automovil;");
 
-        //     $disponibilidad = DB::select("
-        //     SELECT
-        //         aut.*,
-        //         asi.id_asignacion,
-        //         asi.estatus AS estatus_asignacion,
-        //         aut.estatusIn,
-        //         -- Lógica para determinar el estatus final
-        //         CASE
-        //             WHEN asi.estatus IS NOT NULL THEN asi.estatus
-        //             WHEN aut.estatusIn IN ('Mantenimiento', 'En servicio') THEN aut.estatusIn
-        //             ELSE 'Disponible'
-        //         END AS estatus_final
-        //     FROM automoviles AS aut
-        //     LEFT JOIN asignacions AS asi
-        //         ON aut.id_automovil = asi.id_automovil
-        //         AND asi.id_asignacion = (
-        //             SELECT MAX(sub.id_asignacion)
-        //             FROM asignacions AS sub
-        //             WHERE sub.id_automovil = asi.id_automovil
-        //             AND sub.estatus IS NOT NULL
-        //         )
-        // ");
-
-        $disponibilidad = \DB::select("SELECT aut.*,asi.id_asignacion, asi.estatus
-FROM automoviles AS aut
-LEFT JOIN
-    (SELECT id_automovil, id_asignacion, estatus
-     FROM asignacions
-     WHERE (id_automovil, id_asignacion) IN (
-            SELECT  id_automovil, MAX(id_asignacion)
-            FROM asignacions
-            GROUP BY id_automovil
-        )
-    ) AS asi
-ON aut.id_automovil = asi.id_automovil
-ORDER BY aut.marca");
-
-
-
-
-
-
+        $disponibilidad = \DB::select("SELECT aut.*, asi.id_asignacion, asi.estatus
+            FROM automoviles AS aut
+            LEFT JOIN (
+                SELECT id_automovil, id_asignacion, estatus
+                FROM asignacions
+                WHERE (id_automovil, id_asignacion) IN (
+                    SELECT id_automovil, MAX(id_asignacion)
+                    FROM asignacions
+                    GROUP BY id_automovil
+                )
+            ) AS asi
+            ON aut.id_automovil = asi.id_automovil
+            WHERE aut.deleted_at IS NULL
+            ORDER BY aut.marca
+            ");
         // dd($disponibilidad);
         return view('modulos.Gestion.index', compact('disponibilidad'));
     }

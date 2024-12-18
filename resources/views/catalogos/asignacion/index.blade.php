@@ -54,7 +54,7 @@
                             	<td class="px-4 py-2 border">{{ $key + 1 }}</td>
                             	<td class="px-4 py-2 border">
                             	{{ $reserv->automovil }}
-                                </td>                          
+                                </td>
                             	<td class="px-4 py-2 border">{{ $reserv->usuario }}</td>
                             	<td class="px-4 py-2 border">{{ date('d-m-Y',strtotime($reserv->fecha_salida))}}</td>
                             	<td class="px-4 py-2 border">{{ date('h:i a',strtotime(($reserv->hora_salida)))}}</td>
@@ -64,7 +64,7 @@
                             	@else
                                 	<td class="px-4 py-2 border">{{ $reserv->estatus}}</td>
                             	@endif
-                            
+
                                 {{-- acciones --}}
                                 <td class="px-4 py-2 border">
                                     <div class="flex justify-center space-x-2">

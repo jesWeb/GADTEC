@@ -13,24 +13,57 @@ class VerificacionesController extends Controller
     public function index(Request $request)
     {
 
-        $query = verificacion::with('automovil');
-        // Verificar si hay una búsqueda
+        $sql = "SELECT
+        ver.id_verificacion,
+        ver.fecha_verificacion,
+        ver.proxima_verificacion,
+        ver.fecha_verificacion_00,
+        ver.proxima_verificacion_00,
+        CONCAT(aut.marca, ' ', aut.submarca, ' ', aut.modelo) AS automovil
+        FROM
+             verificacions as ver
+        JOIN
+            automoviles AS aut ON ver.id_automovil = aut.id_automovil
+        WHERE
+         ver.deleted_at IS NULL";
+
+        // Condiciones dinámicas para búsqueda
+        $conditions = [];
+        $parameters = [];
+
         if ($request->has('search') && $request->input('search') != '') {
             $search = $request->input('search');
-            $query->where(function ($q) use ($search) {
-                $q->where('id_automovil', 'LIKE', "%{$search}%")
-                    ->orWhere('holograma', 'LIKE', "%{$search}%")
-                    ->orWhere('engomado', 'LIKE', "%{$search}%")
-                    ->orWhere('fecha_verificacion', 'LIKE', "%{$search}%")
-                    ->orWhere('fecha_verificacion_00', 'LIKE', "%{$search}%")
-                    ->orWhereHas('automovil', function ($q) use ($search) {
-                        $q->where('marca', 'LIKE', "%{$search}%")
-                            ->orWhere('submarca', 'LIKE', "%{$search}%")
-                            ->orWhere('modelo', 'LIKE', "%{$search}%");
-                    });
-            });
+            $conditions[] = "(ver.id_verificacion LIKE :search1 OR
+                             ver.fecha_verificacion LIKE :search2 OR
+                             ver.proxima_verificacion LIKE :search3 OR
+                             ver.fecha_verificacion_00 LIKE :search4 OR
+                             ver.proxima_verificacion_00 LIKE :search5 OR
+                             aut.marca LIKE :search6 OR
+                             aut.submarca LIKE :search7 OR
+                             aut.modelo LIKE :search8)";
+            $parameters = [
+                'search1' => "%{$search}%",
+                'search2' => "%{$search}%",
+                'search3' => "%{$search}%",
+                'search4' => "%{$search}%",
+                'search5' => "%{$search}%",
+                'search6' => "%{$search}%",
+                'search7' => "%{$search}%",
+                'search8' => "%{$search}%"
+            ];
         }
-        $verificacion = $query->get();
+
+        // Si hay condiciones de búsqueda, agregar al WHERE
+        if (!empty($conditions)) {
+            $sql .= " AND " . implode(' AND ', $conditions);
+        }
+
+        // Ejecutar la consulta SQL
+        $verificacion = \DB::select($sql, $parameters);
+
+
+
+
         return view('catalogos.verificaciones.index', compact('verificacion'));
     }
     public function create()
@@ -300,7 +333,6 @@ class VerificacionesController extends Controller
 
     public function destroy($id)
     {
-        //
         $DelVer = verificacion::findOrFail($id);
         $DelVer->delete();
         return redirect()->route('verificaciones.index')->with('eliminar', 'Se ha eliminado el registro');

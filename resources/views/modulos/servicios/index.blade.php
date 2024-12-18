@@ -39,7 +39,7 @@
                         <input type="text" name="search" placeholder="Buscar servicio" title="Introduce el tipo de servicio o vehículo para buscar"
                             class="w-full px-4 py-2 text-gray-700 border rounded-l-md focus:outline-none md:w-48"
                             value="{{ request('search') }}">
-                           
+
                         <button type="submit"
                             class="flex items-center px-4 py-2 ml-1 text-white bg-blue-600 border-l-0 rounded-r-md hover:bg-blue-700 focus:outline-none"
                             title="Buscar servicio">
@@ -77,7 +77,7 @@
                             <tr class="hover:bg-gray-50">
                                 <td class="px-4 py-2 border">{{ $key + 1 }}</td>
                                 <td class="px-4 py-2 border">
-                                    {{ $servicio->automovil }} 
+                                    {{ $servicio->automovil }}
                                 </td>
                                 <td class="px-4 py-2 border">{{ $servicio->tipo_servicio }}</td>
                                 <td class="px-4 py-2 border">{{ $servicio->descripcion }}</td>
@@ -98,7 +98,7 @@
                                 </td>
                                 <td class="px-4 py-2 border">${{ $servicio->costo }}</td>
                                 <td class="px-4 py-2 border">{{ $servicio->lugar_servicio }}</td>
-                               
+
                                 <td class="px-4 py-2 border">
                                     <div class="flex items-center space-x-2">
                                         <!-- Ver -->
@@ -166,11 +166,11 @@
     @endif
 
     {{-- alerta de eliminacion --}}
-    @if (session('eliminar') == 'se ha eliminado correctamente El automovil')
+    @if (session('eliminar') == 'se ha eliminado correctamente ')
         <script>
             Swal.fire({
                 title: "Eliminado!",
-                text: "El automóvil ha sido eliminado correctamente.",
+                text: "El registro se ha sido eliminado correctamente.",
                 icon: "success"
             });
         </script>

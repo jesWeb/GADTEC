@@ -10,6 +10,7 @@
 ## About GADTEC - Sistema de Control Vehicular
 Este proyecto está basado en Laravel 10 y está diseñado para facilitar el control vehicular. A continuación, encontrarás las instrucciones para clonar, configurar y ejecutar el proyecto en un entorno de desarrollo local (Windows o macOS).
 
+## Version de Proyecto - V0.1
 
 ## Servicios Necesarios
 Para ejecutar este proyecto con MySQL, asegúrate de que los siguientes servicios estén activos en tu entorno:

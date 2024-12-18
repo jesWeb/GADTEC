@@ -102,7 +102,7 @@
                             <tr class="hover:bg-gray-50">
                                 <td class="px-4 py-2 border">{{ $key + 1 }}</td>
                                 <td class="px-4 py-2 border">
-                                    {{ $vr->automovil->marca }}-{{ $vr->automovil->submarca }}-{{ $vr->automovil->modelo }}
+                                    {{ $vr->automovil}}
                                 </td>
                                 <td class="px-4 py-2 border">
 
@@ -161,7 +161,7 @@
                                         </a>
 
                                         <!-- Eliminar -->
-                                        <form action="{{ route('verificaciones.destroy', $vr) }}" id="eliminacion-form"
+                                        <form action="{{ route('verificaciones.destroy', $vr->id_verificacion) }}" id="eliminacion-form"
                                             method="POST" class="inline">
                                             @csrf
                                             @method('DELETE')

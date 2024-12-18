@@ -5,31 +5,69 @@ namespace App\Http\Controllers;
 use App\Models\Automoviles;
 use App\Models\siniestros;
 use App\Models\Usuarios;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class SiniestrosController extends Controller
 {
     public function index(Request $request)
     {
-        //
-        $query = siniestros::with('automovil', 'usuarios');
-        // Verificar si hay una búsqueda
+        $sql = "SELECT
+                   sin.id_siniestro,
+                   sin.fecha_siniestro,
+                   sin.estatus,
+                   CONCAT(aut.marca, ' ', aut.submarca, ' ', aut.modelo ) AS automovil ,
+						 CONCAT(resp.nombre, ' ', resp.app, ' ', resp.apm) AS usuario
+                FROM
+                 sinister as sin
+                 JOIN
+                 automoviles as aut ON sin.id_automovil = aut.id_automovil
+                 JOIN
+                 usuarios as resp ON sin.id_usuario = resp.id_usuario
+                 where sin.deleted_at IS NULL";
+
+
+        // Condiciones dinámicas para búsqueda
+        $conditions = [];
+        $parameters = [];
+
         if ($request->has('search') && $request->input('search') != '') {
             $search = $request->input('search');
-            $query->where(function ($q) use ($search) {
-                $q->where('id_automovil', 'LIKE', "%{$search}%")
-                    ->orWhere('fecha_siniestro', 'LIKE', "%{$search}%")
-                    ->orWhere('descripcion', 'LIKE', "%{$search}%")
-                    ->orWhere('estatus', 'LIKE', "%{$search}%")
-                    ->orWhereHas('automovil', function ($q) use ($search) {
-                        $q->where('marca', 'LIKE', "%{$search}%")
-                            ->orWhere('submarca', 'LIKE', "%{$search}%")
-                            ->orWhere('modelo', 'LIKE', "%{$search}%");
-                    });
-            });
+            $conditions[] = "(sin.id_siniestro LIKE :search1 OR
+                            sin.fecha_siniestro LIKE :search2 OR
+                            sin.estatus LIKE :search3 OR
+                            mul.fecha_multa LIKE :search4 OR
+                            aut.marca LIKE :search5 OR
+                            aut.submarca LIKE :search6 OR
+                            aut.modelo LIKE :search7 OR
+                            resp.nombre LIKE :search8 OR
+                            resp.app LIKE :search9 OR
+                            resp.apm LIKE :search10  OR
+                            )";
+            $parameters = [
+                'search1' => "%{$search}%",
+                'search2' => "%{$search}%",
+                'search3' => "%{$search}%",
+                'search4' => "%{$search}%",
+                'search5' => "%{$search}%",
+                'search6' => "%{$search}%",
+                'search7' => "%{$search}%",
+                'search8' => "%{$search}%",
+                'search9' => "%{$search}%",
+                'search10' => "%{$search}%",
+            ];
         }
-        $siniestros = $query->get();
+
+        // Si hay condiciones de búsqueda, agregar al WHERE
+        if (!empty($conditions)) {
+            $sql .= " AND " . implode(' AND ', $conditions);
+        }
+
+        // Ejecutar la consulta SQL
+        $siniestros = DB::select($sql, $parameters);
+
+
+
         return view('catalogos.siniestros.index', compact('siniestros'));
     }
     public function create()

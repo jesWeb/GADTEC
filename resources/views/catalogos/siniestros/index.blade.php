@@ -86,14 +86,12 @@
                             <tr class="hover:bg-gray-50">
                                 <td class="px-4 py-2 border">{{ $key + 1 }}</td>
                                 <td class="px-4 py-2 border" title="Detalles del vehículo">
-                                    {{ $sin->automovil->marca }} {{ $sin->automovil->submarca }}
-                                    {{ $sin->automovil->modelo }}
+                                    {{ $sin->automovil}}
                                 </td>
                                 <td class="px-4 py-2 border">
                                     {{ \Carbon\Carbon::parse($sin->fecha_siniestro )->locale('es')->format('d-m-Y') }}
                                     </td>
-                                <td class="px-4 py-2 border">{{ $sin->usuarios->nombre }} {{ $sin->usuarios->app }}
-                                    {{ $sin->usuarios->apm }}</td>
+                                <td class="px-4 py-2 border">{{ $sin->usuario}}</td>
                                 <td class="px-4 py-2 border" title="Estatus del siniestro">
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium {{ $sin->estatus == 'Pendiente' ? 'bg-blue-100 text-green-800' : 'bg-red-100 text-red-800' }}">
                                     {{ $sin->estatus }}
@@ -123,7 +121,7 @@
                                         </a>
 
                                         <!-- Eliminar -->
-                                        <form action="{{ route('siniestros.destroy', $sin) }}" method="POST"
+                                        <form action="{{ route('siniestros.destroy', $sin->id_siniestro ) }}" method="POST"
                                             id="eliminacion-form" class="inline">
                                             @csrf
                                             @method('DELETE')
