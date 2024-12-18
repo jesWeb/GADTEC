@@ -135,20 +135,20 @@
                                     <button type="button" name="fotografia_frontal[]" id="fotografia_frontal" accept="image/*"  class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
                                         Buscar
                                     </button>
-                                    
+
                                 </div>
                             </label>
                         </div>
                     </div>
-                    
-                     
-                        
+
+
+
                     </div>
                     <div class="flex justify-end mt-8 space-x-4">
                         <a href="{{ route('tarjetas.index') }}" class="px-5 py-3 text-gray-700 bg-gray-200 rounded-md shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300" title="Cancelar el registro">Cancelar</button>
                         </a>
                         <button type="submit" title="Registrar tarjeta" class="px-5 py-3 text-white bg-indigo-600 rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">Registrar</button>
-                        
+
                     </div>
 
                 </form>
@@ -189,7 +189,7 @@
             let currentImages = 0;
             const maxFileSize = 15 * 1024 * 1024;
 
-        
+
 
             function createImageInput(capture = false) {
                 const inputFile = $('<input>', {
@@ -247,9 +247,9 @@
                 }
             });
 
-            
 
-            createImageInput(); // Agregar un input por defecto
+
+           // createImageInput(); // Agregar un input por defecto
         });
     </script>
 

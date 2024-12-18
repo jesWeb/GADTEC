@@ -60,7 +60,7 @@
 
                     <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                         <div class="mb-4">
-                            <label for="id_automovil" class="mb-3 block text-base font-medium text-[#07074D]">Seleccionar Automóvil:</label>                          
+                            <label for="id_automovil" class="mb-3 block text-base font-medium text-[#07074D]">Seleccionar Automóvil:</label>
                             <select name="id_automovil" id="id_automovil" title="Selecciona un automóvil disponible" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" title="Selecciona un automóvil">
                             <option disabled selected>Selecciona un automovil...</option>
                                 @foreach ($automoviles as $automovil)
@@ -73,10 +73,10 @@
                                 <span class="text-sm text-red-600">{{ $message }}</span>
                             @enderror
                         </div>
-                    
+
                         <div>
                             <label class="block text-base font-medium text-[#07074D]" for="fecha_pago">Fecha de Pago</label>
-                            <input title="Ingresa la fecha de pago de la tenencia" class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" 
+                            <input title="Ingresa la fecha de pago de la tenencia" class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                 type="date" name="fecha_pago" value="{{ old('fecha_pago') }}" id="fecha_pago">
                             <div class="mt-1 text-sm text-red-600">
                                 @error('fecha_pago')<i>{{ $message }}</i>@enderror
@@ -85,7 +85,7 @@
 
                         <div>
                             <label class="block text-base font-medium text-[#07074D]" for="origen">Vehículo Origen</label>
-                            <input title="Indica el lugar de origen del vehículo" class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" 
+                            <input title="Indica el lugar de origen del vehículo" class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                 type="text" name="origen" value="{{ old('origen') }}" id="origen">
                             <div class="mt-1 text-sm text-red-600">
                                 @error('origen')<i>{{ $message }}</i>@enderror
@@ -94,7 +94,7 @@
 
                         <div>
                             <label class="block text-base font-medium text-[#07074D]" for="monto">Monto</label>
-                            <input title="Introduce el monto pagado" class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" 
+                            <input title="Introduce el monto pagado" class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                 type="text" name="monto" value="{{ old('monto') }}" id="monto">
                             <div class="mt-1 text-sm text-red-600">
                                 @error('monto')<i>{{ $message }}</i>@enderror
@@ -103,7 +103,7 @@
 
                         <div>
                             <label class="block text-base font-medium text-[#07074D]" for="año_correspondiente">Año correspondiente de tenencia ó refrendo</label>
-                            <input title="Indica el año correspondiente al pago de la tenencia" class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" 
+                            <input title="Indica el año correspondiente al pago de la tenencia" class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                 type="text" name="año_correspondiente" value="{{ old('año_correspondiente') }}" id="año_correspondiente">
                             <div class="mt-1 text-sm text-red-600">
                                 @error('año_correspondiente')<i>{{ $message }}</i>@enderror
@@ -112,7 +112,7 @@
 
                         <div>
                             <label class="block text-base font-medium text-[#07074D]" for="observaciones">Observaciones</label>
-                            <input title="Ingresa cualquier observación adicional sobre el pago" class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" 
+                            <input title="Ingresa cualquier observación adicional sobre el pago" class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                 type="text" name="observaciones" value="{{ old('observaciones') }}" id="observaciones">
                             <div class="mt-1 text-sm text-red-600">
                                 @error('observaciones')<i>{{ $message }}</i>@enderror
@@ -133,7 +133,7 @@
                                         <button type="button" name="comprobante[]" id="comprobante" accept="image/*"  class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
                                             Buscar
                                         </button>
-                                        
+
                                     </div>
                                 </label>
                             </div>
@@ -142,7 +142,7 @@
                     </div>
 
                     <div class="flex justify-end mt-8 space-x-4">
-  
+
                         <a href="{{ route('tenencias.index') }}" class="px-5 py-3 text-gray-700 bg-gray-200 rounded-md shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300" title="Cancelar el registro">Cancelar</button>
                         </a>
                         <button type="submit" class="px-5 py-3 text-white bg-indigo-600 rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -161,7 +161,7 @@
             let currentImages = 0;
             const maxFileSize = 15 * 1024 * 1024;
 
-        
+
 
             function createImageInput(capture = false) {
                 const inputFile = $('<input>', {
@@ -219,9 +219,9 @@
                 }
             });
 
-            
 
-            createImageInput(); // Agregar un input por defecto
+
+            //createImageInput(); // Agregar un input por defecto
         });
     </script>
 

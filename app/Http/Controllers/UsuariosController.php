@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Usuarios;
 use Illuminate\Support\Facades\Hash;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
-
+use Illuminate\Support\Facades\DB;
 class UsuariosController extends Controller
 {
     /**
@@ -59,7 +59,7 @@ class UsuariosController extends Controller
             'email' => 'required|email',
             'usuario' => 'required',
             'pass' => 'required',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg', 
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg',
         ];
 
         $messages = [
@@ -212,5 +212,5 @@ class UsuariosController extends Controller
         return redirect()->route('usuarios.index')->with('danger', 'Se ha eliminado correctamente el registro');
     }
 
-    
+
 }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\TeneciasRefrendos;
 use App\Models\Automoviles;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 class TeneciasRefrendosController extends Controller
 {
     /**

@@ -22,7 +22,7 @@ class GestionController extends Controller
     public function index()
     {
 
-        $disponibilidad = \DB::select("SELECT aut.*, asi.id_asignacion, asi.estatus
+        $disponibilidad = DB::select("SELECT aut.*, asi.id_asignacion, asi.estatus
             FROM automoviles AS aut
             LEFT JOIN (
                 SELECT id_automovil, id_asignacion, estatus
@@ -43,7 +43,7 @@ class GestionController extends Controller
 
     public function show(string $id)
     {
-        $dispo = \DB::select("SELECT
+        $dispo = DB::select("SELECT
             aut.marca,
             aut.submarca,
             aut.modelo,

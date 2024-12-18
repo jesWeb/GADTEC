@@ -125,7 +125,7 @@
                         </div>
                     </div>
                     <div>
-                        <h4 
+                        <h4
                         class="p-4 text-lg font-semibold text-center text-gray-700">Imagenes de seguro</h4>
                             <div class="flex gap-4 p-4 ml-4 overflow-x-auto">
                                 @php
@@ -135,7 +135,7 @@
                                 @if ($fotografias)
                                     @foreach ($fotografias as $foto)
                                         <img src="{{ url('img/poliza/' . $foto) }}" class="w-16 h-auto transition-transform duration-300 transform rounded-lg shadow-md hover:scale-90 hover:shadow-lg" alt="seguro">
-                                        <a href="{{ url('img/poliza/' . $foto) }}" target="_blank" class="text-gray-500" title="Ver archivo de seguro">Ver imagen</a> 
+                                        <a href="{{ url('img/poliza/' . $foto) }}" target="_blank" class="text-gray-500" title="Ver archivo de seguro">Ver imagen</a>
                                     @endforeach
                                 @endif
                             </div>
@@ -155,7 +155,7 @@
                                     <button type="button" name="poliza[]" id="poliza" accept="image/*"  class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
                                         Buscar
                                     </button>
-                                    
+
                                 </div>
                             </label>
                         </div>
@@ -180,7 +180,7 @@
             let currentImages = 0;
             const maxFileSize = 15 * 1024 * 1024;
 
-        
+
 
             function createImageInput(capture = false) {
                 const inputFile = $('<input>', {
@@ -238,9 +238,9 @@
                 }
             });
 
-            
 
-            createImageInput(); // Agregar un input por defecto
+
+          //  createImageInput(); // Agregar un input por defecto
         });
     </script>
 @endsection

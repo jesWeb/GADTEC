@@ -6,7 +6,7 @@ use App\Models\Servicios;
 use App\Models\Automoviles;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
-
+use Illuminate\Support\Facades\DB;
 class ServiciosController extends Controller
 {
     /**

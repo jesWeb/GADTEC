@@ -57,7 +57,7 @@
                 <form id="imageForm" action="{{ route('tenencias.update', $tenencia->id_tenencia) }}" method="POST" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 {{ method_field('PUT') }}
-                    
+
                     <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                         <div class="mb-4">
                             <label for="id_automovil" class="mb-3 block text-base font-medium text-[#07074D]">Seleccionar Automóvil:</label>                                                  <select name="id_automovil" id="id_automovil" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" title="Actualizar automóvil">
@@ -74,7 +74,7 @@
 
                         <div>
                             <label class="block text-base font-medium text-[#07074D]" for="fecha_pago">Fecha de Pago</label>
-                            <input class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" 
+                            <input class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                 type="date" name="fecha_pago" value="{{ old('fecha_pago', $tenencia->fecha_pago) }}" id="fecha_pago" placeholder="Ejemplo: Juan Pérez" title="Actualizar fecha de pago">
                             <div id="NombreHelp" class="mt-1 text-sm text-red-600">
                                 @error('fecha_pago')<i>{{ $message }}</i>@enderror
@@ -83,7 +83,7 @@
 
                         <div>
                             <label class="block text-base font-medium text-[#07074D]" for="origen">Vehículo Origen</label>
-                            <input class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" 
+                            <input class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                 type="text" name="origen" value="{{ old('origen', $tenencia->origen) }}" id="origen" placeholder="Ejemplo: 123456789" title="Actualizar vehículo origen">
                             <div id="NumTarjetaHelp" class="mt-1 text-sm text-red-600">
                                 @error('origen')<i>{{ $message }}</i>@enderror
@@ -92,7 +92,7 @@
 
                         <div>
                             <label class="block text-base font-medium text-[#07074D]" for="monto">Monto</label>
-                            <input class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" 
+                            <input class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                 type="text" name="monto" value="{{ old('monto', $tenencia->monto) }}" id="monto" placeholder="Ejemplo: 1000" title="Actualizar monto">
                             <div id="VehiculoOrigenHelp" class="mt-1 text-sm text-red-600">
                                 @error('monto')<i>{{ $message }}</i>@enderror
@@ -101,7 +101,7 @@
 
                         <div>
                             <label class="block text-base font-medium text-[#07074D]" for="año_correspondiente">Año correspondiente</label>
-                            <input class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" 
+                            <input class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                 type="text" name="año_correspondiente" value="{{ old('año_correspondiente', $tenencia->año_correspondiente) }}" id="año_correspondiente" title="Actualizar año correspondiente">
                             <div id="FechaExpedicionHelp" class="mt-1 text-sm text-red-600">
                                 @error('año_correspondiente')<i>{{ $message }}</i>@enderror
@@ -123,7 +123,7 @@
 
                         <div>
                             <label class="block text-base font-medium text-[#07074D]" for="observaciones">Observaciones</label>
-                            <input class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" 
+                            <input class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                 type="text" name="observaciones" value="{{ old('observaciones', $tenencia->observaciones) }}" id="observaciones" title="Actualizar observaciones">
                             <div id="ObservacionesHelp" class="mt-1 text-sm text-red-600">
                                 @error('observaciones')<i>{{ $message }}</i>@enderror
@@ -131,9 +131,9 @@
                         </div>
 
                         <div class="mb-2">
-                            <h4 
+                            <h4
                             class="p-4 text-lg font-semibold text-center text-gray-700">Imagenes de tenencias</h4>
-                            @if($tenencia->comprobante != '') 
+                            @if($tenencia->comprobante != '')
                                 <div class="flex gap-4 p-4 ml-4 overflow-x-auto">
                                     @php
                                         $fotografias = json_decode($tenencia->comprobante, true);
@@ -142,16 +142,16 @@
                                     @if ($fotografias)
                                         @foreach ($fotografias as $foto)
                                             <img src="{{ url('img/tenencias/' . $foto) }}" class="w-16 h-auto transition-transform duration-300 transform rounded-lg shadow-md hover:scale-90 hover:shadow-lg" alt="seguro">
-                                            <a href="{{ url('img/tenencias/' . $foto) }}" target="_blank" class="text-gray-500" title="Ver archivo de de tenencia">Ver imagen</a> 
+                                            <a href="{{ url('img/tenencias/' . $foto) }}" target="_blank" class="text-gray-500" title="Ver archivo de de tenencia">Ver imagen</a>
                                         @endforeach
                                     @else
                                         <p class="text-sm text-gray-500">Sin imagen</p>
                                     @endif
                                 </div>
-                            
+
                             @endif
                         </div>
-                        
+
                         <div>
                             <h3 class="mb-5 block text-xl font-semibold text-[#07074D]">
                                 Subir Imágenes
@@ -165,7 +165,7 @@
                                         <button type="button" name="comprobante[]" id="comprobante" accept="image/*"  class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
                                             Buscar
                                         </button>
-                                        
+
                                     </div>
                                 </label>
                             </div>
@@ -177,7 +177,7 @@
                         </a>
                         <button type="submit" class="px-5 py-3 text-white bg-indigo-600 rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                         title="Actualizar Tenencia">Guardar</button>
-                        
+
                     </div>
                 </form>
             </div>
@@ -193,7 +193,7 @@
             let currentImages = 0;
             const maxFileSize = 15 * 1024 * 1024;
 
-        
+
 
             function createImageInput(capture = false) {
                 const inputFile = $('<input>', {
@@ -251,9 +251,9 @@
                 }
             });
 
-            
 
-            createImageInput(); // Agregar un input por defecto
+
+            //createImageInput(); // Agregar un input por defecto
         });
     </script>
 @endsection
