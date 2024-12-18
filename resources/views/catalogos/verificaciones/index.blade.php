@@ -40,11 +40,9 @@
             </nav>
         </div>
         <div class="p-6 bg-white rounded-md shadow-md">
-
             <div class="flex justify-between mb-3">
                 <h2 class="mb-4 text-lg font-semibold text-gray-700 capitalize">Verificaciones Vehiculares</h2>
             </div>
-
             <div class="mb-2">
                 <div class="flex justify-between">
                     <form action="{{ route('verificaciones.index') }}" method="GET"
@@ -104,45 +102,37 @@
                             <tr class="hover:bg-gray-50">
                                 <td class="px-4 py-2 border">{{ $key + 1 }}</td>
                                 <td class="px-4 py-2 border">
-                                    {{ $vr->automovil->marca }}-{{ $vr->automovil->submarca }}-{{ $vr->automovil->modelo }}
+                                    {{ $vr->automovil}}
                                 </td>
                                 <td class="px-4 py-2 border">
 
-                                    @if ($vr->fecha_verificacion && $vr->proxima_verificacion)
-                                        {{ \Carbon\Carbon::parse($vr->fecha_verificacion)->locale('es')->format('d-m-Y') }}
+                                    @if ($vr->fecha_verificacion )
+                                        {{ date('d-m-Y',strtotime($vr->fecha_verificacion)) }}
                                     @else
                                         {{ 'N/A' }}
                                     @endif
 
-                                    {{-- {{ \Carbon\Carbon::parse($vr->fecha_verificacion)->locale('es')->format('d-m-Y') }} --}}
-
                                 </td>
                                 <td class="px-4 py-2 border">
 
-                                    @if ($vr->fecha_verificacion && $vr->proxima_verificacion)
-                                        {{ \Carbon\Carbon::parse($vr->proxima_verificacion)->format('d-m-Y') }}
+                                    @if ($vr->fecha_verificacion)
+                                        {{ date('d-m-Y',strtotime($vr->proxima_verificacion))}}
                                     @else
                                         {{ 'N/A' }}
                                     @endif
-
-                                    {{-- {{ \Carbon\Carbon::parse($vr->proxima_verificacion)->locale('es')->format('d-m-Y') }} --}}
-
                                 </td>
                                 <td class="px-4 py-2 border">
-                                    @if ($vr->fecha_verificacion_00 && $vr->proxima_verificacion_00)
-                                        {{ \Carbon\Carbon::parse($vr->fecha_verificacion_00)->locale('es')->format('d-m-Y') }}
+                                    @if ($vr->fecha_verificacion_00 )
+                                        {{ date('d-m-Y',strtotime($vr->fecha_verificacion_00)) }}
                                     @else
-                                        {{ 'No aplica' }}
+                                        {{ 'N/A' }}
                                     @endif
-                                    {{-- {{ \Carbon\Carbon::parse($vr->proxima_verificacion)->locale('es')->format('d-m-Y') }} --}}
-
                                 </td>
                                 <td class="px-4 py-2 border">
-                                    {{-- {{ \Carbon\Carbon::parse($vr->proxima_verificacion)->locale('es')->format('d-m-Y') }} --}}
-                                    @if ($vr->fecha_verificacion_00 && $vr->proxima_verificacion_00)
-                                        {{ \Carbon\Carbon::parse($vr->proxima_verificacion_00)->locale('es')->format('d-m-Y') }}
+                                    @if ($vr->fecha_verificacion_00)
+                                    {{ date('d-m-Y',strtotime($vr->proxima_verificacion_00)) }}
                                     @else
-                                        {{ 'No aplica' }}
+                                        {{ 'N/A' }}
                                     @endif
                                 </td>
                                 {{-- acciones --}}
@@ -171,11 +161,11 @@
                                         </a>
 
                                         <!-- Eliminar -->
-                                        <form action="{{ route('verificaciones.destroy', $vr) }}" id="eliminacion-form"
+                                        <form action="{{ route('verificaciones.destroy', $vr->id_verificacion) }}" name="del_$vr->id_verificacion" id="{{$vr->id_verificacion}}"
                                             method="POST" class="inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" onclick="deleteRegister(event)"
+                                            <button type="submit" name="del_$vr->id_verificacion" onclick="deleteRegister(event, '{{$vr->id_verificacion}}')"
                                                 class="inline-flex items-center justify-center w-8 h-8 text-red-600 border border-red-600 rounded hover:bg-red-600 hover:text-white"
                                                 title="Borrar la verificación">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -261,7 +251,7 @@
         btnAlert.addEventListener('click', () => {
             Swal.fire({
                 title: "Calendario  de verificación",
-                imageUrl: "/img/verificaciones/Verificacion.png",
+                imageUrl: '{{url('img/verificaciones/VerificaSemestre.png')}}',
                 imageWidth: 480,
                 imageHeight: 320,
                 imageAlt: "Calendario de verificación"

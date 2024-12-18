@@ -14,18 +14,18 @@ class Multas extends Model
 	protected $primaryKey = 'id_multa';
 	protected $fillable = [
         'tipo_multa',
-        'monto', 
-        'fecha_multa', 
+        'monto',
+        'fecha_multa',
         'lugar',
         'estatus',
-        'comprobante', 
+        'comprobante',
         'observaciones',
         'activo',
         'id_automovil'
     ];
 
-    public function automovil(){ 
-        return $this->belongsTo(Automoviles::class,'id_automovil'); 
+    public function automovil(){
+        return $this->belongsTo(Automoviles::class,'id_automovil');
     }
 
 }

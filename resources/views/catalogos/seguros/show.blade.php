@@ -62,24 +62,27 @@
                         Aseguradora -
                         {{ $seguroS->automovil->marca }} {{ $seguroS->automovil->submarca }}
                         {{ $seguroS->automovil->modelo }}</h2>
-                        {{-- poliza Img --}}
-                        <div class="w-full">
-                            <div class="flex justify-start gap-4 p-4 overflow-x-auto">
-                                @php
-                                    $fotografias = json_decode($seguroS->poliza, true);
-                                @endphp
+                    {{-- poliza Img --}}
+                    <div class="w-full">
+                        <div class="flex justify-start gap-4 p-4 overflow-x-auto">
+                            @php
+                                $fotografias = json_decode($seguroS->poliza, true);
+                            @endphp
 
-                                @if ($fotografias)
-                                    @foreach ($fotografias as $foto)
-                                        <img src="{{ url('img/poliza/' . $foto) }}" class="object-cover w-20 h-auto transition-transform duration-300 transform rounded-lg shadow-md hover:scale-90 hover:shadow-lg" alt="seguro">
-                                        <a href="{{ url('img/poliza/' . $foto) }}" target="_blank" class="object-cover  text-gray-500" title="Ver archivo de seguro">Ver imagen</a> 
-                                    @endforeach
-                                @endif
-                            </div>
+                            @if ($fotografias)
+                                @foreach ($fotografias as $foto)
+                                    <img src="{{ url('img/poliza/' . $foto) }}"
+                                        class="object-cover w-20 h-auto transition-transform duration-300 transform rounded-lg shadow-md hover:scale-90 hover:shadow-lg"
+                                        alt="seguro">
+                                    <a href="{{ url('img/poliza/' . $foto) }}" target="_blank"
+                                        class="object-cover text-gray-500" title="Ver archivo de seguro">Ver imagen</a>
+                                @endforeach
+                            @endif
                         </div>
+                    </div>
                     {{-- content --}}
                     <article class="flex flex-wrap max-w-3xl mx-auto md:flex-nowrap group">
-                        
+
                         {{-- content info --}}
                         <div class="mt-6 ml-4 space-y-6">
                             <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -98,7 +101,8 @@
                                 <div class="p-4 bg-white rounded-lg shadow-sm">
 
                                     <h4 class="text-lg font-semibold text-gray-800">Estatus:</h4>
-                                    <span class="mt-2 text-lg leading-relaxed text-gray-500 ">{{ $seguroS->estatus }}</span>
+                                    <span
+                                        class="mt-2 text-lg leading-relaxed text-gray-500 ">{{ $seguroS->estatus }}</span>
                                 </div>
 
 
@@ -110,7 +114,7 @@
                                 <div class="p-4 bg-white rounded-lg shadow-sm">
                                     <h4 class="text-lg font-semibold text-gray-800">Fecha de Vigencia:</h4>
                                     <span
-                                        class="mt-2 text-lg leading-relaxed text-gray-500 ">{{ \Carbon\Carbon::parse($seguroS->fecha_vigencia)->locale('es')->format('d-m-Y') }}</span>
+                                        class="mt-2 text-lg leading-relaxed text-gray-500 ">{{ date('d-m-Y', strtotime($seguroS->fecha_vigencia)) }}</span>
                                 </div>
                             </div>
                         </div>

@@ -1,13 +1,14 @@
 @extends('layouts.app')
 
 @section('body')
-<div class="px-6 py-2">
+    <div class="px-6 py-2">
         <!-- Mapa de sitio -->
         <div class="flex justify-end mt-2 mb-4">
             <nav class="text-sm text-gray-600">
                 <ul class="flex items-center space-x-4">
                     <li class="flex items-center">
-                        <a href="{{ route('Gestion') }}" title="Ir a la gestión de vehículos" class="flex items-center text-gray-700 hover:text-gray-900">
+                        <a href="{{ route('Gestion') }}" title="Ir a la gestión de vehículos"
+                            class="flex items-center text-gray-700 hover:text-gray-900">
                             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -22,42 +23,45 @@
                     <li class="text-gray-500">/</li>
                     <!-- Multas -->
                     <li class="flex items-center">
-                        <p  class="text-gray-800 hover:text-gray-800">
+                        <p class="text-gray-800 hover:text-gray-800">
                             Multas
                         </p>
                     </li>
                 </ul>
             </nav>
         </div>
-    <div class="p-6 bg-white rounded-md shadow-md">
-        <h2 class="mb-4 text-lg font-semibold text-gray-700 capitalize">Multas</h2>
-        <div class="mb-2">
-            <form action="{{ route('multas.index') }}" method="GET" class="flex flex-col items-center justify-between space-y-2 md:flex-row md:space-y-0">
-                <!-- Campo de búsqueda -->
-                <div class="flex items-center w-full md:w-auto">
-                    <input type="text" name="search" placeholder="Buscar multa"
-                        title="Introduce el tipo de multa, vehículo o lugar para buscar"
-                        class="w-full px-4 py-2 text-gray-700 border rounded-l-md focus:outline-none md:w-48"
-                        value="{{ request('search') }}">
-                    <button type="submit"
-                        class="flex items-center px-4 py-2 ml-1 text-white bg-blue-600 border-l-0 rounded-r-md hover:bg-blue-700 focus:outline-none"
-                        title="Realizar búsqueda">
-                        Buscar
-                    </button>
+        <div class="p-6 bg-white rounded-md shadow-md">
+            <h2 class="mb-4 text-lg font-semibold text-gray-700 capitalize">Multas</h2>
+            <div class="mb-2">
+                <form action="{{ route('multas.index') }}" method="GET"
+                    class="flex flex-col items-center justify-between space-y-2 md:flex-row md:space-y-0">
+                    <!-- Campo de búsqueda -->
+                    <div class="flex items-center w-full md:w-auto">
+                        <input type="text" name="search" placeholder="Buscar multa"
+                            title="Introduce el tipo de multa, vehículo o lugar para buscar"
+                            class="w-full px-4 py-2 text-gray-700 border rounded-l-md focus:outline-none md:w-48"
+                            value="{{ request('search') }}">
+                        <button type="submit"
+                            class="flex items-center px-4 py-2 ml-1 text-white bg-blue-600 border-l-0 rounded-r-md hover:bg-blue-700 focus:outline-none"
+                            title="Realizar búsqueda">
+                            Buscar
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Botones de Imprimir y Nuevo Registro -->
+                <div class="flex justify-end ml-2 space-x-2">
+                    <a href="{{ route('multas-pdf') }}" target="_blank"
+                        class="px-4 py-2 text-white bg-green-600 rounded hover:bg-green-700"
+                        title="Imprimir reporte de multas">Imprimir</a>
+                    <a href="{{ route('multas.create') }}"
+                        class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700"
+                        title="Registrar nueva multa">Nuevo registro</a>
                 </div>
-            </form>
-
-            <!-- Botones de Imprimir y Nuevo Registro -->
-            <div class="flex justify-end ml-2 space-x-2">
-                <a href="{{ route('multas-pdf') }}" target="_blank"
-                class="px-4 py-2 text-white bg-green-600 rounded hover:bg-green-700" title="Imprimir reporte de multas">Imprimir</a>
-                <a href="{{ route('multas.create') }}"
-                class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700" title="Registrar nueva multa">Nuevo registro</a>
             </div>
-        </div>
 
-        <!-- Tabla de multas -->
-        <div class="overflow-x-auto rounded-lg shadow">
+            <!-- Tabla de multas -->
+            <div class="overflow-x-auto rounded-lg shadow">
             <table class="min-w-full bg-white border border-gray-200 divide-y divide-gray-200">
                 <thead class="bg-gray-100">
                     <tr>
@@ -81,7 +85,7 @@
                             <td class="px-4 py-2 border">{{ $multa->tipo_multa }}</td>
                             <td class="px-4 py-2 border">$ {{ $multa->monto }}</td>
                             <td class="px-4 py-2 border">
-                                {{\Carbon\Carbon::parse( $multa->fecha_multa )->locale('es')->format('d-m-Y') }}
+                                {{ date('d/m/Y', strtotime($multa->fecha_multa )) }}
                                 </td>
                             <td class="px-4 py-2 border">{{ $multa->lugar }}</td>
                             <td class="px-4 py-2 border">
@@ -126,9 +130,10 @@
                     @endforeach
                 </tbody>
             </table>
+            </div>
         </div>
-    </div>
-</div>
+
+        
 @endsection
 
 
@@ -155,7 +160,7 @@
     @endif
 
     {{-- alerta de eliminacion --}}
-    @if (session('eliminar') == 'se ha eliminado correctamente El automovil')
+    @if (session('eliminar') == 'se ha eliminado correctamente ')
         <script>
             Swal.fire({
                 title: "Eliminado!",

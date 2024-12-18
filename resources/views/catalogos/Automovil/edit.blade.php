@@ -320,9 +320,9 @@
                         </div>
 
                         <div class="mb-2">
-                            <h4 
+                            <h4
                             class="p-4 text-lg font-semibold text-center text-gray-700">Imagenes de Automovil</h4>
-                            @if($EddCar->fotografias != '') 
+                            @if($EddCar->fotografias != '')
                                 <div class="flex gap-4 p-4 ml-4 overflow-x-auto">
                                     @php
                                         $fotografias = json_decode($EddCar->fotografias, true);
@@ -331,7 +331,7 @@
                                     @if ($fotografias)
                                         @foreach ($fotografias as $foto)
                                             <img src="{{ url('img/automoviles/' . $foto) }}" class="w-16 h-auto transition-transform duration-300 transform rounded-lg shadow-md hover:scale-90 hover:shadow-lg" alt="seguro">
-                                            <a href="{{ url('img/automoviles/' . $foto) }}" target="_blank" class="text-gray-500" title="Ver archivo de de tarjeta">Ver imagen</a> 
+                                            <a href="{{ url('img/automoviles/' . $foto) }}" target="_blank" class="text-gray-500" title="Ver archivo de de tarjeta">Ver imagen</a>
                                         @endforeach
                                     @endif
                                 </div>
@@ -440,7 +440,7 @@
 
 
 
-            createImageInput(); // Agregar un input por defecto
+           // createImageInput(); // Agregar un input por defecto
         });
     </script>
 @endsection

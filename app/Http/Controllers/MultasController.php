@@ -6,7 +6,7 @@ use App\Models\Multas;
 use App\Models\Automoviles;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
-
+use Illuminate\Support\Facades\DB;
 
 class MultasController extends Controller
 {
@@ -218,8 +218,6 @@ class MultasController extends Controller
             $fotografias[] = $imgAuto;
         }
     }
-
-
     //guardar en json la img
     $input['comprobante'] = json_encode($fotografias);
 
@@ -227,8 +225,6 @@ class MultasController extends Controller
 
     return redirect()->route('multas.index')->with('message', 'Se ha modificado correctamente el registro');
 }
-
-
     /**
      * Remove the specified resource from storage.
      */
@@ -257,10 +253,6 @@ class MultasController extends Controller
         return $pdf->stream();  // Salida como archivo PDF
 
     }
-
-
-
-
 
 
 }

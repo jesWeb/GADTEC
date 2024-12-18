@@ -199,24 +199,26 @@
                         </div>
                     </div>
                     <!-- Subida de imágenes -->
-                        <div class="pt-4 mb-6">
-                            <h3 class="mb-5 block text-xl font-semibold text-[#07074D]">
-                                Subir Imágenes
-                            </h3>
-                            <p class="text-sm text-gray-600">Máximo 5 imágenes</p>
-                            <div class="flex flex-wrap gap-4 mt-4 pt-4 mb-6" id="imageContainer"></div>
-                            <div class="mb-8">
-                                <label for="fotografias_salida"  id="takePhotoBtn"
-                                    class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
-                                    <div>
-                                        <button type="button" name="fotografias_salida[]" id="fotografias_salida" accept="image/*"  class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
-                                            Buscar
-                                        </button>
-                                        
-                                    </div>
-                                </label>
-                            </div>
+                    <div class="pt-4 mb-6">
+                        <h3 class="mb-5 block text-xl font-semibold text-[#07074D]">
+                            Subir Imágenes
+                        </h3>
+                        <p class="text-sm text-gray-600">Máximo 5 imágenes</p>
+                        <div class="flex flex-wrap gap-4 mt-4 pt-4 mb-6" id="imageContainer"></div>
+                        <div class="mb-8">
+                            <label for="fotografias_salida" id="takePhotoBtn"
+                                class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
+                                <div>
+                                    <button type="button" name="fotografias_salida[]" id="fotografias_salida"
+                                        accept="image/*"
+                                        class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
+                                        Buscar
+                                    </button>
+
+                                </div>
+                            </label>
                         </div>
+                    </div>
 
 
                     <div class="mt-6">
@@ -313,7 +315,7 @@
                 }
             });
 
-            createImageInput(); // Agregar un input por defecto
+            // createImageInput(); // Agregar un input por defecto
         });
     </script>
 @endsection

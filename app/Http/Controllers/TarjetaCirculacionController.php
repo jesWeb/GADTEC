@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\TarjetaCirculacion;
 use App\Models\Automoviles;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 class TarjetaCirculacionController extends Controller
 {
     /**
@@ -69,10 +69,10 @@ class TarjetaCirculacionController extends Controller
      */
     public function create()
     {
-        $automoviles = \DB::select("SELECT aut.id_automovil, aut.marca, aut.modelo, aut.submarca
-            FROM automoviles AS aut
-            LEFT JOIN tarjetas AS tar ON tar.id_automovil = aut.id_automovil
-            WHERE tar.estatus IS NULL OR tar.estatus != 'vigente'");
+        $automoviles = \DB::select("SELECT aut.id_automovil, aut.marca, aut.modelo, aut.submarca 
+        FROM automoviles 
+        AS aut LEFT JOIN tarjetas AS tar ON tar.id_automovil = aut.id_automovil 
+        WHERE (tar.id_automovil IS NULL OR tar.estatus != 'vigente')");
 
         return view('catalogos.tarjetas.add', compact('automoviles'));
     }
@@ -123,27 +123,27 @@ class TarjetaCirculacionController extends Controller
          $fotografias = [];
          $maxTotalSize = 50 * 1024 * 1024; // 50 MB
          $totalSize = 0;
- 
+
          if ($request->hasFile('fotografia_frontal')) {
              $files = $request->file('fotografia_frontal');
              $files = array_slice($files, 0, 5); // Limitar a 5 fotos
-     
+
              foreach ($files as $file) {
                  $totalSize += $file->getSize();
                  if ($totalSize > $maxTotalSize) {
                      return back()->with('error', 'El tamaño total de las imágenes supera los 50 MB.');
                  }
-     
+
                  // Guardar el archivo en el directorio público
                  $imgVerificacion = date('Ymd_His_') . $file->getClientOriginalName();
                  $file->move(public_path('img/tarjetas'), $imgVerificacion);
                  $fotografias[] = $imgVerificacion;
              }
          }
- 
+
          //$input Guardar en json la imagen
          $input['fotografia_frontal'] = json_encode($fotografias);
- 
+
         TarjetaCirculacion::create($input);
 
         
@@ -205,7 +205,7 @@ class TarjetaCirculacionController extends Controller
 
         $input = $request->all();
 
-       // Manejo de imágenes 
+       // Manejo de imágenes
         $fotografias = $tarjeta->fotografia_frontal ? json_decode($tarjeta->fotografia_frontal, true) : [];
 
         $maxTotalSize = 50 * 1024 * 1024; // 50 MB

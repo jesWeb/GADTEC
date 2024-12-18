@@ -212,7 +212,7 @@
                                         <button type="button" name="fotografias_regreso[]" id="fotografias_regreso" accept="image/*"  class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
                                             Buscar
                                         </button>
-                                        
+
                                     </div>
                                 </label>
                             </div>
@@ -326,7 +326,7 @@
             }
         });
 
-        createImageInput(); // Agregar un input por defecto
+        //createImageInput(); // Agregar un input por defecto
     });
     </script>
 @endsection

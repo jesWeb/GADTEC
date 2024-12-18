@@ -77,32 +77,32 @@
                         @foreach ($seguro as $key => $seg)
                             <tr class="hover:bg-gray-50">
                                 <td class="px-4 py-2 border">{{ $key + 1 }}</td>
-                                <td class="px-4 py-2 border">{{ $seg->automovil->marca }} {{ $seg->automovil->submarca }} {{ $seg->automovil->modelo }}</td>
+                                <td class="px-4 py-2 border">{{ $seg->automovil }} </td>
                                 <td class="px-4 py-2 border">{{ $seg->aseguradora }}</td>
                                 <td class="px-4 py-2 border">
-                                    {{ \Carbon\Carbon::parse($seg->fecha_vigencia)->locale('es')->format('d-m-Y') }}
+                                    {{ date('d-m-Y',strtotime(($seg->fecha_vigencia))) }}
                                 </td>
-                                <td class="px-4 py-2 border">{{ $seg->estatus }}</td>
+                                <td class="px-4 py-2 border">{{ $seg->estatus}}</td>
 
                                 {{-- acciones --}}
                                 <td class="px-4 py-2 border">
                                     <div class="flex items-center space-x-2">
                                         <!-- Ver -->
-                                        <a href="{{ route('seguros.show', $seg->id_seguro) }}" class="inline-flex items-center justify-center w-8 h-8 text-green-600 border border-green-600 rounded hover:bg-green-600 hover:text-white" title="Ver seguro">
+                                        <a href="seguros/{{$seg->id_seguro}}" class="inline-flex items-center justify-center w-8 h-8 text-green-600 border border-green-600 rounded hover:bg-green-600 hover:text-white" title="Ver seguro">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3C6.48 3 2 12 2 12s4.48 9 10 9 10-9 10-9-4.48-9-10-9zm0 12c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z" />
                                             </svg>
                                         </a>
 
                                         <!-- Editar -->
-                                        <a href="{{ route('seguros.edit', $seg->id_seguro) }}" class="inline-flex items-center justify-center w-8 h-8 text-yellow-600 border border-yellow-600 rounded hover:bg-yellow-600 hover:text-white" title="Editar seguro">
+                                        <a href="seguros/{{$seg->id_seguro}}/edit" class="inline-flex items-center justify-center w-8 h-8 text-yellow-600 border border-yellow-600 rounded hover:bg-yellow-600 hover:text-white" title="Editar seguro">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 3l5 5-1.5 1.5-5-5M3 21h18M3 21l8-8 5 5-8 8H3z" />
                                             </svg>
                                         </a>
 
                                         <!-- Eliminar -->
-                                        <form action="{{ route('seguros.destroy', $seg) }}" name="del_{{ $seg->id_seguro }}" method="POST" 
+                                        <form action="{{ route('seguros.destroy', $seg->id_seguro) }}" name="del_{{ $seg->id_seguro }}" method="POST" 
                                         id="{{ $seg->id_seguro }}" class="inline">
                                             @csrf
                                             @method('DELETE')
@@ -156,6 +156,7 @@
                 text: "{{ session('mensajeDel') }}",
                 icon: "success"
             });
+
         </script>
     @endif
 

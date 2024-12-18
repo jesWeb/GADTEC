@@ -78,7 +78,7 @@
                         <!-- Campo para el nombre -->
                         <div class="mb-4">
                             <label for="nombre" class="mb-3 block text-base font-medium text-[#07074D]">Nombre:</label>
-                            <input type="text" name="nombre" id="nombre" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" 
+                            <input type="text" name="nombre" id="nombre" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                             value="{{ old('nombre', $tarjeta->nombre) }}" required title="Actualizar el nombre del propietario de la tarjeta">
                             @error('nombre')
                                 <span class="text-sm text-red-600">{{ $message }}</span>
@@ -88,7 +88,7 @@
                         <!-- Campo para el número de tarjeta -->
                         <div class="mb-4">
                             <label for="num_tarjeta" class="mb-3 block text-base font-medium text-[#07074D]">Número de Tarjeta:</label>
-                            <input type="text" name="num_tarjeta" id="num_tarjeta" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" 
+                            <input type="text" name="num_tarjeta" id="num_tarjeta" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                             value="{{ old('num_tarjeta', $tarjeta->num_tarjeta) }}" required title="Actualizar el número de tarjeta">
                             @error('num_tarjeta')
                                 <span class="text-sm text-red-600">{{ $message }}</span>
@@ -98,7 +98,7 @@
                         <!-- Campo para el vehículo origen -->
                         <div class="mb-4">
                             <label for="vehiculo_origen" class="mb-3 block text-base font-medium text-[#07074D]">Vehículo Origen:</label>
-                            <input type="text" name="vehiculo_origen" id="vehiculo_origen" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" 
+                            <input type="text" name="vehiculo_origen" id="vehiculo_origen" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                             value="{{ old('vehiculo_origen', $tarjeta->vehiculo_origen) }}" required title="Actualizar el vehículo de origen">
                             @error('vehiculo_origen')
                                 <span class="text-sm text-red-600">{{ $message }}</span>
@@ -108,7 +108,7 @@
                         <!-- Campo para la fecha de expedición -->
                         <div class="mb-4">
                             <label for="fecha_expedicion" class="mb-3 block text-base font-medium text-[#07074D]">Fecha de Expedición:</label>
-                            <input type="date" name="fecha_expedicion" id="fecha_expedicion" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" 
+                            <input type="date" name="fecha_expedicion" id="fecha_expedicion" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                             value="{{ old('fecha_expedicion', $tarjeta->fecha_expedicion) }}" required title="Actualizar la fecha de expedición de la tarjeta">
                             @error('fecha_expedicion')
                                 <span class="text-sm text-red-600">{{ $message }}</span>
@@ -118,7 +118,7 @@
                         <!-- Campo para la fecha de vigencia -->
                         <div class="mb-4">
                             <label for="fecha_vigencia" class="mb-3 block text-base font-medium text-[#07074D]">Fecha de Vigencia:</label>
-                            <input type="date" name="fecha_vigencia" id="fecha_vigencia" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" 
+                            <input type="date" name="fecha_vigencia" id="fecha_vigencia" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                             value="{{ old('fecha_vigencia', $tarjeta->fecha_vigencia) }}" required title="Actualizar la fecha de vigencia de la tarjeta">
                             @error('fecha_vigencia')
                                 <span class="text-sm text-red-600">{{ $message }}</span>
@@ -128,7 +128,7 @@
                         <!-- Campo para el estatus -->
                         <div class="mb-4">
                             <label for="estatus" class="mb-3 block text-base font-medium text-[#07074D]">Estatus:</label>
-                            <select name="estatus" id="estatus" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" 
+                            <select name="estatus" id="estatus" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                             title="Actualizar el estatus de la tarjeta">
                                 <option value="Vigente" {{ (old('estatus', $tarjeta->estatus) == 'Vigente') ? 'selected' : '' }}>Vigente</option>
                                 <option value="Expirada" {{ (old('estatus', $tarjeta->estatus) == 'Expirada') ? 'selected' : '' }}>Expirada</option>
@@ -140,9 +140,9 @@
                         </div>
 
                         <div class="mb-2">
-                            <h4 
+                            <h4
                             class="p-4 text-lg font-semibold text-center text-gray-700">Imagenes de tarjetas</h4>
-                            @if($tarjeta->fotografia_frontal != '') 
+                            @if($tarjeta->fotografia_frontal != '')
                                 <div class="flex gap-4 p-4 ml-4 overflow-x-auto">
                                     @php
                                         $fotografias = json_decode($tarjeta->fotografia_frontal, true);
@@ -151,7 +151,7 @@
                                     @if ($fotografias)
                                         @foreach ($fotografias as $foto)
                                             <img src="{{ url('img/tarjetas/' . $foto) }}" class="w-16 h-auto transition-transform duration-300 transform rounded-lg shadow-md hover:scale-90 hover:shadow-lg" alt="seguro">
-                                            <a href="{{ url('img/tarjetas/' . $foto) }}" target="_blank" class="text-gray-500" title="Ver archivo de de tarjeta">Ver imagen</a> 
+                                            <a href="{{ url('img/tarjetas/' . $foto) }}" target="_blank" class="text-gray-500" title="Ver archivo de de tarjeta">Ver imagen</a>
                                         @endforeach
                                     @endif
                                 </div>
@@ -173,19 +173,19 @@
                                         <button type="button" name="fotografia_frontal[]" id="fotografia_frontal" accept="image/*"  class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]">
                                             Buscar
                                         </button>
-                                        
+
                                     </div>
                                 </label>
                             </div>
                         </div>
-                    
-                     
+
+
                     </div>
 
-                    
+
                     <!-- Botones -->
                     <div class="flex justify-end mt-8 space-x-4">
-                        
+
                         <a href="{{ route('tarjetas.index') }}" title="Cancelar la edición" class="px-5 py-3 text-gray-700 bg-gray-200 rounded-md shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">Cancelar</button>
                         </a>
                         <button type="submit" class="px-5 py-3 text-white bg-indigo-600 rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -195,7 +195,7 @@
             </div>
         </div>
     </div>
-</div>  
+</div>
 
 
 
@@ -206,7 +206,7 @@
             let currentImages = 0;
             const maxFileSize = 15 * 1024 * 1024;
 
-        
+
 
             function createImageInput(capture = false) {
                 const inputFile = $('<input>', {
@@ -264,9 +264,9 @@
                 }
             });
 
-            
 
-            createImageInput(); // Agregar un input por defecto
+
+            //createImageInput(); // Agregar un input por defecto
         });
     </script>
 @endsection

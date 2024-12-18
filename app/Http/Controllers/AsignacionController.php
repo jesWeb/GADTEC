@@ -6,7 +6,7 @@ use App\Models\asignacion;
 use App\Models\Automoviles;
 use App\Models\Usuarios;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 
 
 class AsignacionController extends Controller
@@ -16,7 +16,7 @@ class AsignacionController extends Controller
     {
 
 
-        $reservacion = \DB::select("SELECT
+        $reservacion = DB::select("SELECT
             asi.id_asignacion,
             asi.estatus,
             asi.lugar,
@@ -43,7 +43,8 @@ class AsignacionController extends Controller
     public function create()
     {
 
-        $auto = \DB::select("SELECT
+        $auto = DB::select(
+        "SELECT
             aut.id_automovil,
             aut.marca,
             aut.submarca,

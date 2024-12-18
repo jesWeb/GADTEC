@@ -69,18 +69,13 @@ class GestionController extends Controller
             ORDER BY aut.marca
             ");
 
-
-
-
-
-
         // dd($disponibilidad);
         return view('modulos.Gestion.index', compact('disponibilidad'));
     }
 
     public function show(string $id)
     {
-        $dispo = \DB::select("SELECT
+        $dispo = DB::select("SELECT
             aut.marca,
             aut.submarca,
             aut.modelo,

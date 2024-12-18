@@ -5,32 +5,55 @@ namespace App\Http\Controllers;
 use App\Models\Automoviles;
 use App\Models\seguros;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 class SegurosController extends Controller
 {
 
     public function index(Request $request)
     {
         //
-        $query = seguros::with('automovil');
-        // Verificar si hay una búsqueda
-        if ($request->has('search') && $request->input('search') != '') {
-            $search = $request->input('search');
-            $query->where(function ($q) use ($search) {
-                $q->where('aseguradora', 'LIKE', "%{$search}%")
-                    ->orWhere('cobertura', 'LIKE', "%{$search}%")
-                    ->orWhere('fecha_vigencia', 'LIKE', "%{$search}%")
-                    ->orWhere('estatus', 'LIKE', "%{$search}%")
-                    ->orWhere('monto', 'LIKE', "%{$search}%")
-                    ->orWhereHas('automovil', function ($q) use ($search) {
-                        $q->where('marca', 'LIKE', "%{$search}%")
-                            ->orWhere('submarca', 'LIKE', "%{$search}%")
-                            ->orWhere('modelo', 'LIKE', "%{$search}%");
-                    });
-            });
-        }
+        $sql = "SELECT
+                    seg.id_seguro,
+                    seg.aseguradora,
+                    seg.fecha_vigencia,
+                    seg.estatus,
+                    CONCAT(aut.marca, ' ', aut.submarca, ' ', aut.modelo) AS automovil
+                FROM
+                seguros AS seg
+                JOIN
+                automoviles AS aut ON seg.id_automovil = aut.id_automovil
+                WHERE
+                seg.deleted_at IS NULL ";
 
-        $seguro = $query->get();
+        //busqueda dinamica
+        $conditions = [];
+        $parameters = [];
+
+         if ($request->has('search') && $request->input('search') != '') {
+             $search = $request->input('search');
+             $conditions[] = "(seg.aseguradora LIKE :search1 OR
+                               seg.fecha_vigencia LIKE :search2 OR
+                               seg.estatus LIKE :search3 OR
+                               aut.marca LIKE :search4 OR
+                               aut.submarca LIKE :search5 OR
+                               aut.modelo LIKE :search6)";
+             $parameters = [
+                 'search1' => "%{$search}%",
+                 'search2' => "%{$search}%",
+                 'search3' => "%{$search}%",
+                 'search4' => "%{$search}%",
+                 'search5' => "%{$search}%",
+                 'search6' => "%{$search}%",
+             ];
+         }
+
+        // Agregar condiciones a la consulta de busqueda
+         if (!empty($conditions)) {
+             $sql .= " WHERE " . implode(' AND ', $conditions);
+         }
+
+        $seguro = DB::select($sql);
+
         return view('catalogos.seguros.index', compact('seguro'));
     }
 
@@ -43,7 +66,7 @@ class SegurosController extends Controller
 
     public function store(Request $request)
     {
-    //  dd($request);
+        //  dd($request);
         $rules = [
             'id_automovil' => 'required|exists:automoviles,id_automovil',
             'aseguradora' => 'required|string',
@@ -64,13 +87,13 @@ class SegurosController extends Controller
         if ($request->hasFile('poliza')) {
             $files = $request->file('poliza');
             $files = array_slice($files, 0, 5); // Limitar a 5 fotos
-    
+
             foreach ($files as $file) {
                 $totalSize += $file->getSize();
                 if ($totalSize > $maxTotalSize) {
                     return back()->with('error', 'El tamaño total de las imágenes supera los 50 MB.');
                 }
-    
+
                 // Guardar el archivo en el directorio público
                 $imgPoliza = date('Ymd_His_') . $file->getClientOriginalName();
                 $file->move(public_path('img/poliza'), $imgPoliza);
@@ -78,12 +101,9 @@ class SegurosController extends Controller
             }
         }
 
-       
-
         $input = $request->all();
         //$input Guardar en json la imagen
         $input['poliza'] = json_encode($fotografias);
-
 
         //guardamos datos en BD
         seguros::create($input);
@@ -99,7 +119,7 @@ class SegurosController extends Controller
     }
 
     public function edit(Request $request, $id)
-    {    
+    {
         $EddSeg = seguros::findOrFail($id);
         $automoviles = Automoviles::all();
 
@@ -109,9 +129,9 @@ class SegurosController extends Controller
     public function update(Request $request,  $id)
     {
         $request->validate([
-            
+
             'poliza' => 'nullable|array|max:10',
-            'poliza.*' => 'file|mimes:jpeg,png,jpg,pdf', 
+            'poliza.*' => 'file|mimes:jpeg,png,jpg,pdf',
         ]);
 
         $EddSeg = seguros::findOrFail($id);
@@ -148,8 +168,10 @@ class SegurosController extends Controller
 
     public function destroy($id)
     {
+
         $DelSeg = seguros::findOrFail($id);
+
         $DelSeg->delete();
-        return redirect()->route('seguros.index')->with('mensajeDel', 'Se ha eliminado Correctamente el registró');
+        return redirect()->action([SegurosController::class,'index'])->with('mensajeDel', 'Se ha eliminado Correctamente el registró');
     }
 }
