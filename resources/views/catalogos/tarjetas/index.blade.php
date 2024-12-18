@@ -85,8 +85,7 @@
                             <tr class="hover:bg-gray-50">
                                 <td class="px-4 py-2 border">{{ $key + 1 }}</td>
                                 <td class="px-4 py-2 border">
-                                    {{ $tarjeta->automovil->submarca }} {{ $tarjeta->automovil->marca }}
-                                    {{ $tarjeta->automovil->modelo }}
+                                    {{ $tarjeta->automovil }} 
                                 </td>
                                 <td class="px-4 py-2 border">{{ $tarjeta->nombre }}</td>
                                 <td class="px-4 py-2 border">{{ $tarjeta->num_tarjeta }}</td>
@@ -125,10 +124,11 @@
                                         </a>
 
                                         <!-- Eliminar -->
-                                        <form action="tarjetas/{{ $tarjeta->id_tarjeta }}" method="POST" id="eliminacion-form" class="inline">
+                                        <form action="tarjetas/{{ $tarjeta->id_tarjeta }}" 
+                                        name="del_{{ $tarjeta->id_tarjeta }}" method="POST" id="{{ $tarjeta->id_tarjeta }}" class="inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" onclick="deleteRegister(event)"
+                                            <button type="submit" name="del_{{ $tarjeta->id_tarjeta }}" onclick="deleteRegister(event,'{{ $tarjeta->id_tarjeta }}')"
                                                 class="inline-flex items-center justify-center w-8 h-8 text-red-600 border border-red-600 rounded hover:bg-red-600 hover:text-white" title="Eliminar tarjeta">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                     stroke="currentColor" class="w-4 h-4">
@@ -185,20 +185,25 @@
     @endif
 
     <script>
-      function deleteRegister() {
+      function deleteRegister(event, formId) {
             event.preventDefault();
-            const btndelete = document.getElementById("eliminacion-form");
+            const btndelete = document.getElementById(formId);
             Swal.fire({
-                title: "¿Estás seguro de eliminar el registro?",
+                title: "Estas seguro de eliminar el registro?",
                 text: "¡No podrás revertir esto!",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Sí, borrar!"
+                confirmButtonText: "Si, borrar!"
             }).then((result) => {
                 if (result.isConfirmed) {
                     btndelete.submit();
+                    Swal.fire({
+                        title: "¡Eliminado!",
+                        text: "La tarjeta ha sido eliminada correctamente.",
+                        icon: "success"
+                    });
                 }
             });
         }

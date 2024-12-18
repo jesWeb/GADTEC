@@ -60,14 +60,11 @@ class MultasController extends Controller
         }
 
         // Ejecutar la consulta SQL
-        $multas = DB::select($sql, $parameters);
+        $multas = \DB::select($sql, $parameters);
 
         // Retornar vista con resultados
         return view('modulos.multas.index', compact('multas'));
     }
-
-
-
 
     /**
      * Show the form for creating a new resource.
@@ -240,6 +237,8 @@ class MultasController extends Controller
         return redirect()->route('multas.index')->with('success', 'Multa eliminada correctamente');
     }
 
+
+
     /**
      * Generar reporte de multas.
      */
@@ -251,6 +250,5 @@ class MultasController extends Controller
         return $pdf->stream();  // Salida como archivo PDF
 
     }
-
 
 }

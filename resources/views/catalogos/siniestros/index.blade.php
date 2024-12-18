@@ -121,11 +121,11 @@
                                         </a>
 
                                         <!-- Eliminar -->
-                                        <form action="{{ route('siniestros.destroy', $sin->id_siniestro ) }}" method="POST"
-                                            id="eliminacion-form" class="inline">
+                                        <form action="{{ route('siniestros.destroy',  $sin->id_siniestro) }}" method="POST"
+                                            id="{{ $sin->id_siniestro }}" name="del_{{ $sin->id_siniestro }}" class="inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" onclick="deleteRegister(event)"
+                                            <button type="submit" name="del_{{ $sin->id_siniestro }}" onclick="deleteRegister(event, '{{ $sin->id_siniestro }}')"
                                                 class="inline-flex items-center justify-center w-8 h-8 text-red-600 border border-red-600 rounded hover:bg-red-600 hover:text-white" title="Eliminar siniestro">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                     stroke="currentColor" class="w-4 h-4">
@@ -181,9 +181,9 @@
         </script>
     @endif
     <script>
-        function deleteRegister() {
+        function deleteRegister(event, formId) {
             event.preventDefault();
-            const btndelete = document.getElementById("eliminacion-form");
+            const btndelete = document.getElementById(formId);
             Swal.fire({
                 title: "Estas seguro de Eliminar el registro?",
                 text: "¡No podrás revertir esto!",
@@ -195,6 +195,11 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     btndelete.submit();
+                    Swal.fire({
+                        title: "¡Eliminado!",
+                        text: "El siniestro ha sido eliminado correctamente.",
+                        icon: "success"
+                    });
                 }
             });
         }

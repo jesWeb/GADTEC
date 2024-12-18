@@ -13,23 +13,54 @@ class TarjetaCirculacionController extends Controller
      */
     public function index(Request $request)
     {
-        $query = TarjetaCirculacion::with('automovil');
+       
+        $sql = "SELECT
+        tar.id_tarjeta,
+        tar.nombre,
+        tar.num_tarjeta,
+        tar.vehiculo_origen,
+        tar.fecha_expedicion,
+        tar.fecha_vigencia,
+        tar.estatus,
+        CONCAT(aut.marca, ' ', aut.submarca, ' ', aut.modelo) AS automovil
+        FROM
+            tarjetas AS tar
+        JOIN
+            automoviles AS aut ON tar.id_automovil = aut.id_automovil
+        WHERE
+            tar.deleted_at IS NULL";
 
-        // Verificar si hay una búsqueda
+        // Condiciones dinámicas para búsqueda
+        $conditions = [];
+        $parameters = [];
+
         if ($request->has('search') && $request->input('search') != '') {
-            $search = $request->input('search');
-            $query->where(function ($q) use ($search) {
-                $q->where('nombre', 'LIKE', "%{$search}%")
-                    ->orWhere('num_tarjeta', 'LIKE', "%{$search}%")
-                    ->orWhere('vehiculo_origen', 'LIKE', "%{$search}%")
-                    ->orWhereHas('automovil', function ($q) use ($search) {
-                        $q->where('marca', 'LIKE', "%{$search}%")
-                            ->orWhere('submarca', 'LIKE', "%{$search}%")
-                            ->orWhere('modelo', 'LIKE', "%{$search}%");
-                    });
-            });
+        $search = $request->input('search');
+        $conditions[] = "(tar.nombre LIKE :search1 OR 
+                        tar.num_tarjeta LIKE :search2 OR 
+                        tar.vehiculo_origen LIKE :search3 OR 
+                        tar.estatus LIKE :search4 OR 
+                        aut.marca LIKE :search5 OR 
+                        aut.submarca LIKE :search6 OR 
+                        aut.modelo LIKE :search7)";
+        $parameters = [
+            'search1' => "%{$search}%",
+            'search2' => "%{$search}%",
+            'search3' => "%{$search}%",
+            'search4' => "%{$search}%",
+            'search5' => "%{$search}%",
+            'search6' => "%{$search}%",
+            'search7' => "%{$search}%",
+        ];
         }
-        $tarjetas = $query->get();
+
+        // Si hay condiciones de búsqueda, agregar al WHERE
+        if (!empty($conditions)) {
+        $sql .= " AND " . implode(' AND ', $conditions);
+        }
+
+        // Ejecutar la consulta SQL
+        $tarjetas = \DB::select($sql, $parameters);
         return view('catalogos.tarjetas.index', compact('tarjetas'));
     }
 
@@ -38,7 +69,7 @@ class TarjetaCirculacionController extends Controller
      */
     public function create()
     {
-        $automoviles = \DB::select("SELECT *
+        $automoviles = \DB::select("SELECT aut.id_automovil, aut.marca, aut.modelo, aut.submarca
             FROM automoviles AS aut
             LEFT JOIN tarjetas AS tar ON tar.id_automovil = aut.id_automovil
             WHERE tar.estatus IS NULL OR tar.estatus != 'vigente'");
@@ -71,6 +102,7 @@ class TarjetaCirculacionController extends Controller
             'id_automovil.required' => 'El campo automóvil es requerido',
         ];
 
+        // dd($request->all());
         $request->validate($rules, $messages);
 
         $input = $request->all();
@@ -113,6 +145,8 @@ class TarjetaCirculacionController extends Controller
          $input['fotografia_frontal'] = json_encode($fotografias);
 
         TarjetaCirculacion::create($input);
+
+        
 
         return redirect()->route('tarjetas.index')->with('mensaje', 'Se ha creado correctamente el registro');
 

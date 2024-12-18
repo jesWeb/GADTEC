@@ -64,16 +64,20 @@
 
                     <div class="p-6 bg-transparent rounded-lg shadow-sm">
                         <p class="text-lg font-semibold text-gray-800">Fecha de Servicio</p>
-                        <p class="text-gray-600">{{ $servicio->fecha_servicio }}</p>
+                        <p class="text-gray-600">{{  date('d/m/Y', strtotime($servicio->fecha_servicio)) }}</p>
                     </div>
-
-            <div class="p-6 bg-transparent rounded-lg shadow-sm">
-                <p class="text-lg font-semibold text-gray-800">Fecha de Servicio</p>
-                <p class="text-gray-600">
-                    {{\Carbon\Carbon::parse(  $servicio->fecha_servicio
- )->locale('es')->format('d-m-Y') }}
-                </p>
-            </div>
+                    @if ($servicio->prox_servicio == '')
+                        
+                    @else
+                        <div class="p-6 bg-transparent rounded-lg shadow-sm">
+                            <p class="text-lg font-semibold text-gray-800">Fecha de Proximo Servicio</p>
+                        
+                            <p class="text-gray-600">
+                                {{ date('d/m/Y', strtotime($servicio->prox_servicio)) }}
+                            </p>
+                            
+                        </div>
+                @endif
 
                     <div class="p-6 bg-transparent rounded-lg shadow-sm">
                         <p class="text-lg font-semibold text-gray-800">Lugar de Servicio</p>

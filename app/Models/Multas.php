@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class Multas extends Model
 {
-    use HasFactory,SoftDeletes;
-
-    // protected $table = 'multas';
+    use HasFactory, SoftDeletes;
+    protected $table = 'multas';
 	protected $primaryKey = 'id_multa';
 	protected $fillable = [
         'tipo_multa',

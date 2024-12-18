@@ -86,10 +86,11 @@
                                             </a>
 
                                              <!-- Eliminar -->
-                                            <form action="{{ route('asignacion.destroy', $reserv->id_asignacion) }}" method="POST"  id="eliminacion-form" class="inline-block">
+                                            <form action="{{ route('asignacion.destroy', $reserv->id_asignacion) }}" name="del_{{$reserv->id_asignacion}}" method="POST" 
+                                             id="{{ $reserv->id_asignacion }}" class="inline-block">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" onclick="deleteRegister(event)"
+                                                <button type="submit" name="del_{{$reserv->id_asignacion}}" onclick="deleteRegister(event, '{{ $reserv->id_asignacion }}')"
                                                     class="inline-flex items-center justify-center w-8 h-8 text-red-600 border border-red-600 rounded hover:bg-red-600 hover:text-white"
                                                     title="Borrar solicitud">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -145,9 +146,9 @@
         </script>
     @endif
     <script>
-        function deleteRegister() {
+        function deleteRegister(event, formId) {
             event.preventDefault();
-            const btndelete = document.getElementById("eliminacion-form");
+            const btndelete = document.getElementById(formId);
             Swal.fire({
                 title: "Estas seguro de Eliminar el registro?",
                 text: "¡No podrás revertir esto!",
@@ -161,7 +162,7 @@
                     btndelete.submit();
                     Swal.fire({
                         title: "¡Eliminado!",
-                        text: "El automóvil ha sido eliminado correctamente.",
+                        text: "La solicitud ha sido eliminada correctamente.",
                         icon: "success"
                     });
                 }

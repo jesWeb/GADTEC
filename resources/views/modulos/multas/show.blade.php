@@ -65,7 +65,8 @@
 
                     <div class="p-6 bg-transparent rounded-lg shadow-sm">
                         <p class="text-xl font-medium text-gray-800">Fecha de multa:</p>
-                        <p class="text-lg text-gray-600">{{ $multa->fecha_multa }}</p>
+                        
+                        <p class="text-lg text-gray-600">{{ date('d/m/Y', strtotime($multa->fecha_multa)) }}</p>
                     </div>
 
                     <div class="p-6 bg-transparent rounded-lg shadow-sm">
@@ -81,8 +82,8 @@
 
                     <div class="p-6 bg-transparent rounded-lg shadow-sm">
                     <div class="mb-2">
-                            <h4 
-                            class="p-4 text-lg font-semibold text-center text-gray-700">Imagenes de tenencias</h4>
+                            <p
+                            class="text-xl font-medium text-gray-800">Imagenes de tenencias</p>
                             @if($multa->comprobante != '') 
                                 <div class="flex gap-4 p-4 ml-4 overflow-x-auto">
                                     @php
@@ -105,7 +106,13 @@
 
                     <div class="p-6 bg-transparent rounded-lg shadow-sm">
                         <p class="text-xl font-medium text-gray-800">Observaciones:</p>
-                        <p class="text-lg text-gray-600">{{ $multa->observaciones }}</p>
+                        <p class="text-lg text-gray-600">
+                            @if($multa->observaciones)
+                            <p class="text-gray-600 mt-4 text-lg">{{ $multa->observaciones }} </p>
+                            @else
+                            <p class="text-gray-500 mt-4 text-sm">No aplica</p>
+                            @endif
+                        </p>
                     </div>  
                 </div> 
             <div class="flex justify-end">

@@ -76,7 +76,7 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
-                        @foreach ($multas as $key => $multa)
+                        @foreach($multas as $key => $multa)
                             <tr class="hover:bg-gray-50">
                                 <td class="px-4 py-2 border">{{ $key + 1 }}</td>
                                 <td class="px-4 py-2 border">
@@ -86,12 +86,11 @@
                                 <td class="px-4 py-2 border">$ {{ $multa->monto }}</td>
                                 <td class="px-4 py-2 border">
                                     {{ date('d-m-Y',strtotime(($multa->fecha_multa)))}}
-                                </td>
+                                    </td>
                                 <td class="px-4 py-2 border">{{ $multa->lugar }}</td>
                                 <td class="px-4 py-2 border">
-                                    <span
-                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium
-                                {{ $multa->estatus == 'Pagada' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium
+                                    {{ $multa->estatus == 'Pagada' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
                                         {{ $multa->estatus }}
                                     </span>
                                 </td>
@@ -99,42 +98,32 @@
                                 <td class="px-4 py-2 border">
                                     <div class="flex items-center space-x-2">
                                         <!-- Ver -->
-                                        <a href="multas/{{ $multa->id_multa }}"
-                                            class="inline-flex items-center justify-center w-8 h-8 text-green-600 border border-green-600 rounded hover:bg-green-600 hover:text-white"
-                                            title="Ver detalles de la multa">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                stroke="currentColor" class="w-4 h-4">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M12 3C6.48 3 2 12 2 12s4.48 9 10 9 10-9 10-9-4.48-9-10-9zm0 12c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z" />
+                                        <a href="multas/{{$multa->id_multa}}" class="inline-flex items-center justify-center w-8 h-8 text-green-600 border border-green-600 rounded hover:bg-green-600 hover:text-white" title="Ver detalles de la multa">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3C6.48 3 2 12 2 12s4.48 9 10 9 10-9 10-9-4.48-9-10-9zm0 12c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z" />
                                             </svg>
                                         </a>
 
                                         <!-- Editar -->
-                                        <a href="multas/{{ $multa->id_multa }}/edit"
-                                            class="inline-flex items-center justify-center w-8 h-8 text-yellow-600 border border-yellow-600 rounded hover:bg-yellow-600 hover:text-white"
-                                            title="Editar información de la multa">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                stroke="currentColor" class="w-4 h-4">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M16 3l5 5-1.5 1.5-5-5M3 21h18M3 21l8-8 5 5-8 8H3z" />
+                                        <a href="multas/{{$multa->id_multa}}/edit" class="inline-flex items-center justify-center w-8 h-8 text-yellow-600 border border-yellow-600 rounded hover:bg-yellow-600 hover:text-white" title="Editar información de la multa">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 3l5 5-1.5 1.5-5-5M3 21h18M3 21l8-8 5 5-8 8H3z" />
                                             </svg>
                                         </a>
 
-                                        <!-- Eliminar -->
-                                        <form action="multas/{{$multa->id_multa}}" method="POST" id="eliminacion-form"
-                                            class="inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" onclick="deleteRegister(event)"
-                                                class="inline-flex items-center justify-center w-8 h-8 text-red-600 border border-red-600 rounded hover:bg-red-600 hover:text-white"
-                                                title="Borrar esta multa">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                    stroke="currentColor" class="w-4 h-4">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                        d="M19 7H5M10 11v6m4-6v6M7 7h10l-1-1H8l-1 1z" />
-                                                </svg>
-                                            </button>
-                                        </form>
+                                        <form action="multas/{{ $multa->id_multa }}" method="POST"
+                                            id="{{ $multa->id_multa  }}" name="del_{{ $multa->id_multa }}" class="inline-block">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"  name="del_{{ $multa->id_multa }}"  onclick="deleteRegister(event, '{{ $multa->id_multa }}')" title="Borrar multa"
+                                                    class="inline-flex items-center justify-center w-8 h-8 text-red-600 border border-red-600 rounded hover:bg-red-600 hover:text-white">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                        stroke="currentColor" class="w-4 h-4">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                            d="M19 7H5M10 11v6m4-6v6M7 7h10l-1-1H8l-1 1z" />
+                                                    </svg>
+                                                </button>
+                                            </form>
                                     </div>
                                 </td>
                             </tr>
@@ -143,6 +132,8 @@
                 </table>
             </div>
         </div>
+
+
     </div>
 @endsection
 
@@ -180,21 +171,26 @@
         </script>
     @endif
     <script>
-        function deleteRegister() {
+        function deleteRegister(event, formId) {
             event.preventDefault();
-            const btndelete = document.getElementById("eliminacion-form")
+
+            const btndelete = document.getElementById(formId);
             Swal.fire({
-                title: "¿Estás seguro de eliminar el registro?",
-                text: "¡Esta acción no se puede deshacer!",
+                title: "Estas seguro de eliminar el registro?",
+                text: "¡No podrás revertir esto!",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: "Sí, eliminarlo",
-                cancelButtonText: "Cancelar"
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si, borrar!"
             }).then((result) => {
                 if (result.isConfirmed) {
                     btndelete.submit();
+                    Swal.fire({
+                        title: "¡Eliminado!",
+                        text: "La multa ha sido eliminada correctamente.",
+                        icon: "success"
+                    });
                 }
             });
         }

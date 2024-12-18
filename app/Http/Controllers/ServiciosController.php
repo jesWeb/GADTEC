@@ -27,7 +27,9 @@ class ServiciosController extends Controller
                 FROM
                     servicios AS serv
                 JOIN
-                    automoviles AS aut ON serv.id_automovil = aut.id_automovil";
+                    automoviles AS aut ON serv.id_automovil = aut.id_automovil
+                WHERE
+                    serv.deleted_at IS NULL";
 
         // Condiciones dinámicas para buscar
         $conditions = [];
@@ -258,11 +260,23 @@ class ServiciosController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    // public function destroy(string $id)
+    // {
+    //     //
+    //     $servicio = Servicios::findOrFail($id);
+    //     $servicio->delete();
+    //     return redirect()->route('servicios.index')->with('eliminar', 'Se ha eliminado correctamente el registro');
+    // }
+
+    public function destroy($id)
     {
-        //
         $servicio = Servicios::findOrFail($id);
+
+        if (!$servicio) {
+            return response()->json(['error' => 'Serivicio no encontrado'], 404);
+        }
         $servicio->delete();
+
         return redirect()->route('servicios.index')->with('eliminar', 'Se ha eliminado correctamente el registro');
     }
 

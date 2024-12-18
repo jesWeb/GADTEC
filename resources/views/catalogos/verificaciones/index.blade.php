@@ -222,28 +222,28 @@
         </script>
     @endif
     <script>
-         function deleteRegister() {
-            event.preventDefault();
-            const btndelete = document.getElementById("eliminacion-form");
-            Swal.fire({
-                title: "Estas seguro de Eliminar el registro?",
-                text: "¡No podrás revertir esto!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Si, borrar!"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    btndelete.submit();
-                    Swal.fire({
-                        title: "¡Eliminado!",
-                        text: "El automóvil ha sido eliminado correctamente.",
-                        icon: "success"
-                    });
-                }
-            });
-        }
+        function deleteRegister(event, formId) {
+        event.preventDefault();
+        const btndelete = document.getElementById(formId);
+        Swal.fire({
+            title: "Estas seguro de eliminar el registro?",
+            text: "¡No podrás revertir esto!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Si, borrar!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                btndelete.submit();
+                Swal.fire({
+                    title: "¡Eliminado!",
+                    text: "La verificación ha sido eliminada correctamente.",
+                    icon: "success"
+                });
+            }
+        });
+    }
     </script>
     {{-- calendar  --}}
     <script>
