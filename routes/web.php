@@ -42,7 +42,7 @@ Route::middleware('auth')->group(function () {
     Route::middleware('role:Administrador')->group(function () {
         // Dashboard del Administrador
         Route::get('/dashboard', [GestionController::class, 'index'])->name("admin.dashboard");
-        
+
         // Gestión de asignaciones y otros recursos
         Route::get('/autorizar/update/{id_asignacion}', [GestionController::class, 'update'])->name('autorizar');
         Route::resource('usuarios', UsuariosController::class);
@@ -56,7 +56,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('tenencias', TeneciasRefrendosController::class);
         Route::resource('multas', MultasController::class);
         Route::resource('servicios', ServiciosController::class);
-        
+
         // Rutas para la gestión de vigilantes
         Route::resource('/administrador/vigilante', VigilanteController::class);
         Route::get('/administrador/vigilante/edit2/{id}/', [VigilanteController::class, 'edit2'])->name('admin.edit2');
@@ -106,7 +106,7 @@ Route::middleware('auth')->group(function () {
     // Rutas comunes para Administrador y Moderador
     Route::middleware('role:Administrador|Moderador')->group(function () {
         Route::get('/gestion', [GestionController::class, 'index'])->name('Gestion');
-        
+
     });
 
     // Rutas comunes para Administrador y Usuario
