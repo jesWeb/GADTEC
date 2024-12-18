@@ -75,7 +75,7 @@
                     <tbody class="divide-y divide-gray-100">
                         @foreach ($servicios as $key => $servicio)
                             <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-2 border">{{ $servicio->id_servicio }}</td>
+                                <td class="px-4 py-2 border">{{ $key + 1 }}</td>
                                 <td class="px-4 py-2 border">
                                     {{ $servicio->automovil }} 
                                 </td>

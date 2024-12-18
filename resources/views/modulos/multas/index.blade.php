@@ -107,11 +107,11 @@
                                         </svg>
                                     </a>
 
-                                    <form action="multas/{{ $multa->id_multa }}"method="POST"
-                                            id="eliminacion-form" class="inline-block">
+                                    <form action="multas/{{ $multa->id_multa }}" method="POST"
+                                        id="{{ $multa->id_multa  }}" name="del_{{ $multa->id_multa }}" class="inline-block">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" onclick="deleteRegister(event)" title="Borrar multa"
+                                            <button type="submit"  name="del_{{ $multa->id_multa }}"  onclick="deleteRegister(event, '{{ $multa->id_multa }}')" title="Borrar multa"
                                                 class="inline-flex items-center justify-center w-8 h-8 text-red-600 border border-red-600 rounded hover:bg-red-600 hover:text-white">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                     stroke="currentColor" class="w-4 h-4">
@@ -165,22 +165,28 @@
         </script>
     @endif
     <script>
-        function deleteRegister() {
+        function deleteRegister(event, formId) {
             event.preventDefault();
-            const btndelete = document.getElementById("eliminacion-form");
+
+            const btndelete = document.getElementById(formId);
             Swal.fire({
-                title: "¿Estás seguro de eliminar este registro?",
-                text: "¡Este cambio no se puede deshacer!",
+                title: "Estas seguro de eliminar el registro?",
+                text: "¡No podrás revertir esto!",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: "Eliminar"
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si, borrar!"
             }).then((result) => {
                 if (result.isConfirmed) {
                     btndelete.submit();
+                    Swal.fire({
+                        title: "¡Eliminado!",
+                        text: "La multa ha sido eliminada correctamente.",
+                        icon: "success"
+                    });
                 }
-            })
+            });
         }
     </script>
 @endsection

@@ -66,7 +66,7 @@
                     <div class="p-6 bg-transparent rounded-lg shadow-sm">
                         <p class="text-xl font-medium text-gray-800">Fecha de multa:</p>
                         
-                        <p class="text-lg text-gray-600">{{ $multa->fecha_multa ? date('d/m/Y', strtotime($multa->fecha_multa)) : '' }}</p>
+                        <p class="text-lg text-gray-600">{{ date('d/m/Y', strtotime($multa->fecha_multa)) }}</p>
                     </div>
 
                     <div class="p-6 bg-transparent rounded-lg shadow-sm">

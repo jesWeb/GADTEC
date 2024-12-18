@@ -32,7 +32,9 @@ class AsignacionController extends Controller
         JOIN
             automoviles AS aut ON asi.id_automovil = aut.id_automovil
         LEFT JOIN
-            check_ins AS che ON che.id_asignacion = asi.id_asignacion;
+            check_ins AS che ON che.id_asignacion = asi.id_asignacion
+        WHERE 
+            asi.deleted_at IS NULL
         ");
 
         return view('catalogos.asignacion.index', compact('reservacion'));
@@ -55,7 +57,9 @@ class AsignacionController extends Controller
             AND asi.estatus IN ('Reservado', 'Ocupado', 'Autorizado')
         WHERE
             aut.estatusIn = 'Disponible'
-            AND asi.id_asignacion IS NULL"
+            AND asi.id_asignacion IS NULL
+            "
+           
         );
 
         $reservU = Usuarios::all();

@@ -14,26 +14,52 @@ class TeneciasRefrendosController extends Controller
     public function index(Request $request)
     {
         //
-        $query = TeneciasRefrendos::with('automovil');
+        $sql = "SELECT
+        ten.id_tenencia,
+        ten.fecha_pago,
+        ten.origen,
+        ten.monto,
+        ten.año_correspondiente,
+        ten.estatus,
+        CONCAT(aut.marca, ' ', aut.submarca, ' ', aut.modelo) AS automovil
+        FROM
+            tenencias AS ten
+        JOIN
+            automoviles AS aut ON ten.id_automovil = aut.id_automovil
+        WHERE
+            ten.deleted_at IS NULL";
 
-        // Verificar si hay una búsqueda
-        if ($request->has('search') && $request->input('search')!= '') {
-            $search = $request->input('search');
-            $query->where(function($q) use ($search) {
-                $q->where('id_automovil', 'LIKE', "%{$search}%")
-                    ->orWhere('origen', 'LIKE', "%{$search}%")
-                    ->orWhere('monto', 'LIKE', "%{$search}%")
-                    ->orWhere('año_correspondiente', 'LIKE', "%{$search}%")
-                    ->orWhere('estatus', 'LIKE', "%{$search}%")
-                    ->orWhere('fecha_vencimiento', 'LIKE', "%{$search}%")
-                    ->orWhereHas('automovil', function ($q) use ($search) {
-                        $q->where('marca', 'LIKE', "%{$search}%")
-                            ->orWhere('submarca', 'LIKE', "%{$search}%")
-                            ->orWhere('modelo', 'LIKE', "%{$search}%");
-                });
-            });
+        // Condiciones dinámicas para búsqueda
+        $conditions = [];
+        $parameters = [];
+
+        if ($request->has('search') && $request->input('search') != '') {
+        $search = $request->input('search');
+        $conditions[] = "(ten.origen LIKE :search1 OR 
+                        ten.monto LIKE :search2 OR 
+                        ten.año_correspondiente LIKE :search3 OR 
+                        ten.estatus LIKE :search4 OR 
+                        aut.marca LIKE :search5 OR 
+                        aut.submarca LIKE :search6 OR 
+                        aut.modelo LIKE :search7)";
+        $parameters = [
+            'search1' => "%{$search}%",
+            'search2' => "%{$search}%",
+            'search3' => "%{$search}%",
+            'search4' => "%{$search}%",
+            'search5' => "%{$search}%",
+            'search6' => "%{$search}%",
+            'search7' => "%{$search}%",
+        ];
         }
-        $tenencias = $query->get();
+
+        // Si hay condiciones de búsqueda, agregar al WHERE
+        if (!empty($conditions)) {
+        $sql .= " AND " . implode(' AND ', $conditions);
+        }
+
+        // Ejecutar la consulta SQL
+        $tenencias = \DB::select($sql, $parameters);
 
         return view('catalogos.tenencias.index', compact('tenencias'));
     }
@@ -44,11 +70,11 @@ class TeneciasRefrendosController extends Controller
     public function create()
     {
         //
-        // $automoviles = \DB::select("SELECT *
-	    // FROM automoviles AS aut
-	    // LEFT JOIN tenencias AS ten ON ten.id_automovil = aut.id_automovil
-	    // WHERE ten.estatus IS NULL OR ten.estatus != 'vigente'");
-        $automoviles = Automoviles::all();
+        $automoviles = \DB::select("SELECT aut.id_automovil, aut.marca, aut.submarca, aut.modelo
+	    FROM automoviles AS aut
+	    LEFT JOIN tenencias AS ten ON ten.id_automovil = aut.id_automovil
+	    WHERE aut.deleted_at IS NULL");
+        // $automoviles = Automoviles::all();
         return view('catalogos.tenencias.add', compact('automoviles'));
     }
     /**

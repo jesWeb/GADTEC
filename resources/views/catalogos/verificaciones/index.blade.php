@@ -232,22 +232,28 @@
         </script>
     @endif
     <script>
-        function deleteRegister() {
-            event.preventDefault();
-            const form = event.target.closest('form');
-            Swal.fire({
-                title: '¿Estás seguro?',
-                text: "¡No podrás deshacer esta acción!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Sí, eliminar',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    form.submit();
-                }
-            });
-        }
+        function deleteRegister(event, formId) {
+        event.preventDefault();
+        const btndelete = document.getElementById(formId);
+        Swal.fire({
+            title: "Estas seguro de eliminar el registro?",
+            text: "¡No podrás revertir esto!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Si, borrar!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                btndelete.submit();
+                Swal.fire({
+                    title: "¡Eliminado!",
+                    text: "La verificación ha sido eliminada correctamente.",
+                    icon: "success"
+                });
+            }
+        });
+    }
     </script>
     {{-- calendar  --}}
     <script>

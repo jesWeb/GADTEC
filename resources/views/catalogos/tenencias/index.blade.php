@@ -82,7 +82,7 @@
                             <tr class="hover:bg-gray-50">
                                 <td class="px-4 py-2 border">{{ $key + 1 }}</td>
                                 <td class="px-4 py-2 border">
-                                    {{ $tenencia->automovil->marca }} {{ $tenencia->automovil->modelo }}
+                                    {{ $tenencia->automovil }} 
                                 </td>
                                 <td class="px-4 py-2 border">{{ date('d/m/Y', strtotime($tenencia->fecha_pago)) }}</td>
                                 <td class="px-4 py-2 border">{{ $tenencia->origen }}</td>
@@ -116,10 +116,10 @@
                                             </svg>
                                         </a>
                                         <form action="tenencias/{{ $tenencia->id_tenencia }}" method="POST"
-                                              id="eliminacion-form" class="inline">
+                                              id="{{ $tenencia->id_tenencia }}" name="del_{{ $tenencia->id_tenencia }}" class="inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" onclick="deleteRegister(event)"
+                                            <button type="submit" name="del_{{ $tenencia->id_tenencia }}" onclick="deleteRegister(event, '{{ $tenencia->id_tenencia }}')"
                                                     class="inline-flex items-center justify-center w-8 h-8 text-red-600 border border-red-600 rounded hover:bg-red-600 hover:text-white"
                                                     title="Borrar tenencia">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -175,9 +175,9 @@
         </script>
     @endif
     <script>
-        function deleteRegister() {
+        function deleteRegister(event, formId) {
             event.preventDefault();
-            const btndelete = document.getElementById("eliminacion-form");
+            const btndelete = document.getElementById(formId);
             Swal.fire({
                 title: "Estas seguro de Eliminar el registro?",
                 text: "¡No podrás revertir esto!",
@@ -191,7 +191,7 @@
                     btndelete.submit();
                     Swal.fire({
                         title: "¡Eliminado!",
-                        text: "El automóvil ha sido eliminado correctamente.",
+                        text: "La tenencia/refrendo ha sido eliminada correctamente.",
                         icon: "success"
                     });
                 }
