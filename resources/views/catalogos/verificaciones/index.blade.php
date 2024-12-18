@@ -161,11 +161,11 @@
                                         </a>
 
                                         <!-- Eliminar -->
-                                        <form action="{{ route('verificaciones.destroy', $vr->id_verificacion) }}" id="eliminacion-form"
+                                        <form action="{{ route('verificaciones.destroy', $vr->id_verificacion) }}" name="del_$vr->id_verificacion" id="{{$vr->id_verificacion}}"
                                             method="POST" class="inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" onclick="deleteRegister(event)"
+                                            <button type="submit" name="del_$vr->id_verificacion" onclick="deleteRegister(event, '{{$vr->id_verificacion}}')"
                                                 class="inline-flex items-center justify-center w-8 h-8 text-red-600 border border-red-600 rounded hover:bg-red-600 hover:text-white"
                                                 title="Borrar la verificación">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"

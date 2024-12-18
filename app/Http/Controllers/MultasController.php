@@ -66,6 +66,9 @@ class MultasController extends Controller
         return view('modulos.multas.index', compact('multas'));
     }
 
+
+
+
     /**
      * Show the form for creating a new resource.
      */

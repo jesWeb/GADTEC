@@ -64,23 +64,7 @@
 
                     {{-- content --}}
                     <article class="flex flex-wrap max-w-3xl mx-auto md:flex-nowrap group">
-                        {{-- poliza Img --}}
-                        <div class="">
-                            <div class="">
-                                @php
-                                    $fotografias = json_decode($MostrarVer->image, true);
-                                @endphp
-
-                                @if ($fotografias)
-                                    @foreach ($fotografias as $foto)
-                                        <img src="{{ url('img/verificaciones/' . $foto) }}"
-                                            class="w-full max-h-[400px] object-cover md:w-52" alt="seguro">
-                                        <a href="{{ url('img/verificaciones/' . $foto) }}" target="_blank"
-                                            class="text-gray-500" title="Ver archivo de seguro">Ver imagen</a>
-                                    @endforeach
-                                @endif
-                            </div>
-                        </div>
+                        
                         {{-- content info --}}
                         <div class="mt-6 ml-4 space-y-6">
                             <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -141,7 +125,30 @@
                                     <span
                                         class="mt-2 text-base leading-relaxed text-gray-500 ">{{ $MostrarVer->observaciones }}</span>
                                 </div>
+
+                                <div class="p-4 bg-white rounded-lg shadow-sm">
+                                <p class="text-lg font-semibold text-gray-800">Comprobante:</p>
+                                @if($MostrarVer->image != '') 
+                                    <div class="flex gap-4 p-4 ml-4 overflow-x-auto">
+                                        @php
+                                            $fotografias = json_decode($MostrarVer->image, true);
+                                        @endphp
+
+                                        @if ($fotografias)
+                                            @foreach ($fotografias as $foto)
+                                                <img src="{{ url('img/verificaciones/' . $foto) }}" class="w-16 h-auto transition-transform duration-300 transform rounded-lg shadow-md hover:scale-90 hover:shadow-lg" alt="seguro">
+                                                <a href="{{ url('img/verificaciones/' . $foto) }}" target="_blank" class="text-gray-500" title="Ver archivo de de tenencia">Ver imagen</a> 
+                                            @endforeach
+                                        @else
+                                            <p class="text-sm text-gray-500">Sin imagen</p>
+                                        @endif
+                                    </div>
+                            
+                                @endif
                             </div>
+                            </div>
+
+                            
                         </div>
 
                     </article>

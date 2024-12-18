@@ -308,7 +308,7 @@
 
 
 
-
+        // createImageInput(); // Agregar un input por defecto
         });
     </script>
 @endsection

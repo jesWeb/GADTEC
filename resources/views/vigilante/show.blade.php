@@ -126,7 +126,7 @@
 
 
 
-            <div class="flex items-start justify-center gap-8">
+        <div class="flex items-start justify-center gap-8">
                 <!-- Fotografías de salida -->
                 <div class="flex flex-col w-1/2 ml-2">
                     <h1 class="p-4 text-lg font-semibold text-center text-gray-700">Fotografías de salida del automóvil</h1>
@@ -136,24 +136,11 @@
                         @endphp
 
                         @if ($fotografiasSalida)
-                            <a id="show-image" href="" class="text-gray-500" title="Ver archivo de seguro">Ver
-                                imagenes</a>
-                            {{-- una sola imagen preview --}}
                             @foreach ($fotografiasSalida as $foto)
-                                <img src="{{ url('img/salidas/' . $foto) }}" alt="Imagen del Vehículo"
-                                    class="object-cover w-full h-full transition-transform duration-300 transform rounded-lg shadow-md hover:scale-90 hover:shadow-lg">
-                                <script>
-                                    Swal.fire({
-                                        title: "Imagenes de Check-In",
-                                        imageUrl: "{{ url('img/salidas/' . $foto) }}",
-                                        imageWidth: 400,
-                                        imageHeight: 200,
-                                        imageAlt: "Custom image"
-                                    });
-                                </script>
+                                <img src="{{ url('img/salidas/' . $foto) }}" alt="Imagen del Vehículo" class="object-cover w-full h-full transition-transform duration-300 transform rounded-lg shadow-md hover:scale-90 hover:shadow-lg">
+                                <a href="{{ url('img/salidas/' . $foto) }}" target="_blank" class="text-gray-500" title="Ver archivo de seguro">Ver imagen</a>
+
                             @endforeach
-                        @else
-                            <p>No hay fotografias Cargadas </p>
                         @endif
                     </div>
                 </div>
@@ -162,12 +149,13 @@
 
                 <!-- Fotografías de regreso -->
                 <div class="flex flex-col w-1/2 ml-4">
-                    <h1 class="p-4 text-lg font-semibold text-center text-gray-700">Fotografías de regreso del automóvil
-                    </h1>
+                    <h1 class="p-4 text-lg font-semibold text-center text-gray-700">Fotografías de regreso del automóvil</h1>
                     <div class="flex gap-4 p-4 ml-4 overflow-x-auto">
                         @php
                             $fotografiasRegreso = json_decode($checkIn->fotografias_regreso, true);
                         @endphp
+
+
                         @if ($fotografiasRegreso)
                             @foreach ($fotografiasRegreso as $foto)
                                 <img src="{{ asset('img/llegadas/' . $foto) }}" alt="Fotos de regreso"

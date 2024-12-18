@@ -69,26 +69,6 @@ class GestionController extends Controller
             ORDER BY aut.marca
             ");
 
-
-
-
-
-
-        $disponibilidad = DB::select("SELECT aut.*, asi.id_asignacion, asi.estatus
-            FROM automoviles AS aut
-            LEFT JOIN (
-                SELECT id_automovil, id_asignacion, estatus
-                FROM asignacions
-                WHERE (id_automovil, id_asignacion) IN (
-                    SELECT id_automovil, MAX(id_asignacion)
-                    FROM asignacions
-                    GROUP BY id_automovil
-                )
-            ) AS asi
-            ON aut.id_automovil = asi.id_automovil
-            WHERE aut.deleted_at IS NULL
-            ORDER BY aut.marca
-            ");
         // dd($disponibilidad);
         return view('modulos.Gestion.index', compact('disponibilidad'));
     }

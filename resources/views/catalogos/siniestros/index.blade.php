@@ -121,7 +121,7 @@
                                         </a>
 
                                         <!-- Eliminar -->
-                                        <form action="{{ route('siniestros.destroy',  $sin->id_siniestro) }}" method="POST"
+                                        <form action="{{ route('siniestros.destroy', $sin->id_siniestro) }}" method="POST"
                                             id="{{ $sin->id_siniestro }}" name="del_{{ $sin->id_siniestro }}" class="inline">
                                             @csrf
                                             @method('DELETE')

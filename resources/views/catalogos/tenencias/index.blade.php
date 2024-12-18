@@ -47,7 +47,7 @@
                     <div class="flex items-center w-full md:w-auto">
                         <input type="text" name="search" placeholder="Buscar Tenencia"
                                class="w-full px-4 py-2 text-gray-700 border rounded-l-md focus:outline-none md:w-48"
-                               value="{{ request('search') }}" 
+                               value="{{ request('search') }}"
                                title="Buscar tenencias o refrendo">
                         <button type="submit"
                                 class="flex items-center px-4 py-2 ml-1 text-white bg-blue-600 border-l-0 rounded-r-md hover:bg-blue-700 focus:outline-none"
@@ -82,7 +82,7 @@
                             <tr class="hover:bg-gray-50">
                                 <td class="px-4 py-2 border">{{ $key + 1 }}</td>
                                 <td class="px-4 py-2 border">
-                                    {{ $tenencia->automovil }} 
+                                    {{ $tenencia->automovil }}
                                 </td>
                                 <td class="px-4 py-2 border">{{ date('d/m/Y', strtotime($tenencia->fecha_pago)) }}</td>
                                 <td class="px-4 py-2 border">{{ $tenencia->origen }}</td>
@@ -94,10 +94,10 @@
                                         {{ $tenencia->estatus }}
                                     </span>
                                 </td>
-                                
+
                                 <td class="px-4 py-2 border">
                                     <div class="flex items-center space-x-2">
-                                        <a href="tenencias/{{ $tenencia->id_tenencia }}" 
+                                        <a href="tenencias/{{ $tenencia->id_tenencia }}"
                                            class="inline-flex items-center justify-center w-8 h-8 text-green-600 border border-green-600 rounded hover:bg-green-600 hover:text-white"
                                            title="Ver tenencias">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -147,7 +147,7 @@
     @if ($mensaje = Session::get('mensaje'))
         <script>
             Swal.fire({
-                title: "Automovil Registrado",
+                title: "Tenencia Registrada",
                 text: "{{ $mensaje }}",
                 icon: "success"
             });

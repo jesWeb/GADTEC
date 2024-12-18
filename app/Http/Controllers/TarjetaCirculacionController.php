@@ -13,7 +13,7 @@ class TarjetaCirculacionController extends Controller
      */
     public function index(Request $request)
     {
-       
+
         $sql = "SELECT
         tar.id_tarjeta,
         tar.nombre,
@@ -36,12 +36,12 @@ class TarjetaCirculacionController extends Controller
 
         if ($request->has('search') && $request->input('search') != '') {
         $search = $request->input('search');
-        $conditions[] = "(tar.nombre LIKE :search1 OR 
-                        tar.num_tarjeta LIKE :search2 OR 
-                        tar.vehiculo_origen LIKE :search3 OR 
-                        tar.estatus LIKE :search4 OR 
-                        aut.marca LIKE :search5 OR 
-                        aut.submarca LIKE :search6 OR 
+        $conditions[] = "(tar.nombre LIKE :search1 OR
+                        tar.num_tarjeta LIKE :search2 OR
+                        tar.vehiculo_origen LIKE :search3 OR
+                        tar.estatus LIKE :search4 OR
+                        aut.marca LIKE :search5 OR
+                        aut.submarca LIKE :search6 OR
                         aut.modelo LIKE :search7)";
         $parameters = [
             'search1' => "%{$search}%",
@@ -70,9 +70,9 @@ class TarjetaCirculacionController extends Controller
     public function create()
     {
         $automoviles = \DB::select("SELECT aut.id_automovil, aut.marca, aut.modelo, aut.submarca
-            FROM automoviles AS aut
-            LEFT JOIN tarjetas AS tar ON tar.id_automovil = aut.id_automovil
-            WHERE tar.estatus IS NULL OR tar.estatus != 'vigente'");
+        FROM automoviles
+        AS aut LEFT JOIN tarjetas AS tar ON tar.id_automovil = aut.id_automovil
+        WHERE (tar.id_automovil IS NULL OR tar.estatus != 'vigente')");
 
         return view('catalogos.tarjetas.add', compact('automoviles'));
     }
@@ -146,7 +146,7 @@ class TarjetaCirculacionController extends Controller
 
         TarjetaCirculacion::create($input);
 
-        
+
 
         return redirect()->route('tarjetas.index')->with('mensaje', 'Se ha creado correctamente el registro');
 

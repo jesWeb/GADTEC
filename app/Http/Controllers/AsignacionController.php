@@ -43,7 +43,7 @@ class AsignacionController extends Controller
     public function create()
     {
 
-        $auto = \DB::select(
+        $auto = DB::select(
         "SELECT
             aut.id_automovil,
             aut.marca,
