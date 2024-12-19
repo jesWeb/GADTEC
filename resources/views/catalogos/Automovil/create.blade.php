@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('body')
- <!-- Librería requerida para validacion del tamaño de la img, está dentro de public -->
- <script type="text/javascript" src="{{ url('js/jquery-3.7.1.min.js') }}"></script>
+    <!-- Librería requerida para validacion del tamaño de la img, está dentro de public -->
+    <script type="text/javascript" src="{{ url('js/jquery-3.7.1.min.js') }}"></script>
     <div class="px-6 py-2">
         <!-- Mapa de sitio -->
         <div class="flex justify-end mt-2 mb-4">
@@ -264,9 +264,7 @@
                                         Automovil</label>
                                     <select name="tipo_automovil"
                                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                        required
-                                        value="{{ old('tipo_automovil') }}"
-                                        >
+                                        required value="{{ old('tipo_automovil') }}">
                                         <option disabled selected>Selecciona una opción</option>
                                         <option value="Automovil"{{ old('estatus' == 'Automovil' ? 'selected' : '') }}>
                                             Automóvil -
@@ -285,8 +283,7 @@
                                 <div class="xl:mb-5">
                                     <label class="mb-3 block text-base font-medium text-[#07074D]" for="uso">
                                         Uso</label>
-                                    <select name="uso"
-                                     value="{{ old('uso') }}"
+                                    <select name="uso" value="{{ old('uso') }}"
                                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                         required>
                                         <option disabled selected>Selecciona una opcion </option>
@@ -318,23 +315,22 @@
                                 for="observaciones">Observaciones
                                 del
                                 vehiculo</label>
-                            <textarea
-                                 value="{{ old('observaciones') }}"
-                            placeholder="Observaciones ..."
+                            <textarea value="{{ old('observaciones') }}" placeholder="Observaciones ..."
                                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                 name="observaciones"></textarea>
                         </div>
 
-                            {{-- foto --}}
+                        {{-- foto --}}
                         <div class="pt-4 mb-6">
                             <h3 class="mb-2 block text-xl font-semibold text-[#07074D]">
                                 Subir Imágenes
                             </h3>
                             <p class="text-sm text-gray-600">Máximo 5 imágenes</p>
                             <div class="flex flex-wrap gap-4 mt-4 pt-4 mb-6" id="imageContainer"></div>
-                            <input type="file" name="fotografias[]" id="fotografias" accept="image/*" class="sr-only" multiple />
+                            <input type="file" name="fotografias[]" id="fotografias" accept="image/*"
+                                class="sr-only" multiple />
                             <div class="mb-8">
-                                <label for="image"  id="addImageBtn"
+                                <label for="image" id="addImageBtn"
                                     class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
                                     <div>
                                         <span
@@ -360,71 +356,71 @@
             </div>
         </div>
 
-         <!-- Script de validación -->
-    <script>
-        $(document).ready(function() {
-            let maxImages = 5;
-            let currentImages = 0;
-            const maxFileSize = 15 * 1024 * 1024;
+        <!-- Script de validación -->
+        <script>
+            $(document).ready(function() {
+                let maxImages = 5;
+                let currentImages = 0;
+                const maxFileSize = 50 * 1024 * 1024;
 
-            function createImageInput(capture = false) {
-                const inputFile = $('<input>', {
-                    type: 'file',
-                    name: 'fotografias[]',
-                    accept: 'image/jpeg,image/png',
-                    class: 'hidden',
+                function createImageInput(capture = false) {
+                    const inputFile = $('<input>', {
+                        type: 'file',
+                        name: 'fotografias[]',
+                        accept: 'image/jpeg,image/png',
+                        class: 'hidden',
 
-                });
+                    });
 
-                const previewContainer = $(`
+                    const previewContainer = $(`
             <div class="flex items-center mt-4 space-x-4">
                 <img src="#" class="object-cover w-16 h-16 border rounded" alt="Previsualización">
                 <button type="button" class="text-red-500 remove-image">Eliminar</button>
             </div>
         `);
 
-                inputFile.on('change', function() {
-                    const file = this.files[0];
+                    inputFile.on('change', function() {
+                        const file = this.files[0];
 
-                    if (file) {
-                        if (file.size > maxFileSize) {
-                            alert('El archivo supera el tamaño máximo permitido de 10 MB.');
-                            inputFile.val('');
-                            return;
+                        if (file) {
+                            if (file.size > maxFileSize) {
+                                alert('El archivo supera el tamaño máximo permitido de 10 MB.');
+                                inputFile.val('');
+                                return;
+                            }
+
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                                previewContainer.find('img').attr('src', e.target.result);
+                            };
+                            reader.readAsDataURL(file);
+
+                            currentImages++;
+                            updateButtonState();
                         }
+                    });
 
-                        const reader = new FileReader();
-                        reader.onload = function(e) {
-                            previewContainer.find('img').attr('src', e.target.result);
-                        };
-                        reader.readAsDataURL(file);
-
-                        currentImages++;
+                    previewContainer.find('.remove-image').on('click', function() {
+                        inputFile.remove();
+                        previewContainer.remove();
+                        currentImages--;
                         updateButtonState();
+                    });
+
+                    $('#imageContainer').append(previewContainer);
+                    inputFile.click();
+                    $('#imageForm').append(inputFile);
+                }
+
+                $('#addImageBtn').on('click', function() {
+                    if (currentImages < maxImages) {
+                        createImageInput(true);
                     }
                 });
 
-                previewContainer.find('.remove-image').on('click', function() {
-                    inputFile.remove();
-                    previewContainer.remove();
-                    currentImages--;
-                    updateButtonState();
-                });
 
-                $('#imageContainer').append(previewContainer);
-                inputFile.click();
-                $('#imageForm').append(inputFile);
-            }
 
-            $('#addImageBtn').on('click', function() {
-                if (currentImages < maxImages) {
-                    createImageInput(true);
-                }
+                // createImageInput(); // Agregar un input por defecto
             });
-
-
-
-           // createImageInput(); // Agregar un input por defecto
-        });
-    </script>
+        </script>
     @endsection

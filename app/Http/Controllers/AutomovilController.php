@@ -94,7 +94,6 @@ class AutomovilController extends Controller
             'modelo.required' => 'El campo Modelo es obligatorio.',
             'modelo.integer' => 'El año del modelo debe ser un número entero.',
             'fotografias.mimes' => 'El archivo de fotografía debe ser de tipo: jpeg, png, jpg, pdf.',
-            'fotografias.max' => 'El archivo de fotografía no debe superar los 10MB.',
         ];
         //limpieza de kilometraje en el req
         $request->merge(['kilometraje' => $kilometraje]);
@@ -152,7 +151,7 @@ class AutomovilController extends Controller
         // Manejo de imágenes
         $fotografias = $EddCar->fotografias ? json_decode($EddCar->fotografias, true) : [];
 
-        $maxTotalSize = 50 * 1024 * 1024; // 50 MB
+        $maxTotalSize = 100 * 1024 * 1024; // 50 MB
         $totalSize = 0;
 
         if ($request->hasFile('fotografias')) {
