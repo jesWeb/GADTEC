@@ -1,13 +1,6 @@
 @extends('layouts.app')
 
 @section('body')
-
-
-
-
-
-            
-
 <div class="px-6 py-2">
     <!-- Mapa de sitio -->
     <div class="flex justify-end mt-2 mb-4">
@@ -208,7 +201,7 @@
                                 justify-center items-center">
                                 
 
-                        <!-- The close button -->
+                        <!-- Boton de cerrar -->
                         <a class="fixed z-90 top-6 right-8 
                                 text-white text-5xl font-bold" 
                         href="javascript:void(0)"
@@ -247,31 +240,31 @@
 
 <script>
                 
-    // Get all the img elements in the grid
+    // obtener todos los elementos de la img
         var images = document.querySelectorAll('.grid img');
 
-    // Loop through each img element
+    // recorre cada elemento de la img
         images.forEach(function (img) {
                     
-            // Add a click event listener to each img element
+            // agregar cada evento de elementos en cada clic en la img
             img.addEventListener('click', function () {
                 showModal(img.src);
             });
         });
 
-        // Get the modal by id
+        // obtener el id del modal
         var modal = document.getElementById("modal");
 
-        // Get the modal image tag
+        // obtener la etiqueta de la img
         var modalImg = document.getElementById("modal-img");
 
-        // This function is called when a small image is clicked
+        // Cuando se hace clic en la img
         function showModal(src) {
             modal.classList.remove('hidden');
             modalImg.src = src;
         }
 
-        // This function is called when the close button is clicked
+        // Esta funcion es para cerrar
             function closeModal() {
                 modal.classList.add('hidden');
         }
