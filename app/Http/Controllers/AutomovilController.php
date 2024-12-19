@@ -53,7 +53,6 @@ class AutomovilController extends Controller
             'modelo' => [
                 'required',
                 'integer',
-
                 /*VaLIDACION DE MODELO *
                   *creamos una func
                   donde los atributos de $attribute recibe el parametreo del input y $value -> valor del campo
