@@ -129,58 +129,55 @@
         </div>
 
 
-        
-        <div class="flex flex-col gap-5.5 items-center justify-center mt-4 xl:flex-row mb-3">
-            <div>
-                <h1 class="p-4 text-lg font-semibold text-center text-gray-700">
-                    Fotografías de salida del automóvil
-                </h1>
-                
-                <div class="flex gap-4 p-4 ml-4 overflow-x-auto">
-                    @php
-                        $fotografiasSalida = json_decode($checkIn->fotografias_salida, true);
-                    @endphp
+        <h1 class="p-4 text-lg font-semibold text-start text-gray-700">Fotografías de salida del automóvil
+        </h1>
+        <div class="flex items-start justify-center gap-8">
+            
+            <div class="flex gap-4 p-4 ml-4 overflow-x-auto">
+                @php
+                    $fotografiasSalida = json_decode($checkIn->fotografias_salida, true);
+                @endphp
 
-                    @if ($fotografiasSalida)
-                        @foreach ($fotografiasSalida as $foto)
-                            <!-- Images-->
-                            <div class="grid gap-5 ">
-                                <img 
-                                class="w-16 h-max-auto object-cover cursor-pointer rounded-lg 
-                                shadow-md hover:scale-90 hover:shadow-lg "
-                                src="{{ url('img/salidas/' . $foto) }}"
-                                    alt="Img 1" id="img1" />
-                                
-                            </div>
-                        @endforeach
+                @if ($fotografiasSalida)
+                    @foreach ($fotografiasSalida as $foto)
+                        <!-- Images-->
+                        <div class="grid gap-5 ">
+                            <img class="w-16 h-max-auto transition-transform duration-300 transform rounded-lg shadow-md hover:scale-90 hover:shadow-lg object-cover cursor-pointer" src="{{ url('img/salidas/' . $foto) }}"
+                                alt="Img 1" id="img1" />
+                            
+                        </div>
+                    @endforeach
 
-                    @else
-                        <p>No hay fotografias Cargadas </p>
-                    @endif
-                    <!-- The Modal -->
-                    <div id="modal"
-                        class="hidden fixed top-0 left-0 z-80 
-                                w-screen h-screen bg-black/70 flex 
-                                justify-center items-center">
+                @else
+                    <p>No hay fotografias Cargadas </p>
+                @endif
+                <!-- The Modal -->
+                <div id="modal"
+                    class="hidden fixed top-0 left-0 z-80 
+                            w-screen h-screen bg-black/70 flex 
+                            justify-center items-center">
 
-                        <!-- The close button -->
-                        <a class="fixed z-90 top-6 right-8 
-                                text-white text-5xl font-bold" 
-                        href="javascript:void(0)"
-                        onclick="closeModal()">
-                            ×
-                        </a>
+                    <!-- The close button -->
+                    <a class="fixed z-90 top-6 right-8 
+                            text-white text-5xl font-bold" 
+                    href="javascript:void(0)"
+                    onclick="closeModal()">
+                        ×
+                    </a>
 
-                        <!-- Medida de imagen -->
-                        <img id="modal-img"
-                            class="max-w-[900px] max-h-[700px] object-cover"/>
-                    </div>
+                    <!-- Medida de imagen -->
+                    <img id="modal-img"
+                        class="max-w-[900px] max-h-[700px] object-cover"/>
                 </div>
-
             </div>
+           
+       
 
-             <!-- Fotografías de regreso -->
-             <div class="w-full px-3 xl:w-1/2">
+
+       
+
+            <!-- Fotografías de regreso -->
+            <div class="grid grid-col w-1/2 ml-2">
                 <h1 class="p-4 text-lg font-semibold text-center text-gray-700">Fotografías de regreso del automóvil
                 </h1>
                 <div class="flex gap-4 p-4 ml-4 overflow-x-auto">
@@ -191,9 +188,8 @@
 
                     @if ($fotografiasRegreso)
                         @foreach ($fotografiasRegreso as $foto)
-                        <div class="grid gap-5">
-                        <img class="w-16 h-max-auto object-cover cursor-pointer rounded-lg 
-                            shadow-md hover:scale-90 hover:shadow-lg " 
+                        <div class="grid gap-5 ">
+                            <img class="w-16 h-max-auto transition-transform duration-300 transform rounded-lg shadow-md hover:scale-90 hover:shadow-lg object-cover cursor-pointer" 
                             src="{{ url('img/llegadas/' . $foto) }}"
                                 alt="Img 1" id="img1" />
                                 
@@ -203,29 +199,25 @@
                         <p>No hay fotografias Cargadas </p>
                     @endif
                     <div id="modal"
-                        class="hidden  fixed top-0 left-0 z-80 
-                                w-screen h-screen bg-black/70 flex
-                                justify-center items-center">
-                                
+                    class="hidden fixed top-0 left-0 z-80 
+                            w-screen h-screen bg-black/70 flex 
+                            justify-center items-center">
 
-                        <!-- The close button -->
-                        <a class="fixed z-90 top-6 right-8 
-                                text-white text-5xl font-bold" 
-                        href="javascript:void(0)"
-                        onclick="closeModal()">
-                            ×
-                        </a>
+                    <!-- The close button -->
+                    <a class="fixed z-90 top-6 right-8 
+                            text-white text-5xl font-bold" 
+                    href="javascript:void(0)"
+                    onclick="closeModal()">
+                        ×
+                    </a>
 
-                        <!-- Medida de imagen -->
-                        <img id="modal-img"
-                            class="max-w-[900px] max-h-[700px] object-cover"/>
-                    </div>
+                    <!-- Medida de imagen -->
+                    <img id="modal-img"
+                        class="max-w-[900px] max-h-[700px] object-cover"/>
+                </div>
                 </div>
             </div>
-                
         </div>
-           
-    
 
         <div class="flex justify-end mt-6 space-x-4">
             <!-- Botón cerrar -->

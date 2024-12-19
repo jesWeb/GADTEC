@@ -68,11 +68,28 @@ class TarjetaCirculacionController extends Controller
      * Show the form for creating a new resource.
      */
     public function create()
+
+//     SELECT aut.*, asi.id_asignacion
+// FROM automoviles AS aut
+// LEFT JOIN (
+//     SELECT id_automovil, id_asignacion, deleted_at
+//     FROM asignacions
+//     WHERE (id_automovil, id_asignacion) IN (
+//         SELECT id_automovil, MAX(id_asignacion)
+//         FROM asignacions
+//         GROUP BY id_automovil
+//     )
+// ) AS asi
+// ON aut.id_automovil = asi.id_automovil
+// WHERE aut.deleted_at IS NULL 
+//   AND (asi.id_asignacion IS NULL OR asi.deleted_at IS NOT NULL)
+// ORDER BY aut.marca;
     {
         $automoviles = \DB::select("SELECT aut.id_automovil, aut.marca, aut.modelo, aut.submarca
         FROM automoviles
         AS aut LEFT JOIN tarjetas AS tar ON tar.id_automovil = aut.id_automovil
-        WHERE (tar.id_automovil IS NULL OR tar.estatus != 'vigente')");
+        WHERE aut.deleted_at IS NULL AND(tar.id_automovil IS NULL
+        OR tar.deleted_at IS NOT NULL OR tar.estatus != 'vigente')");
 
         return view('catalogos.tarjetas.add', compact('automoviles'));
     }
