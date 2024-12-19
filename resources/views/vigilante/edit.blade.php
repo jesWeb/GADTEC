@@ -140,12 +140,7 @@
                                     required>
                             </div>
 
-
-
-
                         </div>
-
-
                         <!-- Datos de Llegada -->
                         <div class="space-y-4">
                             <h3 class="text-lg font-medium text-gray-700">Datos de Llegada</h3>
@@ -158,7 +153,6 @@
                                     class="block w-full mt-1 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-200"
                                     disabled>
                             </div>
-
                             <div>
                                 <label for="combustible_llegada"
                                     class="block text-sm font-medium text-gray-700">Combustible Llegada</label>
@@ -192,10 +186,6 @@
                                     class="block w-full mt-1 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-200"
                                     disabled>
                             </div>
-
-
-
-
                         </div>
                     </div>
                     <!-- Subida de imágenes -->
@@ -220,9 +210,8 @@
                         </div>
                     </div>
 
-
+                    {{-- btn --}}
                     <div class="mt-6">
-
                         <button type="submit" id="submitBtn" disabled titile="Guardar datos de salida"
                             class="inline-flex items-center px-4 py-2 text-white bg-yellow-600 border border-transparent rounded-md shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
                             Crear Check-In
