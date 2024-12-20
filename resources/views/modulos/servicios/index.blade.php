@@ -99,7 +99,7 @@
                                 </td>
                                 <td class="px-4 py-2 border">${{ $servicio->costo }}</td>
                                 <td class="px-4 py-2 border">{{ $servicio->lugar_servicio }}</td>
-                                @if($servicio->fecha_servicio !='' || $serv->prox_servicio != '')
+                                @if($servicio->estatusIn !='Mantenimiento' && $servicio->estatusIn != 'En servicio')
                                     <td class="px-4 py-2 border">Entregado</td>
                                 @else
                                     <td class="px-4 py-2 border">{{ $servicio->estatusIn }}</td>
