@@ -185,7 +185,7 @@ class ServiciosController extends Controller
              'comprobante' => 'nullable|array|max:5',
              'comprobante.*' => 'nullable|file|mimes:jpeg,png,jpg',
              'id_automovil' => 'nullable|exists:automoviles,id_automovil',
-          
+
          ];
 
          $messages = [
@@ -232,7 +232,7 @@ class ServiciosController extends Controller
          // Actualizar el servicio
          $servicio->update($input);
 
-         
+
 
          return redirect()->route('servicios.index')->with('message', 'Servicio actualizado correctamente');
      }
@@ -251,7 +251,7 @@ class ServiciosController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    
+
 
     public function destroy($id)
     {
