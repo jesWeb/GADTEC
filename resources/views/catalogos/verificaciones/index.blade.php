@@ -92,8 +92,6 @@
                             <th class="px-4 py-2 text-left text-gray-600">Vehículo</th>
                             <th class="px-4 py-2 text-left text-gray-600">Fecha verificación</th>
                             <th class="px-4 py-2 text-left text-gray-600">Fecha próxima verificación</th>
-                            <th class="px-4 py-2 text-left text-gray-600">Fecha verificación 00</th>
-                            <th class="px-4 py-2 text-left text-gray-600">Fecha próxima verificación 00</th>
                             <th class="px-4 py-2 text-left text-gray-600">Acciones</th>
                         </tr>
                     </thead>
@@ -102,39 +100,26 @@
                             <tr class="hover:bg-gray-50">
                                 <td class="px-4 py-2 border">{{ $key + 1 }}</td>
                                 <td class="px-4 py-2 border">
-                                    {{ $vr->automovil}}
+                                    {{ $vr->automovil }}
                                 </td>
                                 <td class="px-4 py-2 border">
 
-                                    @if ($vr->fecha_verificacion )
-                                        {{ date('d-m-Y',strtotime($vr->fecha_verificacion)) }}
-                                    @else
-                                        {{ 'N/A' }}
+                                    @if ($vr->fecha_verificacion)
+                                        {{ date('d-m-Y', strtotime($vr->fecha_verificacion)) }}
+
+                                        {{-- {{ date('d-m-Y', strtotime($vr->fecha_verificacion_00)) }} --}}
                                     @endif
 
                                 </td>
                                 <td class="px-4 py-2 border">
 
                                     @if ($vr->fecha_verificacion)
-                                        {{ date('d-m-Y',strtotime($vr->proxima_verificacion))}}
-                                    @else
-                                        {{ 'N/A' }}
+                                        {{ date('d-m-Y', strtotime($vr->proxima_verificacion)) }}
+                                    {{-- @elseif ($vr->proxima_verificacion_00)
+                                        {{ date('d-m-Y', strtotime($vr->proxima_verificacion_00)) }} --}}
                                     @endif
                                 </td>
-                                <td class="px-4 py-2 border">
-                                    @if ($vr->fecha_verificacion_00 )
-                                        {{ date('d-m-Y',strtotime($vr->fecha_verificacion_00)) }}
-                                    @else
-                                        {{ 'N/A' }}
-                                    @endif
-                                </td>
-                                <td class="px-4 py-2 border">
-                                    @if ($vr->fecha_verificacion_00)
-                                    {{ date('d-m-Y',strtotime($vr->proxima_verificacion_00)) }}
-                                    @else
-                                        {{ 'N/A' }}
-                                    @endif
-                                </td>
+
                                 {{-- acciones --}}
                                 <td class="px-4 py-2 border">
                                     <div class="flex items-center space-x-2">
@@ -161,11 +146,13 @@
                                         </a>
 
                                         <!-- Eliminar -->
-                                        <form action="{{ route('verificaciones.destroy', $vr->id_verificacion) }}" name="del_$vr->id_verificacion" id="{{$vr->id_verificacion}}"
+                                        <form action="{{ route('verificaciones.destroy', $vr->id_verificacion) }}"
+                                            name="del_$vr->id_verificacion" id="{{ $vr->id_verificacion }}"
                                             method="POST" class="inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" name="del_$vr->id_verificacion" onclick="deleteRegister(event, '{{$vr->id_verificacion}}')"
+                                            <button type="submit" name="del_$vr->id_verificacion"
+                                                onclick="deleteRegister(event, '{{ $vr->id_verificacion }}')"
                                                 class="inline-flex items-center justify-center w-8 h-8 text-red-600 border border-red-600 rounded hover:bg-red-600 hover:text-white"
                                                 title="Borrar la verificación">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -223,27 +210,27 @@
     @endif
     <script>
         function deleteRegister(event, formId) {
-        event.preventDefault();
-        const btndelete = document.getElementById(formId);
-        Swal.fire({
-            title: "Estas seguro de eliminar el registro?",
-            text: "¡No podrás revertir esto!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Si, borrar!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                btndelete.submit();
-                Swal.fire({
-                    title: "¡Eliminado!",
-                    text: "La verificación ha sido eliminada correctamente.",
-                    icon: "success"
-                });
-            }
-        });
-    }
+            event.preventDefault();
+            const btndelete = document.getElementById(formId);
+            Swal.fire({
+                title: "Estas seguro de eliminar el registro?",
+                text: "¡No podrás revertir esto!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si, borrar!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    btndelete.submit();
+                    Swal.fire({
+                        title: "¡Eliminado!",
+                        text: "La verificación ha sido eliminada correctamente.",
+                        icon: "success"
+                    });
+                }
+            });
+        }
     </script>
     {{-- calendar  --}}
     <script>
@@ -251,7 +238,7 @@
         btnAlert.addEventListener('click', () => {
             Swal.fire({
                 title: "Calendario  de verificación",
-                imageUrl: '{{url('img/verificaciones/VerificaSemestre.png')}}',
+                imageUrl: '{{ url('img/verificaciones/VerificaSemestre.png') }}',
                 imageWidth: 480,
                 imageHeight: 320,
                 imageAlt: "Calendario de verificación"
