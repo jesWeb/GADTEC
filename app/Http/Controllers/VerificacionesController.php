@@ -138,8 +138,6 @@ class VerificacionesController extends Controller
             ])->withInput();
         }
 
-        // Calcular la próxima fecha de verificación sumando 6 meses
-        // $proximaVerificacion = $fechaV->copy()->addMonths(6);
 
         //verificar si es 00
         $etiquetaDobleCero = $request->input('etiqueta_00');
