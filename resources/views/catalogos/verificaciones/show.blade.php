@@ -64,7 +64,7 @@
 
                     {{-- content --}}
                     <article class="flex flex-wrap max-w-3xl mx-auto md:flex-nowrap group">
-                        
+
                         {{-- content info --}}
                         <div class="mt-6 ml-4 space-y-6">
                             <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -76,13 +76,13 @@
                                     </div>
                                 @endif
 
-                                @if ($MostrarVer->fecha_verificacion_00)
+                                {{-- @if ($MostrarVer->fecha_verificacion_00)
                                     <div class="p-4 bg-white rounded-lg shadow-sm">
                                         <h4 class="text-lg font-semibold text-gray-800">Fecha de Verificación 00:</h4>
                                         <span
                                             class="mt-2 text-base leading-relaxed text-gray-500 ">{{ date('d-m-Y', strtotime($MostrarVer->fecha_verificacion_00)) }}</span>
                                     </div>
-                                @endif
+                                @endif --}}
 
                                 <div class="p-4 bg-white rounded-lg shadow-sm">
                                     <h4 class="text-lg font-semibold text-gray-800">Engomado: </h4>
@@ -102,33 +102,38 @@
                                         </span>
                                     </div>
                                 @endif
-                                @if ($MostrarVer->proxima_verificacion_00)
+                                {{-- @if ($MostrarVer->proxima_verificacion_00)
                                     <div class="p-4 bg-white rounded-lg shadow-sm">
                                         <h4 class="text-lg font-semibold text-gray-800">Próxima Verificación:</h4>
                                         <span class="mt-2 text-base leading-relaxed text-gray-500 ">
                                             {{ date('d-m-Y', strtotime($MostrarVer->proxima_verificacion_00)) }}
                                         </span>
                                     </div>
-                                @endif
+                                @endif --}}
 
-                                @if ($MostrarVer->motivo_00)
+                                {{-- @if ($MostrarVer->motivo_00)
                                     <div class="p-4 bg-white rounded-lg shadow-sm ">
                                         <h4 class="text-lg font-semibold text-gray-800">Observaciones de Verificación 00:
                                         </h4>
                                         <span
                                             class="mt-2 text-base leading-relaxed text-gray-500">{{ $MostrarVer->motivo_00 }}</span>
                                     </div>
-                                @endif
+                                @endif --}}
 
                                 <div class="p-4 bg-white rounded-lg shadow-sm">
                                     <h4 class="text-lg font-semibold text-gray-800">Observaciones de Verificación:</h4>
                                     <span
                                         class="mt-2 text-base leading-relaxed text-gray-500 ">{{ $MostrarVer->observaciones }}</span>
                                 </div>
+                                <div class="p-4 bg-white rounded-lg shadow-sm">
+                                    <h4 class="text-lg font-semibold text-gray-800">Monto de verificacion:</h4>
+                                    <span
+                                        class="mt-2 text-base leading-relaxed text-gray-500 ">${{ $MostrarVer->monto}}.Mxn</span>
+                                </div>
 
                                 <div class="p-4 bg-white rounded-lg shadow-sm">
                                 <p class="text-lg font-semibold text-gray-800">Comprobante:</p>
-                                @if($MostrarVer->image != '') 
+                                @if($MostrarVer->image != '')
                                     <div class="flex gap-4 p-4 ml-4 overflow-x-auto">
                                         @php
                                             $fotografias = json_decode($MostrarVer->image, true);
@@ -149,7 +154,7 @@
                                             <p class="text-sm text-gray-500">Sin imagen</p>
                                         @endif
                                     </div>
-                            
+
                                 @endif
 
                                     <div id="modal"
@@ -171,7 +176,7 @@
                             </div>
                             </div>
 
-                            
+
                         </div>
 
                     </article>

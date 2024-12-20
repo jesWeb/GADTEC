@@ -103,21 +103,11 @@
                                     {{ $vr->automovil }}
                                 </td>
                                 <td class="px-4 py-2 border">
-
-                                    @if ($vr->fecha_verificacion)
-                                        {{ date('d-m-Y', strtotime($vr->fecha_verificacion)) }}
-
-                                        {{-- {{ date('d-m-Y', strtotime($vr->fecha_verificacion_00)) }} --}}
-                                    @endif
-
+                                    {{ date('d-m-Y', strtotime($vr->fecha_verificacion)) }}
                                 </td>
                                 <td class="px-4 py-2 border">
 
-                                    @if ($vr->fecha_verificacion)
-                                        {{ date('d-m-Y', strtotime($vr->proxima_verificacion)) }}
-                                    {{-- @elseif ($vr->proxima_verificacion_00)
-                                        {{ date('d-m-Y', strtotime($vr->proxima_verificacion_00)) }} --}}
-                                    @endif
+                                    {{ date('d-m-Y', strtotime($vr->proxima_verificacion)) }}
                                 </td>
 
                                 {{-- acciones --}}

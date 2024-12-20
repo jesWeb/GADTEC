@@ -70,6 +70,7 @@ class VerificacionesController extends Controller
             'id_automovil' => 'required|exists:automoviles,id_automovil',
             'engomado' => 'required|in:Verde,Amarillo,Rosa,Rojo,Azul',
             'fechaV' => 'nullable|date|before_or_equal:today',
+            'monto' => 'required|numeric|min:0',
             'holograma' => 'required|in:0,00,1,2',
             'estadoV' => 'required|in:EdoMex,Morelos,CDMX',
             'observaciones' => 'nullable|string',
@@ -125,15 +126,20 @@ class VerificacionesController extends Controller
         //verificar si es 00
         $hologramaOpc = $request->input('holograma');
 
-        if ($hologramaOpc == '00'){
-            //fecha a 00 dese el input
+
+        if ($hologramaOpc === '00') {
+
             $fechaVerificacion = Carbon::parse($request->input('fechaV'));
             $proximaVerificacion = $fechaVerificacion->copy()->addYears(2);
+        } elseif (in_array($hologramaOpc, ['0', '1', '2'])) {
 
-        } elseif ($hologramaOpc == '0' || $hologramaOpc == '1' || $hologramaOpc == '2'  ) {
-            $fechaVerificacion = $fechaV->copy()->addMonths(6);
-            $proximaVerificacion = $fechaVerificacion;
+            $fechaVerificacion = Carbon::parse($request->input('fechaV'));
+            $proximaVerificacion = $fechaVerificacion->copy()->addMonths(6);
+        } else {
+
+            return back()->withErrors(['holograma' => 'El valor del holograma no es válido.'])->withInput();
         }
+
 
 
         //guardar fotos
@@ -166,11 +172,12 @@ class VerificacionesController extends Controller
             'id_automovil' => $request->input('id_automovil'),
             'engomado' => $engomado,
             'holograma' => $request->input('holograma'),
-            'fecha_verificacion' =>  $fechaV->format('Y-m-d') ,
+            'monto' => $request->input('monto'),
+            'fecha_verificacion' =>  $fechaV->format('Y-m-d'),
             'proxima_verificacion' => $proximaVerificacion->format('Y-m-d'),
             'observaciones' => $request->input('observaciones'),
             'image' => $input['image'],
-            ]);
+        ]);
 
         return redirect()->route('verificaciones.index')->with('mensaje', 'Se ha registrado correctamente el registro');
     }
@@ -235,20 +242,19 @@ class VerificacionesController extends Controller
             ])->withInput();
         }
 
-        // Verificar si es un caso de 'etiqueta_00'
-        $etiquetaDobleCero = $request->input('etiqueta_00');
-        if ($etiquetaDobleCero) {
-            $fechaV = null;
-            $proximaVerificacion = null;
-            $fechaVerificacionCero = Carbon::parse($request->input('fecha_verificacion_00'));
-            $proximaVerificacion00 = $fechaVerificacionCero->copy()->addYears(2);
+          //verificar si es 00
+          $hologramaOpc = $request->input('holograma');
+        if ($hologramaOpc === '00') {
 
-            $motivoCero = $request->input('motivo_00');
+            $fechaVerificacion = Carbon::parse($request->input('fechaV'));
+            $proximaVerificacion = $fechaVerificacion->copy()->addYears(2);
+        } elseif (in_array($hologramaOpc, ['0', '1', '2'])) {
+
+            $fechaVerificacion = Carbon::parse($request->input('fechaV'));
+            $proximaVerificacion = $fechaVerificacion->copy()->addMonths(6);
         } else {
-            $proximaVerificacion = $fechaV->copy()->addMonths(6);
-            $proximaVerificacion00 = null;
 
-            $motivoCero = null;
+            return back()->withErrors(['holograma' => 'El valor del holograma no es válido.'])->withInput();
         }
 
         // Manejo de imágenes
@@ -281,16 +287,14 @@ class VerificacionesController extends Controller
         $input['image'] = json_encode($fotografias);
 
         $EddVer->update([
-            'id_automovil' => $input['id_automovil'],
-            'engomado' => $input['engomado'],
-            'holograma' => $input['holograma'],
-            'fecha_verificacion' => $etiquetaDobleCero ? null : ($fechaV ? $fechaV->format('Y-m-d') : null),
-            'proxima_verificacion' => $etiquetaDobleCero ? null : ($proximaVerificacion ? $proximaVerificacion->format('Y-m-d') : null),
-            'observaciones' => $input['observaciones'],
+            'id_automovil' => $request->input('id_automovil'),
+            'engomado' => $engomado,
+            'holograma' => $request->input('holograma'),
+            'monto' => $request->input('monto'),
+            'fecha_verificacion' =>  $fechaV->format('Y-m-d'),
+            'proxima_verificacion' => $proximaVerificacion->format('Y-m-d'),
+            'observaciones' => $request->input('observaciones'),
             'image' => $input['image'],
-            'motivo_00' => $motivoCero,
-            'fecha_verificacion_00' => $etiquetaDobleCero ? $fechaVerificacionCero->format('Y-m-d') : null,
-            'proxima_verificacion_00' => $etiquetaDobleCero ? $proximaVerificacion00->format('Y-m-d') : null
         ]);
 
         return redirect()->route('verificaciones.index')->with('message', "Se ha actualizado correctamente el registro");

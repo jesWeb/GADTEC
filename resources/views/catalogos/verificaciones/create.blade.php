@@ -114,20 +114,25 @@
                                 class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                 placeholder="Ingresa el Holograma" required>
                         </div> --}}
-                         {{-- Holograma --}}
-                         <div class="w-full px-3 xl:w-1/2">
+                        {{-- Holograma --}}
+                        <div class="w-full px-3 xl:w-1/2">
                             <label for="holograma" class="mb-3 block text-base font-medium text-[#07074D]">
                                 Holograma:
                             </label>
                             <select
                                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                name="holograma" required >
+                                name="holograma" required>
                                 <option disabled selected>Selecciona una opción...</option>
-                                @foreach (['0','1','2','00'] as $holograma)
-                                    <option value="{{ $holograma }}" {{ old('holograma') == $holograma ? 'selected' : '' }}>
+                                {{-- @foreach (['0', '1', '2', '00'] as $holograma)
+                                    <option value="{{ $holograma }}"
+                                        {{ old('holograma') == $holograma ? 'selected' : '' }}>
                                         {{ $holograma }}
                                     </option>
-                                @endforeach
+                                @endforeach --}}
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="00">00</option>
                             </select>
                         </div>
                     </div>
@@ -157,7 +162,15 @@
                             <input type="date" name="fechaV" id="fechaV" value="{{ old('fechaV') }}"
                                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
                         </div>
-
+                        <!-- Campo de monto -->
+                        <div class="w-full px-3 xl:w-1/2">
+                            <label class="mb-3 block text-base font-medium text-[#07074D]" for="monto">
+                                Ingresa el monto:
+                            </label>
+                            <input type="number" name="monto" id="monto" placeholder="Ejemplo: 15000"
+                                pattern="^\d*([,.]?\d+)?$" min="0"
+                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                        </div>
                     </div>
 
                     <!-- Fechas -->
@@ -326,7 +339,7 @@
 
 
 
-        // createImageInput(); // Agregar un input por defecto
+            // createImageInput(); // Agregar un input por defecto
         });
     </script>
 @endsection
