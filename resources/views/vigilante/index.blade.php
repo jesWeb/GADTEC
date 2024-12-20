@@ -58,7 +58,7 @@
                     @foreach($vigilante as $asignacion)
                         <tr class="hover:bg-gray-50">
                             <td class="px-4 py-2 border" title="Automóvil asignado: {{ $asignacion->automovil->marca ?? 'N/A' }} {{ $asignacion->automovil->modelo ?? '' }}">{{ $asignacion->automovil->marca ?? 'N/A' }}</td>
-                            <td class="px-4 py-2 border" title="Usuario asignado: {{ $asignacion->usuarios->nombre ?? 'N/A' }}">{{ $asignacion->usuarios->nombre ?? 'N/A' }}</td>
+                            <td class="px-4 py-2 border" title="Usuario asignado: {{ $asignacion->usuarios->nombre ?? 'N/A' }}">{{ $asignacion->usuarios->nombre ?? 'N/A' }} {{ $asignacion->usuarios->app ?? 'N/A' }} {{ $asignacion->usuarios->apm ?? 'N/A' }}</td>
                             <td class="px-4 py-2 border" title="Fecha de asignación">{{ $asignacion->fecha_asignacion ? date('d/m/Y', strtotime($asignacion->fecha_asignacion)) : 'N/A' }}</td>
                             <td class="px-4 py-2 border" title="Fecha estimada de devolución">
                                 <span class="text-red-600">

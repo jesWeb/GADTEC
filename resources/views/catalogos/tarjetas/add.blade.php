@@ -63,7 +63,7 @@
                         <div class="mb-4">
                             <label for="id_automovil" class="mb-3 block text-base font-medium text-[#07074D]">Seleccionar
                             Automóvil:</label>
-                            <select name="id_automovil" id="id_automovil" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" title="Selecciona un automóvil">
+                            <select name="id_automovil" id="id_automovil" class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" title="Selecciona un automóvil">
                                 <option disabled selected>Selecciona un automovil...</option>
                                 @foreach ($automoviles as $automovil)
                                     <option value="{{ $automovil->id_automovil }}" >
@@ -160,20 +160,20 @@
 
 <script>
    $(document).ready(function() {
-        $('#fecha_expedicion').change(function() {      // verifica los cambios de fecha_expedicion
+        $('#fecha_expedicion').change(function() {     
 
             const fechaExpedicionInput = $(this).val();     // obtiene los datos de fecha_expedicion
 
-            if (fechaExpedicionInput) { // verifica que exista un afecha completa en el campo de fecha_expedicion
+            if (fechaExpedicionInput) { 
 
-                const fechaExpedicion = new Date(fechaExpedicionInput);     // crea constante tipo arreglo de fecha_expedicion
+                const fechaExpedicion = new Date(fechaExpedicionInput);     
 
-                fechaExpedicion.setFullYear(fechaExpedicion.getFullYear() + 6);    // aumento al año en 6
+                fechaExpedicion.setFullYear(fechaExpedicion.getFullYear() + 6);    
 
                 const year = fechaExpedicion.getFullYear();     // año
-                const mont = String(fechaExpedicion.getMonth() + 1).padStart(2, '0');   // mes - padStar() corta el capo a dos caracteres
-                const date = String(fechaExpedicion.getDate()).padStart(2, '0');    // dia - padStar() corta el capo a dos caracteres
-                const fechaVigenciaFormateada = `${year}-${mont}-${date}`;  // concatena los datos de la fecha para fecha_vigencia
+                const mont = String(fechaExpedicion.getMonth() + 1).padStart(2, '0');   
+                const date = String(fechaExpedicion.getDate()).padStart(2, '0');    
+                const fechaVigenciaFormateada = `${year}-${mont}-${date}`;  
 
                 // regresa la fecha_vigencia por id
                 $('#fecha_vigencia').val(fechaVigenciaFormateada);

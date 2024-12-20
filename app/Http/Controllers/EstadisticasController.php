@@ -41,6 +41,27 @@ class EstadisticasController extends Controller
     }
 
 
+// public function descargarReporte($idAutomovil)
+// {
+//     // Obtener el vehículo específico con sus relaciones
+//     $vehiculo = Automoviles::with(['multas', 'servicios', 'verificacion'])->find($idAutomovil);
+
+//     // En caso de que el vehículo no exista
+//     if (!$vehiculo) {
+//         abort(404, 'Vehículo no encontrado');
+//     }
+
+//     // Sumatoria
+//     $totalMultas = $vehiculo->multas->sum('monto');
+//     $totalServicios = $vehiculo->servicios->sum('costo');
+
+//     // Generar el PDF a partir de la vista, pasando los totales
+//     $pdf = Pdf::loadView('modulos.estadisticas.pdf', compact('vehiculo', 'totalMultas', 'totalServicios'));
+
+//     // PDF con un nombre descriptivo
+//     return $pdf->stream('reporte_vehiculo_' . $vehiculo->marca . '.pdf');
+// }
+
 public function descargarReporte($idAutomovil)
 {
     // Obtener el vehículo específico con sus relaciones
@@ -51,14 +72,18 @@ public function descargarReporte($idAutomovil)
         abort(404, 'Vehículo no encontrado');
     }
 
-    // Sumatoria
+    // Sumatoria de costos
     $totalMultas = $vehiculo->multas->sum('monto');
     $totalServicios = $vehiculo->servicios->sum('costo');
+    $totalVerificaciones = $vehiculo->verificacion->sum(function ($verificacion) {
+        return $verificacion->monto ?? 0;
+    });
 
-    // Generar el PDF a partir de la vista, pasando los totales
-    $pdf = Pdf::loadView('modulos.estadisticas.pdf', compact('vehiculo', 'totalMultas', 'totalServicios'));
+    $costoTotal = $totalMultas + $totalServicios + $totalVerificaciones;
 
-    // PDF con un nombre descriptivo
+    
+    $pdf = Pdf::loadView('modulos.estadisticas.pdf', compact('vehiculo', 'totalMultas', 'totalServicios', 'totalVerificaciones', 'costoTotal'));
+
     return $pdf->stream('reporte_vehiculo_' . $vehiculo->marca . '.pdf');
 }
 }
