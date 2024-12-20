@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reporte de Multas - Sistema de Control Vehicular</title>
+    <title>Reporte de Servicios - Sistema de Control Vehicular</title>
     <link rel="stylesheet" href="{{ public_path('css/pdf.css') }}">
 </head>
 <body>
@@ -13,7 +13,7 @@
         <div class="infoHeader">
             <h1 class="titulo">Sistema de Control Vehicular</h1>
             <hr>
-            <p>Reporte de Multas</p>
+            <p>Reporte de Servicios</p>
         </div>
     </div>
 
@@ -42,18 +42,17 @@
                     <td>{{ $servicio-> descripcion }}</td>
                     <td>
                         @if($servicio->fecha_servicio == '')
-                            <!-- Muestra un guión o un texto vacío si el servicio no es programado -->
                             -
                         @else
-                            {{ $servicio->fecha_servicio }}
+                            {{ date('d/m/Y', strtotime($servicio->fecha_servicio)) }}
                         @endif
                     </td>
                     <td>
                         @if($servicio->prox_servicio == '')
-                            <!-- Muestra un guión o un texto vacío si el servicio no es programado -->
+                            
                             No aplica
                         @else
-                            {{ $servicio->prox_servicio }}
+                            {{ date('d/m/Y', strtotime($servicio->prox_servicio)) }}
                         @endif
                     </td>
                     <td>{{ $servicio ->costo}}</td>

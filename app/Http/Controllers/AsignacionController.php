@@ -21,7 +21,7 @@ class AsignacionController extends Controller
             asi.estatus,
             asi.lugar,
             asi.hora_salida,
-            CONCAT(usu.app, ' ', usu.apm, ', ', usu.nombre) AS usuario,
+            CONCAT(usu.nombre, ' ', usu.app, ' ', usu.apm) AS usuario,
             asi.fecha_salida,
             che.km_llegada,
             CONCAT(aut.marca, ' ', aut.submarca, ' ', aut.modelo) AS automovil

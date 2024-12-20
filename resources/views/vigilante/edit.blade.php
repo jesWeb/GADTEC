@@ -114,7 +114,7 @@
                                     Salida</label>
                                 <select name="combustible_salida" id="combustible_salida"
                                     title="Seleccione el nivel de combustible al salir"
-                                    class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-200"
+                                    class="w-full rounded-md border border-gray-300 py-3 px-6 text-base font-medium outline-none focus:border-yellow-500 focus:ring focus:ring-yellow-200"
                                     required>
                                     <option value="1/4" {{ old('combustible_salida') == '1/4' ? 'selected' : '' }}>
                                         1/4</option>
@@ -159,7 +159,7 @@
                                 <select name="combustible_llegada" id="combustible_llegada"
                                     placeholder="Seleccione el nivel de combustible al llegar"
                                     title="Seleccione el nivel de combustible al llegar"
-                                    class="block w-full mt-1 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-200"
+                                    class="w-full rounded-md border bg-gray-100 border border-gray-300 py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-yellow-500 focus:ring focus:ring-yellow-200"
                                     disabled>
                                     <option value="1/4" {{ old('combustible_llegada') == '1/4' ? 'selected' : '' }}>1/4
                                     </option>

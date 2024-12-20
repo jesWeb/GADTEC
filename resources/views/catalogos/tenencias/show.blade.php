@@ -100,7 +100,7 @@
                                         $fotografias = json_decode($tenencia->comprobante, true);
                                     @endphp
 
-                                    @if ($fotografias != '')
+                                    @if ($fotografias)
                                             @foreach ($fotografias as $foto)
                                             <div class="grid gap-5">
                                                 <img class="w-16 h-max-auto object-cover cursor-pointer rounded-lg 
@@ -111,7 +111,7 @@
                                             </div>
                                         @endforeach
                                     @else
-                                        <p>No hay fotografias Cargadas </p>
+                                        <p class="text-sm text-gray-600">No hay fotografias cargadas </p>
                                     @endif
                                     <div id="modal"
                                         class="hidden  fixed top-0 left-0 z-80 

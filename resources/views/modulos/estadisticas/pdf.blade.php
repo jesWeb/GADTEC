@@ -102,7 +102,7 @@
                     @foreach($vehiculo->verificacion as $verificacion)
                     <tr>
                         <td>{{ $verificacion->engomado }}</td>
-                        <td>{{ $verificacion->fechaP }}</td>
+                        <td>{{ date('d/m/Y', strtotime($verificacion->proxima_verificacion)) }}</td>
                     </tr>
                     @endforeach
                 </tbody>
