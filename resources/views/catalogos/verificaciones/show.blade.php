@@ -64,7 +64,7 @@
 
                     {{-- content --}}
                     <article class="flex flex-wrap max-w-3xl mx-auto md:flex-nowrap group">
-                        
+
                         {{-- content info --}}
                         <div class="mt-6 ml-4 space-y-6">
                             <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -76,13 +76,13 @@
                                     </div>
                                 @endif
 
-                                @if ($MostrarVer->fecha_verificacion_00)
+                                {{-- @if ($MostrarVer->fecha_verificacion_00)
                                     <div class="p-4 bg-white rounded-lg shadow-sm">
                                         <h4 class="text-lg font-semibold text-gray-800">Fecha de Verificación 00:</h4>
                                         <span
                                             class="mt-2 text-base leading-relaxed text-gray-500 ">{{ date('d-m-Y', strtotime($MostrarVer->fecha_verificacion_00)) }}</span>
                                     </div>
-                                @endif
+                                @endif --}}
 
                                 <div class="p-4 bg-white rounded-lg shadow-sm">
                                     <h4 class="text-lg font-semibold text-gray-800">Engomado: </h4>
@@ -102,33 +102,38 @@
                                         </span>
                                     </div>
                                 @endif
-                                @if ($MostrarVer->proxima_verificacion_00)
+                                {{-- @if ($MostrarVer->proxima_verificacion_00)
                                     <div class="p-4 bg-white rounded-lg shadow-sm">
                                         <h4 class="text-lg font-semibold text-gray-800">Próxima Verificación:</h4>
                                         <span class="mt-2 text-base leading-relaxed text-gray-500 ">
                                             {{ date('d-m-Y', strtotime($MostrarVer->proxima_verificacion_00)) }}
                                         </span>
                                     </div>
-                                @endif
+                                @endif --}}
 
-                                @if ($MostrarVer->motivo_00)
+                                {{-- @if ($MostrarVer->motivo_00)
                                     <div class="p-4 bg-white rounded-lg shadow-sm ">
                                         <h4 class="text-lg font-semibold text-gray-800">Observaciones de Verificación 00:
                                         </h4>
                                         <span
                                             class="mt-2 text-base leading-relaxed text-gray-500">{{ $MostrarVer->motivo_00 }}</span>
                                     </div>
-                                @endif
+                                @endif --}}
 
                                 <div class="p-4 bg-white rounded-lg shadow-sm">
                                     <h4 class="text-lg font-semibold text-gray-800">Observaciones de Verificación:</h4>
                                     <span
                                         class="mt-2 text-base leading-relaxed text-gray-500 ">{{ $MostrarVer->observaciones }}</span>
                                 </div>
+                                <div class="p-4 bg-white rounded-lg shadow-sm">
+                                    <h4 class="text-lg font-semibold text-gray-800">Monto de verificacion:</h4>
+                                    <span
+                                        class="mt-2 text-base leading-relaxed text-gray-500 ">${{ $MostrarVer->monto}}.Mxn</span>
+                                </div>
 
                                 <div class="p-4 bg-white rounded-lg shadow-sm">
                                 <p class="text-lg font-semibold text-gray-800">Comprobante:</p>
-                                @if($MostrarVer->image != '') 
+                                @if($MostrarVer->image != '')
                                     <div class="flex gap-4 p-4 ml-4 overflow-x-auto">
                                         @php
                                             $fotografias = json_decode($MostrarVer->image, true);
@@ -136,19 +141,42 @@
 
                                         @if ($fotografias)
                                             @foreach ($fotografias as $foto)
-                                                <img src="{{ url('img/verificaciones/' . $foto) }}" class="w-16 h-auto transition-transform duration-300 transform rounded-lg shadow-md hover:scale-90 hover:shadow-lg" alt="seguro">
-                                                <a href="{{ url('img/verificaciones/' . $foto) }}" target="_blank" class="text-gray-500" title="Ver archivo de de tenencia">Ver imagen</a> 
+                                                <div class="grid gap-5">
+                                                    <img class="w-16 h-max-auto object-cover cursor-pointer rounded-lg 
+                                                            shadow-md hover:scale-90 hover:shadow-lg " 
+                                                            src="{{ url('img/verificaciones/' . $foto) }}"
+                                                                alt="Img 1" id="img1" />
+                                                                
+                                                </div>
+                                                
                                             @endforeach
                                         @else
                                             <p class="text-sm text-gray-500">Sin imagen</p>
                                         @endif
                                     </div>
-                            
+
                                 @endif
+
+                                    <div id="modal"
+                                        class="hidden  fixed top-0 left-0 z-80 
+                                            w-screen h-screen bg-black/70 flex
+                                            justify-center items-center">
+                                        <!-- Boton de cerrar -->
+                                        <a class="fixed z-90 top-6 right-8 
+                                        text-white text-5xl font-bold" 
+                                            href="javascript:void(0)"
+                                            onclick="closeModal()">
+                                            ×
+                                        </a>
+
+                                        <!-- Medida de imagen -->
+                                        <img id="modal-img"
+                                            class="max-w-[900px] max-h-[700px] object-cover"/>
+                                    </div>
                             </div>
                             </div>
 
-                            
+
                         </div>
 
                     </article>
@@ -160,4 +188,36 @@
                     </section>
                 </div>
             </div>
+
+            <script>
+                
+    // obtener todos los elementos de la img
+        var images = document.querySelectorAll('.grid img');
+
+    // recorre cada elemento de la img
+        images.forEach(function (img) {
+                    
+            // agregar cada evento de elementos en cada clic en la img
+            img.addEventListener('click', function () {
+                showModal(img.src);
+            });
+        });
+
+        // obtener el id del modal
+        var modal = document.getElementById("modal");
+
+        // obtener la etiqueta de la img
+        var modalImg = document.getElementById("modal-img");
+
+        // Cuando se hace clic en la img
+        function showModal(src) {
+            modal.classList.remove('hidden');
+            modalImg.src = src;
+        }
+
+        // Esta funcion es para cerrar
+            function closeModal() {
+                modal.classList.add('hidden');
+        }
+</script>
         @endsection

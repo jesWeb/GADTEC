@@ -51,7 +51,7 @@
                         <!-- Selección de Automóvil -->
                         <div class="mb-4">
                             <label for="id_automovil" class="mb-3 block text-base font-medium text-[#07074D]">Seleccionar Automóvil:</label>                                                  
-                                <select name="id_automovil" id="id_automovil" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" title="Actualizar automóvil">
+                                <select name="id_automovil" id="id_automovil" class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"  title="Actualizar automóvil">
                                     @foreach ($automoviles as $automovil)
                                         <option value="{{ $automovil->id_automovil }}" {{ (old('id_automovil', $servicio->id_automovil) == $automovil->id_automovil) ? 'selected' : '' }}>
                                             {{ $automovil->marca }} {{ $automovil->modelo }} ({{ $automovil->submarca }})
@@ -76,18 +76,6 @@
                                 @error('tipo_servicio')<i>{{ $message }}</i>@enderror
                             </div>
                         </div>
-
-                       <!-- Estatus del Automóvil -->
-                        <div>
-                            <label class="block text-base font-medium text-[#07074D]" for="estatusIn">Estatus del Vehículo</label>
-                            <select name="estatusIn" id="estatusIn" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" title="Selecciona el estatus del vehículo">
-                                <option value="Disponible" {{ old('estatusIn', $servicio->automovil->estatusIn) == 'Disponible' ? 'selected' : '' }}>Disponible</option>
-                                <option value="En servicio" {{ old('estatusIn', $servicio->automovil->estatusIn) == 'En servicio' ? 'selected' : '' }}>En servicio</option>
-                                <option value="Mantenimiento" {{ old('estatusIn', $servicio->automovil->estatusIn) == 'Mantenimiento' ? 'selected' : '' }}>Mantenimiento</option>
-                                <option value="No disponible" {{ old('estatusIn', $servicio->automovil->estatusIn) == 'No disponible' ? 'selected' : '' }}>No disponible</option>
-                            </select>
-                        </div>
-
 
 
                         <!-- Descripción -->
@@ -267,7 +255,7 @@
             // createImageInput(); // Agregar un input por defecto
         });
     </script>
-@endsection
+
 <script>
     // Al cargar la página, verificamos si el tipo de servicio es "Programado" o "No programado"
     window.onload = function() {
@@ -295,4 +283,8 @@
         };
     };
 </script>
+@endsection
+
+
+
 

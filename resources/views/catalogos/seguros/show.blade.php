@@ -64,20 +64,42 @@
                         {{ $seguroS->automovil->modelo }}</h2>
                     {{-- poliza Img --}}
                     <div class="w-full">
-                        <div class="flex justify-start gap-4 p-4 overflow-x-auto">
+                        
+
+                        <div class="flex gap-4 p-4 ml-4 overflow-x-auto">
                             @php
                                 $fotografias = json_decode($seguroS->poliza, true);
                             @endphp
 
                             @if ($fotografias)
                                 @foreach ($fotografias as $foto)
-                                    <img src="{{ url('img/poliza/' . $foto) }}"
-                                        class="object-cover w-20 h-auto transition-transform duration-300 transform rounded-lg shadow-md hover:scale-90 hover:shadow-lg"
-                                        alt="seguro">
-                                    <a href="{{ url('img/poliza/' . $foto) }}" target="_blank"
-                                        class="object-cover text-gray-500" title="Ver archivo de seguro">Ver imagen</a>
+                                    <div class="grid gap-5">
+                                        <img class="w-16 h-max-auto object-cover cursor-pointer rounded-lg 
+                                                shadow-md hover:scale-90 hover:shadow-lg " 
+                                                src="{{ url('img/poliza/' . $foto) }}"
+                                                    alt="Img 1" id="img1" />
+                                                    
+                                    </div>
                                 @endforeach
+                            @else
+                                <p>No hay fotografias Cargadas </p>
                             @endif
+                            <div id="modal"
+                                class="hidden  fixed top-0 left-0 z-80 
+                                    w-screen h-screen bg-black/70 flex
+                                    justify-center items-center">
+                            <!-- Boton de cerrar -->
+                                <a class="fixed z-90 top-6 right-8 
+                                text-white text-5xl font-bold" 
+                                    href="javascript:void(0)"
+                                    onclick="closeModal()">
+                                    ×
+                                </a>
+
+                                <!-- Medida de imagen -->
+                                <img id="modal-img"
+                                    class="max-w-[900px] max-h-[700px] object-cover"/>
+                            </div>
                         </div>
                     </div>
                     {{-- content --}}
@@ -129,4 +151,35 @@
                 </div>
             </div>
         </div>
+<script>
+                
+    // obtener todos los elementos de la img
+        var images = document.querySelectorAll('.grid img');
+
+    // recorre cada elemento de la img
+        images.forEach(function (img) {
+                    
+            // agregar cada evento de elementos en cada clic en la img
+            img.addEventListener('click', function () {
+                showModal(img.src);
+            });
+        });
+
+        // obtener el id del modal
+        var modal = document.getElementById("modal");
+
+        // obtener la etiqueta de la img
+        var modalImg = document.getElementById("modal-img");
+
+        // Cuando se hace clic en la img
+        function showModal(src) {
+            modal.classList.remove('hidden');
+            modalImg.src = src;
+        }
+
+        // Esta funcion es para cerrar
+            function closeModal() {
+                modal.classList.add('hidden');
+        }
+</script>
     @endsection

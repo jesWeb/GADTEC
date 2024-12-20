@@ -153,11 +153,20 @@
                             class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
                     </div>
                     @endif
+                       <!-- Campo de monto -->
+                       <div class="w-full px-3 xl:w-1/2">
+                        <label class="mb-3 block text-base font-medium text-[#07074D]" for="monto">
+                            Ingresa el monto:
+                        </label>
+                        <input type="number" name="monto" id="monto" value="{{ old('monto', $EddVer->monto) }}"
 
+                            pattern="^\d*([,.]?\d+)?$" min="0"
+                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                    </div>
                 </div>
 
                 <!-- Fechas -->
-                <div class=" gap-5.5 mt-6 xl:flex-row">
+                {{-- <div class=" gap-5.5 mt-6 xl:flex-row">
                     @if ($EddVer->etiqueta_00 && $EddVer->fecha_verificacion_00)
                     <div class="flex flex-col gap-5.5 mt-4 xl:flex-row">
                         <div class="w-full px-3 xl:w-1/2">
@@ -230,7 +239,7 @@
                     </div>
                     @endif
 
-                </div>
+                </div> --}}
 
                     <!-- Observaciones -->
                     <div class="w-full xl:m-5 xl:w-2/4 xl:mt-4 xl:mb-4">
@@ -371,7 +380,7 @@
 
 
 
-        createImageInput(); // Agregar un input por defecto
+        // createImageInput(); // Agregar un input por defecto
     });
 
 </script>

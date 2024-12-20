@@ -23,7 +23,7 @@ class SegurosController extends Controller
                 JOIN
                 automoviles AS aut ON seg.id_automovil = aut.id_automovil
                 WHERE
-                seg.deleted_at IS NULL ";
+                seg.deleted_at IS NULL";
 
         //busqueda dinamica
         $conditions = [];

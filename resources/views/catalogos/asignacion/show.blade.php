@@ -106,7 +106,7 @@
 
                                 @if ($asignacionV->nombre_chofer)
                                     <div class="p-4 bg-white rounded-lg shadow-sm">
-                                        <h4 class="text-lg font-semibold text-gray-800">Nombre del chofer:</h4>
+                                        <h4 class="text-lg font-semibold text-gray-800">Nombre del conductor:</h4>
                                         <span class="mt-2 text-base leading-relaxed text-gray-500 ">
                                             @if ($asignacionV->nombre_chofer)
                                                 {{ $asignacionV->nombre_chofer }}

@@ -114,7 +114,7 @@
                                     Salida</label>
                                 <select name="combustible_salida" id="combustible_salida"
                                     title="Seleccione el nivel de combustible al salir"
-                                    class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-200"
+                                    class="w-full rounded-md border border-gray-300 py-3 px-6 text-base font-medium outline-none focus:border-yellow-500 focus:ring focus:ring-yellow-200"
                                     required>
                                     <option value="1/4" {{ old('combustible_salida') == '1/4' ? 'selected' : '' }}>
                                         1/4</option>
@@ -140,12 +140,7 @@
                                     required>
                             </div>
 
-
-
-
                         </div>
-
-
                         <!-- Datos de Llegada -->
                         <div class="space-y-4">
                             <h3 class="text-lg font-medium text-gray-700">Datos de Llegada</h3>
@@ -158,14 +153,13 @@
                                     class="block w-full mt-1 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-200"
                                     disabled>
                             </div>
-
                             <div>
                                 <label for="combustible_llegada"
                                     class="block text-sm font-medium text-gray-700">Combustible Llegada</label>
                                 <select name="combustible_llegada" id="combustible_llegada"
                                     placeholder="Seleccione el nivel de combustible al llegar"
                                     title="Seleccione el nivel de combustible al llegar"
-                                    class="block w-full mt-1 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-200"
+                                    class="w-full rounded-md border bg-gray-100 border border-gray-300 py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-yellow-500 focus:ring focus:ring-yellow-200"
                                     disabled>
                                     <option value="1/4" {{ old('combustible_llegada') == '1/4' ? 'selected' : '' }}>1/4
                                     </option>
@@ -192,10 +186,6 @@
                                     class="block w-full mt-1 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-200"
                                     disabled>
                             </div>
-
-
-
-
                         </div>
                     </div>
                     <!-- Subida de imágenes -->
@@ -220,9 +210,8 @@
                         </div>
                     </div>
 
-
+                    {{-- btn --}}
                     <div class="mt-6">
-
                         <button type="submit" id="submitBtn" disabled titile="Guardar datos de salida"
                             class="inline-flex items-center px-4 py-2 text-white bg-yellow-600 border border-transparent rounded-md shadow-sm hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
                             Crear Check-In

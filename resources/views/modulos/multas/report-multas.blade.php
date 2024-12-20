@@ -40,7 +40,7 @@
                     <td>{{ $multa->automovil->marca }} {{ $multa->automovil->modelo }}</td>
                     <td>{{ $multa->tipo_multa }}</td>
                     <td>{{ $multa->monto }}</td>
-                    <td>{{ $multa->fecha_multa }}</td>
+                    <td>{{ date('d/m/Y', strtotime($multa->fecha_multa)) }}</td>
                     <td>{{ $multa->lugar }}</td>
                     <td>
                         <span class="estatus {{ strtolower($multa->estatus) === 'pagada' ? 'pagada' : 'pendiente' }}">
@@ -50,11 +50,25 @@
 
                     </td>
                     <td>
-                        @if($multa->comprobante)
-                            <a href="{{ $multa->comprobante }}" target="_blank">Ver Comprobante</a>
-                        @else
-                            No disponible
-                        @endif
+                        @if($multa->comprobante != '') 
+                            <div>
+                                @php
+                                    $fotografias = json_decode($multa->comprobante, true);
+                                @endphp
+
+
+                                @if ($fotografias)
+                                    @foreach ($fotografias as $foto)
+                                        <a href="{{ url('img/multas/' . $foto) }}" target="_blank" >
+                                            Ver comprobante <br>
+                                        </a>
+                                    @endforeach
+                                @else
+                                    <p>No hay fotografias Cargadas </p>
+                                @endif
+                                
+                            </div>
+                        @endif        
                     </td>
                 </tr>
                 @endforeach

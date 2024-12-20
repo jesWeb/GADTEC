@@ -115,7 +115,7 @@
                                     <label for="combustible_salida"
                                         class="block text-sm font-medium text-gray-700">Combustible Salida</label>
                                     <select name="combustible_salida" id="combustible_salida"
-                                        class="block w-full mt-1 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-200"
+                                        class="w-full rounded-md border bg-gray-100  border-gray-300 py-3 px-6 text-base font-medium  outline-none focus:border-yellow-500 focus:ring focus:ring-yellow-200"
                                         disabled title="Nivel de combustible en el momento de la salida">
                                         <option value="1/4"
                                             {{ old('combustible_salida', $asignacion->checkIns->first()->combustible_salida) == '1/4' ? 'selected' : '' }}>
@@ -165,7 +165,7 @@
                                     <label for="combustible_llegada"
                                         class="block text-sm font-medium text-gray-700">Combustible Llegada</label>
                                     <select name="combustible_llegada" id="combustible_llegada"
-                                        class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-yellow-500 focus:ring focus:ring-yellow-200"
+                                        class="w-full rounded-md border border-gray-300 py-3 px-6 text-base font-medium outline-none focus:border-yellow-500 focus:ring focus:ring-yellow-200"
                                         title="Nivel de combustible en el momento de la llegada">
                                         <option value="1/4"
                                             {{ old('combustible_llegada', $asignacion->checkIns->first()->combustible_llegada) == '1/4' ? 'selected' : '' }}>

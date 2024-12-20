@@ -85,22 +85,46 @@
                             <p
                             class="text-xl font-medium text-gray-800">Imagenes de tenencias</p>
                             @if($multa->comprobante != '') 
-                                <div class="flex gap-4 p-4 ml-4 overflow-x-auto">
-                                    @php
-                                        $fotografias = json_decode($multa->comprobante, true);
-                                    @endphp
+                            <div class="flex gap-4 p-4 ml-4 overflow-x-auto">
+                                @php
+                                    $fotografias = json_decode($multa->comprobante, true);
+                                @endphp
 
-                                    @if ($fotografias)
-                                        @foreach ($fotografias as $foto)
-                                            <img src="{{ url('img/multas/' . $foto) }}" class="w-16 h-auto transition-transform duration-300 transform rounded-lg shadow-md hover:scale-90 hover:shadow-lg" alt="seguro">
-                                            <a href="{{ url('img/multas/' . $foto) }}" target="_blank" class="text-gray-500" title="Ver archivo de de tenencia">Ver imagen</a> 
-                                        @endforeach
-                                    @else
-                                        <p class="text-sm text-gray-500">Sin imagen</p>
-                                    @endif
+
+                                @if ($fotografias)
+                                    @foreach ($fotografias as $foto)
+                                        <div class="grid gap-5">
+                                            <img class="w-16 h-max-auto object-cover cursor-pointer rounded-lg 
+                                            shadow-md hover:scale-90 hover:shadow-lg " 
+                                            src="{{ url('img/multas/' . $foto) }}"
+                                                alt="Img 1" id="img1" />
+                                                
+                                        </div>
+                                    @endforeach
+                                @else
+                                    <p>No hay fotografias Cargadas </p>
+                                @endif
+                                <div id="modal"
+                                    class="hidden  fixed top-0 left-0 z-80 
+                                            w-screen h-screen bg-black/70 flex
+                                            justify-center items-center">
+                                            
+
+                                    <!-- Boton de cerrar -->
+                                    <a class="fixed z-90 top-6 right-8 
+                                            text-white text-5xl font-bold" 
+                                    href="javascript:void(0)"
+                                    onclick="closeModal()">
+                                        ×
+                                    </a>
+
+                                    <!-- Medida de imagen -->
+                                    <img id="modal-img"
+                                        class="max-w-[900px] max-h-[700px] object-cover"/>
                                 </div>
+                            </div>
+                        @endif   
                             
-                            @endif
                         </div>
                     </div>
 
@@ -124,4 +148,33 @@
         </div>
     </div>
 </div>
+
+<script>                
+    // obtener todos los elementos de la img
+        var images = document.querySelectorAll('.grid img');
+
+    // recorre cada elemento de la img
+        images.forEach(function (img) {
+                    
+            // agregar cada evento de elementos en cada clic en la img
+            img.addEventListener('click', function () {
+                showModal(img.src);
+            });
+        });
+
+        // obtener el id del modal
+        var modal = document.getElementById("modal");
+
+        // obtener la etiqueta de la img
+        var modalImg = document.getElementById("modal-img");
+
+        function showModal(src) {
+            modal.classList.remove('hidden');
+            modalImg.src = src;
+        }
+
+        function closeModal() {
+            modal.classList.add('hidden');
+        }
+</script>
 @endsection
