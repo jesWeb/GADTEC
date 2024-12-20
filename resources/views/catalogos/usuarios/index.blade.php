@@ -89,7 +89,7 @@
                                 <td class="px-4 py-2 border">{{ $key + 1 }}</td>
                                 <td class="px-4 py-2 border">
                                     <img src="{{ url('img/usuarios/' . $usuario->foto) }}" alt="Foto de usuario"
-                                        class="object-cover w-16 h-16">
+                                        class="object-cover w-16 h-16 rounded-2xl">
                                 </td>
                                 <td class="px-4 py-2 border">{{ $usuario->num_empleado }}</td>
                                 <td class="px-4 py-2 border">{{ $usuario->nombre }} {{ $usuario->app }} {{ $usuario->apm }}

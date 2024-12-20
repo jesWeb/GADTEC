@@ -63,7 +63,7 @@
                         <div class="mb-4">
                             <label for="id_automovil" class="mb-3 block text-base font-medium text-[#07074D]">Seleccionar
                             Automóvil:</label>
-                            <select name="id_automovil" id="id_automovil" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" title="Selecciona un automóvil">
+                            <select name="id_automovil" id="id_automovil" class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" title="Selecciona un automóvil">
                                 <option disabled selected>Selecciona un automovil...</option>
                                 @foreach ($automoviles as $automovil)
                                     <option value="{{ $automovil->id_automovil }}" >

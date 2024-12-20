@@ -268,5 +268,5 @@
             function closeModal() {
                 modal.classList.add('hidden');
         }
-    </script>
+</script>
 @endsection

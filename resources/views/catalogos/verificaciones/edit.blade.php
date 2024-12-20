@@ -371,7 +371,7 @@
 
 
 
-        createImageInput(); // Agregar un input por defecto
+        // createImageInput(); // Agregar un input por defecto
     });
 
 </script>

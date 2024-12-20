@@ -58,8 +58,26 @@
                     </div>
 
                     <!-- Imagen de Usuario a la derecha -->
-                    <div class="flex-shrink-0">
-                        <img src="{{ url('img/usuarios/' . $usuario->foto) }}" alt="Foto de Usuario" class="object-cover w-16 h-16 border-4 border-indigo-500 rounded-full shadow-lg">
+                    <div class="grid gap-5">
+                        <img src="{{ url('img/usuarios/' . $usuario->foto) }}" alt="Foto de Usuario" class="w-16 h-16 object-cover border-4 border-indigo-500 cursor-pointer rounded-full
+                            shadow-md hover:scale-90 hover:shadow-lg ">
+                    </div>
+                    
+                    <div id="modal"
+                        class="hidden  fixed top-0 left-0 z-80 
+                        w-screen h-screen bg-black/70 flex
+                        justify-center items-center">
+                        <!-- Boton de cerrar -->
+                        <a class="fixed z-90 top-6 right-8 
+                        text-white text-5xl font-bold" 
+                        href="javascript:void(0)"
+                        onclick="closeModal()">
+                            ×
+                        </a>
+
+                        <!-- Medida de imagen -->
+                        <img id="modal-img"
+                            class="max-w-[900px] max-h-[700px] object-cover"/>
                     </div>
                 </div>
 
@@ -111,4 +129,36 @@
         </div>
     </div>
 </div>
+
+<script>
+                
+    // obtener todos los elementos de la img
+        var images = document.querySelectorAll('.grid img');
+
+    // recorre cada elemento de la img
+        images.forEach(function (img) {
+                    
+            // agregar cada evento de elementos en cada clic en la img
+            img.addEventListener('click', function () {
+                showModal(img.src);
+            });
+        });
+
+        // obtener el id del modal
+        var modal = document.getElementById("modal");
+
+        // obtener la etiqueta de la img
+        var modalImg = document.getElementById("modal-img");
+
+        // Cuando se hace clic en la img
+        function showModal(src) {
+            modal.classList.remove('hidden');
+            modalImg.src = src;
+        }
+
+        // Esta funcion es para cerrar
+            function closeModal() {
+                modal.classList.add('hidden');
+        }
+</script>
 @endsection

@@ -132,6 +132,13 @@
                                                 </svg>
                                             </button>
                                         </form>
+
+                                        @if($servicio->estatusIn != 'Disponible')
+                                        <a href="{{ route('liberar', $servicio->id_automovil) }}"
+                                            class="inline-flex items-center justify-center w-8 h-8 text-white border border-[#07074D] bg-white rounded-md shadow-md hover:bg-white hover:text-white hover:border-blue-950 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                                           
+                                        </a>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>

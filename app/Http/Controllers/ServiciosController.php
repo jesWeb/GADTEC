@@ -23,6 +23,8 @@ class ServiciosController extends Controller
                     serv.prox_servicio,
                     serv.costo,
                     serv.lugar_servicio,
+                    serv.id_automovil,
+                    aut.estatusIn,
                     CONCAT(aut.marca, ' ', aut.submarca, ' ', aut.modelo) AS automovil
                 FROM
                     servicios AS serv
@@ -80,42 +82,37 @@ class ServiciosController extends Controller
      * Store a newly created resource in storage.
      */
 
-     public function store(Request $request)
-     {
-         $rules = [
-             'tipo_servicio' => 'required|string|max:100',
-             'descripcion' => 'nullable|string|max:255',
-             'fecha_servicio' => 'nullable|date',
-             'prox_servicio' => 'nullable|date',
-             'costo' => 'nullable|numeric',
-             'lugar_servicio' => 'required|string|max:255',
-             'comprobante' => 'nullable|array|max:5',
-             'comprobante.*' => 'nullable|file|mimes:jpeg,png,jpg',
-             'id_automovil' => 'nullable|exists:automoviles,id_automovil'
-         ];
 
-         $messages = [
-             'tipo_servicio.required' => 'El campo tipo de servicio es requerido',
-             'descripcion.required' => 'El campo descripción es requerido',
-             'fecha_servicio.required' => 'El campo fecha de servicio es requerida',
-             'prox_servicio.nullable' => 'El campo próximo servicio es opcional',
-             'costo.nullable' => 'El campo costo es requerido',
-             'lugar_servicio.required' => 'El campo lugar de servicio es requerido',
-             'comprobante.nullable' => 'El campo comprobante es opcional',
-             'id_automovil.exists' => 'El campo automóvil no existe'
-         ];
+    public function store(Request $request)
+    {
+        $rules = [
+            'tipo_servicio' => 'required|string|max:100',
+            'descripcion' => 'nullable|string|max:255',
+            'fecha_servicio' => 'nullable|date',
+            'prox_servicio' => 'nullable|date',
+            'costo' => 'nullable|numeric',
+            'lugar_servicio' => 'required|string|max:255',
+            'comprobante' => 'nullable|array|max:5',
+            'comprobante.*' => 'nullable|file|mimes:jpeg,png,jpg',
+            'id_automovil' => 'nullable|exists:automoviles,id_automovil'
+        ];
 
-         $request->validate($rules, $messages);
-         $input = $request->all();
+        $messages = [
+            'tipo_servicio.required' => 'El campo tipo de servicio es requerido',
+            'lugar_servicio.required' => 'El campo lugar de servicio es requerido',
+            'id_automovil.exists' => 'El campo automóvil no existe'
+        ];
 
-         $fotografias = [];
+        $request->validate($rules, $messages);
+        $input = $request->all();
 
+        // Manejo de comprobantes
+        $fotografias = [];
         $maxTotalSize = 50 * 1024 * 1024; // 50 MB
         $totalSize = 0;
 
         if ($request->hasFile('comprobante')) {
-            $files = $request->file('comprobante');
-            $files = array_slice($files, 0, 5); // Limitar a 5 fotos
+            $files = array_slice($request->file('comprobante'), 0, 5); // Limitar a 5 fotos
 
             foreach ($files as $file) {
                 $totalSize += $file->getSize();
@@ -123,43 +120,34 @@ class ServiciosController extends Controller
                     return back()->with('error', 'El tamaño total de las imágenes supera los 50 MB.');
                 }
 
-                // Guardar el archivo en el directorio público
                 $imgAuto = date('Ymd_His_') . $file->getClientOriginalName();
                 $file->move(public_path('img/servicios'), $imgAuto);
                 $fotografias[] = $imgAuto;
             }
         }
 
-
-        //guardar en json la img
         $input['comprobante'] = json_encode($fotografias);
 
-     // Obtener el automóvil relacionado
-     $automovil = Automoviles::find($request->id_automovil);
-     if (!$automovil) {
-         return redirect()->back()->withErrors(['id_automovil' => 'Automóvil no encontrado.']);
-     }
+        // Obtener el automóvil actualizar estatus
+        $automovil = Automoviles::find($request->id_automovil);
+        if ($automovil) {
+            $fechaActual = now();
 
-     $fechaActual = now()->format('Y-m-d');
+            if ($request->tipo_servicio === 'Programado' && $request->prox_servicio == $fechaActual->format('Y-m-d')) {
+                $automovil->estatusIn = 'Mantenimiento';
+            } elseif ($request->tipo_servicio === 'No programado' && $request->fecha_servicio == $fechaActual->format('Y-m-d')) {
+                $automovil->estatusIn = 'En servicio';
+            } else {
+                $automovil->estatusIn = 'Disponible';
+            }
+            $automovil->save();
+        }
 
-    // Actualizar el estatus del automóvil según el tipo de servicio
-    if ($request->tipo_servicio == 'Programado' && $request->prox_servicio == $fechaActual) {
-        $automovil->estatusIn = 'Mantenimiento';
-    } elseif ($request->tipo_servicio == 'No programado' && $request->fecha_servicio == $fechaActual) {
-        $automovil->estatusIn = 'En servicio';
-    } else {
-        $automovil->estatusIn = 'Disponible';
+        // Crear el servicio
+        Servicios::create($input);
+
+        return redirect()->route('servicios.index')->with('mensaje', 'Se ha creado correctamente el registro');
     }
-     $automovil->save();  // Guardar cambios en el automóvil
-
-    // dd($request->fecha_servicio, $request->prox_servicio, $fechaActual);
-    // Crear el servicio
-    Servicios::create($input);
-
-    return redirect()->route('servicios.index')->with('mensaje', 'Se ha creado correctamente el registro');
-
-    }
-
 
     /**
      * Display the specified resource.
@@ -197,7 +185,7 @@ class ServiciosController extends Controller
              'comprobante' => 'nullable|array|max:5',
              'comprobante.*' => 'nullable|file|mimes:jpeg,png,jpg',
              'id_automovil' => 'nullable|exists:automoviles,id_automovil',
-             'estatusIn' => 'nullable|string'
+          
          ];
 
          $messages = [
@@ -244,29 +232,26 @@ class ServiciosController extends Controller
          // Actualizar el servicio
          $servicio->update($input);
 
-         // Actualizar el estatus del automóvil
-         $automovil = Automoviles::find($request->id_automovil);
-         if ($automovil) {
-             $automovil->estatusIn = $request->estatusIn;
-             $automovil->save();
-         }
+         
 
          return redirect()->route('servicios.index')->with('message', 'Servicio actualizado correctamente');
      }
 
+    public function update2($id, Request $request)
+    {
+        $query = Automoviles::find($id);
+        $query->estatusIn = 'Disponible';
+        $query->save();
 
+        // Redirigir a la vista de Gestión después de la actualización
+        return redirect()->route('servicios.index');
+    }
 
 
     /**
      * Remove the specified resource from storage.
      */
-    // public function destroy(string $id)
-    // {
-    //     //
-    //     $servicio = Servicios::findOrFail($id);
-    //     $servicio->delete();
-    //     return redirect()->route('servicios.index')->with('eliminar', 'Se ha eliminado correctamente el registro');
-    // }
+    
 
     public function destroy($id)
     {

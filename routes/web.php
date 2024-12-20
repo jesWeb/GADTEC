@@ -56,6 +56,8 @@ Route::middleware('auth')->group(function () {
         Route::resource('tenencias', TeneciasRefrendosController::class);
         Route::resource('multas', MultasController::class);
         Route::resource('servicios', ServiciosController::class);
+        Route::get('/liberar/update/{id_automovil}', [ServiciosController::class, 'update2'])->name('liberar');
+
 
         // Rutas para la gestión de vigilantes
         Route::resource('/administrador/vigilante', VigilanteController::class);

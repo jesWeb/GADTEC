@@ -62,7 +62,7 @@
                         <!-- Campo para seleccionar el automóvil -->
                         <div class="mb-4">
                             <label for="id_automovil" class="mb-3 block text-base font-medium text-[#07074D]">Seleccionar Automóvil:</label>
-                            <select disabled name="id_automovil" id="id_automovil" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            <select disabled name="id_automovil" id="id_automovil" class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                             title="Actualizar el automóvil asociado">
                                 @foreach ($automoviles as $automovil)
                                     <option value="{{ $automovil->id_automovil }}" {{ (old('id_automovil', $tarjeta->id_automovil) == $automovil->id_automovil) ? 'selected' : '' }}>
@@ -128,7 +128,7 @@
                         <!-- Campo para el estatus -->
                         <div class="mb-4">
                             <label for="estatus" class="mb-3 block text-base font-medium text-[#07074D]">Estatus:</label>
-                            <select name="estatus" id="estatus" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            <select name="estatus" id="estatus" class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                             title="Actualizar el estatus de la tarjeta">
                                 <option value="Vigente" {{ (old('estatus', $tarjeta->estatus) == 'Vigente') ? 'selected' : '' }}>Vigente</option>
                                 <option value="Expirada" {{ (old('estatus', $tarjeta->estatus) == 'Expirada') ? 'selected' : '' }}>Expirada</option>
