@@ -24,9 +24,6 @@ class verificacion extends Model
         'estadoV',
         'observaciones',
         'image',
-        // 'motivo_00',
-        // 'fecha_verificacion_00',
-        // 'proxima_verificacion_00'
     ];
 
 

@@ -69,7 +69,7 @@ class VerificacionesController extends Controller
         $request->validate([
             'id_automovil' => 'required|exists:automoviles,id_automovil',
             'engomado' => 'required|in:Verde,Amarillo,Rosa,Rojo,Azul',
-            'fecha_verificacion' => 'nullable|date|before_or_equal:today',
+            'fechaV' => 'nullable|date|before_or_equal:today',
             'holograma' => 'required|in:0,00,1,2',
             'estadoV' => 'required|in:EdoMex,Morelos,CDMX',
             'observaciones' => 'nullable|string',
@@ -80,7 +80,7 @@ class VerificacionesController extends Controller
         // Obtener el valor del engomado y la fecha
         $engomado = $request->input('engomado');
         // Usar Carbon para manipular fechas
-        $fechaV = Carbon::parse($request->input('fecha_verificacion'));
+        $fechaV = Carbon::parse($request->input('fechaV'));
         $mes = $fechaV->month;
 
         // Definir rangos de meses según el engomado
@@ -125,21 +125,16 @@ class VerificacionesController extends Controller
         //verificar si es 00
         $hologramaOpc = $request->input('holograma');
 
-        if ($hologramaOpc == '00') {
-            $fechaV = null;
-            $proximaVerificacion = null;
-
+        if ($hologramaOpc == '00'){
             //fecha a 00 dese el input
-            $fechaVerificacion = Carbon::parse($request->input('fecha_verificacion'));
+            $fechaVerificacion = Carbon::parse($request->input('fechaV'));
             $proximaVerificacion = $fechaVerificacion->copy()->addYears(2);
 
-        } elseif (in_array($hologramaOpc,['0','1','2'])   ) {
+        } elseif ($hologramaOpc == '0' || $hologramaOpc == '1' || $hologramaOpc == '2'  ) {
             $fechaVerificacion = $fechaV->copy()->addMonths(6);
             $proximaVerificacion = $fechaVerificacion;
-        }else{
-            $proximaVerificacion = null;
-            // $proximaVerificacion00 = null;
         }
+
 
         //guardar fotos
         $fotografias = [];
@@ -171,8 +166,8 @@ class VerificacionesController extends Controller
             'id_automovil' => $request->input('id_automovil'),
             'engomado' => $engomado,
             'holograma' => $request->input('holograma'),
-            'fecha_verificacion' => $hologramaOpc == '00' ? null : ($fechaV ? $fechaV->format('Y-m-d') : null),
-            'proxima_verificacion' => $hologramaOpc == '00' ? null : ($proximaVerificacion ? $proximaVerificacion->format('Y-m-d') : null),
+            'fecha_verificacion' =>  $fechaV->format('Y-m-d') ,
+            'proxima_verificacion' => $proximaVerificacion->format('Y-m-d'),
             'observaciones' => $request->input('observaciones'),
             'image' => $input['image'],
             ]);

@@ -154,7 +154,7 @@
                             <label for="fecha_verificacion" class="mb-3 block text-base font-medium text-[#07074D]">
                                 Fecha de Verificación
                             </label>
-                            <input type="date" name="fecha_verificacion" id="fecha_verificacion" value="{{ old('fecha_verificacion') }}"
+                            <input type="date" name="fechaV" id="fechaV" value="{{ old('fechaV') }}"
                                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
                         </div>
 
