@@ -21,6 +21,7 @@ class verificacion extends Model
         'holograma',
         'fecha_verificacion',
         'proxima_verificacion',
+        'monto',
         'estadoV',
         'observaciones',
         'image',

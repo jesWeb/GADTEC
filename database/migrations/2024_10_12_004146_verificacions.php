@@ -14,7 +14,8 @@ return new class extends Migration
             $table->enum('holograma', ['0','00','1','2']);
             $table->enum('engomado', ['Amarillo','Verde','Rosa' ,'Azul', 'Rojo']);
             $table->enum('estadoV', ['EdoMex', 'Morelos', 'CDMX']);
-            $table->date('fecha_verificacion')->nullable();
+            $table->decimal('monto', 10, 2)->nullable();
+            $table->date('fecha_verificacion');
             $table->date('proxima_verificacion')->nullable();
             $table->text('observaciones')->nullable();
             $table->string('image')->nullable();
