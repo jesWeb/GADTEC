@@ -52,15 +52,13 @@
                 </div>
             </nav>
         </div>
-
         <div class="p-6 bg-white border rounded-md shadow-md">
-            <div class="flex justify-between mb-3">
-                <h2 class="mb-4 text-lg font-semibold text-gray-700 capitalize">Verificaciones vehiculares</h2>
-
+            <div class="flex justify-between ">
+                <h2 class="text-lg font-semibold text-gray-700 capitalize ">Verificaciones vehiculares</h2>
             </div>
             <form id="imageForm" action="{{ route('verificaciones.store') }}" enctype="multipart/form-data" method="POST">
                 @csrf
-                <div class="m-3 xl:p-10 xl:m-5">
+                <div class="m-3 xl:p-10 xl:m-3">
 
                     <!-- Mensajes de error -->
                     @if ($errors->any())
@@ -108,13 +106,29 @@
                         </div>
 
                         <!-- Holograma -->
-                        <div class="w-full px-3 xl:w-1/2">
+                        {{-- <div class="w-full px-3 xl:w-1/2">
                             <label class=" block text-base font-medium text-[#07074D]" for="holograma">
                                 Holograma
                             </label>
                             <input type="text" name="holograma" id="holograma" value="{{ old('holograma') }}"
                                 class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                 placeholder="Ingresa el Holograma" required>
+                        </div> --}}
+                         {{-- Holograma --}}
+                         <div class="w-full px-3 xl:w-1/2">
+                            <label for="holograma" class="mb-3 block text-base font-medium text-[#07074D]">
+                                Holograma:
+                            </label>
+                            <select
+                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                name="holograma" required >
+                                <option disabled selected>Selecciona una opción...</option>
+                                @foreach (['0','1','2','00'] as $holograma)
+                                    <option value="{{ $holograma }}" {{ old('holograma') == $holograma ? 'selected' : '' }}>
+                                        {{ $holograma }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     {{--  --}}
@@ -140,12 +154,19 @@
                             <label for="fecha_verificacion" class="mb-3 block text-base font-medium text-[#07074D]">
                                 Fecha de Verificación
                             </label>
-                            <input type="date" name="fechaV" id="fechaV" value="{{ old('fechaV') }}"
+                            <input type="date" name="fecha_verificacion" id="fecha_verificacion" value="{{ old('fecha_verificacion') }}"
                                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
                         </div>
+
                     </div>
+
                     <!-- Fechas -->
-                    <div class=" gap-5.5 mt-6 xl:flex-row">
+                    {{-- <div class="flex flex-col gap-5.5 mt-4 xl:flex-row mb-3">
+                        <div id="" class="w-full px-3 xl:w-1/2" style="display: none">
+
+                        </div>
+                    </div> --}}
+                    {{-- <div class=" gap-5.5 mt-6 xl:flex-row">
 
                         <div class="px-2 mt-4 mb-5">
                             <div>
@@ -190,7 +211,7 @@
                             </div>
                         </div>
 
-                    </div>
+                    </div> --}}
 
                     <!-- Observaciones -->
                     <div class="w-full xl:m-5 xl:w-2/4 xl:mt-4 xl:mb-4">
@@ -222,9 +243,6 @@
                             </label>
                         </div>
                     </div>
-
-
-
                     <!-- Botones -->
                     <div class="flex justify-end gap-4 mt-4">
                         <a href="{{ route('verificaciones.index') }}"

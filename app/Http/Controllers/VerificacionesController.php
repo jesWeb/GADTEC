@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 
 class VerificacionesController extends Controller
 {
-
     public function index(Request $request)
     {
 
@@ -17,8 +16,6 @@ class VerificacionesController extends Controller
         ver.id_verificacion,
         ver.fecha_verificacion,
         ver.proxima_verificacion,
-        ver.fecha_verificacion_00,
-        ver.proxima_verificacion_00,
         CONCAT(aut.marca, ' ', aut.submarca, ' ', aut.modelo) AS automovil
         FROM
              verificacions as ver
@@ -36,20 +33,16 @@ class VerificacionesController extends Controller
             $conditions[] = "(ver.id_verificacion LIKE :search1 OR
                              ver.fecha_verificacion LIKE :search2 OR
                              ver.proxima_verificacion LIKE :search3 OR
-                             ver.fecha_verificacion_00 LIKE :search4 OR
-                             ver.proxima_verificacion_00 LIKE :search5 OR
-                             aut.marca LIKE :search6 OR
-                             aut.submarca LIKE :search7 OR
-                             aut.modelo LIKE :search8)";
+                             aut.marca LIKE :search4 OR
+                             aut.submarca LIKE :search5 OR
+                             aut.modelo LIKE :search6)";
             $parameters = [
                 'search1' => "%{$search}%",
                 'search2' => "%{$search}%",
                 'search3' => "%{$search}%",
                 'search4' => "%{$search}%",
                 'search5' => "%{$search}%",
-                'search6' => "%{$search}%",
-                'search7' => "%{$search}%",
-                'search8' => "%{$search}%"
+                'search6' => "%{$search}%"
             ];
         }
 
@@ -57,46 +50,37 @@ class VerificacionesController extends Controller
         if (!empty($conditions)) {
             $sql .= " AND " . implode(' AND ', $conditions);
         }
-
         // Ejecutar la consulta SQL
         $verificacion = \DB::select($sql, $parameters);
-
-
-
-
         return view('catalogos.verificaciones.index', compact('verificacion'));
     }
+
     public function create()
     {
         $automoviles = Automoviles::all();
         return view('catalogos.verificaciones.create', compact('automoviles'));
     }
 
+
     public function store(Request $request)
     {
-        $request->merge([
-            'etiqueta_00' => $request->has('etiqueta_00') ? true : false
-        ]);
-
+        // dd($request);
         // Validar entrada básica
         $request->validate([
             'id_automovil' => 'required|exists:automoviles,id_automovil',
             'engomado' => 'required|in:Verde,Amarillo,Rosa,Rojo,Azul',
-            'fechaV' => 'nullable|date|before_or_equal:today',
-            'holograma' => 'required|string|max:255',
+            'fecha_verificacion' => 'nullable|date|before_or_equal:today',
+            'holograma' => 'required|in:0,00,1,2',
             'estadoV' => 'required|in:EdoMex,Morelos,CDMX',
             'observaciones' => 'nullable|string',
             'image' => 'nullable|array|max:10',
             'image.*' => 'file|mimes:jpg,png,jpeg',
-            'etiqueta_00' => 'nullable|boolean',
-            'motivo_00' => 'nullable|string|max:255',
-            'fecha_verificacion_00' => 'nullable|date|before_or_equal:today',
         ]);
 
         // Obtener el valor del engomado y la fecha
         $engomado = $request->input('engomado');
         // Usar Carbon para manipular fechas
-        $fechaV = Carbon::parse($request->input('fechaV'));
+        $fechaV = Carbon::parse($request->input('fecha_verificacion'));
         $mes = $fechaV->month;
 
         // Definir rangos de meses según el engomado
@@ -138,28 +122,24 @@ class VerificacionesController extends Controller
             ])->withInput();
         }
 
-        // Calcular la próxima fecha de verificación sumando 6 meses
-        // $proximaVerificacion = $fechaV->copy()->addMonths(6);
-
         //verificar si es 00
-        $etiquetaDobleCero = $request->input('etiqueta_00');
-        if ($etiquetaDobleCero) {
+        $hologramaOpc = $request->input('holograma');
+
+        if ($hologramaOpc == '00') {
             $fechaV = null;
             $proximaVerificacion = null;
-            // Obtener fecha  verificación ingresada por el usuario
-            $fechaVerificacionCero = Carbon::parse($request->input('fecha_verificacion_00'));
-            //  sumando 2 años a la fecha de verificación 00
-            $proximaVerificacion00 = $fechaVerificacionCero->copy()->addYears(2);
 
-            $motivoCero = $request->input('motivo_00');
-        } else {
-            //si no es 00 suma los 6b meses normales
-            $proximaVerificacion = $fechaV->copy()->addMonths(6);
-            $proximaVerificacion00 = null;
+            //fecha a 00 dese el input
+            $fechaVerificacion = Carbon::parse($request->input('fecha_verificacion'));
+            $proximaVerificacion = $fechaVerificacion->copy()->addYears(2);
 
-            $motivoCero = null;
+        } elseif (in_array($hologramaOpc,['0','1','2'])   ) {
+            $fechaVerificacion = $fechaV->copy()->addMonths(6);
+            $proximaVerificacion = $fechaVerificacion;
+        }else{
+            $proximaVerificacion = null;
+            // $proximaVerificacion00 = null;
         }
-
 
         //guardar fotos
         $fotografias = [];
@@ -191,35 +171,25 @@ class VerificacionesController extends Controller
             'id_automovil' => $request->input('id_automovil'),
             'engomado' => $engomado,
             'holograma' => $request->input('holograma'),
-            'fecha_verificacion' => $etiquetaDobleCero ? null : ($fechaV ? $fechaV->format('Y-m-d') : null),
-            'proxima_verificacion' => $etiquetaDobleCero ? null : ($proximaVerificacion ? $proximaVerificacion->format('Y-m-d') : null),
+            'fecha_verificacion' => $hologramaOpc == '00' ? null : ($fechaV ? $fechaV->format('Y-m-d') : null),
+            'proxima_verificacion' => $hologramaOpc == '00' ? null : ($proximaVerificacion ? $proximaVerificacion->format('Y-m-d') : null),
             'observaciones' => $request->input('observaciones'),
             'image' => $input['image'],
-            'motivo_00' => $motivoCero,
-            'fecha_verificacion_00' => $etiquetaDobleCero ? $fechaVerificacionCero->format('Y-m-d') : null,
-            'proxima_verificacion_00' => $etiquetaDobleCero ? $proximaVerificacion00->format('Y-m-d') : null
-        ]);
+            ]);
 
         return redirect()->route('verificaciones.index')->with('mensaje', 'Se ha registrado correctamente el registro');
     }
-
-
-
-
     public function show($id)
     {
         $MostrarVer = verificacion::findOrfail($id);
         return view('catalogos.verificaciones.show', compact('MostrarVer'));
     }
-
     public function edit(string $id)
     {
         $EddVer = verificacion::find($id);
         $automoviles = Automoviles::all();
         return view('catalogos.verificaciones.edit', compact('EddVer', 'automoviles'));
     }
-
-
     public function update(Request $request, $id)
     {
 
@@ -330,7 +300,6 @@ class VerificacionesController extends Controller
 
         return redirect()->route('verificaciones.index')->with('message', "Se ha actualizado correctamente el registro");
     }
-
     public function destroy($id)
     {
         $DelVer = verificacion::findOrFail($id);

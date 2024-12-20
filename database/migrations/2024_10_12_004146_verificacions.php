@@ -11,12 +11,13 @@ return new class extends Migration
         Schema::create('verificacions', function (Blueprint $table) {
             $table->bigIncrements('id_verificacion');
             $table->unsignedBigInteger('id_automovil');
-            $table->string('holograma');
+            // $table->string('holograma');
+            $table->enum('holograma', ['0','00','1' ,'2']);
             $table->enum('engomado', ['Amarillo','Verde','Rosa' ,'Azul', 'Rojo']);
             $table->enum('estadoV', ['EdoMex', 'Morelos', 'CDMX']);
-            $table->string('motivo_00')->nullable();
-            $table->date('fecha_verificacion_00')->nullable();
-            $table->date('proxima_verificacion_00')->nullable();
+            // $table->string('motivo_00')->nullable();
+            // $table->date('fecha_verificacion_00')->nullable();
+            // $table->date('proxima_verificacion_00')->nullable();
             $table->date('fecha_verificacion')->nullable();
             $table->date('proxima_verificacion')->nullable();
             $table->text('observaciones')->nullable();
