@@ -111,9 +111,20 @@ class SegurosController extends Controller
         return redirect()->route('seguros.index')->with('mensaje', 'Se ha registarado exitosamente!!');
     }
 
+
     public function show($id)
     {
-        $seguroS = seguros::findOrfail($id);
+    
+        $seguroS = seguros::with('automovil')->findOrFail($id);
+
+    
+        if (is_null($seguroS->automovil)) {
+        
+            return view('catalogos.seguros.show', [
+                'seguroS' => $seguroS,
+                'mensaje' => 'El automóvil relacionado ha sido eliminado.',
+            ]);
+        }
 
         return view('catalogos.seguros.show', compact('seguroS'));
     }

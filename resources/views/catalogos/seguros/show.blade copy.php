@@ -59,18 +59,18 @@
                     </div>
 
                     <h2 class="text-2xl font-semibold tracking-tight text-center text-green-600 f text-primary-800 md:m-5">
+                        Aseguradora -
                         @if($seguroS->automovil)
-                            Aseguradora -
-                            @if($seguroS->automovil)
-                                {{ $seguroS->automovil->marca }} {{ $seguroS->automovil->submarca }}
-                                {{ $seguroS->automovil->modelo }}
-                            @elseif($automovilEliminado)
-                                <p class="text-sm text-red-600">Nota: Este automóvil ha sido eliminado.</p>
+                            <h2>Detalles del Automóvil</h2>
+                            <p>Marca: {{ $seguroS->automovil->marca }}</p>
+                            <p>Submarca: {{ $seguroS->automovil->submarca }}</p>
+                            <p>Modelo: {{ $seguroS->automovil->modelo }}</p>
+
+                            @if($automovilEliminado)
+                                <p style="color: red;">Nota: Este automóvil ha sido eliminado.</p>
                             @endif
                         @else
-                            
-                            <p class="text-red-600">El automóvil asociado a este seguro no existe.</p>
-                            <p class="text-sm text-red-600">Nota: Este automóvil ha sido eliminado.</p>
+                            <p style="color: red;">No hay un automóvil asociado a este seguro.</p>
                         @endif
                         
                      </h2>
