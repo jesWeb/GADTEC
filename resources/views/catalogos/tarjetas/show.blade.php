@@ -58,9 +58,22 @@
 
                 <!-- Detalles del automóvil -->
                 <div class="mt-6 space-y-6">
-                    <div class="p-6 bg-transparent rounded-lg shadow-sm">
-                        <p class="text-xl font-bold text-gray-800">Automóvil</p>
-                        <p class="text-xl font-bold text-green-600">{{ $tarjeta->automovil->marca }} {{ $tarjeta->automovil->submarca }}  {{ $tarjeta->automovil->modelo }}</p>
+                    <div class="p-6 bg-transparent rounded-lg shadow-sm">   
+                        <h2 class="text-xl font-bold text-center text-green-600">
+                        @if($tarjeta->automovil)
+                            <p class="text-xl font-bold text-center text-gray-800">Automóvil</p>
+                            @if($tarjeta->automovil)
+                                {{ $tarjeta->automovil->marca }} {{ $tarjeta->automovil->submarca }}
+                                {{ $tarjeta->automovil->modelo }}
+                            @elseif($automovilEliminado)
+                                <p class="text-sm text-red-600">Nota: Este automóvil ha sido eliminado.</p>
+                            @endif
+                        @else
+                            
+                            <p class="text-red-600">El automóvil asociado a esta tarjeta no existe.</p>
+                            <p class="text-sm text-red-600">Nota: Este automóvil ha sido eliminado.</p>
+                        @endif
+                        </h2>
                     </div>
 
                     <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -106,8 +119,7 @@
                                     @if ($fotografias)
                                         @foreach ($fotografias as $foto)
                                             <div class="grid gap-5">
-                                                <img class="w-16 h-max-auto object-cover cursor-pointer rounded-lg 
-                                                        shadow-md hover:scale-90 hover:shadow-lg " 
+                                                <img class="object-cover w-16 rounded-lg shadow-md cursor-pointer h-max-auto hover:scale-90 hover:shadow-lg " 
                                                         src="{{ url('img/tarjetas/' . $foto) }}"
                                                             alt="Img 1" id="img1" />
                                                             
@@ -118,12 +130,9 @@
                                     @endif
                                    
                                     <div id="modal"
-                                        class="hidden  fixed top-0 left-0 z-80 
-                                            w-screen h-screen bg-black/70 flex
-                                            justify-center items-center">
+                                        class="fixed top-0 left-0 flex items-center justify-center hidden w-screen h-screen z-80 bg-black/70">
                                         <!-- Boton de cerrar -->
-                                        <a class="fixed z-90 top-6 right-8 
-                                        text-white text-5xl font-bold" 
+                                        <a class="fixed text-5xl font-bold text-white z-90 top-6 right-8" 
                                             href="javascript:void(0)"
                                             onclick="closeModal()">
                                             ×

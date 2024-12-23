@@ -53,16 +53,37 @@
                         <div class="mt-6 ml-4 space-y-6">
                             <div class="grid grid-cols-2 gap-6 md:grid-cols-3">
                                 <div class="p-4 bg-white rounded-lg shadow-sm">
-                                    <h4 class="text-lg font-semibold text-gray-800">Solicitante:</h4>
-                                    <span
-                                        class="mt-2 text-base leading-relaxed text-gray-500 ">{{ $asignacionV->usuarios->nombre }}
-                                        {{ $asignacionV->usuarios->app }} {{ $asignacionV->usuarios->apm }}</span>
+                                    @if($asignacionV->>usuarios)
+                                        <h4 class="text-lg font-semibold text-gray-800">Solicitante:</h4>
+                                        @if($asignacionV->>usuarios)
+                                            <span class="mt-2 text-base leading-relaxed text-gray-500 ">{{ $asignacionV->usuarios->nombre }}
+                                            {{ $asignacionV->usuarios->app }} {{ $asignacionV->usuarios->apm }} </span>
+                                        @elseif($automovilEliminado)
+                                            <p class="text-sm text-red-600">Nota: Este usuario ha sido eliminado.</p>
+                                        @endif
+                                    @else
+                                        
+                                        <p class="text-red-600">El usuario asociado a esta asignacion no existe.</p>
+                                        <p class="text-sm text-red-600">Nota: Este usuario ha sido eliminado.</p>
+                                    @endif
+                        
+                                   
                                 </div>
                                 <div class="p-4 bg-white rounded-lg shadow-sm">
+                                @if($asignacionV->automovil)
                                     <h4 class="text-lg font-semibold text-gray-800">Automovil: </h4>
-                                    <span class="mt-2 text-base leading-relaxed text-gray-500 ">
-                                        {{ $asignacionV->automovil->marca }} {{ $asignacionV->automovil->submarca }}
-                                        {{ $asignacionV->automovil->modelo }}</span>
+                                    @if($asignacionV->automovil)
+                                        <span class="mt-2 text-base leading-relaxed text-gray-500 ">{{ $asignacionV->automovil->marca }} {{ $asignacionV->automovil->submarca }}
+                                        {{ $asignacionV->automovil->modelo }} </span>
+                                    @elseif($automovilEliminado)
+                                        <p class="text-sm text-red-600">Nota: Este automóvil ha sido eliminado.</p>
+                                    @endif
+                                @else
+                                    
+                                    <p class="text-red-600">El automóvil asociado a esta asignacion no existe.</p>
+                                    <p class="text-sm text-red-600">Nota: Este automóvil ha sido eliminado.</p>
+                                @endif
+                                   
                                 </div>
                                 <div class="p-4 bg-white rounded-lg shadow-sm">
                                     <h4 class="text-lg font-semibold text-gray-800">Fecha de salida:</h4>

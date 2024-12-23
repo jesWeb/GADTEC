@@ -100,14 +100,28 @@ class AsignacionController extends Controller
     }
 
 
-
+    // public function show($id)
+    // {
+    //     $asignacionV = asignacion::findOrFail($id);
+    //     return view('catalogos.asignacion.show', compact('asignacionV'));
+    // }
 
     public function show($id)
     {
-        $asignacionV = asignacion::findOrFail($id);
+    
+        $asignacionV = asignacion::with('automovil', 'usuarios')->findOrFail($id);
+    
+        if (is_null($tarjeta->automovil) || is_null($tarjeta->usuarios) ) {
+        
+            return view('catalogos.asignacion.show', [
+                'asignacionV' => $asignacionV,
+                'mensaje' => 'El automóvil o usuario relacionado ha sido eliminado.',
+            ]);
+        }
+
         return view('catalogos.asignacion.show', compact('asignacionV'));
     }
-
+    
     public function edit($id)
     {
         $EddtAsig = asignacion::findOrFail($id);

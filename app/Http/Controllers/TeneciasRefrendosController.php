@@ -142,10 +142,26 @@ class TeneciasRefrendosController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    // public function show(string $id)
+    // {
+    //     //
+    //     $tenencia = TeneciasRefrendos::findOrFail($id);
+    //     return view('catalogos.tenencias.show', compact('tenencia'));
+    // }
+    public function show($id)
     {
-        //
-        $tenencia = TeneciasRefrendos::findOrFail($id);
+    
+        $tenencia = TeneciasRefrendos::with('automovil')->findOrFail($id);
+
+    
+        if (is_null($tenencia->automovil)) {
+        
+            return view('catalogos.tenencias.show', [
+                'tenencia' => $tenencia,
+                'mensaje' => 'El automóvil relacionado ha sido eliminado.',
+            ]);
+        }
+
         return view('catalogos.tenencias.show', compact('tenencia'));
     }
     /**

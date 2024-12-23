@@ -46,12 +46,26 @@
                     <p class="mt-2 text-lg text-gray-600">Información completa sobre la multa seleccionada</p>
                 </div>
 
+                <div class="p-6 bg-transparent rounded-lg shadow-sm">
+                        <h2 class="text-2xl font-semibold tracking-tight text-center text-green-600 f text-primary-800 md:m-5">
+                            @if($multa->automovil)
+                                Multa -
+                                @if($multa->automovil)
+                                    {{ $multa->automovil->marca }} {{ $multa->automovil->submarca }} {{ $multa->automovil->modelo }}
+                                @elseif($automovilEliminado)
+                                    <p class="text-sm text-red-600">Nota: Este automóvil ha sido eliminado.</p>
+                                @endif
+                            @else
+                                
+                                <p class="text-red-600">El automóvil asociado a esta multa no existe.</p>
+                                <p class="text-sm text-red-600">Nota: Este automóvil ha sido eliminado.</p>
+                            @endif
+                            
+                        </h2>
+                    </div>
             <!-- Información de multas en dos columnas -->
             <div class="grid grid-cols-1 gap-4 mb-6 sm:grid-cols-2">
-                    <div class="p-6 bg-transparent rounded-lg shadow-sm">
-                        <p class="text-xl font-medium text-gray-800">Vehículo:</p>
-                        <p class="text-2xl font-semibold text-green-600">{{ $multa->automovil->marca }} {{ $multa->automovil->submarca }} {{ $multa->automovil->modelo }}</p>
-                    </div>
+                   
 
                     <div class="p-6 bg-transparent rounded-lg shadow-sm">
                         <p class="text-xl font-medium text-gray-800">Fecha de pago:</p>
@@ -94,8 +108,7 @@
                                 @if ($fotografias)
                                     @foreach ($fotografias as $foto)
                                         <div class="grid gap-5">
-                                            <img class="w-16 h-max-auto object-cover cursor-pointer rounded-lg 
-                                            shadow-md hover:scale-90 hover:shadow-lg " 
+                                            <img class="object-cover w-16 rounded-lg shadow-md cursor-pointer h-max-auto hover:scale-90 hover:shadow-lg " 
                                             src="{{ url('img/multas/' . $foto) }}"
                                                 alt="Img 1" id="img1" />
                                                 
@@ -105,14 +118,11 @@
                                     <p>No hay fotografias Cargadas </p>
                                 @endif
                                 <div id="modal"
-                                    class="hidden  fixed top-0 left-0 z-80 
-                                            w-screen h-screen bg-black/70 flex
-                                            justify-center items-center">
+                                    class="fixed top-0 left-0 flex items-center justify-center hidden w-screen h-screen z-80 bg-black/70">
                                             
 
                                     <!-- Boton de cerrar -->
-                                    <a class="fixed z-90 top-6 right-8 
-                                            text-white text-5xl font-bold" 
+                                    <a class="fixed text-5xl font-bold text-white z-90 top-6 right-8" 
                                     href="javascript:void(0)"
                                     onclick="closeModal()">
                                         ×
@@ -132,9 +142,9 @@
                         <p class="text-xl font-medium text-gray-800">Observaciones:</p>
                         <p class="text-lg text-gray-600">
                             @if($multa->observaciones)
-                            <p class="text-gray-600 mt-4 text-lg">{{ $multa->observaciones }} </p>
+                            <p class="mt-4 text-lg text-gray-600">{{ $multa->observaciones }} </p>
                             @else
-                            <p class="text-gray-500 mt-4 text-sm">No aplica</p>
+                            <p class="mt-4 text-sm text-gray-500">No aplica</p>
                             @endif
                         </p>
                     </div>  

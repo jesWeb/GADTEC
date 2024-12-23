@@ -151,12 +151,27 @@ class MultasController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-        $multa = Multas::findOrFail($id);
-        return view('modulos.multas.show', compact('multa'));
+    // public function show(string $id)
+    // {
+    //     //
+    //     $multa = Multas::findOrFail($id);
+    //     return view('modulos.multas.show', compact('multa'));
 
+    // }
+
+    public function show($id)
+    {
+    
+        $multa = Multas::with('automovil')->findOrFail($id);
+    
+        if (is_null($multa->automovil) ) {
+            return view('modulos.multas.show', [
+                'multa' => $multa,
+                'mensaje' => 'El automóvil o usuario relacionado ha sido eliminado.',
+            ]);
+        }
+
+        return view('modulos.multas.show', compact('multa'));
     }
 
     /**
