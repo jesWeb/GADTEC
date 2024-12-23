@@ -103,7 +103,7 @@
                                 
                                 <!-- programadas y no programadas -->
                                 @if($servicio->tipo_servicio == "Programado")
-                                    @if($servicio->prox_servicio === now()->toDateString() && $servicio->tipo_servicio != "Programado")
+                                    @if($servicio->prox_servicio === now()->toDateString() && $servicio->estatus != "Disponible")
                                         <td class="px-4 py-2 text-center border">
                                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium 
                                                 {{ 
@@ -131,7 +131,7 @@
                                                 {{$servicio->estatus}} 
                                             </span>
                                         </td>
-                                    @elseif($servicio->fecha_servicio != $servicio->prox_servicio )
+                                    @elseif($servicio->fecha_servicio != $servicio->prox_servicio)
                                         <td class="px-4 py-2 text-center border">
                                             <span>
                                                 Entregado  
