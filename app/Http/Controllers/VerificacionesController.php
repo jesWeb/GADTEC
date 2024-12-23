@@ -187,9 +187,9 @@ class VerificacionesController extends Controller
     }
     public function show($id)
     {
-        $MostrarVer = verificacion::with('automoviles')->findOrfail($id);
+        $MostrarVer = verificacion::with('automovil')->findOrfail($id);
 
-        if (is_null($MostrarVer->automoviles)) {
+        if (is_null($MostrarVer->automovil)) {
             return view('catalogos.verificaciones.show', [
                 'MostrarVer' => $MostrarVer,
                 'mensaje' => 'El automóvil relacionado ha sido eliminado.',
