@@ -59,28 +59,24 @@
                     </div>
 
                     <h2 class="text-2xl font-semibold tracking-tight text-center text-green-600 f text-primary-800 md:m-5">
-<<<<<<< HEAD
-                        Aseguradora -</h2>
-=======
+                        Aseguradora -
                         @if($seguroS->automovil)
-                            Aseguradora -
-                            @if($seguroS->automovil)
-                                {{ $seguroS->automovil->marca }} {{ $seguroS->automovil->submarca }}
-                                {{ $seguroS->automovil->modelo }}
-                            @elseif($automovilEliminado)
-                                <p class="text-sm text-red-600">Nota: Este automóvil ha sido eliminado.</p>
+                            <h2>Detalles del Automóvil</h2>
+                            <p>Marca: {{ $seguroS->automovil->marca }}</p>
+                            <p>Submarca: {{ $seguroS->automovil->submarca }}</p>
+                            <p>Modelo: {{ $seguroS->automovil->modelo }}</p>
+
+                            @if($automovilEliminado)
+                                <p style="color: red;">Nota: Este automóvil ha sido eliminado.</p>
                             @endif
                         @else
-                            
-                            <p class="text-red-600">El automóvil asociado a este seguro no existe.</p>
-                            <p class="text-sm text-red-600">Nota: Este automóvil ha sido eliminado.</p>
+                            <p style="color: red;">No hay un automóvil asociado a este seguro.</p>
                         @endif
                         
                      </h2>
->>>>>>> mitzi
                     {{-- poliza Img --}}
                     <div class="w-full">
-
+                        
 
                         <div class="flex gap-4 p-4 ml-4 overflow-x-auto">
                             @php
@@ -90,14 +86,10 @@
                             @if ($fotografias)
                                 @foreach ($fotografias as $foto)
                                     <div class="grid gap-5">
-<<<<<<< HEAD
-                                        <img class="object-cover w-16 rounded-lg shadow-md cursor-pointer h-max-auto hover:scale-90 hover:shadow-lg "
-=======
                                         <img class="object-cover w-16 rounded-lg shadow-md cursor-pointer h-max-auto hover:scale-90 hover:shadow-lg " 
->>>>>>> mitzi
                                                 src="{{ url('img/poliza/' . $foto) }}"
                                                     alt="Img 1" id="img1" />
-
+                                                    
                                     </div>
                                 @endforeach
                             @else
@@ -106,11 +98,7 @@
                             <div id="modal"
                                 class="fixed top-0 left-0 flex items-center justify-center hidden w-screen h-screen z-80 bg-black/70">
                             <!-- Boton de cerrar -->
-<<<<<<< HEAD
-                                <a class="fixed text-5xl font-bold text-white z-90 top-6 right-8"
-=======
                                 <a class="fixed text-5xl font-bold text-white z-90 top-6 right-8" 
->>>>>>> mitzi
                                     href="javascript:void(0)"
                                     onclick="closeModal()">
                                     ×
@@ -172,13 +160,13 @@
             </div>
         </div>
 <script>
-
+                
     // obtener todos los elementos de la img
         var images = document.querySelectorAll('.grid img');
 
     // recorre cada elemento de la img
         images.forEach(function (img) {
-
+                    
             // agregar cada evento de elementos en cada clic en la img
             img.addEventListener('click', function () {
                 showModal(img.src);
