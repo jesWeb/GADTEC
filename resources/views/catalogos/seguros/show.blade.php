@@ -123,7 +123,6 @@
                                         class="mt-2 text-lg leading-relaxed text-gray-500 ">{{ $seguroS->aseguradora }}</span>
                                 </div>
                                 <div class="p-4 bg-white rounded-lg shadow-sm">
-
                                     <h4 class="text-lg font-semibold text-gray-800">Cobertura:</h4>
                                     <span
                                         class="mt-2 text-lg leading-relaxed text-gray-500 ">{{ $seguroS->cobertura }}</span>
@@ -134,8 +133,6 @@
                                     <span
                                         class="mt-2 text-lg leading-relaxed text-gray-500 ">{{ $seguroS->estatus }}</span>
                                 </div>
-
-
                                 <div class="p-4 bg-white rounded-lg shadow-sm">
                                     <h4 class="text-lg font-semibold text-gray-800">Monto Asegurado:</h4>
                                     <span class="mt-2 text-lg leading-relaxed text-gray-500 ">$
@@ -148,7 +145,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </article>
                     {{-- btn --}}
                     <div class="flex justify-end mt-6 space-x-4">
@@ -163,11 +159,9 @@
 
     // obtener todos los elementos de la img
         var images = document.querySelectorAll('.grid img');
-
     // recorre cada elemento de la img
         images.forEach(function (img) {
-
-            // agregar cada evento de elementos en cada clic en la img
+            // agregar  evento al elemento en cada clic en la img
             img.addEventListener('click', function () {
                 showModal(img.src);
             });

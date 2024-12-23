@@ -25,12 +25,9 @@ class SiniestrosController extends Controller
                  JOIN
                  usuarios as resp ON sin.id_usuario = resp.id_usuario
                  where sin.deleted_at IS NULL";
-
-
         // Condiciones dinámicas para búsqueda
         $conditions = [];
         $parameters = [];
-
         if ($request->has('search') && $request->input('search') != '') {
             $search = $request->input('search');
             $conditions[] = "(sin.id_siniestro LIKE :search1 OR
@@ -57,17 +54,12 @@ class SiniestrosController extends Controller
                 'search10' => "%{$search}%",
             ];
         }
-
         // Si hay condiciones de búsqueda, agregar al WHERE
         if (!empty($conditions)) {
             $sql .= " AND " . implode(' AND ', $conditions);
         }
-
         // Ejecutar la consulta SQL
         $siniestros = DB::select($sql, $parameters);
-
-
-
         return view('catalogos.siniestros.index', compact('siniestros'));
     }
     public function create()
@@ -78,7 +70,6 @@ class SiniestrosController extends Controller
     }
     public function store(Request $request)
     {
-
         // dd($request);
         $rules = [
             'id_automovil' => 'required|exists:automoviles,id_automovil',
@@ -98,34 +89,23 @@ class SiniestrosController extends Controller
             'fecha_siniestro' => 'La fecha del Siniesro tiene que ser anterior',
             'descripcion' => 'Ingresa Una descripcion detallada del Siniestro',
         ];
-
         $request->validate($rules, $messages);
         // $newSin->costo_danos_estimados =  str_replace(',', '.', $costoDano);
         // ;
-
         $montoSin = $request->input('monto');
         $porcentajeSin = $request->input('porcentaje');
         $aplica_deducible = $request->input('aplica_deducible') == 1 ? true : false;
-
         if ($aplica_deducible) {
             $operacionSin = $montoSin * ($porcentajeSin / 100);
             $resultado = $montoSin - $operacionSin;
         } else {
             $resultado = $montoSin;
         }
-
         $input = $request->all();
         $input['monto'] = $montoSin;
         $input['resultado'] = $resultado;
-
-
-
-
         //guardamos datos en BD
         siniestros::create($input);
-
-
-
         return redirect()->route('siniestros.index')->with('mensaje', 'Se ha creado Correctamente el registro');
     }
 
@@ -143,47 +123,34 @@ class SiniestrosController extends Controller
 
     return view('catalogos.siniestros.show', compact('ViewSini'));
     }
-
     public function edit($id)
     {
-
         $EddSin = siniestros::find($id);
         $automoviles = Automoviles::all();
         $usuarios = Usuarios::all();
         return view('catalogos.siniestros.edit', compact('EddSin', 'automoviles', 'usuarios'));
     }
-
-
     public function update(Request $request,  $id)
     {
-
         $EddSin = siniestros::findOrFail($id);
-
         $rules = [
             'fecha_siniestro' => 'required|date|before_or_equal:today',
         ];
         $messages = [
             'fecha_siniestro' => 'La fecha del Siniesro tiene que ser anterior',
-
         ];
-
         $request->validate($rules, $messages);
-
-
         $montoSin = $request->input('monto');
         $porcentajeSin = $request->input('porcentaje');
-
         if ($porcentajeSin) {
             $operacionSin = $montoSin * ($porcentajeSin / 100);
             $resultado =  $operacionSin;
         } else {
             $resultado = $montoSin;
         }
-
         $input = $request->only(['fecha_siniestro', 'estatus', 'id_usuario', 'observaciones', 'descripcion', 'porcentaje', 'resultado']);
         $input['monto'] = $montoSin;
         $input['resultado'] = $resultado;
-
         $EddSin->update($input);
         return redirect()->route('siniestros.index')->with('message', 'Se ha modificado correctamente el Registro ');
     }
