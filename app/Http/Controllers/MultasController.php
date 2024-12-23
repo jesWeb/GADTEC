@@ -74,7 +74,10 @@ class MultasController extends Controller
      */
     public function create(){
         //
-        $automoviles = Automoviles::all();
+        $automoviles = \DB::select("SELECT aut.id_automovil, aut.marca, aut.modelo, aut.submarca
+        FROM automoviles
+        AS aut LEFT JOIN multas AS ver ON ver.id_automovil = aut.id_automovil
+        WHERE aut.deleted_at IS NULL AND aut.estatusIn = 'Disponible'");
         return view('modulos.multas.add', compact('automoviles'));
     }
     /**
