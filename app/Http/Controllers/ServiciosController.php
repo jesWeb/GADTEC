@@ -24,7 +24,7 @@ class ServiciosController extends Controller
                     serv.costo,
                     serv.lugar_servicio,
                     serv.id_automovil,
-                    aut.estatusIn,
+                    aut.estatusIn as estatus,
                     CONCAT(aut.marca, ' ', aut.submarca, ' ', aut.modelo) AS automovil
                 FROM
                     servicios AS serv
@@ -229,6 +229,21 @@ class ServiciosController extends Controller
         //guardar en json la img
         $input['comprobante'] = json_encode($fotografias);
 
+
+        // Obtener el automóvil actualizar estatus
+        $automovil = Automoviles::find($request->id_automovil);
+        if ($automovil) {
+            $fechaActual = now();
+
+            if ($request->tipo_servicio === 'Programado' && $request->prox_servicio == $fechaActual->format('Y-m-d')) {
+                $automovil->estatusIn = 'Mantenimiento';
+            } elseif ($request->tipo_servicio === 'No programado' && $request->fecha_servicio == $fechaActual->format('Y-m-d')) {
+                $automovil->estatusIn = 'En servicio';
+            } else {
+                $automovil->estatusIn = 'Disponible';
+            }
+            $automovil->save();
+        }
          // Actualizar el servicio
          $servicio->update($input);
 
@@ -237,15 +252,35 @@ class ServiciosController extends Controller
          return redirect()->route('servicios.index')->with('message', 'Servicio actualizado correctamente');
      }
 
-    public function update2($id, Request $request)
-    {
-        $query = Automoviles::find($id);
-        $query->estatusIn = 'Disponible';
-        $query->save();
+    // public function update2($id, Request $request)
+    // {
+    //     $query = Automoviles::find($id);
+    //     $query->estatusIn = 'Disponible';
+    //     $query->save();
 
-        // Redirigir a la vista de Gestión después de la actualización
-        return redirect()->route('servicios.index');
+    //     return redirect()->route('servicios.index');
+    // }
+
+    public function liberar($id)
+    {
+        $servicio = Servicios::where('id_servicio', $id)->first();
+
+        if (!$servicio) {
+            return redirect()->route('servicios.index')->with('error', 'Servicio no encontrado.');
+        }
+        
+         // Obtener el automóvil relacionado
+            $automovil = $servicio->automovil;
+
+            if ($automovil) {
+                $automovil->estatusIn = 'Disponible';
+                $automovil->save();
+            }
+
+
+        return redirect()->route('servicios.index')->with('mensaje', 'El vehículo ha sido liberado exitosamente.');
     }
+
 
 
     /**
