@@ -152,10 +152,19 @@ class ServiciosController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+
+    public function show($id)
     {
-        //
-        $servicio = Servicios::findOrFail($id);
+    
+        $servicio = Servicios::with('automovil')->findOrFail($id);
+    
+        if (is_null($servicio->automovil) ) {
+            return view('modulos.servicios.show', [
+                'servicio' => $servicio,
+                'mensaje' => 'El automóvil o usuario relacionado ha sido eliminado.',
+            ]);
+        }
+
         return view('modulos.servicios.show', compact('servicio'));
     }
 

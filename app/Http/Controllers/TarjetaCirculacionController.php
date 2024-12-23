@@ -173,11 +173,28 @@ class TarjetaCirculacionController extends Controller
     /**
      * Display the specified resource.
      */
+    // public function show($id)
+    // {
+    //     $tarjeta = TarjetaCirculacion::findOrFail($id);
+    //     return view('catalogos.tarjetas.show', compact('tarjeta'));
+    // }
     public function show($id)
     {
-        $tarjeta = TarjetaCirculacion::findOrFail($id);
+    
+        $tarjeta = TarjetaCirculacion::with('automovil')->findOrFail($id);
+
+    
+        if (is_null($tarjeta->automovil)) {
+        
+            return view('catalogos.tarjetas.show', [
+                'tarjeta' => $tarjeta,
+                'mensaje' => 'El automóvil relacionado ha sido eliminado.',
+            ]);
+        }
+
         return view('catalogos.tarjetas.show', compact('tarjeta'));
     }
+
 
     /**
      * Show the form for editing the specified resource.
