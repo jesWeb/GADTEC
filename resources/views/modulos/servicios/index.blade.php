@@ -103,7 +103,7 @@
                                 
                                 <!-- programadas y no programadas -->
                                 @if($servicio->tipo_servicio == "Programado")
-                                    @if($servicio->prox_servicio === now()->toDateString())
+                                    @if($servicio->prox_servicio === now()->toDateString() && $servicio->tipo_servicio != "Programado")
                                         <td class="px-4 py-2 text-center border">
                                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium 
                                                 {{ 
@@ -121,7 +121,7 @@
                                         </td>
                                     @endif
                                 @else
-                                    @if($servicio->fecha_servicio === now()->toDateString())
+                                    @if($servicio->fecha_servicio === now()->toDateString() )
                                         <td class="px-4 py-2 text-center border">
                                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium 
                                                 {{ 
@@ -131,7 +131,7 @@
                                                 {{$servicio->estatus}} 
                                             </span>
                                         </td>
-                                    @elseif($servicio->fecha_servicio != $servicio->prox_servicio)
+                                    @elseif($servicio->fecha_servicio != $servicio->prox_servicio )
                                         <td class="px-4 py-2 text-center border">
                                             <span>
                                                 Entregado  
@@ -178,11 +178,20 @@
                                             </button>
                                         </form>
                                             @if($servicio->fecha_servicio === now()->toDateString() || $servicio->prox_servicio === now()->toDateString())
-                                            <a href="{{ route('liberar',['id' => $servicio->id_servicio]) }}"
-                                                class="inline-flex items-center justify-center w-8 h-8 text-indigo-800 transition bg-white border border-indigo-600 rounded-md shadow-md hover:bg-white hover:text-white hover:border-blue-950 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                                                <svg class="w-6 h-6 text-indigo-800 dark:text-dark" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.757 6 3.24 10.95a1.05 1.05 0 0 0 0 1.549l5.611 5.088m5.73-3.214v1.615a.948.948 0 0 1-1.524.845l-5.108-4.251a1.1 1.1 0 0 1 0-1.646l5.108-4.251a.95.95 0 0 1 1.524.846v1.7c3.312 0 6 2.979 6 6.654v1.329a.7.7 0 0 1-1.345.353 5.174 5.174 0 0 0-4.652-3.191l-.003-.003Z"/>
-                                                </svg>
+                                                @if($servicio->estatus == "Mantenimiento")
+                                                    <a href="{{ route('liberar',['id' => $servicio->id_servicio]) }}"
+                                                    class="inline-flex items-center justify-center w-8 h-8 text-indigo-800 transition bg-white border border-indigo-600 rounded-md shadow-md hover:bg-white hover:text-white hover:border-blue-950 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                                    <svg class="w-6 h-6 text-indigo-800 dark:text-dark" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.757 6 3.24 10.95a1.05 1.05 0 0 0 0 1.549l5.611 5.088m5.73-3.214v1.615a.948.948 0 0 1-1.524.845l-5.108-4.251a1.1 1.1 0 0 1 0-1.646l5.108-4.251a.95.95 0 0 1 1.524.846v1.7c3.312 0 6 2.979 6 6.654v1.329a.7.7 0 0 1-1.345.353 5.174 5.174 0 0 0-4.652-3.191l-.003-.003Z"/>
+                                                    </svg>
+                                                @elseif($servicio->estatus == "En servicio")
+                                                    <a href="{{ route('liberar',['id' => $servicio->id_servicio]) }}"
+                                                    class="inline-flex items-center justify-center w-8 h-8 text-indigo-800 transition bg-white border border-indigo-600 rounded-md shadow-md hover:bg-white hover:text-white hover:border-blue-950 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                                    <svg class="w-6 h-6 text-indigo-800 dark:text-dark" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.757 6 3.24 10.95a1.05 1.05 0 0 0 0 1.549l5.611 5.088m5.73-3.214v1.615a.948.948 0 0 1-1.524.845l-5.108-4.251a1.1 1.1 0 0 1 0-1.646l5.108-4.251a.95.95 0 0 1 1.524.846v1.7c3.312 0 6 2.979 6 6.654v1.329a.7.7 0 0 1-1.345.353 5.174 5.174 0 0 0-4.652-3.191l-.003-.003Z"/>
+                                                    </svg>
+                                                @endif
+
 
                                             </a>
                                             @endif
