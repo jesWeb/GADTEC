@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Automoviles;
 use App\Models\verificacion;
+
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -57,6 +58,17 @@ class VerificacionesController extends Controller
 
     public function create()
     {
+        $autoVer = \DB::select(
+            "SELECT
+            ver.id_verificacion,
+            ver.fecha_verificacion,
+            ver.proxima_verificacion,
+            concat(aut.marca,'',aut.submarca,'',aut.modelo) as automovil
+            from verificacions as ver
+            join automoviles as aut on ver.id_automovil = aut.id_automovil
+            where ver.deleted_at is null
+            "
+        );
         $automoviles = Automoviles::all();
         return view('catalogos.verificaciones.create', compact('automoviles'));
     }
