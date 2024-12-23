@@ -100,66 +100,47 @@
                                 <td class="px-4 py-2 border">${{ $servicio->costo }}</td>
                                 <td class="px-4 py-2 border">{{ $servicio->lugar_servicio }}</td>
 
+                                
                                 <!-- programadas y no programadas -->
                                 @if($servicio->tipo_servicio == "Programado")
-                                    @if($servicio->prox_servicio != now()->toDateString())
-                                        @if($servicio->estatus == 'Disponible')
-                                            <td class="px-4 py-2 border"> Entregado </td>
-                                        @else
-                                            <td class="px-4 py-2 border">
-                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium 
-                                                    {{ 
-                                                        $servicio->estatus == 'Mantenimiento' ? 'bg-yellow-100 text-yellow-800' :
-                                                        ($servicio->estatus == 'En servicio' ? 'bg-pink-100 text-pink-800' : '')
-                                                    }}">
-                                                    {{ $servicio->estatus }} 
-                                                </span>
-                                            </td>
-                                        @endif
-                                    @else
-                                        <td class="px-4 py-2 border">
+                                    @if($servicio->prox_servicio === now()->toDateString())
+                                        <td class="px-4 py-2 text-center border">
                                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium 
                                                 {{ 
                                                     $servicio->estatus == 'Mantenimiento' ? 'bg-yellow-100 text-yellow-800' :
                                                     ($servicio->estatus == 'En servicio' ? 'bg-pink-100 text-pink-800' : '')
                                                 }}">
-                                                {{ $servicio->estatus }}
-                                            </span> 
+                                                {{$servicio->estatus}} 
+                                            </span>
+                                        </td>
+                                    @elseif($servicio->fecha_servicio != $servicio->prox_servicio)
+                                        <td class="px-4 py-2 text-center border">
+                                            <span>
+                                                Entregado 
+                                            </span>
                                         </td>
                                     @endif
                                 @else
-                                    
-                                    @if($servicio->fecha_servicio != now()->toDateString())
-                                        @if($servicio->estatus == 'Disponible')
-                                            <td class="px-4 py-2 border">
-                                                <span>
-                                                    Entregado
-                                                </span>
-                                            </td>
-                                        @else
-                                            <td class="px-4 py-2 border">
-                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium 
-                                                    {{ 
-                                                        $servicio->estatus == 'Mantenimiento' ? 'bg-yellow-100 text-yellow-800' :
-                                                        ($servicio->estatus == 'En servicio' ? 'bg-pink-100 text-pink-800' : '')
-                                                    }}">
-                                                    {{ $servicio->estatus }}
-                                                </span>
-                                            </td>
-                                        @endif
-                                    @else
-                                        <td class="px-4 py-2 border">
+                                    @if($servicio->fecha_servicio === now()->toDateString())
+                                        <td class="px-4 py-2 text-center border">
                                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium 
                                                 {{ 
                                                     $servicio->estatus == 'Mantenimiento' ? 'bg-yellow-100 text-yellow-800' :
                                                     ($servicio->estatus == 'En servicio' ? 'bg-pink-100 text-pink-800' : '')
                                                 }}">
-                                                {{ $servicio->estatus }} 
+                                                {{$servicio->estatus}} 
+                                            </span>
+                                        </td>
+                                    @elseif($servicio->fecha_servicio != $servicio->prox_servicio)
+                                        <td class="px-4 py-2 text-center border">
+                                            <span>
+                                                Entregado  
                                             </span>
                                         </td>
                                     @endif
     
                                 @endif
+
 
                                 
 
@@ -196,7 +177,7 @@
                                                 </svg>
                                             </button>
                                         </form>
-                                            @if($servicio->estatus != 'Disponible')
+                                            @if($servicio->fecha_servicio === now()->toDateString() || $servicio->prox_servicio === now()->toDateString())
                                             <a href="{{ route('liberar',['id' => $servicio->id_servicio]) }}"
                                                 class="inline-flex items-center justify-center w-8 h-8 text-indigo-800 transition bg-white border border-indigo-600 rounded-md shadow-md hover:bg-white hover:text-white hover:border-blue-950 focus:outline-none focus:ring-2 focus:ring-indigo-500">
                                                 <svg class="w-6 h-6 text-indigo-800 dark:text-dark" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
