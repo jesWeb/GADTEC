@@ -121,7 +121,7 @@
                                         </td>
                                     @endif
                                 @else
-                                    @if($servicio->fecha_servicio === now()->toDateString() )
+                                    @if($servicio->fecha_servicio === now()->toDateString() && $servicio->estatus != "Disponible")
                                         <td class="px-4 py-2 text-center border">
                                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium 
                                                 {{ 
