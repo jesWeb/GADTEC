@@ -193,9 +193,6 @@
                                                     </svg>
                                                     </a>
                                                 @endif
-
-
-                                           
                                             @endif
                                     </div>
                                 </td>

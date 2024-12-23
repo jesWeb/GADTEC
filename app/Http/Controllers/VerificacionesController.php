@@ -57,7 +57,11 @@ class VerificacionesController extends Controller
 
     public function create()
     {
-        $automoviles = Automoviles::all();
+        $automoviles = \DB::select("SELECT aut.id_automovil, aut.marca, aut.modelo, aut.submarca
+        FROM automoviles
+        AS aut LEFT JOIN verificacions AS ver ON ver.id_automovil = aut.id_automovil
+        WHERE aut.deleted_at IS NULL AND(ver.id_automovil IS NULL
+        OR ver.deleted_at IS NOT NULL OR ver.holograma is NULL)");
         return view('catalogos.verificaciones.create', compact('automoviles'));
     }
 
