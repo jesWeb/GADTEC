@@ -59,9 +59,6 @@
                     </div>
 
                     <h2 class="text-2xl font-semibold tracking-tight text-center text-green-600 f text-primary-800 md:m-5">
-<<<<<<< HEAD
-                        Aseguradora -</h2>
-=======
                         @if($seguroS->automovil)
                             Aseguradora -
                             @if($seguroS->automovil)
@@ -71,13 +68,12 @@
                                 <p class="text-sm text-red-600">Nota: Este automóvil ha sido eliminado.</p>
                             @endif
                         @else
-                            
+
                             <p class="text-red-600">El automóvil asociado a este seguro no existe.</p>
                             <p class="text-sm text-red-600">Nota: Este automóvil ha sido eliminado.</p>
                         @endif
-                        
+
                      </h2>
->>>>>>> mitzi
                     {{-- poliza Img --}}
                     <div class="w-full">
 
@@ -90,11 +86,7 @@
                             @if ($fotografias)
                                 @foreach ($fotografias as $foto)
                                     <div class="grid gap-5">
-<<<<<<< HEAD
                                         <img class="object-cover w-16 rounded-lg shadow-md cursor-pointer h-max-auto hover:scale-90 hover:shadow-lg "
-=======
-                                        <img class="object-cover w-16 rounded-lg shadow-md cursor-pointer h-max-auto hover:scale-90 hover:shadow-lg " 
->>>>>>> mitzi
                                                 src="{{ url('img/poliza/' . $foto) }}"
                                                     alt="Img 1" id="img1" />
 
@@ -106,11 +98,7 @@
                             <div id="modal"
                                 class="fixed top-0 left-0 flex items-center justify-center hidden w-screen h-screen z-80 bg-black/70">
                             <!-- Boton de cerrar -->
-<<<<<<< HEAD
                                 <a class="fixed text-5xl font-bold text-white z-90 top-6 right-8"
-=======
-                                <a class="fixed text-5xl font-bold text-white z-90 top-6 right-8" 
->>>>>>> mitzi
                                     href="javascript:void(0)"
                                     onclick="closeModal()">
                                     ×
