@@ -262,4 +262,15 @@
             });
         }
     </script>
+
+    {{-- alert liberado --}}
+    @if ($liberado = Session::get('liberado'))
+        <script>
+            Swal.fire({
+                title: "Autmovil Disponible",
+                text: "{{ $liberado }}",
+                icon: "success"
+            });
+        </script>
+    @endif
 @endsection

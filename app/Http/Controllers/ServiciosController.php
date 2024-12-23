@@ -278,7 +278,7 @@ class ServiciosController extends Controller
             }
 
 
-        return redirect()->route('servicios.index')->with('mensaje', 'El vehículo ha sido liberado exitosamente.');
+        return redirect()->route('servicios.index')->with('liberado', 'El vehículo ha sido liberado exitosamente.');
     }
 
 
