@@ -81,7 +81,7 @@ class TarjetaCirculacionController extends Controller
 //     )
 // ) AS asi
 // ON aut.id_automovil = asi.id_automovil
-// WHERE aut.deleted_at IS NULL 
+// WHERE aut.deleted_at IS NULL
 //   AND (asi.id_asignacion IS NULL OR asi.deleted_at IS NOT NULL)
 // ORDER BY aut.marca;
     {
