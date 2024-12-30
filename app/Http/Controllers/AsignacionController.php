@@ -34,7 +34,7 @@ class AsignacionController extends Controller
         LEFT JOIN
             check_ins AS che ON che.id_asignacion = asi.id_asignacion
         WHERE
-            asi.deleted_at IS NULL
+            asi.deleted_at IS NULL 
         ");
 
         return view('catalogos.asignacion.index', compact('reservacion'));

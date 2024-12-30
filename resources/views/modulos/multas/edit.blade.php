@@ -50,8 +50,8 @@
 
                     <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-3">
                         <div class="mb-4">
-                            <label for="id_automovil" class="mb-3 block text-base font-medium text-[#07074D]">Seleccionar Automóvil:</label>                                                  
-                                <select name="id_automovil" id="id_automovil" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" title="Actualizar automóvil">
+                            <label for="id_automovil" class="block text-base font-medium text-[#07074D]">Seleccionar Automóvil:</label>                                                  
+                                <select name="id_automovil" id="id_automovil" class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"  title="Actualizar automóvil">
                                     @foreach ($automoviles as $automovil)
                                         <option value="{{ $automovil->id_automovil }}" {{ (old('id_automovil', $multa->id_automovil) == $automovil->id_automovil) ? 'selected' : '' }}>
                                             {{ $automovil->marca }} {{ $automovil->modelo }} ({{ $automovil->submarca }})
@@ -148,7 +148,7 @@
                                 Subir Imágenes
                             </h3>
                             <p class="text-sm text-gray-600">Máximo 5 imágenes</p>
-                            <div class="flex flex-wrap gap-4 mt-4 pt-4 mb-6" id="imageContainer"></div>
+                            <div class="flex flex-wrap gap-4 pt-4 mt-4 mb-6" id="imageContainer"></div>
                             <div class="mb-8">
                                 <label for="comprobante"  id="addImageBtn"
                                     class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
