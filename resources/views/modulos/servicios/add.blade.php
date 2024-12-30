@@ -54,8 +54,9 @@
                             <div class="mb-4">
                                 <label for="id_automovil" class="block text-base font-medium text-gray-700">Seleccionar Automóvil:</label>
                                 <select name="id_automovil" id="id_automovil" class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" title="Selecciona un automóvil">
+                                    <option selected>Selecciona una opción...</option>
                                     @foreach ($automoviles as $automovil)
-                                    <option value="{{ $automovil->id_automovil }}" {{ (old('id_automovil') == $automovil->id_automovil) ? 'selected' : '' }}>
+                                    <option>
                                         {{ $automovil->marca }} {{ $automovil->modelo }} ({{ $automovil->submarca }})
                                     </option>
                                     @endforeach
@@ -128,7 +129,7 @@
                                 Subir Imágenes
                             </h3>
                             <p class="text-sm text-gray-600">Máximo 5 imágenes</p>
-                            <div class="flex flex-wrap gap-4 mt-4 pt-4 mb-6" id="imageContainer"></div>
+                            <div class="flex flex-wrap gap-4 pt-4 mt-4 mb-6" id="imageContainer"></div>
                             <div class="mb-8">
                                 <label for="comprobante"  id="addImageBtn"
                                     class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">

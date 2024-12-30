@@ -79,7 +79,7 @@
                         <div>
                             <label class="block text-base font-medium text-[#07074D]" for="monto" title="Introduce el monto de la multa">Monto</label>
                             <input type="text" class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" 
-                                name="monto" value="{{ old('monto') }}" id="monto" placeholder="$ 900.00" title="Introduce el monto de la multa">
+                                name="monto" value="{{ old('monto') }}" id="monto" placeholder="Ingresa la cantidad a pagar" title="Introduce el monto de la multa">
                             <div class="mt-1 text-sm text-red-600">
                                 @error('monto')<i>{{ $message }}</i>@enderror
                             </div>
@@ -97,7 +97,7 @@
                         <div>
                             <label class="block text-base font-medium text-[#07074D]" for="lugar" title="Indica el lugar donde ocurrió la multa">Lugar</label>
                             <input type="text" class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" 
-                                name="lugar" value="{{ old('lugar') }}" id="lugar" placeholder="Edo. Méx" title="Indica el lugar donde ocurrió la multa">
+                                name="lugar" value="{{ old('lugar') }}" id="lugar" placeholder="Ingresa el lugar de la multa" title="Indica el lugar donde ocurrió la multa">
                             <div class="mt-1 text-sm text-red-600">
                                 @error('lugar')<i>{{ $message }}</i>@enderror
                             </div>
@@ -130,7 +130,7 @@
                                 Subir Imágenes
                             </h3>
                             <p class="text-sm text-gray-600">Máximo 5 imágenes</p>
-                            <div class="flex flex-wrap gap-4 mt-4 pt-4 mb-6" id="imageContainer"></div>
+                            <div class="flex flex-wrap gap-4 pt-4 mt-4 mb-6" id="imageContainer"></div>
                             <div class="mb-8">
                                 <label for="comprobante"  id="addImageBtn"
                                     class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">

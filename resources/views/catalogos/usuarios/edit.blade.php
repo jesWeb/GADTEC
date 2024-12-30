@@ -193,8 +193,20 @@
                             }
                         </script>
 
-                        <!-- Selección de Imagen -->
-                        <div class="flex flex-col items-center space-y-4">
+                    
+
+                        <!-- Selección de Estatus -->
+                        <div>
+                            <label for="estatus" class="block text-base font-medium text-gray-700">Selección de Estatus</label>
+                            <select name="estatus" id="estatus" title="Actualizar el estatus del usuario" class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                                <option selected>Selecciona una opción...</option>
+                                <option value="Activo" {{ $usuario->estatus == 'Activo' ? 'selected' : '' }}>Activo</option>
+                                <option value="Inactivo" {{ $usuario->estatus == 'Inactivo' ? 'selected' : '' }}>Inactivo</option>
+                            </select>
+                        </div>
+
+    <!-- Selección de Imagen -->
+    <div class="flex flex-col items-center space-y-4">
                                 <label for="foto" class="block text-base font-medium text-gray-700">Seleccionar Imagen</label>
                                 <div class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] mt-4 p-6 text-center">
                                     <input type="file" name="foto" id="foto" accept="image/*"
@@ -236,18 +248,6 @@
                                 });
                             </script>
 
-                        <!-- Selección de Estatus -->
-                        <div>
-                            <label for="estatus" class="block text-base font-medium text-gray-700">Selección de Estatus</label>
-                            <select name="estatus" id="estatus" title="Actualizar el estatus del usuario" class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
-                                <option selected>Selecciona una opción...</option>
-                                <option value="Activo" {{ $usuario->estatus == 'Activo' ? 'selected' : '' }}>Activo</option>
-                                <option value="Inactivo" {{ $usuario->estatus == 'Inactivo' ? 'selected' : '' }}>Inactivo</option>
-                            </select>
-                        </div>
-
-
-
                     </div>
 
                     <hr class="my-6">
@@ -256,7 +256,7 @@
                     <a href="{{ route('usuarios.index') }}" title="Cancelar registro"
                         class="px-5 py-3 text-gray-700 bg-gray-200 rounded-md shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">Cancelar</a>
                         
-                        <button type="submit" title="Actualizar los datos del usuario"  class="px-5 py-3 text-white ml-2 bg-indigo-600 rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">Guardar</button>
+                        <button type="submit" title="Actualizar los datos del usuario"  class="px-5 py-3 ml-2 text-white bg-indigo-600 rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">Guardar</button>
                     </div>
                 </form>
             </div>
