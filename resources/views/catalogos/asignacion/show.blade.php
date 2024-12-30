@@ -53,9 +53,9 @@
                         <div class="mt-6 ml-4 space-y-6">
                             <div class="grid grid-cols-2 gap-6 md:grid-cols-3">
                                 <div class="p-4 bg-white rounded-lg shadow-sm">
-                                    @if($asignacionV->>usuarios)
+                                    @if($asignacionV->usuarios)
                                         <h4 class="text-lg font-semibold text-gray-800">Solicitante:</h4>
-                                        @if($asignacionV->>usuarios)
+                                        @if($asignacionV->usuarios)
                                             <span class="mt-2 text-base leading-relaxed text-gray-500 ">{{ $asignacionV->usuarios->nombre }}
                                             {{ $asignacionV->usuarios->app }} {{ $asignacionV->usuarios->apm }} </span>
                                         @elseif($automovilEliminado)

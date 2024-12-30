@@ -58,9 +58,21 @@
                     </div>
                     {{-- Title --}}
                     <h2 class="text-2xl font-semibold tracking-tight text-center text-green-600 f text-primary-800 md:m-5">
+
+                        @if($MostrarVer->automovil)
                         Detalles de Verificación -
-                        {{ $MostrarVer->automovil->marca }} {{ $MostrarVer->automovil->submarca }}
-                        {{ $MostrarVer->automovil->modelo }}</h2>
+                        @if($MostrarVer->automovil)
+                            {{ $MostrarVer->automovil->marca }} {{ $MostrarVer->automovil->submarca }}
+                            {{ $MostrarVer->automovil->modelo }}
+                        @elseif($automovilEliminado)
+                            <p class="text-sm text-red-600">Nota: Este automóvil ha sido eliminado.</p>
+                        @endif
+                    @else
+
+                        <p class="text-red-600">El automóvil asociado a este seguro no existe.</p>
+                        <p class="text-sm text-red-600">Nota: Este automóvil ha sido eliminado.</p>
+                    @endif
+                    </h2>
 
                     {{-- content --}}
                     <article class="flex flex-wrap max-w-3xl mx-auto md:flex-nowrap group">
@@ -75,14 +87,6 @@
                                             class="mt-2 text-base leading-relaxed text-gray-500 ">{{ date('d-m-Y', strtotime($MostrarVer->fecha_verificacion)) }}</span>
                                     </div>
                                 @endif
-
-                                {{-- @if ($MostrarVer->fecha_verificacion_00)
-                                    <div class="p-4 bg-white rounded-lg shadow-sm">
-                                        <h4 class="text-lg font-semibold text-gray-800">Fecha de Verificación 00:</h4>
-                                        <span
-                                            class="mt-2 text-base leading-relaxed text-gray-500 ">{{ date('d-m-Y', strtotime($MostrarVer->fecha_verificacion_00)) }}</span>
-                                    </div>
-                                @endif --}}
 
                                 <div class="p-4 bg-white rounded-lg shadow-sm">
                                     <h4 class="text-lg font-semibold text-gray-800">Engomado: </h4>
@@ -102,23 +106,7 @@
                                         </span>
                                     </div>
                                 @endif
-                                {{-- @if ($MostrarVer->proxima_verificacion_00)
-                                    <div class="p-4 bg-white rounded-lg shadow-sm">
-                                        <h4 class="text-lg font-semibold text-gray-800">Próxima Verificación:</h4>
-                                        <span class="mt-2 text-base leading-relaxed text-gray-500 ">
-                                            {{ date('d-m-Y', strtotime($MostrarVer->proxima_verificacion_00)) }}
-                                        </span>
-                                    </div>
-                                @endif --}}
 
-                                {{-- @if ($MostrarVer->motivo_00)
-                                    <div class="p-4 bg-white rounded-lg shadow-sm ">
-                                        <h4 class="text-lg font-semibold text-gray-800">Observaciones de Verificación 00:
-                                        </h4>
-                                        <span
-                                            class="mt-2 text-base leading-relaxed text-gray-500">{{ $MostrarVer->motivo_00 }}</span>
-                                    </div>
-                                @endif --}}
 
                                 <div class="p-4 bg-white rounded-lg shadow-sm">
                                     <h4 class="text-lg font-semibold text-gray-800">Observaciones de Verificación:</h4>
@@ -142,13 +130,12 @@
                                         @if ($fotografias)
                                             @foreach ($fotografias as $foto)
                                                 <div class="grid gap-5">
-                                                    <img class="w-16 h-max-auto object-cover cursor-pointer rounded-lg 
-                                                            shadow-md hover:scale-90 hover:shadow-lg " 
+                                                    <img class="object-cover w-16 rounded-lg shadow-md cursor-pointer h-max-auto hover:scale-90 hover:shadow-lg "
                                                             src="{{ url('img/verificaciones/' . $foto) }}"
                                                                 alt="Img 1" id="img1" />
-                                                                
+
                                                 </div>
-                                                
+
                                             @endforeach
                                         @else
                                             <p class="text-sm text-gray-500">Sin imagen</p>
@@ -158,12 +145,9 @@
                                 @endif
 
                                     <div id="modal"
-                                        class="hidden  fixed top-0 left-0 z-80 
-                                            w-screen h-screen bg-black/70 flex
-                                            justify-center items-center">
+                                        class="fixed top-0 left-0 flex items-center justify-center hidden w-screen h-screen z-80 bg-black/70">
                                         <!-- Boton de cerrar -->
-                                        <a class="fixed z-90 top-6 right-8 
-                                        text-white text-5xl font-bold" 
+                                        <a class="fixed text-5xl font-bold text-white z-90 top-6 right-8"
                                             href="javascript:void(0)"
                                             onclick="closeModal()">
                                             ×
@@ -190,13 +174,13 @@
             </div>
 
             <script>
-                
+
     // obtener todos los elementos de la img
         var images = document.querySelectorAll('.grid img');
 
     // recorre cada elemento de la img
         images.forEach(function (img) {
-                    
+
             // agregar cada evento de elementos en cada clic en la img
             img.addEventListener('click', function () {
                 showModal(img.src);

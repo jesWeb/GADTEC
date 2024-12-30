@@ -108,11 +108,10 @@ class AsignacionController extends Controller
 
     public function show($id)
     {
-    
+
         $asignacionV = asignacion::with('automovil', 'usuarios')->findOrFail($id);
-    
-        if (is_null($tarjeta->automovil) || is_null($tarjeta->usuarios) ) {
-        
+
+        if (is_null(!$asignacionV->automovil ||  !$asignacionV->usuarios )) {
             return view('catalogos.asignacion.show', [
                 'asignacionV' => $asignacionV,
                 'mensaje' => 'El automóvil o usuario relacionado ha sido eliminado.',

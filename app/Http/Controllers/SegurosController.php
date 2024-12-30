@@ -59,8 +59,16 @@ class SegurosController extends Controller
 
     public function create()
     {
-        // dd($request);
-        $automoviles = Automoviles::all();
+        $automoviles = \DB::select("SELECT
+        aut.id_automovil,
+        aut.marca,
+        aut.modelo,
+        aut.submarca
+        FROM automoviles
+        AS aut LEFT JOIN seguros AS seg ON seg.id_automovil = aut.id_automovil
+        WHERE aut.deleted_at IS NULL AND(seg.id_automovil IS NULL
+        OR seg.deleted_at IS NOT NULL OR seg.aseguradora is NULL)
+        ");
         return view('catalogos.seguros.create', compact('automoviles'));
     }
 

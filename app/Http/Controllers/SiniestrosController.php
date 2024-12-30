@@ -132,9 +132,16 @@ class SiniestrosController extends Controller
 
     public function show($id)
     {
-        //
-        $ViewSini = siniestros::findOrfail($id);
-        return view('catalogos.siniestros.show', compact('ViewSini'));
+     $ViewSini = siniestros::with('automovil','usuarios')->findOrfail($id);
+
+     if (is_null(!$ViewSini->automovil || !$ViewSini->usuarios)) {
+        return view('catalogos.siniestros.show', [
+            'ViewSini' => $ViewSini,
+            'mensaje' => 'El automóvil relacionado ha sido eliminado.',
+        ]);
+     }
+
+    return view('catalogos.siniestros.show', compact('ViewSini'));
     }
 
     public function edit($id)

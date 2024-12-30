@@ -37,7 +37,7 @@ class CatalogosController extends Controller
                 'imagen' => asset('img/catalogos/siniestros.svg')
             ],
             [
-                'titulo' => 'Verficaciones',
+                'titulo' => 'Verificaciones',
                 //  'label' => 'areas de usuario',
                 'href' => route('verificaciones.index'),
                 'imagen' => asset('img/catalogos/verificaciones.svg')
@@ -64,8 +64,8 @@ class CatalogosController extends Controller
 
     public function show($id)
     {
-        
-        $backRoute = route('catalogos.index'); 
+
+        $backRoute = route('catalogos.index');
 
         return view('catalogos.index', compact('backRoute'));
     }

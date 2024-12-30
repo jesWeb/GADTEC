@@ -58,9 +58,22 @@
                     </div>
 
                     <h2 class="text-2xl font-semibold tracking-tight text-center text-green-600 f text-primary-800 md:m-5">
-                        Siniestro -
-                        {{ $ViewSini->automovil->marca }} {{ $ViewSini->automovil->submarca }}
-                        {{ $ViewSini->automovil->modelo }}</h2>
+
+                        @if($ViewSini->automovil)
+                        Aseguradora -
+                        @if($ViewSini->automovil)
+                            {{ $ViewSini->automovil->marca }} {{ $ViewSini->automovil->submarca }}
+                            {{ $ViewSini->automovil->modelo }}
+                        @elseif($automovilEliminado)
+                            <p class="text-sm text-red-600">Nota: Este automóvil ha sido eliminado.</p>
+                        @endif
+                    @else
+
+                        <p class="text-red-600">El automóvil asociado a este siniestro no existe.</p>
+                        <p class="text-sm text-red-600">Nota: Este automóvil ha sido eliminado.</p>
+                    @endif
+
+                    </h2>
 
 
                     {{-- content --}}
@@ -84,11 +97,28 @@
                                         class="inline-flex items-center px-2.5 py-0.5 mt-0.5 rounded-full text-sm font-medium {{ $ViewSini->estatus == 'Pendiente' ? 'bg-blue-100 text-green-800' : 'bg-red-100 text-red-800' }}">{{ $ViewSini->estatus }}</span>
                                 </div>
                                 <div class="p-4 bg-white rounded-lg shadow-sm">
-                                    <h4 class="text-lg font-semibold text-gray-800">Responsable: </h4>
-                                    <span
-                                        class="mt-2 text-lg leading-relaxed text-gray-500 ">{{ $ViewSini->usuarios->nombre }}
+
+                                        @if($ViewSini->usuarios)
+                                        <h4 class="text-lg font-semibold text-gray-800">Responsable: </h4>
+
+                                        @if($ViewSini->usuarios)
+                                        <span class="mt-2 text-lg leading-relaxed text-gray-500 ">
+                                        {{ $ViewSini->usuarios->nombre }}
                                         {{ $ViewSini->usuarios->app }}
-                                        {{ $ViewSini->usuarios->apm }}</span>
+                                        {{ $ViewSini->usuarios->apm }}
+                                        </span>
+                                             @elseif($automovilEliminado)
+                                            <p class="text-sm text-red-600">Nota:El usuario ha sido eliminado.</p>
+                                        @endif
+                                    @else
+
+                                        <p class="text-red-600">El usuario asociado a este siniestro no existe.</p>
+                                        <p class="text-sm text-red-600">Nota: Este usuario ha sido eliminado.</p>
+                                    @endif
+
+
+
+
                                 </div>
                                 <div class="p-4 bg-white rounded-lg shadow-sm">
                                     <h4 class="text-lg font-semibold text-gray-800">Monto :</h4>

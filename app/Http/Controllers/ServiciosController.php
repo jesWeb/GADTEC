@@ -277,7 +277,7 @@ class ServiciosController extends Controller
         if (!$servicio) {
             return redirect()->route('servicios.index')->with('error', 'Servicio no encontrado.');
         }
-        
+
          // Obtener el automóvil relacionado
             $automovil = $servicio->automovil;
 
@@ -287,7 +287,7 @@ class ServiciosController extends Controller
             }
 
 
-        return redirect()->route('servicios.index')->with('liberado', 'El vehículo ha sido liberado exitosamente.');
+        return redirect()->route('servicios.index')->with('liberado', 'El vehículo ha sido regresado exitosamente.');
     }
 
 
