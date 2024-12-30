@@ -12,7 +12,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
                         </svg>
-                        Gestion
+                        Gestión
                     </a>
                 </li>
             </ul>
@@ -48,20 +48,20 @@
                             <td class="px-4 py-2 text-center border">
                             @if ($dispo->estatus)
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium
-                                            {{ 
-                                                $dispo->estatus == 'Reservado' ? 'bg-orange-100 text-orange-800' : 
+                                            {{
+                                                $dispo->estatus == 'Reservado' ? 'bg-orange-100 text-orange-800' :
                                                 ($dispo->estatus == 'Ocupado' ? 'bg-red-100 text-red-800' :
                                                 ($dispo->estatus == 'Autorizado' ? 'bg-blue-100 text-blue-800' :
-                                                ($dispo->estatus == 'Disponible' ? 'bg-green-100 text-green-800' : ''))) 
+                                                ($dispo->estatus == 'Disponible' ? 'bg-green-100 text-green-800' : '')))
                                             }}">
                                             {{ $dispo->estatus }}
                                         </span>
                                     @else
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium 
-                                            {{ 
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium
+                                            {{
                                                 $dispo->estatusIn == 'Mantenimiento' ? 'bg-yellow-100 text-yellow-800' :
-                                                ($dispo->estatusIn == 'Disponible' ? 'bg-green-100 text-green-800' : 
-                                                ($dispo->estatusIn == 'No disponible' ? 'bg-gray-100 text-gray-800' : 
+                                                ($dispo->estatusIn == 'Disponible' ? 'bg-green-100 text-green-800' :
+                                                ($dispo->estatusIn == 'No disponible' ? 'bg-gray-100 text-gray-800' :
                                                 ($dispo->estatusIn == 'En servicio' ? 'bg-pink-100 text-pink-800' : '')))
                                             }}">
                                             {{ $dispo->estatusIn }}

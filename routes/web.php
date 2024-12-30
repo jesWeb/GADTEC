@@ -89,10 +89,10 @@ Route::middleware('auth')->group(function () {
     // Rutas para el Moderador (Vigilante)
     Route::middleware('role:Moderador')->group(function () {
         // Dashboard del Moderador
-        Route::get('/moderador/dashboard', [GestionController::class, 'index'])->name('moderator.dashboard');
+        Route::get('/vigilante/dashboard', [GestionController::class, 'index'])->name('moderator.dashboard');
 
         // Gestión de vigilantes por parte del moderador
-        Route::get('/moderador/vigilante', [VigilanteController::class, 'index'])->name('moderador.vigilante');
+        Route::get('/vigilante', [VigilanteController::class, 'index'])->name('moderador.vigilante');
         Route::put('/vigilante/asignacion/{id_asignacion}', [VigilanteController::class, 'update'])->name('update.vigilante');
         Route::get('/vigilante/edit/{id}/', [VigilanteController::class, 'edit'])->name('moderador.edit');
         Route::get('/vigilante/edit2/{id}/', [VigilanteController::class, 'edit2'])->name('moderador.edit2');
@@ -113,7 +113,7 @@ Route::middleware('auth')->group(function () {
     });
 
     // Rutas comunes para Administrador y Usuario
-    Route::middleware('role:Administrador|Usuario')->group(function () {
-        Route::resource('autorizante', AutorizanteController::class);
-    });
+    // Route::middleware('role:Administrador|Usuario')->group(function () {
+    //     Route::resource('autorizante', AutorizanteController::class);
+    // });
 });

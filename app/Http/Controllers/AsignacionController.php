@@ -58,7 +58,7 @@ class AsignacionController extends Controller
             AND asi.estatus IN ('Reservado', 'Ocupado', 'Autorizado')
         WHERE
             aut.estatusIn = 'Disponible'
-            AND asi.id_asignacion IS NULL
+            AND asi.id_asignacion IS NULL AND aut.deleted_at IS NULL
             "
 
         );

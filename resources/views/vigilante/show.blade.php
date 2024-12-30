@@ -123,12 +123,11 @@
 
 
 
-        <div class="flex flex-col gap-5.5 items-center justify-center mt-4 xl:flex-row mb-3">
-            <div>
-                <h1 class="p-4 text-lg font-semibold text-center text-gray-700">
+        <div class="flex flex-col gap-5.5 justify-evenly  mt-4 xl:flex-row mb-3">
+            <div class="">
+                <h1 class="p-4 text-lg font-semibold text-gray-700">
                     Fotografías de salida del automóvil
                 </h1>
-
                 <div class="flex gap-4 p-4 ml-4 overflow-x-auto">
                     @php
                         $fotografiasSalida = json_decode($checkIn->fotografias_salida, true);
@@ -139,8 +138,7 @@
                             <!-- Images-->
                             <div class="grid gap-5 ">
                                 <img
-                                class="w-16 h-max-auto object-cover cursor-pointer rounded-lg
-                                shadow-md hover:scale-90 hover:shadow-lg "
+                                class="object-cover w-16 rounded-lg shadow-md cursor-pointer h-max-auto hover:scale-90 hover:shadow-lg "
                                 src="{{ url('img/salidas/' . $foto) }}"
                                     alt="Img 1" id="img1" />
 
@@ -152,13 +150,10 @@
                     @endif
                     <!-- The Modal -->
                     <div id="modal"
-                        class="hidden fixed top-0 left-0 z-80
-                                w-screen h-screen bg-black/70 flex
-                                justify-center items-center">
+                        class="fixed top-0 left-0 flex items-center justify-center hidden w-screen h-screen z-80 bg-black/70">
 
                         <!-- The close button -->
-                        <a class="fixed z-90 top-6 right-8
-                                text-white text-5xl font-bold"
+                        <a class="fixed text-5xl font-bold text-white z-90 top-6 right-8"
                         href="javascript:void(0)"
                         onclick="closeModal()">
                             ×
@@ -173,8 +168,8 @@
             </div>
 
              <!-- Fotografías de regreso -->
-            <div class="w-full px-3 xl:w-1/2">
-                <h1 class="p-4 text-lg font-semibold text-center text-gray-700">Fotografías de regreso del automóvil
+            <div class="">
+                <h1 class="p-4 text-lg font-semibold text-gray-700">Fotografías de regreso del automóvil
                 </h1>
                 <div class="flex gap-4 p-4 ml-4 overflow-x-auto">
                     @php
@@ -183,8 +178,7 @@
                     @if ($fotografiasRegreso)
                         @foreach ($fotografiasRegreso as $foto)
                         <div class="grid gap-5">
-                        <img class="w-16 h-max-auto object-cover cursor-pointer rounded-lg
-                            shadow-md hover:scale-90 hover:shadow-lg "
+                        <img class="object-cover w-16 rounded-lg shadow-md cursor-pointer h-max-auto hover:scale-90 hover:shadow-lg "
                             src="{{ url('img/llegadas/' . $foto) }}"
                                 alt="Img 1" id="img1" />
 
@@ -194,14 +188,11 @@
                         <p>No hay fotografias Cargadas </p>
                     @endif
                     <div id="modal"
-                        class="hidden  fixed top-0 left-0 z-80
-                                w-screen h-screen bg-black/70 flex
-                                justify-center items-center">
+                        class="fixed top-0 left-0 flex items-center justify-center hidden w-screen h-screen z-80 bg-black/70">
 
 
                         <!-- Boton de cerrar -->
-                        <a class="fixed z-90 top-6 right-8
-                                text-white text-5xl font-bold"
+                        <a class="fixed text-5xl font-bold text-white z-90 top-6 right-8"
                         href="javascript:void(0)"
                         onclick="closeModal()">
                             ×

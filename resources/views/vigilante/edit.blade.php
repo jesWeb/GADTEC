@@ -114,7 +114,7 @@
                                     Salida</label>
                                 <select name="combustible_salida" id="combustible_salida"
                                     title="Seleccione el nivel de combustible al salir"
-                                    class="w-full rounded-md border border-gray-300 py-3 px-6 text-base font-medium outline-none focus:border-yellow-500 focus:ring focus:ring-yellow-200"
+                                    class="w-full px-6 py-3 text-base font-medium border border-gray-300 rounded-md outline-none focus:border-yellow-500 focus:ring focus:ring-yellow-200"
                                     required>
                                     <option value="1/4" {{ old('combustible_salida') == '1/4' ? 'selected' : '' }}>
                                         1/4</option>
@@ -194,7 +194,7 @@
                             Subir Imágenes
                         </h3>
                         <p class="text-sm text-gray-600">Máximo 5 imágenes</p>
-                        <div class="flex flex-wrap gap-4 mt-4 pt-4 mb-6" id="imageContainer"></div>
+                        <div class="flex flex-wrap gap-4 pt-4 mt-4 mb-6" id="imageContainer"></div>
                         <div class="mb-8">
                             <label for="fotografias_salida" id="takePhotoBtn"
                                 class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
