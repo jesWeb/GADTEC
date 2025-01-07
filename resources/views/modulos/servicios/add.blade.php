@@ -53,10 +53,11 @@
                             <!-- Selección de Automóvil -->
                             <div class="mb-4">
                                 <label for="id_automovil" class="block text-base font-medium text-gray-700">Seleccionar Automóvil:</label>
-                                <select name="id_automovil" id="id_automovil" class="w-full mt-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" title="Selecciona un automóvil">
+                                <select name="id_automovil" id="id_automovil" class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" 
+                                 title="Selecciona un automóvil">
                                     <option selected>Selecciona una opción...</option>
                                     @foreach ($automoviles as $automovil)
-                                    <option>
+                                    <option value="{{ $automovil->id_automovil }}" {{ (old('id_automovil') == $automovil->id_automovil) ? 'selected' : '' }}>
                                         {{ $automovil->marca }} {{ $automovil->modelo }} ({{ $automovil->submarca }})
                                     </option>
                                     @endforeach
