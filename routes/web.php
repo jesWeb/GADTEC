@@ -19,12 +19,14 @@ use App\Http\Controllers\MultasController;
 use App\Http\Controllers\ServiciosController;
 use App\Http\Controllers\JsController;
 use App\Http\Controllers\AutorizanteController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ConsumeController;
 
 // Rutas de autenticación
 Route::get('/', function () {
     return view('auth.login');
 });
+
+Route::get('/consume',[ConsumeController::class,'index']);
 
 // Rutas de autenticación (Login, Logout y Restablecimiento de Contraseña)
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -57,9 +59,6 @@ Route::middleware('auth')->group(function () {
         Route::resource('multas', MultasController::class);
         Route::resource('servicios', ServiciosController::class);
         Route::get('/liberar/{id}', [ServiciosController::class, 'liberar'])->name('liberar');
-
-
-
         // Rutas para la gestión de vigilantes
         Route::resource('/administrador/vigilante', VigilanteController::class);
         Route::get('/administrador/vigilante/edit2/{id}/', [VigilanteController::class, 'edit2'])->name('admin.edit2');
