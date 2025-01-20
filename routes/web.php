@@ -40,6 +40,10 @@ Route::post('/reset-password', [PasswordResetLinkController::class, 'update'])->
 // Rutas protegidas por el middleware 'auth'
 Route::middleware('auth')->group(function () {
 
+    // Route::get('/error500', function () {
+    //     abort(500, '¡Algo salió mal!');
+    // });
+
     // Rutas para el Administrador
     Route::middleware('role:Administrador')->group(function () {
         // Dashboard del Administrador
