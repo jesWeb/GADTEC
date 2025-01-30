@@ -50,7 +50,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/dashboard', [GestionController::class, 'index'])->name("admin.dashboard");
 
         // Gestión de asignaciones y otros recursos
-        Route::get('/autorizar/update/{id_asignacion}', [GestionController::class, 'update'])->name('autorizar');
+        Route::post('autorizar_reserva/{id}', [GestionController::class, 'autorizarReserva'])->name('autorizar_reserva');
+
+        // Route::get('/autorizar/update/{id_asignacion}', [GestionController::class, 'update'])->name('autorizar');
         Route::resource('usuarios', UsuariosController::class);
         Route::get('/eliminar/{id_usuario}', [UsuariosController::class, 'update2'])->name('usuario');
         Route::resource('Automovil', AutomovilController::class);

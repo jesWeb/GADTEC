@@ -19,59 +19,106 @@ class GestionController extends Controller
     }
 
 
+    // public function index()
+    // {
+    //     // $disponibilidad = asignacion::with('automovil')
+    //     //     ->get();
+    //     // $disponibilidad = \DB::select("SELECT *
+    //     // FROM automoviles AS aut
+    //     // JOIN asignacions AS asi
+    //     // ON aut.id_automovil = asi.id_automovil
+    //     // WHERE asi.estatus IS NOT NULL
+    //     // GROUP BY aut.id_automovil;");
+
+    //     //     $disponibilidad = DB::select("
+    //     //     SELECT
+    //     //         aut.*,
+    //     //         asi.id_asignacion,
+    //     //         asi.estatus AS estatus_asignacion,
+    //     //         aut.estatusIn,
+    //     //         -- Lógica para determinar el estatus final
+    //     //         CASE
+    //     //             WHEN asi.estatus IS NOT NULL THEN asi.estatus
+    //     //             WHEN aut.estatusIn IN ('Mantenimiento', 'En servicio') THEN aut.estatusIn
+    //     //             ELSE 'Disponible'
+    //     //         END AS estatus_final
+    //     //     FROM automoviles AS aut
+    //     //     LEFT JOIN asignacions AS asi
+    //     //         ON aut.id_automovil = asi.id_automovil
+    //     //         AND asi.id_asignacion = (
+    //     //             SELECT MAX(sub.id_asignacion)
+    //     //             FROM asignacions AS sub
+    //     //             WHERE sub.id_automovil = asi.id_automovil
+    //     //             AND sub.estatus IS NOT NULL
+    //     //         )
+    //     // ");
+
+    //     $disponibilidad = \DB::select("SELECT aut.*, asi.id_asignacion, asi.estatus
+    //         FROM automoviles AS aut
+    //         LEFT JOIN (
+    //             SELECT id_automovil, id_asignacion, estatus
+    //             FROM asignacions
+    //             WHERE (id_automovil, id_asignacion) IN (
+    //                 SELECT id_automovil, MAX(id_asignacion)
+    //                 FROM asignacions
+    //                 GROUP BY id_automovil
+    //             )
+    //         ) AS asi
+    //         ON aut.id_automovil = asi.id_automovil
+    //         WHERE aut.deleted_at IS NULL
+    //         ORDER BY aut.marca
+    //         ");
+
+    //     // dd($disponibilidad);
+    //     return view('modulos.Gestion.index', compact('disponibilidad'));
+    // }
+
     public function index()
     {
-        // $disponibilidad = asignacion::with('automovil')
-        //     ->get();
-        // $disponibilidad = \DB::select("SELECT *
-        // FROM automoviles AS aut
-        // JOIN asignacions AS asi
-        // ON aut.id_automovil = asi.id_automovil
-        // WHERE asi.estatus IS NOT NULL
-        // GROUP BY aut.id_automovil;");
-
-        //     $disponibilidad = DB::select("
-        //     SELECT
-        //         aut.*,
-        //         asi.id_asignacion,
-        //         asi.estatus AS estatus_asignacion,
-        //         aut.estatusIn,
-        //         -- Lógica para determinar el estatus final
-        //         CASE
-        //             WHEN asi.estatus IS NOT NULL THEN asi.estatus
-        //             WHEN aut.estatusIn IN ('Mantenimiento', 'En servicio') THEN aut.estatusIn
-        //             ELSE 'Disponible'
-        //         END AS estatus_final
-        //     FROM automoviles AS aut
-        //     LEFT JOIN asignacions AS asi
-        //         ON aut.id_automovil = asi.id_automovil
-        //         AND asi.id_asignacion = (
-        //             SELECT MAX(sub.id_asignacion)
-        //             FROM asignacions AS sub
-        //             WHERE sub.id_automovil = asi.id_automovil
-        //             AND sub.estatus IS NOT NULL
-        //         )
-        // ");
-
-        $disponibilidad = \DB::select("SELECT aut.*, asi.id_asignacion, asi.estatus
+        // Obtener la disponibilidad de los automóviles 
+        $disponibilidad = \DB::select("
+            SELECT aut.*, asi.id_asignacion, asi.estatus
             FROM automoviles AS aut
             LEFT JOIN (
-                SELECT id_automovil, id_asignacion, estatus
+                SELECT id_automovil, id_asignacion, estatus, hora_salida
                 FROM asignacions
                 WHERE (id_automovil, id_asignacion) IN (
                     SELECT id_automovil, MAX(id_asignacion)
                     FROM asignacions
+                    WHERE deleted_at IS NULL  
                     GROUP BY id_automovil
                 )
+                AND deleted_at IS NULL  
+                ORDER BY hora_salida
             ) AS asi
             ON aut.id_automovil = asi.id_automovil
-            WHERE aut.deleted_at IS NULL
+            WHERE aut.deleted_at IS NULL 
             ORDER BY aut.marca
+        ");
+
+        // Obtener las reservaciones
+        foreach ($disponibilidad as $dispo) {
+            $dispo->asignaciones = DB::select("
+                SELECT id_asignacion, hora_salida, estatus
+                FROM asignacions
+                WHERE id_automovil = {$dispo->id_automovil}
+                ORDER BY hora_salida
             ");
 
-        // dd($disponibilidad);
+            // Contar las reservas al dia
+            $reservas_dia = DB::select("
+                SELECT COUNT(*) AS reservas_dia
+                FROM asignacions AS asi
+                WHERE asi.id_automovil = {$dispo->id_automovil}
+                AND DATE(asi.fecha_salida) = CURDATE() 
+                AND asi.estatus = 'Reservado'
+            ");
+            $dispo->num_reservas = $reservas_dia[0]->reservas_dia;
+        }
+
         return view('modulos.Gestion.index', compact('disponibilidad'));
     }
+
 
     public function show(string $id)
     {
@@ -121,5 +168,25 @@ class GestionController extends Controller
     //         );
     //     return redirect()->route("usu_detalle", ['id' => $id->id]);
     // }
+
+    public function autorizarReserva($id, Request $request)
+    {
+        // Verificar si se seleccionó una asignación válida
+        $asignacion = asignacion::find($request->hora_salida);
+    
+        if ($asignacion) {
+            // Cambiar el estatus a 'Autorizado'
+            $asignacion->estatus = 'Autorizado';
+            $asignacion->save();
+    
+            // Redirigir a la vista de gestión con un mensaje de éxito
+            return redirect()->route('Gestion')->with('success', 'La asignación del vehículo ' . $asignacion->automovil->marca . ' con placas ' . $asignacion->automovil->placas . ' ha sido autorizada correctamente.');
+        }
+    
+        
+        // Redirigir en caso de que no se encuentre la asignación
+        return redirect()->route('Gestion')->with('error', 'No se pudo autorizar la asignación.');
+    }
+    
 
 }

@@ -8,14 +8,10 @@ use App\Models\Usuarios;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-
 class AsignacionController extends Controller
 {
-
     public function index()
     {
-
-
         $reservacion = DB::select("SELECT
             asi.id_asignacion,
             asi.estatus,
@@ -42,31 +38,32 @@ class AsignacionController extends Controller
 
     public function create()
     {
-
+        // Permitir crear solicitudes con diferente fecha y hora
         $auto = DB::select(
         "SELECT
             aut.id_automovil,
             aut.marca,
             aut.submarca,
             aut.modelo,
-            aut.estatusIn,
-            asi.estatus
+            aut.estatusIn
         FROM
             automoviles AS aut
-        LEFT JOIN asignacions AS asi
-            ON aut.id_automovil = asi.id_automovil
-            AND asi.estatus IN ('Reservado', 'Ocupado', 'Autorizado')
         WHERE
             aut.estatusIn = 'Disponible'
-            AND asi.id_asignacion IS NULL AND aut.deleted_at IS NULL
-            "
-
+            AND NOT EXISTS (
+                SELECT 1 FROM asignacions AS asi
+                WHERE asi.id_automovil = aut.id_automovil
+                AND asi.estatus IN ('Reservado', 'Ocupado', 'Autorizado')
+                AND asi.fecha_salida = :fecha_salida
+                AND asi.hora_salida = :hora_salida
+            )
+            AND aut.deleted_at IS NULL",
+            ['fecha_salida' => now()->toDateString(), 'hora_salida' => now()->toTimeString()]
         );
 
         $reservU = Usuarios::all();
         return view('catalogos.asignacion.create', compact('auto', 'reservU'));
     }
-
 
     public function store(Request $request)
     {
@@ -75,43 +72,38 @@ class AsignacionController extends Controller
             'id_automovil' => 'required|exists:automoviles,id_automovil',
             'telefono' => 'required|numeric',
             'fecha_salida' => 'required|date',
-            'hora_salida' => 'nullable|date_format:H:i',
-            'hora_llegada' => 'nullable|date_format:H:i',
+            'hora_salida' => 'required|date_format:H:i',
             'lugar' => 'required|string',
-            'requierechofer' => 'nullable',
-            'nombre_chofer' => 'nullable|string',
             'motivo' => 'required|string',
             'no_licencia' => 'required|string',
             'condiciones' => 'nullable|string',
-            'autorizante' => 'nullable|string',
+            'requierechofer' => 'nullable|boolean',
+            'nombre_chofer' => 'nullable|string',
         ]);
-
-        //verificar si ya esta apartado
-
+    
+        // Ver si el automovil no esta apartado
+        $conflicto = DB::table('asignacions')
+            ->where('id_automovil', $request->id_automovil)
+            ->where('fecha_salida', $request->fecha_salida)
+            ->where('hora_salida', $request->hora_salida)
+            ->whereIn('estatus', ['Reservado', 'Ocupado', 'Autorizado'])
+            ->exists();
+    
+        if ($conflicto) {
+            return redirect()->back()->withErrors(['El vehículo ya está reservado en ese horario.'])->withInput();;
+        }
+    
+        // Guardar la nueva asignación
         $newAsig = new asignacion($validated);
-
-        // Si no se requiere chofer, el campo nombre_chofer  debe estar vacío
-        // if (!$request->has('requierechofer')) {
-        //     $newAsig->nombre_chofer = 'N/A';
-        // }
         $newAsig->save();
-
-        return redirect()->route('asignacion.index')->with('success', 'Asignación creada con éxito.');
+    
+        return redirect()->route('asignacion.index')->with('success', 'La solicitud de automóvil se ha registrado correctamente.');
     }
-
-
-    // public function show($id)
-    // {
-    //     $asignacionV = asignacion::findOrFail($id);
-    //     return view('catalogos.asignacion.show', compact('asignacionV'));
-    // }
-
     public function show($id)
     {
-
         $asignacionV = asignacion::with('automovil', 'usuarios')->findOrFail($id);
 
-        if (is_null(!$asignacionV->automovil ||  !$asignacionV->usuarios )) {
+        if (!$asignacionV->automovil || !$asignacionV->usuarios) {
             return view('catalogos.asignacion.show', [
                 'asignacionV' => $asignacionV,
                 'mensaje' => 'El automóvil o usuario relacionado ha sido eliminado.',
@@ -126,7 +118,6 @@ class AsignacionController extends Controller
         $EddtAsig = asignacion::findOrFail($id);
         $usuarios = Usuarios::all();
 
-
         return view('catalogos.asignacion.edit', compact('EddtAsig', 'usuarios'));
     }
 
@@ -139,11 +130,10 @@ class AsignacionController extends Controller
         return redirect()->route('asignacion.index')->with('mensaje', 'Se ha actualizado el registro');
     }
 
-
     public function destroy($id)
     {
         $DelAsg = asignacion::findOrFail($id);
         $DelAsg->delete();
-        return redirect()->route('asignacion.index')->with('eliminar', 'se ha eliminado el registro');
+        return redirect()->route('asignacion.index')->with('eliminar', 'Se ha eliminado el registro');
     }
 }

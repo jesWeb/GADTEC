@@ -19,6 +19,18 @@
         </nav>
     </div>
     <div class="p-6 bg-white rounded-md shadow-md">
+        @if(session('success'))
+            <div class="py-4 text-center bg-indigo-900 lg:px-4">
+                <div class="flex items-center p-2 leading-none text-indigo-100 bg-indigo-800 lg:rounded-full lg:inline-flex" role="alert">
+                    <span class="flex px-2 py-1 mr-3 text-xs font-bold uppercase bg-indigo-500 rounded-full">New</span>
+                    <span class="flex-auto mr-2 font-semibold text-left">{{ session('success') }}</span>
+                    <svg class="w-4 h-4 opacity-75 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z"/>
+                    </svg>
+                </div>
+            </div>
+        @endif
+
         <h2 class="text-lg font-semibold text-gray-700 capitalize">Gestión: Disponibilidad Automóviles </h2>
         <div class="mt-4 overflow-x-auto rounded-lg shadow overflow-y-autom">
             <table class="min-w-full bg-white border border-gray-200 divide-y divide-gray-200">
@@ -31,6 +43,7 @@
                         @if(auth()->user()->hasRole('Administrador'))
                             <th class="px-4 py-2 text-left text-gray-600">Acciones</th>
                         @endif
+                        <th class="px-4 py-2 text-left text-gray-600">Reservas Hoy</th> <!-- Nueva columna -->
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100">
@@ -68,7 +81,7 @@
                                         </span>
                                     @endif
                             </td>
-
+                            
                             {{-- acciones --}}
                             @if(auth()->user()->hasRole('Administrador'))
                             <td class="px-4 py-2">
@@ -84,12 +97,29 @@
                                             </svg>
                                         </a>
                                     @elseif($dispo->estatus == 'Reservado')
-                                        <a href="{{ route('autorizar', $dispo->id_asignacion) }}"
-                                            class="inline-flex items-center justify-center w-8 h-8 text-white border border-[#07074D] bg-indigo-600 rounded-md shadow-md hover:bg-indigo-700 hover:text-white hover:border-blue-950 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5">
-                                                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zM10.293 16.293a1 1 0 0 1-1.414 0l-2.293-2.293a1 1 0 1 1 1.414-1.414L10 14.586l4.586-4.586a1 1 0 1 1 1.414 1.414l-5 5z"/>
-                                            </svg>
-                                        </a>
+                        
+                                        @if ($dispo->num_reservas > 0)
+                                            <form action="{{ route('autorizar_reserva', ['id' => $dispo->id_automovil]) }}" method="POST">
+                                                @csrf
+                                                <select name="hora_salida" class="text-gray-700 bg-white border border-gray-300 rounded-md form-select">
+                                                    @foreach ($dispo->asignaciones as $asignacion)
+                                                        @if ($asignacion->estatus == 'Reservado')
+                                                            <option value="{{ $asignacion->id_asignacion }}">
+                                                                {{ $asignacion->hora_salida }} - {{ $asignacion->estatus }}
+                                                            </option>
+                                                        @endif
+                                                    @endforeach
+                                                </select>
+
+                                                <button type="submit" class="px-3 py-1 ml-2 text-white bg-indigo-600 rounded-md hover:bg-indigo-700">
+                                                    Autorizar
+                                                </button>
+                                            </form>
+                                        @else
+                                            <span class="text-gray-500">Sin reservas hoy</span>
+                                        @endif
+
+
                                     @else
                                         <span class="text-gray-400">
                                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -103,6 +133,15 @@
                                 </div>
                             </td>
                             @endif
+                            <td class="px-4 py-2 border">
+                                @if ($dispo->num_reservas > 1)
+                                    <span class="font-semibold text-red-600">{{ $dispo->num_reservas }} reservas hoy</span>
+                                @elseif ($dispo->num_reservas == 1)
+                                    1 reserva hoy
+                                @else
+                                    Sin reservas hoy
+                                @endif
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -110,4 +149,5 @@
         </div>
     </div>
 </div>
+
 @endsection
