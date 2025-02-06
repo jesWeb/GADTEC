@@ -13,14 +13,57 @@ class VigilanteController extends Controller
 {
 
     // Mostrar la bitácora de asignaciones
-    public function index()
+    // public function index()
+    // {
+    //     // $vigilante = asignacion::with(['automovil', 'usuarios', 'checkIns'])->get();
+    //     $vigilante = asignacion::with(['automovil', 'usuarios', 'checkIns'])
+    //         ->where('estatus', '!=', 'reservado')
+    //         ->get();
+    //     return view('vigilante.index', compact('vigilante'));
+    // }
+
+    public function index(Request $request)
     {
-        // $vigilante = asignacion::with(['automovil', 'usuarios', 'checkIns'])->get();
         $vigilante = asignacion::with(['automovil', 'usuarios', 'checkIns'])
-            ->where('estatus', '!=', 'reservado')
-            ->get();
+            ->where('estatus', '!=', 'reservado');
+        
+        // Búsqueda
+        if ($request->has('search') && $request->input('search') != '') {
+            $search = $request->input('search');
+            $vigilante->where(function ($query) use ($search) {
+                $query->where('estatus', 'LIKE', "%{$search}%")
+                      ->orWhere('fecha_asignacion', 'LIKE', "%{$search}%")
+                      
+                      ->orWhere('lugar', 'LIKE', "%{$search}%")
+                      ->orWhere('motivo', 'LIKE', "%{$search}%")
+                      ->orWhereHas('usuarios', function ($q) use ($search) {
+                          $q->where('nombre', 'LIKE', "%{$search}%")
+                            ->orWhere('app', 'LIKE', "%{$search}%")
+                            ->orWhere('apm', 'LIKE', "%{$search}%");
+                      })
+                      ->orWhereHas('automovil', function ($q) use ($search) {
+                          $q->where('marca', 'LIKE', "%{$search}%")
+                            ->orWhere('submarca', 'LIKE', "%{$search}%")
+                            ->orWhere('modelo', 'LIKE', "%{$search}%");
+                      })
+                      ->orWhereHas('checkIns', function ($q) use ($search) {
+                          $q->where('km_salida', 'LIKE', "%{$search}%")
+                            ->orWhere('combustible_salida', 'LIKE', "%{$search}%")
+                            ->orWhere('hora_salida', 'LIKE', "%{$search}%")
+                            ->orWhere('fecha_llegada', 'LIKE', "%{$search}%")
+                            ->orWhere('km_llegada', 'LIKE', "%{$search}%")
+                            ->orWhere('combustible_llegada', 'LIKE', "%{$search}%")
+                            ->orWhere('hora_llegada', 'LIKE', "%{$search}%");
+                      });
+            });
+        }
+        
+        $vigilante = $vigilante->paginate(10)->appends($request->query());
+        
         return view('vigilante.index', compact('vigilante'));
     }
+    
+
 
     // Mostrar el formulario de edición
     public function edit($id)

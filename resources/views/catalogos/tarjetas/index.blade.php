@@ -144,6 +144,8 @@
                     </tbody>
                 </table>
             </div>
+             <!-- Navegación de paginación -->
+             {{ $tarjetas->links() }}
         </div>
         
     </div>

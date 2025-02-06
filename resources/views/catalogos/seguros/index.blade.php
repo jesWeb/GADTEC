@@ -120,7 +120,7 @@
                 </table>
             </div>
             <!-- Navegación de paginación -->
-            {{-- {{ $cars->links() }} --}}
+            {{ $seguro->links() }}
         </div>
     </div>
 </div>

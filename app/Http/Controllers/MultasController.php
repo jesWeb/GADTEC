@@ -15,57 +15,40 @@ class MultasController extends Controller
      */
     public function index(Request $request)
     {
-        $sql = "SELECT
-                    mul.id_multa,
-                    mul.estatus,
-                    mul.tipo_multa,
-                    mul.monto,
-                    mul.fecha_multa,
-                    mul.lugar,
-                    CONCAT(aut.marca, ' ', aut.submarca, ' ', aut.modelo) AS automovil
-                FROM
-                    multas AS mul
-                JOIN
-                    automoviles AS aut ON mul.id_automovil = aut.id_automovil
-                WHERE
-                    mul.deleted_at IS NULL";
+        $query = \DB::table('multas as mul')
+            ->join('automoviles as aut', 'mul.id_automovil', '=', 'aut.id_automovil')
+            ->select(
+                'mul.id_multa',
+                'mul.estatus',
+                'mul.tipo_multa',
+                'mul.monto',
+                'mul.fecha_multa',
+                'mul.lugar',
+                \DB::raw("CONCAT(aut.marca, ' ', aut.submarca, ' ', aut.modelo) AS automovil")
+            )
+            ->whereNull('mul.deleted_at');
 
-        // Condiciones dinámicas para búsqueda
-        $conditions = [];
-        $parameters = [];
-
-        if ($request->has('search') && $request->input('search') != '') {
-            $search = $request->input('search');
-            $conditions[] = "(mul.tipo_multa LIKE :search1 OR
-                            mul.lugar LIKE :search2 OR
-                            mul.estatus LIKE :search3 OR
-                            mul.fecha_multa LIKE :search4 OR
-                            aut.marca LIKE :search5 OR
-                            aut.submarca LIKE :search6 OR
-                            aut.modelo LIKE :search7)";
-            $parameters = [
-                'search1' => "%{$search}%",
-                'search2' => "%{$search}%",
-                'search3' => "%{$search}%",
-                'search4' => "%{$search}%",
-                'search5' => "%{$search}%",
-                'search6' => "%{$search}%",
-                'search7' => "%{$search}%",
-            ];
+        // busqueda
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('mul.tipo_multa', 'LIKE', "%{$search}%")
+                    ->orWhere('mul.lugar', 'LIKE', "%{$search}%")
+                    ->orWhere('mul.estatus', 'LIKE', "%{$search}%")
+                    ->orWhere('mul.monto', 'LIKE', "%{$search}%")
+                    ->orWhere('mul.fecha_multa', 'LIKE', "%{$search}%")
+                    ->orWhere('aut.marca', 'LIKE', "%{$search}%")
+                    ->orWhere('aut.submarca', 'LIKE', "%{$search}%")
+                    ->orWhere('aut.modelo', 'LIKE', "%{$search}%");
+                    
+            });
         }
 
-        // Si hay condiciones de búsqueda, agregar al WHERE
-        if (!empty($conditions)) {
-            $sql .= " AND " . implode(' AND ', $conditions);
-        }
+        // paginacion
+        $multas = $query->paginate(10)->appends($request->query());
 
-        // Ejecutar la consulta SQL
-        $multas = \DB::select($sql, $parameters);
-
-        // Retornar vista con resultados
         return view('modulos.multas.index', compact('multas'));
     }
-
 
 
 

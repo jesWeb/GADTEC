@@ -14,7 +14,7 @@ class UsuariosController extends Controller
      */
     public function index(Request $request)
     {
-        // $usuarios = Usuarios::all();
+        //$usuarios = Usuarios::all();
 
         // Inicializar la consulta
         $query = Usuarios::query();
@@ -34,7 +34,7 @@ class UsuariosController extends Controller
             });
         }
 
-        $usuarios = $query->get();
+        $usuarios = $query->paginate(10)->appends($request->query()); 
         return view('catalogos.usuarios.index', compact('usuarios'));
     }
 

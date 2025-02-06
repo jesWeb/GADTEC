@@ -15,56 +15,38 @@ class ServiciosController extends Controller
     public function index(Request $request)
     {
         // Base de la consulta SQL
-        $sql = "SELECT
-                    serv.id_servicio,
-                    serv.tipo_servicio,
-                    serv.descripcion,
-                    serv.fecha_servicio,
-                    serv.prox_servicio,
-                    serv.costo,
-                    serv.lugar_servicio,
-                    serv.id_automovil,
-                    aut.estatusIn as estatus,
-                    CONCAT(aut.marca, ' ', aut.submarca, ' ', aut.modelo) AS automovil
-                FROM
-                    servicios AS serv
-                JOIN
-                    automoviles AS aut ON serv.id_automovil = aut.id_automovil
-                WHERE
-                    serv.deleted_at IS NULL";
+            $query = DB::table('servicios as serv')
+            ->join('automoviles as aut', 'serv.id_automovil', '=', 'aut.id_automovil')
+            ->select(
+                'serv.id_servicio',
+                'serv.tipo_servicio',
+                'serv.descripcion',
+                'serv.fecha_servicio',
+                'serv.prox_servicio',
+                'serv.costo',
+                'serv.lugar_servicio',
+                'serv.id_automovil',
+                'aut.estatusIn as estatus',
+                DB::raw("CONCAT(aut.marca, ' ', aut.submarca, ' ', aut.modelo) AS automovil")
+            )
+            ->whereNull('serv.deleted_at'); // Filtrar registros activos
 
-        // Condiciones dinámicas para buscar
-        $conditions = [];
-        $parameters = [];
-
-        if ($request->has('search') && $request->input('search') != '') {
-            $search = $request->input('search');
-            $conditions[] = "(serv.tipo_servicio LIKE :search1 OR
-                              serv.descripcion LIKE :search2 OR
-                              serv.costo LIKE :search3 OR
-                              serv.lugar_servicio LIKE :search4 OR
-                              aut.marca LIKE :search5 OR
-                              aut.submarca LIKE :search6 OR
-                              aut.modelo LIKE :search7)";
-            $parameters = [
-                'search1' => "%{$search}%",
-                'search2' => "%{$search}%",
-                'search3' => "%{$search}%",
-                'search4' => "%{$search}%",
-                'search5' => "%{$search}%",
-                'search6' => "%{$search}%",
-                'search7' => "%{$search}%",
-            ];
+        // Búsqueda dinámica
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('serv.tipo_servicio', 'LIKE', "%{$search}%")
+                    ->orWhere('serv.descripcion', 'LIKE', "%{$search}%")
+                    ->orWhere('serv.costo', 'LIKE', "%{$search}%")
+                    ->orWhere('serv.lugar_servicio', 'LIKE', "%{$search}%")
+                    ->orWhere('aut.marca', 'LIKE', "%{$search}%")
+                    ->orWhere('aut.submarca', 'LIKE', "%{$search}%")
+                    ->orWhere('aut.modelo', 'LIKE', "%{$search}%");
+            });
         }
 
-        // Agregar condiciones a la consulta de busqueda
-        if (!empty($conditions)) {
-            $sql .= " WHERE " . implode(' AND ', $conditions);
-        }
-
-        // Variable para visualizar en tb
-        $servicios = \DB::select($sql, $parameters);
-
+        // Paginación con 10 elementos por página
+        $servicios = $query->paginate(10)->appends($request->query());
 
         return view('modulos.servicios.index', compact('servicios'));
     }

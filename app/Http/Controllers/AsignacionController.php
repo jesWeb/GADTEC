@@ -10,31 +10,45 @@ use Illuminate\Support\Facades\DB;
 
 class AsignacionController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $reservacion = DB::select("SELECT
-            asi.id_asignacion,
-            asi.estatus,
-            asi.lugar,
-            asi.hora_salida,
-            CONCAT(usu.nombre, ' ', usu.app, ' ', usu.apm) AS usuario,
-            asi.fecha_salida,
-            che.km_llegada,
-            CONCAT(aut.marca, ' ', aut.submarca, ' ', aut.modelo) AS automovil
-        FROM
-            asignacions AS asi
-        JOIN
-            usuarios AS usu ON asi.id_usuario = usu.id_usuario
-        JOIN
-            automoviles AS aut ON asi.id_automovil = aut.id_automovil
-        LEFT JOIN
-            check_ins AS che ON che.id_asignacion = asi.id_asignacion
-        WHERE
-            asi.deleted_at IS NULL 
-        ");
-
+        $reservacion = Asignacion::select(
+            'asignacions.id_asignacion',
+            'asignacions.estatus',
+            'asignacions.lugar',
+            'asignacions.hora_salida',
+            'asignacions.fecha_salida',
+            'check_ins.km_llegada',
+            DB::raw("CONCAT(usuarios.nombre, ' ', usuarios.app, ' ', usuarios.apm) AS usuario"),
+            DB::raw("CONCAT(automoviles.marca, ' ', automoviles.submarca, ' ', automoviles.modelo) AS automovil")
+        )
+        ->join('usuarios', 'asignacions.id_usuario', '=', 'usuarios.id_usuario')
+        ->join('automoviles', 'asignacions.id_automovil', '=', 'automoviles.id_automovil')
+        ->leftJoin('check_ins', 'check_ins.id_asignacion', '=', 'asignacions.id_asignacion')
+        ->whereNull('asignacions.deleted_at');
+    
+        // Busqueda
+        if ($request->has('search') && $request->input('search') != '') {
+            $search = $request->input('search');
+            $reservacion->where(function ($query) use ($search) {
+                $query->where('asignacions.estatus', 'LIKE', "%{$search}%")
+                      ->orWhere('asignacions.lugar', 'LIKE', "%{$search}%")
+                      ->orWhere('asignacions.fecha_salida', 'LIKE', "%{$search}%")
+                      ->orWhere('usuarios.nombre', 'LIKE', "%{$search}%")
+                      ->orWhere('usuarios.app', 'LIKE', "%{$search}%")
+                      ->orWhere('usuarios.apm', 'LIKE', "%{$search}%")
+                      ->orWhere('automoviles.marca', 'LIKE', "%{$search}%")
+                      ->orWhere('automoviles.submarca', 'LIKE', "%{$search}%")
+                      ->orWhere('automoviles.modelo', 'LIKE', "%{$search}%");
+            });
+        }
+    
+        $reservacion = $reservacion->paginate(10)->appends($request->query()); 
+    
         return view('catalogos.asignacion.index', compact('reservacion'));
     }
+    
+
 
     public function create()
     {
@@ -71,7 +85,7 @@ class AsignacionController extends Controller
             'id_usuario' => 'required|exists:usuarios,id_usuario',
             'id_automovil' => 'required|exists:automoviles,id_automovil',
             'telefono' => 'required|numeric',
-            'fecha_salida' => 'required|date',
+            'fecha_salida' => 'required|date|after_or_equal:today',
             'hora_salida' => 'required|date_format:H:i',
             'lugar' => 'required|string',
             'motivo' => 'required|string',
@@ -79,6 +93,8 @@ class AsignacionController extends Controller
             'condiciones' => 'nullable|string',
             'requierechofer' => 'nullable|boolean',
             'nombre_chofer' => 'nullable|string',
+        ], [
+            'fecha_salida.after_or_equal' => 'La fecha de salida no puede ser anterior a hoy.',
         ]);
     
         // Ver si el automovil no esta apartado

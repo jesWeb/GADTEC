@@ -71,13 +71,13 @@
                     {{ method_field('PUT') }}
 
                     <div class="grid grid-cols-1 gap-6 pt-3 sm:grid-cols-2 md:grid-cols-3">
-                        <!-- N° Empleado -->
+                        <!-- Número de seguro social -->
                         <div>
-                            <label for="num_empleado" class="block text-base font-medium text-gray-700">N° Empleado</label>
+                            <label for="num_empleado" class="block text-base font-medium text-gray-700">Nùmero de Seguro Social (NSS)</label>
                             <input type="text" name="num_empleado" id="num_empleado"  value="{{ old('num_empleado', $usuario->num_empleado) }}"
-                                placeholder="ejemplo: 12345" class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                                placeholder="AA-BB-CC-DDDD-E" class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                                 value="{{ old('num_empleado') }}"
-                                title="Actualiza el número de empleado"
+                                title="Actualiza el número de seguro social"
                             >
                             @error('num_empleado') <span class="text-sm text-red-600">{{ $message }}</span> @enderror
                         </div>
@@ -205,8 +205,8 @@
                             </select>
                         </div>
 
-    <!-- Selección de Imagen -->
-    <div class="flex flex-col items-center space-y-4">
+                        <!-- Selección de Imagen -->
+                            <div class="flex flex-col items-center space-y-4">
                                 <label for="foto" class="block text-base font-medium text-gray-700">Seleccionar Imagen</label>
                                 <div class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] mt-4 p-6 text-center">
                                     <input type="file" name="foto" id="foto" accept="image/*"

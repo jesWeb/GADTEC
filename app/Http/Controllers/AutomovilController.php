@@ -32,7 +32,7 @@ class AutomovilController extends Controller
                     ->orWhere('num_nsi', 'LIKE', "%{$search}%");
             });
         }
-        $cars = $query->get();
+        $cars = $query->paginate(10)->appends($request->query()); 
         return view('catalogos.Automovil.index', compact('cars'));
     }
 

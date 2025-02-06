@@ -140,9 +140,10 @@
                         @endforeach
                     </tbody>
                 </table>
+                
             </div>
             <!-- Navegación de paginación -->
-            {{-- {{ $cars->links() }} --}}
+            {{ $siniestros->links() }}
         </div>
     </div>
 @endsection

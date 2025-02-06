@@ -103,13 +103,14 @@
                                                 @csrf
                                                 <select name="hora_salida" class="text-gray-700 bg-white border border-gray-300 rounded-md form-select">
                                                     @foreach ($dispo->asignaciones as $asignacion)
-                                                        @if ($asignacion->estatus == 'Reservado')
+                                                        @if ($asignacion->estatus == 'Reservado' && $asignacion->fecha_salida == date('Y-m-d'))
                                                             <option value="{{ $asignacion->id_asignacion }}">
-                                                                {{ $asignacion->hora_salida }} - {{ $asignacion->estatus }}
+                                                                {{ $asignacion->fecha_salida }} - {{ $asignacion->hora_salida }}
                                                             </option>
                                                         @endif
                                                     @endforeach
                                                 </select>
+
 
                                                 <button type="submit" class="px-3 py-1 ml-2 text-white bg-indigo-600 rounded-md hover:bg-indigo-700">
                                                     Autorizar

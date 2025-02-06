@@ -130,7 +130,9 @@
                     @endforeach
                 </tbody>
             </table>
+            
             </div>
+            {{ $multas->links() }}
         </div>
 
 

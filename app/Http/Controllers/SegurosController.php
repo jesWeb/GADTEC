@@ -11,49 +11,33 @@ class SegurosController extends Controller
 
     public function index(Request $request)
     {
-        //
-        $sql = "SELECT
-                    seg.id_seguro,
-                    seg.aseguradora,
-                    seg.fecha_vigencia,
-                    seg.estatus,
-                    CONCAT(aut.marca, ' ', aut.submarca, ' ', aut.modelo) AS automovil
-                FROM
-                seguros AS seg
-                JOIN
-                automoviles AS aut ON seg.id_automovil = aut.id_automovil
-                WHERE
-                seg.deleted_at IS NULL";
+        // Inicializar 
+        $query = DB::table('seguros as seg')
+            ->join('automoviles as aut', 'seg.id_automovil', '=', 'aut.id_automovil')
+            ->select(
+                'seg.id_seguro',
+                'seg.aseguradora',
+                'seg.fecha_vigencia',
+                'seg.estatus',
+                DB::raw("CONCAT(aut.marca, ' ', aut.submarca, ' ', aut.modelo) AS automovil")
+            )
+            ->whereNull('seg.deleted_at'); 
 
-        //busqueda dinamica
-        $conditions = [];
-        $parameters = [];
+        // Búsqueda 
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('seg.aseguradora', 'LIKE', "%{$search}%")
+                    ->orWhere('seg.fecha_vigencia', 'LIKE', "%{$search}%")
+                    ->orWhere('seg.estatus', 'LIKE', "%{$search}%")
+                    ->orWhere('aut.marca', 'LIKE', "%{$search}%")
+                    ->orWhere('aut.submarca', 'LIKE', "%{$search}%")
+                    ->orWhere('aut.modelo', 'LIKE', "%{$search}%");
+            });
+        }
 
-         if ($request->has('search') && $request->input('search') != '') {
-             $search = $request->input('search');
-             $conditions[] = "(seg.aseguradora LIKE :search1 OR
-                               seg.fecha_vigencia LIKE :search2 OR
-                               seg.estatus LIKE :search3 OR
-                               aut.marca LIKE :search4 OR
-                               aut.submarca LIKE :search5 OR
-                               aut.modelo LIKE :search6)";
-             $parameters = [
-                 'search1' => "%{$search}%",
-                 'search2' => "%{$search}%",
-                 'search3' => "%{$search}%",
-                 'search4' => "%{$search}%",
-                 'search5' => "%{$search}%",
-                 'search6' => "%{$search}%",
-             ];
-         }
-
-        // Agregar condiciones a la consulta de busqueda
-         if (!empty($conditions)) {
-             $sql .= " WHERE " . implode(' AND ', $conditions);
-         }
-
-        $seguro = DB::select($sql);
-
+        // Paginación 
+        $seguro = $query->paginate(10)->appends($request->query());
         return view('catalogos.seguros.index', compact('seguro'));
     }
 

@@ -136,6 +136,8 @@
                     </tbody>
                 </table>
             </div>
+             <!-- Navegación de paginación -->
+             {{ $tenencias->links() }}
         </div>
     </div>
 @endsection

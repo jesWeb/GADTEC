@@ -32,8 +32,24 @@
             </nav>
         </div>
     <div class="p-6 bg-white rounded-md shadow-md">
-        <h2 class="text-lg font-semibold text-gray-700 capitalize">Bitácora de Vigilante - Control Vehicular</h2>
-
+        <h2 class="mb-4 text-lg font-semibold text-gray-700 capitalize">Bitácora de Vigilante - Control Vehicular</h2>
+            <div class="mb-3">
+                <form action="{{ route('vigilante.index') }}" method="GET"
+                    class="flex flex-col items-center justify-between space-y-2 md:flex-row md:space-y-0">
+                    <!-- Campo de búsqueda -->
+                    <div class="flex items-center w-full md:w-auto">
+                        <input type="text" name="search" placeholder="Buscar bitacora"
+                            title="Introduce el la fecha, vehículo o estatus para buscar"
+                            class="w-full px-4 py-2 text-gray-700 border rounded-l-md focus:outline-none md:w-48"
+                            value="{{ request('search') }}">
+                        <button type="submit"
+                            class="flex items-center px-4 py-2 ml-1 text-white bg-blue-600 border-l-0 rounded-r-md hover:bg-blue-700 focus:outline-none"
+                            title="Realizar búsqueda">
+                            Buscar
+                        </button>
+                    </div>
+                </form>
+            </div>
         <div class="overflow-x-auto rounded-lg shadow">
             <table class="min-w-full bg-white border border-gray-200 divide-y divide-gray-200">
                 <thead class="bg-gray-100">
@@ -182,7 +198,10 @@
                     
                 </tbody>
             </table>
+            
         </div>
+        <!-- Páginado -->
+        {{ $vigilante->links() }}
     </div>
 </div>
 

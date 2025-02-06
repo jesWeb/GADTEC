@@ -12,56 +12,40 @@ class SiniestrosController extends Controller
 {
     public function index(Request $request)
     {
-        $sql = "SELECT
-                   sin.id_siniestro,
-                   sin.fecha_siniestro,
-                   sin.estatus,
-                   CONCAT(aut.marca, ' ', aut.submarca, ' ', aut.modelo ) AS automovil ,
-						 CONCAT(resp.nombre, ' ', resp.app, ' ', resp.apm) AS usuario
-                FROM
-                 sinister as sin
-                 JOIN
-                 automoviles as aut ON sin.id_automovil = aut.id_automovil
-                 JOIN
-                 usuarios as resp ON sin.id_usuario = resp.id_usuario
-                 where sin.deleted_at IS NULL";
-        // Condiciones dinámicas para búsqueda
-        $conditions = [];
-        $parameters = [];
-        if ($request->has('search') && $request->input('search') != '') {
-            $search = $request->input('search');
-            $conditions[] = "(sin.id_siniestro LIKE :search1 OR
-                            sin.fecha_siniestro LIKE :search2 OR
-                            sin.estatus LIKE :search3 OR
-                            mul.fecha_multa LIKE :search4 OR
-                            aut.marca LIKE :search5 OR
-                            aut.submarca LIKE :search6 OR
-                            aut.modelo LIKE :search7 OR
-                            resp.nombre LIKE :search8 OR
-                            resp.app LIKE :search9 OR
-                            resp.apm LIKE :search10  OR
-                            )";
-            $parameters = [
-                'search1' => "%{$search}%",
-                'search2' => "%{$search}%",
-                'search3' => "%{$search}%",
-                'search4' => "%{$search}%",
-                'search5' => "%{$search}%",
-                'search6' => "%{$search}%",
-                'search7' => "%{$search}%",
-                'search8' => "%{$search}%",
-                'search9' => "%{$search}%",
-                'search10' => "%{$search}%",
-            ];
+        $query = DB::table('sinister as sin')
+        ->join('automoviles as aut', 'sin.id_automovil', '=', 'aut.id_automovil')
+        ->join('usuarios as resp', 'sin.id_usuario', '=', 'resp.id_usuario')
+        ->select(
+            'sin.id_siniestro',
+            'sin.fecha_siniestro',
+            'sin.estatus',
+            DB::raw("CONCAT(aut.marca, ' ', aut.submarca, ' ', aut.modelo) AS automovil"),
+            DB::raw("CONCAT(resp.nombre, ' ', resp.app, ' ', resp.apm) AS usuario")
+        )
+        ->whereNull('sin.deleted_at'); 
+
+        // Búsqueda dinámica
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('sin.id_siniestro', 'LIKE', "%{$search}%")
+                    ->orWhere('sin.fecha_siniestro', 'LIKE', "%{$search}%")
+                    ->orWhere('sin.estatus', 'LIKE', "%{$search}%")
+                    ->orWhere('aut.marca', 'LIKE', "%{$search}%")
+                    ->orWhere('aut.submarca', 'LIKE', "%{$search}%")
+                    ->orWhere('aut.modelo', 'LIKE', "%{$search}%")
+                    ->orWhere('resp.nombre', 'LIKE', "%{$search}%")
+                    ->orWhere('resp.app', 'LIKE', "%{$search}%")
+                    ->orWhere('resp.apm', 'LIKE', "%{$search}%");
+            });
         }
-        // Si hay condiciones de búsqueda, agregar al WHERE
-        if (!empty($conditions)) {
-            $sql .= " AND " . implode(' AND ', $conditions);
-        }
-        // Ejecutar la consulta SQL
-        $siniestros = DB::select($sql, $parameters);
+
+        // Paginación 
+        $siniestros = $query->paginate(5)->appends($request->query());
+
         return view('catalogos.siniestros.index', compact('siniestros'));
     }
+
     public function create()
     {
         $automoviles  = Automoviles::all();

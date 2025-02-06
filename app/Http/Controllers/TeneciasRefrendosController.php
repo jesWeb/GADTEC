@@ -13,54 +13,37 @@ class TeneciasRefrendosController extends Controller
      */
     public function index(Request $request)
     {
-        //
-        $sql = "SELECT
-        ten.id_tenencia,
-        ten.fecha_pago,
-        ten.origen,
-        ten.monto,
-        ten.año_correspondiente,
-        ten.estatus,
-        CONCAT(aut.marca, ' ', aut.submarca, ' ', aut.modelo) AS automovil
-        FROM
-            tenencias AS ten
-        JOIN
-            automoviles AS aut ON ten.id_automovil = aut.id_automovil
-        WHERE
-            ten.deleted_at IS NULL";
+        $query = TeneciasRefrendos::with('automovil')
+        ->whereNull('tenencias.deleted_at')
+        ->join('automoviles as aut', 'tenencias.id_automovil', '=', 'aut.id_automovil') // Unir con la tabla de automóviles
+        ->select(
+            'tenencias.id_tenencia',
+            'tenencias.fecha_pago',
+            'tenencias.origen',
+            'tenencias.monto',
+            'tenencias.año_correspondiente',
+            'tenencias.estatus',
+            DB::raw("CONCAT(aut.marca, ' ', aut.submarca, ' ', aut.modelo) AS automovil")
+        );
 
-        // Condiciones dinámicas para búsqueda
-        $conditions = [];
-        $parameters = [];
-
-        if ($request->has('search') && $request->input('search') != '') {
-        $search = $request->input('search');
-        $conditions[] = "(ten.origen LIKE :search1 OR 
-                        ten.monto LIKE :search2 OR 
-                        ten.año_correspondiente LIKE :search3 OR 
-                        ten.estatus LIKE :search4 OR 
-                        aut.marca LIKE :search5 OR 
-                        aut.submarca LIKE :search6 OR 
-                        aut.modelo LIKE :search7)";
-        $parameters = [
-            'search1' => "%{$search}%",
-            'search2' => "%{$search}%",
-            'search3' => "%{$search}%",
-            'search4' => "%{$search}%",
-            'search5' => "%{$search}%",
-            'search6' => "%{$search}%",
-            'search7' => "%{$search}%",
-        ];
+        // busqueda
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('tenencias.origen', 'LIKE', "%{$search}%")
+                    ->orWhere('tenencias.monto', 'LIKE', "%{$search}%")
+                    ->orWhere('tenencias.año_correspondiente', 'LIKE', "%{$search}%")
+                    ->orWhere('tenencias.estatus', 'LIKE', "%{$search}%")
+                    ->orWhere('aut.marca', 'LIKE', "%{$search}%")
+                    ->orWhere('aut.submarca', 'LIKE', "%{$search}%")
+                    ->orWhere('aut.modelo', 'LIKE', "%{$search}%");
+            });
         }
 
-        // Si hay condiciones de búsqueda, agregar al WHERE
-        if (!empty($conditions)) {
-        $sql .= " AND " . implode(' AND ', $conditions);
-        }
+        // paginacion
+        $tenencias = $query->paginate(10)->appends($request->query()); 
 
-        // Ejecutar la consulta SQL
-        $tenencias = \DB::select($sql, $parameters);
-
+        
         return view('catalogos.tenencias.index', compact('tenencias'));
     }
 

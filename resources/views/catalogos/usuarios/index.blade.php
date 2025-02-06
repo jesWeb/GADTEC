@@ -74,7 +74,7 @@
                         <tr>
                             <th class="px-4 py-2 text-left text-gray-600">#</th>
                             <th class="px-4 py-2 text-left text-gray-600">Foto</th>
-                            <th class="px-4 py-2 text-left text-gray-600">Num Empleado</th>
+                            <th class="px-4 py-2 text-left text-gray-600">NSS</th>
                             <th class="px-4 py-2 text-left text-gray-600">Nombre</th>
                             <th class="px-4 py-2 text-left text-gray-600">Empresa</th>
                             <th class="px-4 py-2 text-left text-gray-600">Rol</th>
@@ -147,7 +147,9 @@
                         @endforeach
                     </tbody>
                 </table>
+                
             </div>
+            {{ $usuarios->links() }}
         </div>
     </div>
 @endsection

@@ -14,53 +14,36 @@ class TarjetaCirculacionController extends Controller
     public function index(Request $request)
     {
 
-        $sql = "SELECT
-        tar.id_tarjeta,
-        tar.nombre,
-        tar.num_tarjeta,
-        tar.vehiculo_origen,
-        tar.fecha_expedicion,
-        tar.fecha_vigencia,
-        tar.estatus,
-        CONCAT(aut.marca, ' ', aut.submarca, ' ', aut.modelo) AS automovil
-        FROM
-            tarjetas AS tar
-        JOIN
-            automoviles AS aut ON tar.id_automovil = aut.id_automovil
-        WHERE
-            tar.deleted_at IS NULL";
+        $query = TarjetaCirculacion::join('automoviles as aut', 'tarjetas.id_automovil', '=', 'aut.id_automovil')
+        ->select(
+            'tarjetas.id_tarjeta',
+            'tarjetas.nombre',
+            'tarjetas.num_tarjeta',
+            'tarjetas.vehiculo_origen',
+            'tarjetas.fecha_expedicion',
+            'tarjetas.fecha_vigencia',
+            'tarjetas.estatus',
+            \DB::raw("CONCAT(aut.marca, ' ', aut.submarca, ' ', aut.modelo) AS automovil")
+        )
+        ->whereNull('tarjetas.deleted_at'); 
 
-        // Condiciones dinámicas para búsqueda
-        $conditions = [];
-        $parameters = [];
-
-        if ($request->has('search') && $request->input('search') != '') {
-        $search = $request->input('search');
-        $conditions[] = "(tar.nombre LIKE :search1 OR
-                        tar.num_tarjeta LIKE :search2 OR
-                        tar.vehiculo_origen LIKE :search3 OR
-                        tar.estatus LIKE :search4 OR
-                        aut.marca LIKE :search5 OR
-                        aut.submarca LIKE :search6 OR
-                        aut.modelo LIKE :search7)";
-        $parameters = [
-            'search1' => "%{$search}%",
-            'search2' => "%{$search}%",
-            'search3' => "%{$search}%",
-            'search4' => "%{$search}%",
-            'search5' => "%{$search}%",
-            'search6' => "%{$search}%",
-            'search7' => "%{$search}%",
-        ];
+        // Búsqueda dinámica
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('tarjetas.nombre', 'LIKE', "%{$search}%")
+                    ->orWhere('tarjetas.num_tarjeta', 'LIKE', "%{$search}%")
+                    ->orWhere('tarjetas.vehiculo_origen', 'LIKE', "%{$search}%")
+                    ->orWhere('tarjetas.estatus', 'LIKE', "%{$search}%")
+                    ->orWhere('aut.marca', 'LIKE', "%{$search}%")
+                    ->orWhere('aut.submarca', 'LIKE', "%{$search}%")
+                    ->orWhere('aut.modelo', 'LIKE', "%{$search}%");
+            });
         }
 
-        // Si hay condiciones de búsqueda, agregar al WHERE
-        if (!empty($conditions)) {
-        $sql .= " AND " . implode(' AND ', $conditions);
-        }
+        // Paginación 
+        $tarjetas = $query->paginate(10)->appends($request->query()); 
 
-        // Ejecutar la consulta SQL
-        $tarjetas = \DB::select($sql, $parameters);
         return view('catalogos.tarjetas.index', compact('tarjetas'));
     }
 

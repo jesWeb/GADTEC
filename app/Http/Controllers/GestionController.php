@@ -99,7 +99,7 @@ class GestionController extends Controller
         // Obtener las reservaciones
         foreach ($disponibilidad as $dispo) {
             $dispo->asignaciones = DB::select("
-                SELECT id_asignacion, hora_salida, estatus
+                SELECT id_asignacion, hora_salida, estatus, fecha_salida
                 FROM asignacions
                 WHERE id_automovil = {$dispo->id_automovil}
                 ORDER BY hora_salida

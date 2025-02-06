@@ -200,7 +200,10 @@
                         @endforeach
                     </tbody>
                 </table>
+                
             </div>
+            <!-- Navegación de paginación -->
+            {{ $servicios->links() }}
         </div>
     </div>
 @endsection

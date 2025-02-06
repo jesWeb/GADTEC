@@ -58,11 +58,11 @@
                         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
                             <!-- N° Empleado -->
                             <div>
-                                <label for="num_empleado" class="block text-base font-medium text-gray-700">N° Empleado</label>
+                                <label for="num_empleado" class="block text-base font-medium text-gray-700">Nùmero de Seguro Social (NSS)</label>
                                 <input type="text" name="num_empleado" id="num_empleado" value="{{ old('num_empleado') }}"
-                                    placeholder="Ejemplo: 12345"
+                                    placeholder="AA-BB-CC-DDDD-E"
                                     class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                                    title="Ingresa el número del empleado">
+                                    title="Ingresa el número de seguro social">
                                 @error('num_empleado')
                                 <span class="text-sm text-red-600">{{ $message }}</span>
                                 @enderror

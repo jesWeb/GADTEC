@@ -29,10 +29,27 @@
             </nav>
         </div>
         <div class="p-6 bg-white rounded-md shadow-md">
-            <h2 class="text-lg font-semibold text-gray-700 capitalize">Solicitud de Vehículo</h2>
-            <div class="mb-4 text-right">
-                <a href="{{ route('asignacion.create') }}"class="inline-block px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700"
-                title="Generar nueva solicitud">Nueva Solicitud</a>
+            <h2 class="mb-4 text-lg font-semibold text-gray-700 capitalize">Solicitud de Vehículo</h2>
+            <div class="mb-2">
+                <form action="{{ route('asignacion.index') }}" method="GET"
+                    class="flex flex-col items-center justify-between space-y-2 md:flex-row md:space-y-0">
+                    <!-- Campo de búsqueda -->
+                    <div class="flex items-center w-full md:w-auto">
+                        <input type="text" name="search" placeholder="Buscar solicitud"
+                            title="Introduce el fecha, vehículo o estatus para buscar"
+                            class="w-full px-4 py-2 text-gray-700 border rounded-l-md focus:outline-none md:w-48"
+                            value="{{ request('search') }}">
+                        <button type="submit"
+                            class="flex items-center px-4 py-2 ml-1 text-white bg-blue-600 border-l-0 rounded-r-md hover:bg-blue-700 focus:outline-none"
+                            title="Realizar búsqueda">
+                            Buscar
+                        </button>
+                    </div>
+                </form>
+                <div class="mb-4 text-right">
+                    <a href="{{ route('asignacion.create') }}"class="inline-block px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700"
+                    title="Generar nueva solicitud">Nueva Solicitud</a>
+                </div>
             </div>
             <div class="overflow-x-auto rounded-lg shadow">
                 <table class="min-w-full bg-white border border-gray-200 divide-y divide-gray-200">
@@ -107,7 +124,10 @@
                         @endforeach
                     </tbody>
                 </table>
+                
             </div>
+            <!-- Páginado -->
+            {{ $reservacion->links() }}
         </div>
     </div>
 @endsection

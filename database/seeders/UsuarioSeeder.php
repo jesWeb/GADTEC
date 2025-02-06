@@ -17,7 +17,7 @@ class UsuarioSeeder extends Seeder
     {
         // Insertar un usuario de ejemplo con contraseña encriptada
         Usuarios::create([
-            'num_empleado' => '12345',
+            'num_empleado' => '45-67-89-1234-5',
             'nombre' => 'Juan',
             'app' => 'Pérez',
             'apm' => 'Gómez',
@@ -36,7 +36,7 @@ class UsuarioSeeder extends Seeder
 
         // Insertar otro usuario con contraseñas encriptadas
         Usuarios::create([
-            'num_empleado' => '67890',
+            'num_empleado' => '08249256783',
             'nombre' => 'Ana',
             'app' => 'López',
             'apm' => 'Martínez',
