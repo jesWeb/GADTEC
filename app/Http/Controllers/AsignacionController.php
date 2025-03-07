@@ -152,4 +152,22 @@ class AsignacionController extends Controller
         $DelAsg->delete();
         return redirect()->route('asignacion.index')->with('eliminar', 'Se ha eliminado el registro');
     }
+
+    public function reservacionesPorAutomovil(Request $request)
+{
+    $id_automovil = $request->query('id_automovil');
+
+    if (!$id_automovil) {
+        return response()->json(['error' => 'ID de automóvil requerido'], 400);
+    }
+
+    $reservaciones = Asignacion::where('id_automovil', $id_automovil)
+        ->whereIn('estatus', ['Reservado', 'Autorizado', 'Ocupado'])
+        ->orderBy('fecha_salida', 'asc')
+        ->orderBy('hora_salida', 'asc')
+        ->get();
+
+    return response()->json($reservaciones);
+}
+
 }

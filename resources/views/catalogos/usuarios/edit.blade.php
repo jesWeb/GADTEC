@@ -144,6 +144,7 @@
                             class="w-full px-4 py-2 mt-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
                                 <option value="Administrador" {{ $usuario->rol == 'Administrador' ? 'selected' : '' }}>Administrador</option>
                                 <option value="Moderador" {{ $usuario->rol == 'Moderador' ? 'selected' : '' }}>Moderador</option>
+                                <option value="Usuario" {{ $usuario->rol == 'Usuario' ? 'selected' : '' }}>Usuario</option>
 
                             </select>
                         </div>

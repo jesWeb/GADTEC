@@ -194,20 +194,64 @@
 
         {{-- Usuario --}}
         @if (Auth::user()->rol === 'Usuario')
-        {{-- Enlace de Autorizante --}}
-        <div
-            class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3 17.25h18M3 12h10.5M3 6.75h15" />
-                <path stroke-linecap="round" stroke-linejoin="round" d="M5 6.75V12M10.5 12V17.25M16.5 12V17.25" />
-            </svg>
+           
+            {{-- Enlace de Autorizante --}}
+            <div class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
+                <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <g id="iconCarrier">
+                      <!-- Documento -->
+                      <rect x="6" y="3" width="12" height="18" rx="2" stroke="currentColor"></rect>
+                      <path d="M9 7H15" stroke="currentColor"></path>
+                      <path d="M9 11H15" stroke="currentColor"></path>
+                      <path d="M9 15H13" stroke="currentColor"></path>
+                      <!-- Usuario -->
+                      <circle cx="17" cy="17" r="3" stroke="currentColor"></circle>
+                      <path d="M17 20V21" stroke="currentColor"></path>
+                      <path d="M17 14V15" stroke="currentColor"></path>
+                    </g>
+                  </svg>
+                  
+            
+                <x-nav-link :href="route('user.dashboard')" :active="request()->routeIs('user.dashboard')">
+                    <span class="mx-4">{{ __('Mis Solicitudes') }}</span>
+                </x-nav-link>
+            </div>
+            
+            {{-- Enlace de Autorizante --}}
+            <div
+                class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
+                <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <g id="iconCarrier">
+                      <!-- Documento -->
+                      <rect x="14" y="2" width="8" height="10" stroke="currentColor"></rect>
+                      <path d="M16 6H20M18 4V8" stroke="currentColor"></path>
+                      <!-- Auto -->
+                      <path d="M5 13L7 8H17L19 13" stroke="currentColor"></path>
+                      <circle cx="7" cy="18" r="2" stroke="currentColor"></circle>
+                      <circle cx="17" cy="18" r="2" stroke="currentColor"></circle>
+                      <path d="M3 13H21V16H3V13Z" stroke="currentColor"></path>
+                      <!-- Icono de solicitud (mano apuntando) -->
+                      <path d="M8 4L10 6L12 4M10 6V2" stroke="currentColor"></path>
+                    </g>
+                  </svg>
+                  
+                  
+                <x-nav-link :href="route('user.solicitud')" :active="request()->routeIs('user.solicitud')">
+                    {{-- nombre del link --}}
+                    <span class="mx-4"> {{ __('Solicitar Préstamo') }}</span>
+                </x-nav-link>
+            </div>
+            <!-- Enlace al Perfil -->
+            <div class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
+                <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="7" r="4" stroke="currentColor"></circle>
+            <path d="M5 21V19C5 16.5 7.5 14 10 14H14C16.5 14 19 16.5 19 19V21" stroke="currentColor"></path>
+        </svg>
 
-            <x-nav-link :href="route('user.dashboard')" :active="request()->routeIs('user.dashboard')">
-                {{-- nombre del link --}}
-                <span class="mx-4"> {{ __('Autorizante') }}</span>
-            </x-nav-link>
-        </div>
+        <x-nav-link :href="route('perfil.user')" :active="request()->routeIs('perfil.user')">
+            <span class="mx-4"> {{ __('Perfil de Usuario') }}</span>
+        </x-nav-link>
+    </div>
         @endif
     </nav>
 </div>

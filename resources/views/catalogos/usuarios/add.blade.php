@@ -153,6 +153,7 @@
                                     <option disabled selected>Selecciona una opción </option>
                                     <option value="Administrador">Administrador</option>
                                     <option value="Moderador">Moderador</option>
+                                    <option value="Usuario">Usuario</option>
                                 </select>
                                 @error('rol')
                                 <span class="text-sm text-red-600">{{ $message }}</span>

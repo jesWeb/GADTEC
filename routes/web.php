@@ -19,7 +19,9 @@ use App\Http\Controllers\MultasController;
 use App\Http\Controllers\ServiciosController;
 use App\Http\Controllers\JsController;
 use App\Http\Controllers\AutorizanteController;
+use App\Http\Controllers\SolicitudesController;
 use App\Http\Controllers\ConsumeController;
+use App\Http\Controllers\PerfilController;
 
 // Rutas de autenticación
 Route::get('/', function () {
@@ -108,7 +110,11 @@ Route::middleware('auth')->group(function () {
     // Rutas para el Usuario
     Route::middleware('role:Usuario')->group(function () {
         // Dashboard del Usuario
-        Route::get('/user/dashboard', [AutorizanteController::class, 'index'])->name('user.dashboard');
+        Route::get('/TusSolicitudes', [AutorizanteController::class, 'index'])->name('user.dashboard');
+        Route::get('/solicitudes', [SolicitudesController::class, 'index'])->name('user.solicitud');
+        Route::post('/solicitudes', [SolicitudesController::class, 'store'])->name('solicitudes.store');
+        Route::get('/perfil', [PerfilController::class, 'index'])->name('perfil.user');
+
     });
 
     // Rutas comunes para Administrador y Moderador
@@ -117,8 +123,9 @@ Route::middleware('auth')->group(function () {
 
     });
 
-    // Rutas comunes para Administrador y Usuario
-    // Route::middleware('role:Administrador|Usuario')->group(function () {
-    //     Route::resource('autorizante', AutorizanteController::class);
-    // });
+    // Rutas comunes para Administrador y Moderador
+    Route::middleware('role:Administrador|Moderador')->group(function () {
+        Route::get('/gestion', [GestionController::class, 'index'])->name('Gestion');
+
+    });
 });
