@@ -43,7 +43,7 @@
                         @if(auth()->user()->hasRole('Administrador'))
                             <th class="px-4 py-2 text-left text-gray-600">Acciones</th>
                         @endif
-                        <th class="px-4 py-2 text-left text-gray-600">Reservas Hoy</th> <!-- Nueva columna -->
+                        <th class="px-4 py-2 text-left text-gray-600">Reservas Hoy</th> 
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100">
@@ -105,7 +105,7 @@
                                                     @foreach ($dispo->asignaciones as $asignacion)
                                                         @if ($asignacion->estatus == 'Reservado' && $asignacion->fecha_salida == date('Y-m-d'))
                                                             <option value="{{ $asignacion->id_asignacion }}">
-                                                                {{ $asignacion->fecha_salida }} - {{ $asignacion->hora_salida }}
+                                                                {{ date('d-m-Y', strtotime($asignacion->fecha_salida)) }} - {{ $asignacion->hora_salida }}
                                                             </option>
                                                         @endif
                                                     @endforeach
