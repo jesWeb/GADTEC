@@ -99,9 +99,10 @@ class GestionController extends Controller
         // Obtener las reservaciones
         foreach ($disponibilidad as $dispo) {
             $dispo->asignaciones = DB::select("
-                SELECT id_asignacion, hora_salida, estatus, fecha_salida
+                SELECT id_asignacion, hora_salida, estatus, fecha_salida 
                 FROM asignacions
                 WHERE id_automovil = {$dispo->id_automovil}
+                AND deleted_at IS NULL
                 ORDER BY hora_salida
             ");
 
@@ -112,6 +113,7 @@ class GestionController extends Controller
                 WHERE asi.id_automovil = {$dispo->id_automovil}
                 AND DATE(asi.fecha_salida) = CURDATE() 
                 AND asi.estatus = 'Reservado'
+                AND asi.deleted_at IS NULL
             ");
             $dispo->num_reservas = $reservas_dia[0]->reservas_dia;
         }
@@ -135,6 +137,7 @@ class GestionController extends Controller
             che.km_llegada AS kilometraje,
             che.combustible_llegada AS combustible,
             asi.estatus
+            AND asi.deleted_at IS NULL
         FROM automoviles AS aut
         INNER JOIN asignacions AS asi ON aut.id_automovil = asi.id_automovil
         INNER JOIN check_ins AS che ON asi.id_asignacion = che.id_asignacion
@@ -171,20 +174,15 @@ class GestionController extends Controller
 
     public function autorizarReserva($id, Request $request)
     {
-        // Verificar si se seleccionó una asignación válida
         $asignacion = asignacion::find($request->hora_salida);
     
         if ($asignacion) {
-            // Cambiar el estatus a 'Autorizado'
             $asignacion->estatus = 'Autorizado';
             $asignacion->save();
-    
-            // Redirigir a la vista de gestión con un mensaje de éxito
+
             return redirect()->route('Gestion')->with('success', 'La asignación del vehículo ' . $asignacion->automovil->marca . ' con placas ' . $asignacion->automovil->placas . ' ha sido autorizada correctamente.');
         }
     
-        
-        // Redirigir en caso de que no se encuentre la asignación
         return redirect()->route('Gestion')->with('error', 'No se pudo autorizar la asignación.');
     }
     

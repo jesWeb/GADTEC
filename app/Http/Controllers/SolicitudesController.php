@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\asignacion;
 use App\Models\Automoviles;
+use App\Models\Usuarios; 
+use Illuminate\Support\Facades\Auth;
+
 
 
 class SolicitudesController extends Controller
@@ -15,8 +18,8 @@ class SolicitudesController extends Controller
 
     public function index()
     {
-        $vehiculos = Automoviles::all(); // Obtiene todos los vehículos
-        return view('autorizante.solicitud.solicitudes', compact('vehiculos'));
+        $vehiculos = Automoviles::all(); 
+        return view('usuario.solicitudes', compact('vehiculos'));
     }
 
 
@@ -31,42 +34,45 @@ class SolicitudesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        $request->validate([
-            'id_automovil' => 'required|exists:vehiculos,id',
-            'fecha_salida' => 'required|date',
-            'hora_salida' => 'required',
-        ]);
+   
     
-        $hora_fin = date('H:i', strtotime($request->hora_salida . ' +1 hour'));
-    
-        $conflicto = Asignacion::where('id_automovil', $request->id_automovil)
-            ->where('fecha_salida', $request->fecha_salida)
-            ->where(function ($query) use ($request, $hora_fin) {
-                $query->whereBetween('hora_salida', [$request->hora_salida, $hora_fin])
-                      ->orWhereBetween('hora_fin', [$request->hora_salida, $hora_fin])
-                      ->orWhere(function ($q) use ($request, $hora_fin) {
-                          $q->where('hora_salida', '<=', $request->hora_salida)
-                            ->where('hora_fin', '>=', $hora_fin);
-                      });
-            })
-            ->exists();
-    
-        if ($conflicto) {
-            return response()->json(['error' => 'Este horario ya está reservado.'], 409);
+     public function store(Request $request)
+     {
+         if (!Auth::check()) {
+             return redirect()->route('login')->with('error', 'Debes iniciar sesión para solicitar un vehículo.');
+         }
+     
+         $usuario = Auth::user(); 
+     
+         // Validar datos
+         $request->validate([
+             'id_automovil' => 'required|exists:automoviles,id_automovil',
+             'motivo' => 'required|string|max:255',
+             'lugar' => 'required|string|max:255',
+             'fecha_salida' => 'required|date',
+             'hora_salida' => 'required',
+             'requierechofer' => 'nullable|boolean',
+             'nombre_chofer' => 'nullable|string|max:255',
+         ]);
+   
+     
+         // Crear la asignación
+         asignacion::create([
+             'id_automovil' => $request->id_automovil,
+             'id_usuario' => Auth::user()->id_usuario,
+             'motivo' => $request->motivo,
+             'lugar' => $request->lugar,
+             'fecha_salida' => $request->fecha_salida,
+             'hora_salida' => $request->hora_salida,
+             'requierechofer' => $request->has('requierechofer') ? 1 : 0,
+             'nombre_chofer' => $request->requierechofer ? $request->nombre_chofer : null,
+             'no_licencia' => $usuario->num_licencia, 
+             'estatus' => 'Reservado',
+         ]);
+     
+         return redirect()->route('user.dashboard')->with('mensaje', 'Solicitud registrada correctamente');
         }
-    
-        Asignacion::create([
-            'id_automovil' => $request->id_automovil,
-            'fecha_salida' => $request->fecha_salida,
-            'hora_salida' => $request->hora_salida,
-            'hora_fin' => $hora_fin,
-            'estado' => 'Reservado',
-        ]);
-    
-        return response()->json(['success' => 'Solicitud registrada con éxito.'], 201);
-    }
+
     
     /**
      * Display the specified resource.

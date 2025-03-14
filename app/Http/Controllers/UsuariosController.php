@@ -59,6 +59,7 @@ class UsuariosController extends Controller
             'email' => 'required|email',
             'usuario' => 'required',
             'pass' => 'required',
+            'num_licencia' => 'nullable',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg',
         ];
 
@@ -132,6 +133,7 @@ class UsuariosController extends Controller
             'email' => 'required|email',
             'usuario' => 'required',
             'pass' => 'nullable',
+            'num_licencia' => 'nullable',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg',
         ];
 

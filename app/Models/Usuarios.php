@@ -18,7 +18,7 @@ class Usuarios extends Model implements Authenticatable, CanResetPasswordContrac
     protected $table = 'usuarios';
     protected $primaryKey = 'id_usuario';
     protected $fillable = [
-        'num_empleado', 'nombre', 'app', 'apm', 'empresa', 'fn', 'sex', 'rol', 'gen',
+        'num_empleado', 'nombre', 'app', 'apm', 'empresa', 'fn', 'sex', 'rol', 'gen', 'num_licencia',
         'foto', 'email', 'usuario', 'pass', 'estatus', 'activo',
     ];
 

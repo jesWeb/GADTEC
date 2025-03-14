@@ -7,6 +7,6 @@ class AutorizanteController extends Controller
 {
     public function index()
     {
-        return view('autorizante.index');
+        return view('usuario.index');
     }
 }

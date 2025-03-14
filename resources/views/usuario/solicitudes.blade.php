@@ -3,9 +3,15 @@
 @section('body')
     <div class="px-6 py-4">
         <div class="mt-8">
-            <div class="p-6 bg-white shadow-xl rounded-xl">
+            <div class="p-6 bg-white rounded-xl shadow-xl">
                 <h2 class="text-2xl font-bold text-gray-800">Solicitud de Vehículo</h2>
+                @if(session('error'))
+                <div class="bg-red-500 text-white p-2 rounded">
+                    {{ session('error') }}
+                </div>
+            @endif
 
+            
                 <form id="solicitudForm" action="{{ route('solicitudes.store') }}" method="POST" class="mt-4">
                     @csrf
 
@@ -13,7 +19,7 @@
                         <div>
                             <label class="block text-lg font-semibold text-gray-700">Vehículo</label>
                             <select name="id_automovil" id="vehiculo"
-                                class="w-full px-4 py-3 mt-2 text-gray-700 border border-gray-300 rounded-lg bg-gray-50 focus:border-indigo-500 focus:ring focus:ring-indigo-200"
+                                class="w-full mt-2 rounded-lg border border-gray-300 bg-gray-50 py-3 px-4 text-gray-700 focus:border-indigo-500 focus:ring focus:ring-indigo-200"
                                 required>
                                 <option value="" disabled selected>Selecciona un vehículo...</option>
                                 @foreach ($vehiculos as $vehiculo)
@@ -26,14 +32,14 @@
                         <div>
                             <label class="block text-lg font-semibold text-gray-700">Motivo</label>
                             <input type="text" name="motivo" id="motivo"
-                                class="w-full px-4 py-3 mt-2 text-gray-700 border border-gray-300 rounded-lg bg-gray-50 focus:border-indigo-500 focus:ring focus:ring-indigo-200"
+                                class="w-full mt-2 rounded-lg border border-gray-300 bg-gray-50 py-3 px-4 text-gray-700 focus:border-indigo-500 focus:ring focus:ring-indigo-200"
                                 placeholder="Ejemplo: Reunión de trabajo" required>
                         </div>
 
                         <div>
                             <label class="block text-lg font-semibold text-gray-700">Lugar</label>
                             <input type="text" name="lugar" id="lugar"
-                                class="w-full px-4 py-3 mt-2 text-gray-700 border border-gray-300 rounded-lg bg-gray-50 focus:border-indigo-500 focus:ring focus:ring-indigo-200"
+                                class="w-full mt-2 rounded-lg border border-gray-300 bg-gray-50 py-3 px-4 text-gray-700 focus:border-indigo-500 focus:ring focus:ring-indigo-200"
                                 placeholder="Ejemplo: Oficinas centrales" required>
                         </div>
 
@@ -44,7 +50,7 @@
 
                             <div class="flex items-center gap-2 mt-2">
                                 <input type="checkbox" id="requierechofer" name="requierechofer" value="1"
-                                    class="w-5 h-5 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                                    class="h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                     onclick="toggleChoferInput()" {{ old('requierechofer') ? 'checked' : '' }}
                                     title="¿Requieres chofer?">
                                 <label for="requierechofer" class="text-base font-medium text-gray-700">Sí</label>
@@ -57,7 +63,7 @@
                                 Nombre del Conductor
                             </label>
                             <input type="text" id="nombre_chofer" name="nombre_chofer" value="{{ old('nombre_chofer') }}"
-                            class="w-full px-4 py-3 mt-2 text-gray-700 border border-gray-300 rounded-lg bg-gray-50 focus:border-indigo-500 focus:ring focus:ring-indigo-200"
+                            class="w-full mt-2 rounded-lg border border-gray-300 bg-gray-50 py-3 px-4 text-gray-700 focus:border-indigo-500 focus:ring focus:ring-indigo-200"
                             placeholder="Ingresa el nombre del conductor" title="Ingresa el nombre del chofer" />
                         </div>
 
@@ -66,7 +72,8 @@
                     <!-- Calendario -->
                     <div class="mt-6">
                         <h3 class="text-lg font-semibold text-gray-800">Disponibilidad del Vehículo</h3>
-                        <div id="calendar" class="p-3 mt-3 rounded-md shadow-xs"></div> 
+                        <div class="mt-3 rounded-md shadow-sm p-3"></div>
+                        <div id="calendar" class="mt-3 rounded-md shadow-sm p-3"></div> 
 
                     </div>
 
@@ -184,7 +191,6 @@
                 locale: 'es',
                 slotMinTime: "06:00:00",
                 slotMaxTime: "22:00:00",
-                // slotDuration: "00:10:00",
                 slotLabelFormat: {
                     hour: '2-digit',
                     minute: '2-digit',

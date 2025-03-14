@@ -114,6 +114,14 @@
                     </div>
 
                     <div class="p-6 bg-transparent rounded-lg shadow-sm">
+                        <p class="text-lg font-semibold text-gray-800">Licencia:</p>
+                        <p class="text-gray-600">
+                            {{ $usuario->num_licencia ?? 'No tiene licencia' }}
+                        </p>
+                    </div>
+                   
+
+                    <div class="p-6 bg-transparent rounded-lg shadow-sm">
                         <p class="text-lg font-semibold text-gray-800">Rol Asignado:</p>
                         <p class="text-gray-600">{{ $usuario->rol }}</p>
                     </div>
