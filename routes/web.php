@@ -116,7 +116,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/perfil', [PerfilController::class, 'index'])->name('perfil.user');
         Route::put('/perfil/{id}', [PerfilController::class, 'update'])->name('perfil.update');
         Route::post('/perfil/{id}/foto', [PerfilController::class, 'updateFoto'])->name('perfil.update.foto');
-        Route::get('/usuario/{id}', [AutorizanteController::class, 'show'])->name('usuario.show');
+        Route::get('/solicitud/{id}', [AutorizanteController::class, 'show'])->name('usuario.show');
     });
 
     // Rutas comunes para Administrador y Moderador
