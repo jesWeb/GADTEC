@@ -2,16 +2,42 @@
 
 @section('body')
     <div class="px-6 py-4">
+        <!-- Mapa de sitio -->
+        <div class="flex justify-end mt-2 mb-6">
+            <nav class="text-sm text-gray-600">
+                <ul class="flex items-center space-x-4">
+                    <li>
+                        <a href="{{ route('user.dashboard') }}" class="flex items-center text-gray-700 hover:text-gray-900">
+                            <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <g id="iconCarrier">
+                                    <!-- Documento -->
+                                    <rect x="6" y="3" width="12" height="18" rx="2" stroke="currentColor">
+                                    </rect>
+                                    <path d="M9 7H15" stroke="currentColor"></path>
+                                    <path d="M9 11H15" stroke="currentColor"></path>
+                                    <path d="M9 15H13" stroke="currentColor"></path>
+                                    <!-- Usuario -->
+                                    <circle cx="17" cy="17" r="3" stroke="currentColor"></circle>
+                                    <path d="M17 20V21" stroke="currentColor"></path>
+                                    <path d="M17 14V15" stroke="currentColor"></path>
+                                </g>
+                            </svg>
+                            Mis solicitudes
+                        </a>
+                    </li>
+                    <p class="text-gray-500">/</p>
+                    <li>
+                        <span class="text-gray-800 font-semibold">Solicitar Prestamo</span>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
         <div class="mt-8">
             <div class="p-6 bg-white rounded-xl shadow-xl">
                 <h2 class="text-2xl font-bold text-gray-800">Solicitud de Vehículo</h2>
-                @if(session('error'))
-                <div class="bg-red-500 text-white p-2 rounded">
-                    {{ session('error') }}
-                </div>
-            @endif
-
-            
                 <form id="solicitudForm" action="{{ route('solicitudes.store') }}" method="POST" class="mt-4">
                     @csrf
 
@@ -63,8 +89,8 @@
                                 Nombre del Conductor
                             </label>
                             <input type="text" id="nombre_chofer" name="nombre_chofer" value="{{ old('nombre_chofer') }}"
-                            class="w-full mt-2 rounded-lg border border-gray-300 bg-gray-50 py-3 px-4 text-gray-700 focus:border-indigo-500 focus:ring focus:ring-indigo-200"
-                            placeholder="Ingresa el nombre del conductor" title="Ingresa el nombre del chofer" />
+                                class="w-full mt-2 rounded-lg border border-gray-300 bg-gray-50 py-3 px-4 text-gray-700 focus:border-indigo-500 focus:ring focus:ring-indigo-200"
+                                placeholder="Ingresa el nombre del conductor" title="Ingresa el nombre del chofer" />
                         </div>
 
                     </div>
@@ -72,25 +98,25 @@
                     <!-- Calendario -->
                     <div class="mt-6">
                         <h3 class="text-lg font-semibold text-gray-800">Disponibilidad del Vehículo</h3>
-                        <div class="mt-3 rounded-md shadow-sm p-3"></div>
-                        <div id="calendar" class="mt-3 rounded-md shadow-sm p-3"></div> 
+                        <div id="calendar" class="mt-3 rounded-md shadow-sm p-3"></div>
 
                     </div>
 
-                     <input type="hidden" name="fecha_salida" id="fecha_salida">
-                            <input type="hidden" name="hora_salida" id="hora_salida">
+                    <input type="hidden" name="fecha_salida" id="fecha_salida">
+                    <input type="hidden" name="hora_salida" id="hora_salida">
 
-                            <div class="flex justify-end mt-8 space-x-4">
-                                <a href="#"
-                                    class="px-5 py-3 text-gray-700 bg-gray-200 rounded-lg shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">Cancelar</a>
-                                <button type="submit"
-                                    class="px-5 py-3 text-white bg-indigo-600 rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">Registrar</button>
-                            </div> 
+                    <div class="flex justify-end mt-8 space-x-4">
+                        <a href="#"
+                            class="px-5 py-3 text-gray-700 bg-gray-200 rounded-lg shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">Cancelar</a>
+                        <button type="submit"
+                            class="px-5 py-3 text-white bg-indigo-600 rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">Registrar</button>
+                    </div>
                 </form>
             </div>
+          
         </div>
     </div>
-
+    
     <!-- Scripts de FullCalendar -->
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet">
     <style>
@@ -99,15 +125,18 @@
             background: white;
             border-radius: 10px;
             padding: 15px;
+            max-width: 100%;
+            height: 400px;
+            font-size: 12px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
-        /* Estilos para la cabecera */
         .fc-toolbar-title {
-            font-size: 1.5rem;
             font-weight: bold;
             text-align: center;
             color: #18177a;
+            font-size: 1.2rem !important;
+
         }
 
         .fc-toolbar-title {
@@ -118,17 +147,26 @@
             text-transform: capitalize !important;
         }
 
+        .fc-daygrid-day-number {
+            font-size: 10px !important;
+        }
 
-        /* Botones modernos */
+
         .fc-button {
             background-color: #4f46e5 !important;
             border: none !important;
             color: white !important;
             border-radius: 6px !important;
-            padding: 6px 12px !important;
-            font-size: 14px;
+            padding: 4px 8px !important;
+            font-size: 12px;
             margin: 5px !important;
 
+        }
+
+        #confirmModal {
+            z-index: 1050 !important;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
         }
 
         .fc-button:hover {
@@ -136,7 +174,6 @@
         }
 
 
-        /* Estilos mejorados para eventos */
         .event-blue {
             background-color: rgba(93, 115, 241, 0.63) !important;
             color: #3f1cdb !important;
@@ -149,7 +186,6 @@
             background-color: rgba(238, 22, 22, 0.5) !important;
             color: #ec1313 !important;
             border: none !important;
-            /* Asegura que no haya bordes */
             border-radius: 6px !important;
             padding: 6px !important;
             font-size: 11px;
@@ -159,23 +195,30 @@
             border-top: none !important;
         }
 
-        /* Estilización de la cuadrícula */
         .fc-timegrid-slot {
             height: 50px !important;
             background-color: #ffff !important;
             border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
         }
 
-        /* Fondo gris para los días con eventos */
-        .fc-daygrid-day.fc-day-today {
-            background-color: #ecf0f8 !important;
-            /* Gris claro */
+        .fc-event {
+            font-size: 10px !important;
+            padding: 3px !important;
         }
 
-        /* Asegurar que el texto siga siendo legible */
+        .fc-daygrid-day {
+            min-height: 50px !important;
+        }
+
+        .fc-daygrid-day.fc-day-today {
+            background-color: #ecf0f8 !important;
+            
+        }
+
+      
         .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
             color: #111827 !important;
-            /* Gris oscuro para contraste */
+           
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
@@ -190,16 +233,16 @@
                 initialView: 'timeGridWeek',
                 locale: 'es',
                 slotMinTime: "06:00:00",
-                slotMaxTime: "22:00:00",
+                slotMaxTime: "23:00:00",
                 slotLabelFormat: {
                     hour: '2-digit',
                     minute: '2-digit',
-                    meridiem: 'short' // AM/PM en las franjas horarias
+                    meridiem: 'short' 
                 },
                 eventTimeFormat: {
                     hour: '2-digit',
                     minute: '2-digit',
-                    meridiem: 'short' // AM/PM en los eventos
+                    meridiem: 'short' 
                 },
                 selectable: true,
                 headerToolbar: {
@@ -208,11 +251,11 @@
                     right: 'dayGridMonth,timeGridWeek,timeGridDay'
                 },
                 columnHeaderFormat: {
-                    weekday: 'long' // Se mantendrá en minúsculas por defecto
+                    weekday: 'long' 
                 },
                 titleFormat: {
                     year: 'numeric',
-                    month: 'long' // Cambia el formato para que los meses comiencen con mayúscula
+                    month: 'long' 
                 },
                 buttonText: {
                     today: 'Hoy',
