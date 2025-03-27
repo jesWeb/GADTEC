@@ -20,7 +20,9 @@ class AutorizanteController extends Controller
             ->join('automoviles', 'asignacions.id_automovil', '=', 'automoviles.id_automovil')
             ->select('asignacions.id_asignacion', 'asignacions.motivo', 'asignacions.lugar', 
                      'asignacions.fecha_salida', 'asignacions.hora_salida', 'asignacions.estatus', 
-                     'automoviles.marca', 'automoviles.modelo', 'automoviles.submarca');
+                     'automoviles.marca', 'automoviles.modelo', 'automoviles.submarca')
+                     ->orderBy('asignacions.id_asignacion', 'desc'); 
+                    
 
         if ($request->has('search') && $request->input('search') != '') {
             $search = $request->input('search');

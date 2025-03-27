@@ -162,16 +162,15 @@
                                         Tipo de combustible</label>
                                     <select name="tipo_combustible" title="Actualizar el tipo de combustible del vehículo"
                                         class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                                        <option value="Gasolina" {{ old('tipo_combustible') == 'Gasolina' ? 'selected' : '' }}>
+                                        <option value="Gasolina" {{ old('tipo_combustible', $EddCar->tipo_combustible) == 'Gasolina' ? 'selected' : '' }}>
                                             Gasolina
                                         </option>
-                                        <option value="Diésel" {{ old('tipo_combustible') == 'Diésel' ? 'selected' : '' }}>
+                                        <option value="Diésel" {{ old('tipo_combustible', $EddCar->tipo_combustible) == 'Diésel' ? 'selected' : '' }}>
                                             Diésel
                                         </option>
-                                        <option value="Eléctrico" {{ old('tipo_combustible') == 'Eléctrico' ? 'selected' : '' }}>
-                                            Diésel
+                                        <option value="Eléctrico" {{ old('tipo_combustible', $EddCar->tipo_combustible) == 'Eléctrico' ? 'selected' : '' }}>
+                                            Eléctrico
                                         </option>
-
                                     </select>
                                 </div>
                             </div>

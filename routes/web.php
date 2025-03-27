@@ -107,7 +107,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/vigilante/{id}', [VigilanteController::class, 'show'])->name('vigilante.show');
     });
 
-   // Rutas para el Usuario
+    // Rutas para el Usuario
     Route::middleware('role:Usuario')->group(function () {
         // Dashboard del Usuario
         Route::get('/TusSolicitudes', [AutorizanteController::class, 'index'])->name('user.dashboard');
@@ -115,8 +115,10 @@ Route::middleware('auth')->group(function () {
         Route::post('/solicitudes', [SolicitudesController::class, 'store'])->name('solicitudes.store');
         Route::get('/perfil', [PerfilController::class, 'index'])->name('perfil.user');
         Route::put('/perfil/{id}', [PerfilController::class, 'update'])->name('perfil.update');
-        Route::post('/perfil/{id}/foto', [PerfilController::class, 'updateFoto'])->name('perfil.update.foto');
-        Route::get('/solicitud/{id}', [AutorizanteController::class, 'show'])->name('usuario.show');
+        Route::get('/usuario/{id}', [AutorizanteController::class, 'show'])->name('usuario.show');
+        Route::delete('/perfil/{id}/eliminar-foto', [PerfilController::class, 'eliminarFoto'])->name('perfil.eliminarFoto');
+
+
     });
 
     // Rutas comunes para Administrador y Moderador

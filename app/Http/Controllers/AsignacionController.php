@@ -43,7 +43,9 @@ class AsignacionController extends Controller
             });
         }
     
-        $reservacion = $reservacion->paginate(10)->appends($request->query()); 
+        $reservacion = $reservacion->orderBy('asignacions.fecha_salida', 'desc')
+            ->paginate(10)
+            ->appends($request->query());
     
         return view('catalogos.asignacion.index', compact('reservacion'));
     }

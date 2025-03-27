@@ -45,7 +45,7 @@ class SolicitudesController extends Controller
          $usuario = Auth::user(); 
      
          // Validar datos
-         $request->validate([
+        $request->validate([
              'id_automovil' => 'required|exists:automoviles,id_automovil',
              'motivo' => 'required|string|max:255',
              'lugar' => 'required|string|max:255',
@@ -53,8 +53,13 @@ class SolicitudesController extends Controller
              'hora_salida' => 'required',
              'requierechofer' => 'nullable|boolean',
              'nombre_chofer' => 'nullable|string|max:255',
-         ]);
+        ]);
    
+        // Verificar si el usuario tiene licencia 
+        if (!$request->has('requierechofer') && empty($usuario->num_licencia)) {
+            return redirect()->back()->with('error', "Para solicitar un vehículo sin chofer, debes registrar tu licencia.\nSi ya cuentas con una, por favor agrégala a tu perfil.");
+        }
+     
      
          // Crear la asignación
          asignacion::create([

@@ -38,6 +38,39 @@
         <div class="mt-8">
             <div class="p-6 bg-white rounded-xl shadow-xl">
                 <h2 class="text-2xl font-bold text-gray-800">Solicitud de Vehículo</h2>
+                @if (session('error'))
+                    <div id="errorModal"
+                        class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50 hidden">
+                        <div class="bg-white p-4 rounded-lg shadow-lg">
+                            <h2 class="text-2xl font-bold text-red-600">¡Error!</h2>
+                            <p class="mt-2 text-gray-800">{!! nl2br(e(session('error'))) !!}</p>
+                            <div class="flex justify-center pt-2">
+                                <button onclick="cerrarModal()"
+                                    class="w-full py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+                                    Cerrar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
+                <script>
+                    function cerrarModal() {
+                        document.getElementById('errorModal').classList.add('hidden');
+                    }
+
+                    document.addEventListener("DOMContentLoaded", function() {
+                        let modal = document.getElementById('errorModal');
+                        if (modal.querySelector('p').innerText.trim() !== '') {
+                            modal.classList.remove('hidden');
+                        }
+                    });
+                </script>
+
+
+                <div id="messageContainer"></div>
+
+
                 <form id="solicitudForm" action="{{ route('solicitudes.store') }}" method="POST" class="mt-4">
                     @csrf
 
@@ -113,10 +146,67 @@
                     </div>
                 </form>
             </div>
-          
+            <!-- Modal de Confirmación -->
+            <div id="confirmModal"
+                class="fixed inset-0 flex items-center justify-center hidden bg-gray-900 bg-opacity-50">
+                <div class="bg-white p-6 rounded-lg shadow-xl w-96">
+                    <h3 class="text-lg font-semibold text-gray-800">Confirmación</h3>
+                    <p class="mt-2 text-gray-600">¿Estás seguro de que los datos ingresados son correctos?</p>
+                    <div class="flex justify-end mt-4">
+                        <button onclick="closeModal()"
+                            class="px-4 py-2 mr-2 text-gray-700 bg-gray-200 rounded-lg">Cancelar</button>
+                        <button id="confirmButton"
+                            class="px-4 py-2 text-white bg-indigo-600 rounded-lg">Confirmar</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const form = document.getElementById("solicitudForm");
+            const modal = document.getElementById("confirmModal");
+            const confirmButton = document.getElementById("confirmButton");
+
+            form.addEventListener("submit", function(event) {
+                event.preventDefault();
+                document.getElementById("calendar").style.display = "none"; // Oculta el calendario
+                modal.classList.remove("hidden");
+            });
+
+            confirmButton.addEventListener("click", function() {
+                modal.classList.add("hidden");
+                document.getElementById("calendar").style.display =
+                "block"; // Muestra el calendario nuevamente
+
+                form.submit();
+            });
+        });
+
+        function closeModal() {
+            document.getElementById("confirmModal").classList.add("hidden");
+            localStorage.setItem("cancelMessage", "Solicitud cancelada");
+            location.reload();
+        }
+
+        window.onload = function() {
+            let message = localStorage.getItem("cancelMessage");
+            if (message) {
+                let messageContainer = document.getElementById("messageContainer");
+
+                if (messageContainer) {
+                    messageContainer.innerHTML = `
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                    <strong class="font-bold">¡Atención!</strong>
+                    <span class="block sm:inline"> ${message} </span>
+                </div>
+            `;
+                }
+
+                localStorage.removeItem("cancelMessage"); 
+            }
+        };
+    </script>
     <!-- Scripts de FullCalendar -->
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet">
     <style>
@@ -212,13 +302,10 @@
 
         .fc-daygrid-day.fc-day-today {
             background-color: #ecf0f8 !important;
-            
         }
 
-      
         .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
             color: #111827 !important;
-           
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
