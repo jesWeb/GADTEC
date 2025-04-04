@@ -40,8 +40,8 @@ class SolicitudVehiculoMailable extends Mailable
             'vehiculo' => $this->asignacion->automovil->modelo,
             'marca' => $this->asignacion->automovil->marca,
             'motivo' => $this->asignacion->motivo,
-            'fecha_salida' => $this->asignacion->fecha_salida,
-            'hora_salida' => $this->asignacion->hora_salida,
+            'fecha_salida' => date('d-m-Y', strtotime($this->asignacion->fecha_salida)), 
+            'hora_salida' => date('H:i', strtotime($this->asignacion->hora_salida)),     
         ]);
     }
 }
