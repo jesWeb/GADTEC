@@ -25,7 +25,9 @@ class AsignacionController extends Controller
         ->join('usuarios', 'asignacions.id_usuario', '=', 'usuarios.id_usuario')
         ->join('automoviles', 'asignacions.id_automovil', '=', 'automoviles.id_automovil')
         ->leftJoin('check_ins', 'check_ins.id_asignacion', '=', 'asignacions.id_asignacion')
-        ->whereNull('asignacions.deleted_at');
+        ->whereNull('asignacions.deleted_at')
+        ->orderBy('asignacions.id_asignacion', 'asc');  
+
     
         // Busqueda
         if ($request->has('search') && $request->input('search') != '') {

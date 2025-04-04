@@ -68,7 +68,7 @@
                     <tbody class="divide-y divide-gray-100">
                     @foreach($reservacion as $key => $reserv)
                             <tr class="hover:bg-gray-50">
-                            	<td class="px-4 py-2 border">{{ $key + 1 }}</td>
+                            	<td class="px-4 py-2 border">{{ $reserv->id_asignacion }}</td>
                             	<td class="px-4 py-2 border">
                             	{{ $reserv->automovil }}
                                 </td>

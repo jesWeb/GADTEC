@@ -23,6 +23,7 @@ use App\Http\Controllers\SolicitudesController;
 use App\Http\Controllers\ConsumeController;
 use App\Http\Controllers\PerfilController;
 
+
 // Rutas de autenticación
 Route::get('/', function () {
     return view('auth.login');
@@ -132,4 +133,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/gestion', [GestionController::class, 'index'])->name('Gestion');
 
     });
+
+   
+
 });

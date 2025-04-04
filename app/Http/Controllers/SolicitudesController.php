@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\asignacion;
 use App\Models\Automoviles;
-use App\Models\Usuarios; 
+use Illuminate\Support\Facades\Mail;
+use App\Models\Usuarios;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\SolicitudVehiculoMailable;
 
 
 
@@ -38,46 +40,56 @@ class SolicitudesController extends Controller
     
      public function store(Request $request)
      {
-         if (!Auth::check()) {
-             return redirect()->route('login')->with('error', 'Debes iniciar sesión para solicitar un vehículo.');
-         }
+            if (!Auth::check()) {
+                return redirect()->route('login')->with('error', 'Debes iniciar sesión para solicitar un vehículo.');
+            }
+        
+            $usuario = Auth::user(); 
+        
+            // Validar datos
+            $request->validate([
+                'id_automovil' => 'required|exists:automoviles,id_automovil',
+                'motivo' => 'required|string|max:255',
+                'lugar' => 'required|string|max:255',
+                'fecha_salida' => 'required|date',
+                'hora_salida' => 'required',
+                'requierechofer' => 'nullable|boolean',
+                'nombre_chofer' => 'nullable|string|max:255',
+            ]);
      
-         $usuario = Auth::user(); 
+            // Verificar si el usuario tiene licencia cuando no requiere chofer
+            if ($request->input('requierechofer') == 0 && empty($usuario->num_licencia)) {
+                return redirect()->back()->with('error', "Para solicitar un vehículo sin chofer, debes registrar tu licencia.\nSi ya cuentas con una, por favor agrégala a tu perfil.");
+            }
      
-         // Validar datos
-        $request->validate([
-             'id_automovil' => 'required|exists:automoviles,id_automovil',
-             'motivo' => 'required|string|max:255',
-             'lugar' => 'required|string|max:255',
-             'fecha_salida' => 'required|date',
-             'hora_salida' => 'required',
-             'requierechofer' => 'nullable|boolean',
-             'nombre_chofer' => 'nullable|string|max:255',
-        ]);
-   
-        // Verificar si el usuario tiene licencia 
-        if (!$request->has('requierechofer') && empty($usuario->num_licencia)) {
-            return redirect()->back()->with('error', "Para solicitar un vehículo sin chofer, debes registrar tu licencia.\nSi ya cuentas con una, por favor agrégala a tu perfil.");
-        }
-     
-     
-         // Crear la asignación
-         asignacion::create([
-             'id_automovil' => $request->id_automovil,
-             'id_usuario' => Auth::user()->id_usuario,
-             'motivo' => $request->motivo,
-             'lugar' => $request->lugar,
-             'fecha_salida' => $request->fecha_salida,
-             'hora_salida' => $request->hora_salida,
-             'requierechofer' => $request->has('requierechofer') ? 1 : 0,
-             'nombre_chofer' => $request->requierechofer ? $request->nombre_chofer : null,
-             'no_licencia' => $usuario->num_licencia, 
-             'estatus' => 'Reservado',
-         ]);
+            // Crear la asignación
+            $asignacion = asignacion::create([
+                'id_automovil' => $request->id_automovil,
+                'id_usuario' => Auth::user()->id_usuario, 
+                'motivo' => $request->motivo,
+                'lugar' => $request->lugar,
+                'fecha_salida' => $request->fecha_salida,
+                'hora_salida' => $request->hora_salida,
+                'requierechofer' => $request->has('requierechofer') ? 1 : 0,
+                'nombre_chofer' => $request->requierechofer ? $request->nombre_chofer : null,
+                'no_licencia' => $usuario->num_licencia, 
+                'estatus' => 'Reservado',
+            ]);
+        
+         
+       
+         
+            $admin = Usuarios::where('rol', 'Administrador')->first();
+
+            if ($admin) {
+                $asignacion->load(['usuarios', 'automovil']); 
+                Mail::to($admin->email)->send(new SolicitudVehiculoMailable($asignacion));
+            }
+
      
          return redirect()->route('user.dashboard')->with('mensaje', 'Solicitud registrada correctamente');
-        }
-
+     }
+     
     
     /**
      * Display the specified resource.
