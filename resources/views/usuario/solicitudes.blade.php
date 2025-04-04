@@ -67,10 +67,7 @@
                     });
                 </script>
 
-
-                <div id="messageContainer"></div>
-
-
+                <!-- Formulario -->
                 <form id="solicitudForm" action="{{ route('solicitudes.store') }}" method="POST" class="mt-4">
                     @csrf
 
@@ -125,14 +122,12 @@
                                 class="w-full mt-2 rounded-lg border border-gray-300 bg-gray-50 py-3 px-4 text-gray-700 focus:border-indigo-500 focus:ring focus:ring-indigo-200"
                                 placeholder="Ingresa el nombre del conductor" title="Ingresa el nombre del chofer" />
                         </div>
-
                     </div>
 
                     <!-- Calendario -->
                     <div class="mt-6">
                         <h3 class="text-lg font-semibold text-gray-800">Disponibilidad del Vehículo</h3>
                         <div id="calendar" class="mt-3 rounded-md shadow-sm p-3"></div>
-
                     </div>
 
                     <input type="hidden" name="fecha_salida" id="fecha_salida">
@@ -141,72 +136,95 @@
                     <div class="flex justify-end mt-8 space-x-4">
                         <a href="#"
                             class="px-5 py-3 text-gray-700 bg-gray-200 rounded-lg shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">Cancelar</a>
-                        <button type="submit"
+                        <button type="button" id="submitBtn"
                             class="px-5 py-3 text-white bg-indigo-600 rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">Registrar</button>
                     </div>
                 </form>
             </div>
-            <!-- Modal de Confirmación -->
-            <div id="confirmModal"
-                class="fixed inset-0 flex items-center justify-center hidden bg-gray-900 bg-opacity-50">
-                <div class="bg-white p-6 rounded-lg shadow-xl w-96">
-                    <h3 class="text-lg font-semibold text-gray-800">Confirmación</h3>
-                    <p class="mt-2 text-gray-600">¿Estás seguro de que los datos ingresados son correctos?</p>
-                    <div class="flex justify-end mt-4">
-                        <button onclick="closeModal()"
-                            class="px-4 py-2 mr-2 text-gray-700 bg-gray-200 rounded-lg">Cancelar</button>
-                        <button id="confirmButton"
-                            class="px-4 py-2 text-white bg-indigo-600 rounded-lg">Confirmar</button>
-                    </div>
-                </div>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmación -->
+    <div id="confirmModal" class="fixed inset-0 flex items-center justify-center hidden bg-gray-900 bg-opacity-50">
+        <div class="bg-white p-6 rounded-lg shadow-xl w-96">
+            <h2 class="text-2xl font-bold text-gray-800">Confirmación de Solicitud</h2>
+            <p class="mt-2 text-gray-600">¿Estás seguro de que los datos ingresados son correctos?</p>
+            <p id="confirmSummary" class="mt-4 text-gray-700"></p>
+            <div class="flex justify-end space-x-4 mt-4">
+                <button onclick="closeConfirmModal()" class="px-4 py-2 mr-2 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300">Cancelar</button>
+                <button id="confirmButton" onclick="confirmAndSubmit()"
+                class="px-4 py-2 text-white bg-indigo-600 rounded-lg hover:bg-indigo-700">Confirmar</button>
             </div>
         </div>
     </div>
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const form = document.getElementById("solicitudForm");
-            const modal = document.getElementById("confirmModal");
-            const confirmButton = document.getElementById("confirmButton");
-
-            form.addEventListener("submit", function(event) {
-                event.preventDefault();
-                document.getElementById("calendar").style.display = "none"; // Oculta el calendario
-                modal.classList.remove("hidden");
-            });
-
-            confirmButton.addEventListener("click", function() {
-                modal.classList.add("hidden");
-                document.getElementById("calendar").style.display =
-                "block"; // Muestra el calendario nuevamente
-
-                form.submit();
-            });
-        });
-
-        function closeModal() {
-            document.getElementById("confirmModal").classList.add("hidden");
-            localStorage.setItem("cancelMessage", "Solicitud cancelada");
-            location.reload();
-        }
-
-        window.onload = function() {
-            let message = localStorage.getItem("cancelMessage");
-            if (message) {
-                let messageContainer = document.getElementById("messageContainer");
-
-                if (messageContainer) {
-                    messageContainer.innerHTML = `
-                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                    <strong class="font-bold">¡Atención!</strong>
-                    <span class="block sm:inline"> ${message} </span>
-                </div>
-            `;
-                }
-
-                localStorage.removeItem("cancelMessage"); 
+            const submitButton = document.getElementById("submitBtn");
+            const confirmModal = document.getElementById("confirmModal");
+            const confirmButtonModal = document.getElementById("confirmButton");
+            const confirmSummary = document.getElementById("confirmSummary");
+    
+            // Utilizar el calendario en formato de día, mes y año (DD/MM/YYYY)
+            const dateInput = document.getElementById("fecha_salida");
+            const timeInput = document.getElementById("hora_salida");
+    
+            // Formatear la fecha en formato DD/MM/YYYY
+            function formatDate(date) {
+                let d = new Date(date);
+                let day = ("0" + d.getDate()).slice(-2); // Día con dos dígitos
+                let month = ("0" + (d.getMonth() + 1)).slice(-2); // Mes con dos dígitos
+                let year = d.getFullYear(); // Año
+                return `${day}/${month}/${year}`;
             }
-        };
+    
+            // Formatear la hora en formato de 12 horas (hh:mm AM/PM)
+            function formatTime(date) {
+                let hours = date.getHours();
+                let minutes = ("0" + date.getMinutes()).slice(-2);
+                let ampm = hours >= 12 ? "PM" : "AM";
+                hours = hours % 12;
+                hours = hours ? hours : 12; // La hora 0 es 12 AM
+                return `${hours}:${minutes} ${ampm}`;
+            }
+    
+            // Evento para capturar la fecha y hora seleccionadas
+            submitButton.addEventListener("click", function() {
+                // Obtener los datos del formulario
+                const vehiculo = document.getElementById("vehiculo").options[document.getElementById("vehiculo").selectedIndex].text;
+                const motivo = document.getElementById("motivo").value;
+                const lugar = document.getElementById("lugar").value;
+                const fechaSalida = document.getElementById("fecha_salida").value;
+                const horaSalida = document.getElementById("hora_salida").value;
+    
+                // Convertir la fecha seleccionada a un formato adecuado
+                let formattedDate = formatDate(fechaSalida);
+                let formattedTime = formatTime(new Date(`1970-01-01T${horaSalida}:00`));
+    
+                // Actualizar el contenido del modal con toda la información formateada
+                confirmSummary.innerHTML = `
+                    <strong>Vehículo:</strong> ${vehiculo} <br>
+                    <strong>Motivo:</strong> ${motivo} <br>
+                    <strong>Lugar:</strong> ${lugar} <br>
+                    <strong>Fecha y Hora de Salida:</strong> ${formattedDate} ${formattedTime} <br>
+                `;
+                confirmModal.classList.remove('hidden');
+            });
+    
+            // Confirmar y enviar el formulario
+            window.confirmAndSubmit = function() {
+                form.submit();
+            };
+    
+            // Función para cerrar el modal de confirmación
+            function closeConfirmModal() {
+                confirmModal.classList.add('hidden');
+            }
+        });
     </script>
+    
+
     <!-- Scripts de FullCalendar -->
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet">
     <style>
@@ -324,12 +342,12 @@
                 slotLabelFormat: {
                     hour: '2-digit',
                     minute: '2-digit',
-                    meridiem: 'short' 
+                    meridiem: 'short'
                 },
                 eventTimeFormat: {
                     hour: '2-digit',
                     minute: '2-digit',
-                    meridiem: 'short' 
+                    meridiem: 'short'
                 },
                 selectable: true,
                 headerToolbar: {
@@ -338,11 +356,11 @@
                     right: 'dayGridMonth,timeGridWeek,timeGridDay'
                 },
                 columnHeaderFormat: {
-                    weekday: 'long' 
+                    weekday: 'long'
                 },
                 titleFormat: {
                     year: 'numeric',
-                    month: 'long' 
+                    month: 'long'
                 },
                 buttonText: {
                     today: 'Hoy',
@@ -352,9 +370,16 @@
                     list: 'Lista'
                 },
                 select: function(info) {
-                    fechaSalida.value = info.startStr.split("T")[0];
-                    horaSalida.value = info.startStr.split("T")[1].substring(0, 5);
-                    alert(`Seleccionaste: ${info.startStr}`);
+                    // Obtener fecha y hora seleccionadas
+                    const selectedDate = info.startStr.split("T")[0]; // Fecha
+                    const selectedTime = info.startStr.split("T")[1].substring(0, 5); // Hora (HH:mm)
+
+                    // Asignar los valores a los campos ocultos
+                    fechaSalida.value = selectedDate;
+                    horaSalida.value = selectedTime;
+
+                    // Mostrar el valor en el modal (puedes ponerlo en el alert si es para depuración)
+                    alert(`Fecha: ${selectedDate}, Hora: ${selectedTime}`);
                 },
                 events: function(fetchInfo, successCallback, failureCallback) {
                     let id_automovil = vehiculoSelect.value;
