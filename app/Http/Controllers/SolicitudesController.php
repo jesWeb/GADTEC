@@ -20,7 +20,7 @@ class SolicitudesController extends Controller
 
     public function index()
     {
-        $vehiculos = Automoviles::all(); 
+        $vehiculos = Automoviles::where('uso', 'Empresarial')->get();
         return view('usuario.solicitudes', compact('vehiculos'));
     }
 
@@ -76,8 +76,6 @@ class SolicitudesController extends Controller
                 'estatus' => 'Reservado',
             ]);
         
-         
-       
          
             $admin = Usuarios::where('rol', 'Administrador')->first();
 

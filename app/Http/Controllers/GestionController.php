@@ -137,12 +137,13 @@ class GestionController extends Controller
             che.km_llegada AS kilometraje,
             che.combustible_llegada AS combustible,
             asi.estatus
-            AND asi.deleted_at IS NULL
         FROM automoviles AS aut
         INNER JOIN asignacions AS asi ON aut.id_automovil = asi.id_automovil
         INNER JOIN check_ins AS che ON asi.id_asignacion = che.id_asignacion
         INNER JOIN usuarios AS usu ON asi.id_usuario = usu.id_usuario
-        WHERE aut.id_automovil = $id");
+        WHERE aut.id_automovil = $id
+        AND asi.deleted_at IS NULL;
+        ");
 
         $auto = \DB::select("SELECT CONCAT(aut.marca, ' ', aut.submarca, ' ', aut.modelo)
         AS automovil

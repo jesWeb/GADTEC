@@ -80,7 +80,8 @@
                                                 <span
                                                     class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium
                                                         {{ $salidas->estatus == 'Reservado' ? 'bg-orange-100 text-orange-400' : ($salidas->estatus == 'Ocupado' ? 'bg-red-100 text-red-800' : '') }}">
-                                                    {{ $salidas->estatus }}
+                                                        {{ $salidas->estatus }}
+
                                                 </span>
                                             </td>
                                         </tr>

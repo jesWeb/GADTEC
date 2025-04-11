@@ -38,6 +38,10 @@
         <div class="mt-8">
             <div class="p-6 bg-white rounded-xl shadow-xl">
                 <h2 class="text-2xl font-bold text-gray-800">Solicitud de Vehículo</h2>
+                <div id="cancelAlert" class="hidden p-4 mb-4 text-sm text-red-800 bg-red-100 rounded-lg" role="alert">
+                    Solicitud cancelada. No se ha registrado ningún cambio.
+                </div>
+
                 @if (session('error'))
                     <div id="errorModal"
                         class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50 hidden">
@@ -151,9 +155,12 @@
             <p class="mt-2 text-gray-600">¿Estás seguro de que los datos ingresados son correctos?</p>
             <p id="confirmSummary" class="mt-4 text-gray-700"></p>
             <div class="flex justify-end space-x-4 mt-4">
-                <button onclick="closeConfirmModal()" class="px-4 py-2 mr-2 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300">Cancelar</button>
+                <a href="javascript:void(0);" onclick="cancelarSolicitud()"
+                    class="px-5 py-3 text-gray-700 bg-gray-200 rounded-lg shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                    Cancelar
+                </a>
                 <button id="confirmButton" onclick="confirmAndSubmit()"
-                class="px-4 py-2 text-white bg-indigo-600 rounded-lg hover:bg-indigo-700">Confirmar</button>
+                    class="px-4 py-2 text-white bg-indigo-600 rounded-lg hover:bg-indigo-700">Confirmar</button>
             </div>
         </div>
     </div>
@@ -165,11 +172,11 @@
             const confirmModal = document.getElementById("confirmModal");
             const confirmButtonModal = document.getElementById("confirmButton");
             const confirmSummary = document.getElementById("confirmSummary");
-    
+
             // Utilizar el calendario en formato de día, mes y año (DD/MM/YYYY)
             const dateInput = document.getElementById("fecha_salida");
             const timeInput = document.getElementById("hora_salida");
-    
+
             // Formatear la fecha en formato DD/MM/YYYY
             function formatDate(date) {
                 let d = new Date(date);
@@ -178,7 +185,7 @@
                 let year = d.getFullYear(); // Año
                 return `${day}/${month}/${year}`;
             }
-    
+
             // Formatear la hora en formato de 12 horas (hh:mm AM/PM)
             function formatTime(date) {
                 let hours = date.getHours();
@@ -188,20 +195,21 @@
                 hours = hours ? hours : 12; // La hora 0 es 12 AM
                 return `${hours}:${minutes} ${ampm}`;
             }
-    
+
             // Evento para capturar la fecha y hora seleccionadas
             submitButton.addEventListener("click", function() {
                 // Obtener los datos del formulario
-                const vehiculo = document.getElementById("vehiculo").options[document.getElementById("vehiculo").selectedIndex].text;
+                const vehiculo = document.getElementById("vehiculo").options[document.getElementById(
+                    "vehiculo").selectedIndex].text;
                 const motivo = document.getElementById("motivo").value;
                 const lugar = document.getElementById("lugar").value;
                 const fechaSalida = document.getElementById("fecha_salida").value;
                 const horaSalida = document.getElementById("hora_salida").value;
-    
+
                 // Convertir la fecha seleccionada a un formato adecuado
                 let formattedDate = formatDate(fechaSalida);
                 let formattedTime = formatTime(new Date(`1970-01-01T${horaSalida}:00`));
-    
+
                 // Actualizar el contenido del modal con toda la información formateada
                 confirmSummary.innerHTML = `
                     <strong>Vehículo:</strong> ${vehiculo} <br>
@@ -211,19 +219,40 @@
                 `;
                 confirmModal.classList.remove('hidden');
             });
-    
+
             // Confirmar y enviar el formulario
             window.confirmAndSubmit = function() {
                 form.submit();
             };
-    
-            // Función para cerrar el modal de confirmación
-            function closeConfirmModal() {
-                confirmModal.classList.add('hidden');
-            }
+
+            // Fuera del DOMContentLoaded
+            window.closeConfirmModal = function() {
+                document.getElementById('confirmModal').classList.add('hidden');
+            };
+
+            window.cancelarSolicitud = function() {
+                document.getElementById("solicitudForm").reset();
+
+                // Ocultar el input del chofer si estaba visible
+                document.getElementById("choferInput").classList.add("hidden");
+
+                // También puedes limpiar los campos ocultos si es necesario
+                document.getElementById("fecha_salida").value = "";
+                document.getElementById("hora_salida").value = "";
+
+                const alertBox = document.getElementById('cancelAlert');
+                alertBox.classList.remove('hidden');
+
+                closeConfirmModal();
+
+                setTimeout(() => {
+                    alertBox.classList.add('hidden');
+                }, 3000);
+            };
+
         });
     </script>
-    
+
 
     <!-- Scripts de FullCalendar -->
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet">
