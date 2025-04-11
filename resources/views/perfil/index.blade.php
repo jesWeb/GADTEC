@@ -29,22 +29,25 @@
                     </label>
 
                     <div class="mt-2 flex gap-3">
-                        <button type="submit" form="perfil-form"  class="inline-flex items-center justify-center w-8 h-8 text-green-600 border border-green-600 rounded hover:bg-green-600 hover:text-white"
-                        title="Guardar">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M3 3V21H21V7L17 3H3ZM5 5H16V9H5V5ZM7 11H17V19H7V11ZM9 13V17H15V13H9Z"></path>
-                        </svg>
+                        <button type="submit" form="perfil-form"
+                            class="inline-flex items-center justify-center w-8 h-8 text-green-600 border border-green-600 rounded hover:bg-green-600 hover:text-white"
+                            title="Guardar">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3 3V21H21V7L17 3H3ZM5 5H16V9H5V5ZM7 11H17V19H7V11ZM9 13V17H15V13H9Z"></path>
+                            </svg>
                         </button>
             </form>
             <form name="borrarFoto" action="{{ route('perfil.eliminarFoto', $usuario->id_usuario) }}" method="POST">
                 @csrf
                 @method('DELETE')
                 <button type="submit"
-                class="inline-flex items-center justify-center w-8 h-8 text-red-600 border border-red-600 rounded hover:bg-red-600 hover:text-white"
-                title="Borrar foto">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M9 3V4H4V6H5V19C5 19.5523 5.44772 20 6 20H18C18.5523 20 19 19.5523 19 19V6H20V4H15V3H9ZM7 6H17V18H7V6ZM9 8V16H11V8H9ZM13 8V16H15V8H13Z"></path>
-                </svg>
+                    class="inline-flex items-center justify-center w-8 h-8 text-red-600 border border-red-600 rounded hover:bg-red-600 hover:text-white"
+                    title="Borrar foto">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M9 3V4H4V6H5V19C5 19.5523 5.44772 20 6 20H18C18.5523 20 19 19.5523 19 19V6H20V4H15V3H9ZM7 6H17V18H7V6ZM9 8V16H11V8H9ZM13 8V16H15V8H13Z">
+                        </path>
+                    </svg>
                 </button>
             </form>
         </div>
@@ -81,7 +84,7 @@
             </div>
             <div>
                 <p class="text-gray-600 font-semibold">Fecha de Nacimiento:</p>
-                <p class="text-gray-800">{{ $usuario->fn }}</p>
+                <p class="text-gray-800">{{ date('d/m/Y', strtotime($usuario->fn)) }}</p>
             </div>
         </div>
     </div>

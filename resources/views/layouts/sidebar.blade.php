@@ -28,103 +28,98 @@
 
         {{-- Enlaces solo para Administrador --}}
         @if (Auth::user()->rol === 'Administrador')
-        {{-- link Gestion --}}
-        <div
-            class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100 dark:text-gray-500">
-            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
-            </svg>
+            {{-- link Gestion --}}
+            <div
+                class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100 dark:text-gray-500">
+                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
+                </svg>
 
-            <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')"
-                title="Ver todas las solicitudes">
-                <span class="mx-4 text-base"> {{ __('Gestión') }}</span>
-            </x-nav-link>
-        </div>
+                <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')" title="Ver todas las solicitudes">
+                    <span class="mx-4 text-base"> {{ __('Gestión') }}</span>
+                </x-nav-link>
+            </div>
 
-        {{-- link Solicitudes --}}
-        <div
-            class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100 dark:text-gray-500">
-            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z" />
-            </svg>
+            {{-- link Solicitudes --}}
+            <div
+                class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100 dark:text-gray-500">
+                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z" />
+                </svg>
 
-            <x-nav-link :href="route('asignacion.index')" :active="request()->routeIs('asignacion.index')"
-                title="Ver todas las solicitudes">
-                {{-- nombre del link --}}
-                <span class="mx-4 text-center"> {{ __('Solicitudes') }}</span>
-            </x-nav-link>
-        </div>
-        {{-- link catálogos --}}
-        <div
-            class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
-            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-            </svg>
+                <x-nav-link :href="route('asignacion.index')" :active="request()->routeIs('asignacion.index')" title="Ver todas las solicitudes">
+                    {{-- nombre del link --}}
+                    <span class="mx-4 text-center"> {{ __('Solicitudes') }}</span>
+                </x-nav-link>
+            </div>
+            {{-- link catálogos --}}
+            <div
+                class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
+                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                </svg>
 
-            <x-nav-link :href="route('catalogos.index')" :active="request()->routeIs('catalogos.index')"
-                title="Ver todos los catálogos">
-                {{-- nombre del link --}}
-                <span class="mx-4"> {{ __('Catálogos') }}</span>
-            </x-nav-link>
-        </div>
-        {{-- link Multas --}}
-        <div
-            class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M8.25 13.5h7.5m-7.5 0a1.5 1.5 0 100-3h7.5a1.5 1.5 0 100 3m-7.5 0v3m7.5-3v3M6.75 21h10.5M4.5 4.5l3.75 3.75M16.5 4.5l-3.75 3.75M7.5 10.5L3 7.5M16.5 10.5L21 7.5" />
-            </svg>
-            <x-nav-link :href="route('multas.index')" :active="request()->routeIs('multas.index')"
-                title="Ver todos las multas">
-                {{-- nombre del link --}}
-                <span class="mx-4"> {{ __('Multas') }}</span>
-            </x-nav-link>
-        </div>
-        {{-- link  Servicios --}}
-        <div
-            class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M6.75 19.5h10.5M4.5 7.5l1.5-3h12l1.5 3M5.25 7.5h13.5v9.75H5.25V7.5zM8.25 16.5h7.5M9.75 16.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm4.5 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
-            </svg>
-            <x-nav-link :href="route('servicios.index')" :active="request()->routeIs('servicios.index')"
-                title="Ver todos los servicios">
-                {{-- nombre del link --}}
-                <span class="mx-4"> {{ __('Servicios') }}</span>
-            </x-nav-link>
-        </div>
+                <x-nav-link :href="route('catalogos.index')" :active="request()->routeIs('catalogos.index')" title="Ver todos los catálogos">
+                    {{-- nombre del link --}}
+                    <span class="mx-4"> {{ __('Catálogos') }}</span>
+                </x-nav-link>
+            </div>
+            {{-- link Multas --}}
+            <div
+                class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M8.25 13.5h7.5m-7.5 0a1.5 1.5 0 100-3h7.5a1.5 1.5 0 100 3m-7.5 0v3m7.5-3v3M6.75 21h10.5M4.5 4.5l3.75 3.75M16.5 4.5l-3.75 3.75M7.5 10.5L3 7.5M16.5 10.5L21 7.5" />
+                </svg>
+                <x-nav-link :href="route('multas.index')" :active="request()->routeIs('multas.index')" title="Ver todos las multas">
+                    {{-- nombre del link --}}
+                    <span class="mx-4"> {{ __('Multas') }}</span>
+                </x-nav-link>
+            </div>
+            {{-- link  Servicios --}}
+            <div
+                class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M6.75 19.5h10.5M4.5 7.5l1.5-3h12l1.5 3M5.25 7.5h13.5v9.75H5.25V7.5zM8.25 16.5h7.5M9.75 16.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm4.5 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
+                </svg>
+                <x-nav-link :href="route('servicios.index')" :active="request()->routeIs('servicios.index')" title="Ver todos los servicios">
+                    {{-- nombre del link --}}
+                    <span class="mx-4"> {{ __('Servicios') }}</span>
+                </x-nav-link>
+            </div>
 
 
-        {{-- Enlace de Vigilante --}}
-        <div
-            class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" width="64" height="64" viewBox="0 0 24 24"
-                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="7" r="4" />
-                <path d="M20 21c0-2.761-2.686-5-6-5H10c-3.314 0-6 2.239-6 5v1h16v-1z" />
-                <rect x="9" y="15" width="6" height="1" rx="0.5" />
-                <path d="M14 2h6v2h-6zM4 2h6v2H4z" />
-            </svg>
+            {{-- Enlace de Vigilante --}}
+            <div
+                class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" width="64" height="64"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <circle cx="12" cy="7" r="4" />
+                    <path d="M20 21c0-2.761-2.686-5-6-5H10c-3.314 0-6 2.239-6 5v1h16v-1z" />
+                    <rect x="9" y="15" width="6" height="1" rx="0.5" />
+                    <path d="M14 2h6v2h-6zM4 2h6v2H4z" />
+                </svg>
 
 
-            <x-nav-link :href="route('vigilante.index')" :active="request()->routeIs('vigilante.index')"
-                title="Ver módulo de vigilante">
-                {{-- nombre del link --}}
-                <span class="mx-4"> {{ __('Vigilante') }}</span>
-            </x-nav-link>
-        </div>
+                <x-nav-link :href="route('vigilante.index')" :active="request()->routeIs('vigilante.index')" title="Ver módulo de vigilante">
+                    {{-- nombre del link --}}
+                    <span class="mx-4"> {{ __('Vigilante') }}</span>
+                </x-nav-link>
+            </div>
 
-        <!-- {{-- Enlace de Autorizante --}}
+            <!-- {{-- Enlace de Autorizante --}}
             <div class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="w-6 h-6">
@@ -139,119 +134,141 @@
             </div> -->
 
 
-        {{-- link Estadísticas --}}
-        <div
-            class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3 17.25h18M3 12h10.5M3 6.75h15" />
-                <path stroke-linecap="round" stroke-linejoin="round" d="M5 6.75V12M10.5 12V17.25M16.5 12V17.25" />
-            </svg>
+            {{-- link Estadísticas --}}
+            <div
+                class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 17.25h18M3 12h10.5M3 6.75h15" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 6.75V12M10.5 12V17.25M16.5 12V17.25" />
+                </svg>
 
-            <x-nav-link :href="route('estadisticas')" :active="request()->routeIs('estadisticas')"
-                title="Ver todas las estadísticas">
-                {{-- nombre del link --}}
-                <span class="mx-4"> {{ __('Estadísticas') }}</span>
-            </x-nav-link>
-        </div>
+                <x-nav-link :href="route('estadisticas')" :active="request()->routeIs('estadisticas')" title="Ver todas las estadísticas">
+                    {{-- nombre del link --}}
+                    <span class="mx-4"> {{ __('Estadísticas') }}</span>
+                </x-nav-link>
+            </div>
         @endif
 
         {{-- Moderador --}}
         @if (Auth::user()->rol === 'Moderador')
-        {{-- link Gestion --}}
-        <a class="flex items-center px-6 py-2 mt-4 text-gray-100 bg-gray-700 bg-opacity-25"
-            href="{{ route('Gestion') }}" title="Ir a la gestión general">
-            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
-            </svg>
+            {{-- link Gestion --}}
+            <div class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100 dark:text-gray-500"
+                href="{{ route('Gestion') }}" title="Ir a la gestión general">
+                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
+                </svg>
 
-            <span class="mx-3">Gestion</span>
-        </a>
+                <span class="mx-3">Gestion</span>
+            </div>
 
-        {{-- Enlace de Vigilante --}}
-        <div
-            class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" width="64" height="64" viewBox="0 0 24 24"
-                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="7" r="4" />
-                <path d="M20 21c0-2.761-2.686-5-6-5H10c-3.314 0-6 2.239-6 5v1h16v-1z" />
-                <rect x="9" y="15" width="6" height="1" rx="0.5" />
-                <path d="M14 2h6v2h-6zM4 2h6v2H4z" />
-            </svg>
+            {{-- Enlace de Vigilante --}}
+            <div
+                class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" width="64" height="64"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="7" r="4" />
+                    <path d="M20 21c0-2.761-2.686-5-6-5H10c-3.314 0-6 2.239-6 5v1h16v-1z" />
+                    <rect x="9" y="15" width="6" height="1" rx="0.5" />
+                    <path d="M14 2h6v2h-6zM4 2h6v2H4z" />
+                </svg>
 
-            <x-nav-link :href="route('moderador.vigilante')" :active="request()->routeIs('moderador.vigilante')"
-                title="Ver entradas y salidas de vehículos">
-                {{-- nombre del link --}}
-                <span class="mx-4"> {{ __('Vigilante') }}</span>
-            </x-nav-link>
-        </div>
+                <x-nav-link :href="route('moderador.vigilante')" :active="request()->routeIs('moderador.vigilante')" title="Ver entradas y salidas de vehículos">
+                    {{-- nombre del link --}}
+                    <span class="mx-4"> {{ __('Vigilante') }}</span>
+                </x-nav-link>
+            </div>
+
+            {{-- Enlace de Incidencias --}}
+            <div
+                class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" width="64" height="64"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 4a2 2 0 0 1 2-2h3l1 2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                    <line x1="12" y1="11" x2="12" y2="17" />
+                    <line x1="12" y1="7" x2="12" y2="7" />
+                </svg>
+
+                <x-nav-link :href="route('incidencias.index')" :active="request()->routeIs('incidencias.index')" title="Registrar y consultar incidencias">
+                    <span class="mx-4">{{ __('Incidencias') }}</span>
+                </x-nav-link>
+            </div>
         @endif
 
 
         {{-- Usuario --}}
         @if (Auth::user()->rol === 'Usuario')
-           
             {{-- Enlace de Autorizante --}}
-            <div class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
-                <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <div
+                class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
+                <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
                     <g id="iconCarrier">
-                      <!-- Documento -->
-                      <rect x="6" y="3" width="12" height="18" rx="2" stroke="currentColor"></rect>
-                      <path d="M9 7H15" stroke="currentColor"></path>
-                      <path d="M9 11H15" stroke="currentColor"></path>
-                      <path d="M9 15H13" stroke="currentColor"></path>
-                      <!-- Usuario -->
-                      <circle cx="17" cy="17" r="3" stroke="currentColor"></circle>
-                      <path d="M17 20V21" stroke="currentColor"></path>
-                      <path d="M17 14V15" stroke="currentColor"></path>
+                        <!-- Documento -->
+                        <rect x="6" y="3" width="12" height="18" rx="2" stroke="currentColor"></rect>
+                        <path d="M9 7H15" stroke="currentColor"></path>
+                        <path d="M9 11H15" stroke="currentColor"></path>
+                        <path d="M9 15H13" stroke="currentColor"></path>
+                        <!-- Usuario -->
+                        <circle cx="17" cy="17" r="3" stroke="currentColor"></circle>
+                        <path d="M17 20V21" stroke="currentColor"></path>
+                        <path d="M17 14V15" stroke="currentColor"></path>
                     </g>
-                  </svg>
-                  
-            
+                </svg>
+
+
                 <x-nav-link :href="route('user.dashboard')" :active="request()->routeIs('user.dashboard')">
                     <span class="mx-4">{{ __('Mis Solicitudes') }}</span>
                 </x-nav-link>
             </div>
-            
+
             {{-- Enlace de Autorizante --}}
             <div
                 class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
-                <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
                     <g id="iconCarrier">
-                      <!-- Documento -->
-                      <rect x="14" y="2" width="8" height="10" stroke="currentColor"></rect>
-                      <path d="M16 6H20M18 4V8" stroke="currentColor"></path>
-                      <!-- Auto -->
-                      <path d="M5 13L7 8H17L19 13" stroke="currentColor"></path>
-                      <circle cx="7" cy="18" r="2" stroke="currentColor"></circle>
-                      <circle cx="17" cy="18" r="2" stroke="currentColor"></circle>
-                      <path d="M3 13H21V16H3V13Z" stroke="currentColor"></path>
-                      <!-- Icono de solicitud (mano apuntando) -->
-                      <path d="M8 4L10 6L12 4M10 6V2" stroke="currentColor"></path>
+                        <!-- Documento -->
+                        <rect x="14" y="2" width="8" height="10" stroke="currentColor"></rect>
+                        <path d="M16 6H20M18 4V8" stroke="currentColor"></path>
+                        <!-- Auto -->
+                        <path d="M5 13L7 8H17L19 13" stroke="currentColor"></path>
+                        <circle cx="7" cy="18" r="2" stroke="currentColor"></circle>
+                        <circle cx="17" cy="18" r="2" stroke="currentColor"></circle>
+                        <path d="M3 13H21V16H3V13Z" stroke="currentColor"></path>
+                        <!-- Icono de solicitud (mano apuntando) -->
+                        <path d="M8 4L10 6L12 4M10 6V2" stroke="currentColor"></path>
                     </g>
-                  </svg>
-                  
-                  
+                </svg>
+
+
                 <x-nav-link :href="route('user.solicitud')" :active="request()->routeIs('user.solicitud')">
                     {{-- nombre del link --}}
                     <span class="mx-4"> {{ __('Solicitar Préstamo') }}</span>
                 </x-nav-link>
             </div>
             <!-- Enlace al Perfil -->
-            <div class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
-                <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="7" r="4" stroke="currentColor"></circle>
-            <path d="M5 21V19C5 16.5 7.5 14 10 14H14C16.5 14 19 16.5 19 19V21" stroke="currentColor"></path>
-        </svg>
+            <div
+                class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
+                <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <circle cx="12" cy="7" r="4" stroke="currentColor"></circle>
+                    <path d="M5 21V19C5 16.5 7.5 14 10 14H14C16.5 14 19 16.5 19 19V21" stroke="currentColor"></path>
+                </svg>
 
-        <x-nav-link :href="route('perfil.user')" :active="request()->routeIs('perfil.user')">
-            <span class="mx-4"> {{ __('Perfil de Usuario') }}</span>
-        </x-nav-link>
-    </div>
+                <x-nav-link :href="route('perfil.user')" :active="request()->routeIs('perfil.user')">
+                    <span class="mx-4"> {{ __('Perfil de Usuario') }}</span>
+                </x-nav-link>
+            </div>
         @endif
     </nav>
 </div>

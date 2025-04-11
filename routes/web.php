@@ -13,6 +13,7 @@ use App\Http\Controllers\SegurosController;
 use App\Http\Controllers\SiniestrosController;
 use App\Http\Controllers\VerificacionesController;
 use App\Http\Controllers\VigilanteController;
+use App\Http\Controllers\IncidenciaController;
 use App\Http\Controllers\TarjetaCirculacionController;
 use App\Http\Controllers\TeneciasRefrendosController;
 use App\Http\Controllers\MultasController;
@@ -106,6 +107,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/vigilante/edit2/{id}/', [VigilanteController::class, 'edit2'])->name('moderador.edit2');
         Route::put('/vigilante/update2/{id_asignacion}', [VigilanteController::class, 'update2'])->name('moderador.update2');
         Route::get('/vigilante/{id}', [VigilanteController::class, 'show'])->name('vigilante.show');
+        Route::get('/incidencias', [IncidenciaController::class, 'index'])->name('incidencias.index');
+        Route::get('/incidencias/create', [IncidenciaController::class, 'create'])->name('incidencias.create');
+        Route::post('/incidencias', [IncidenciaController::class, 'store'])->name('incidencias.store');
+        Route::get('/incidencias/{id_incidencia}', [IncidenciaController::class, 'show'])->name('incidencias.show');
+
+
     });
 
     // Rutas para el Usuario
