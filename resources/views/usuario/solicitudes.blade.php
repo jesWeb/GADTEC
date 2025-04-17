@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('body')
+    <!-- CSS de Flatpickr -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
     <div class="px-6 py-4">
         <!-- Mapa de sitio -->
         <div class="flex justify-end mt-2 mb-6">
@@ -38,10 +41,6 @@
         <div class="mt-8">
             <div class="p-6 bg-white rounded-xl shadow-xl">
                 <h2 class="text-2xl font-bold text-gray-800">Solicitud de Vehículo</h2>
-                <div id="cancelAlert" class="hidden p-4 mb-4 text-sm text-red-800 bg-red-100 rounded-lg" role="alert">
-                    Solicitud cancelada. No se ha registrado ningún cambio.
-                </div>
-
                 @if (session('error'))
                     <div id="errorModal"
                         class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50 hidden">
@@ -71,6 +70,16 @@
                     });
                 </script>
 
+                <!-- Alerta de cancelación -->
+                <div id="alertaCancelacion"
+                    class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50 hidden">
+                    <div class="bg-white px-6 py-4 rounded-lg shadow-xl max-w-md text-center">
+                        <h2 class="text-xl font-bold text-red-600 mb-2">¡Solicitud cancelada!</h2>
+                        <p class="text-gray-800">Tu solicitud ha sido cancelada y no se registró en el sistema.</p>
+                    </div>
+                </div>
+
+
                 <!-- Formulario -->
                 <form id="solicitudForm" action="{{ route('solicitudes.store') }}" method="POST" class="mt-4">
                     @csrf
@@ -89,6 +98,17 @@
                             </select>
                         </div>
 
+                        <!-- Fecha y Hora -->
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-700">Selecciona fecha y hora del
+                                préstamo</label>
+
+                            <input type="text" name="fecha_hora" id="fecha_hora"
+                                class="flatpickr w-full mt-2 rounded-lg border border-gray-300 bg-gray-50 py-3 px-4 text-gray-700 focus:border-indigo-500 focus:ring focus:ring-indigo-200"
+                                placeholder="Selecciona fecha y hora" required>
+
+                        </div>
+
                         <div>
                             <label class="block text-lg font-semibold text-gray-700">Motivo</label>
                             <input type="text" name="motivo" id="motivo"
@@ -103,42 +123,37 @@
                                 placeholder="Ejemplo: Oficinas centrales" required>
                         </div>
 
-                        <!-- Requiere Chofer -->
-                        <div class="mb-4">
-                            <label for="requierechofer" class="block text-lg font-semibold text-gray-800">¿Requiere
-                                Conductor?</label>
 
-                            <div class="flex items-center gap-2 mt-2">
-                                <input type="checkbox" id="requierechofer" name="requierechofer" value="1"
-                                    class="h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                                    onclick="toggleChoferInput()" {{ old('requierechofer') ? 'checked' : '' }}
-                                    title="¿Requieres chofer?">
-                                <label for="requierechofer" class="text-base font-medium text-gray-700">Sí</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-4">
+                            <!-- Requiere Chofer -->
+                            <div class="mb-4">
+                                <label for="requierechofer" class="block text-lg font-semibold text-gray-800">¿Requiere
+                                    Conductor?</label>
+
+                                <div class="flex items-center gap-2 mt-2">
+                                    <input type="checkbox" id="requierechofer" name="requierechofer" value="1"
+                                        class="h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                        onclick="toggleChoferInput()" {{ old('requierechofer') ? 'checked' : '' }}
+                                        title="¿Requieres chofer?">
+                                    <label for="requierechofer" class="text-base font-medium text-gray-700">Sí</label>
+                                </div>
+                            </div>
+                            <!-- Nombre del Conductor -->
+                            <div id="choferInput" class="hidden mt-4">
+                                <label for="nombre_chofer" class="block text-lg font-semibold text-gray-800">
+                                    Nombre del Conductor
+                                </label>
+                                <input type="text" id="nombre_chofer" name="nombre_chofer"
+                                    value="{{ old('nombre_chofer') }}"
+                                    class="w-full mt-2 rounded-lg border border-gray-300 bg-gray-50 py-3 px-4 text-gray-700 focus:border-indigo-500 focus:ring focus:ring-indigo-200"
+                                    placeholder="Ingresa el nombre del conductor" title="Ingresa el nombre del chofer" />
                             </div>
                         </div>
-
-                        <!-- Nombre del Conductor -->
-                        <div id="choferInput" class="hidden mt-4">
-                            <label for="nombre_chofer" class="block text-lg font-semibold text-gray-800">
-                                Nombre del Conductor
-                            </label>
-                            <input type="text" id="nombre_chofer" name="nombre_chofer" value="{{ old('nombre_chofer') }}"
-                                class="w-full mt-2 rounded-lg border border-gray-300 bg-gray-50 py-3 px-4 text-gray-700 focus:border-indigo-500 focus:ring focus:ring-indigo-200"
-                                placeholder="Ingresa el nombre del conductor" title="Ingresa el nombre del chofer" />
-                        </div>
                     </div>
 
-                    <!-- Calendario -->
-                    <div class="mt-6">
-                        <h3 class="text-lg font-semibold text-gray-800">Disponibilidad del Vehículo</h3>
-                        <div id="calendar" class="mt-3 rounded-md shadow-sm p-3"></div>
-                    </div>
-
-                    <input type="hidden" name="fecha_salida" id="fecha_salida">
-                    <input type="hidden" name="hora_salida" id="hora_salida">
 
                     <div class="flex justify-end mt-8 space-x-4">
-                        <a href="#"
+                        <a href="{{ route('user.dashboard') }}"
                             class="px-5 py-3 text-gray-700 bg-gray-200 rounded-lg shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">Cancelar</a>
                         <button type="button" id="submitBtn"
                             class="px-5 py-3 text-white bg-indigo-600 rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">Registrar</button>
@@ -155,7 +170,7 @@
             <p class="mt-2 text-gray-600">¿Estás seguro de que los datos ingresados son correctos?</p>
             <p id="confirmSummary" class="mt-4 text-gray-700"></p>
             <div class="flex justify-end space-x-4 mt-4">
-                <a href="javascript:void(0);" onclick="cancelarSolicitud()"
+                <a href="#" onclick="cancelarSolicitud()"
                     class="px-5 py-3 text-gray-700 bg-gray-200 rounded-lg shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">
                     Cancelar
                 </a>
@@ -165,287 +180,195 @@
         </div>
     </div>
 
+    <!-- JS de Flatpickr -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const form = document.getElementById("solicitudForm");
             const submitButton = document.getElementById("submitBtn");
             const confirmModal = document.getElementById("confirmModal");
-            const confirmButtonModal = document.getElementById("confirmButton");
             const confirmSummary = document.getElementById("confirmSummary");
 
-            // Utilizar el calendario en formato de día, mes y año (DD/MM/YYYY)
-            const dateInput = document.getElementById("fecha_salida");
-            const timeInput = document.getElementById("hora_salida");
-
-            // Formatear la fecha en formato DD/MM/YYYY
-            function formatDate(date) {
-                let d = new Date(date);
-                let day = ("0" + d.getDate()).slice(-2); // Día con dos dígitos
-                let month = ("0" + (d.getMonth() + 1)).slice(-2); // Mes con dos dígitos
-                let year = d.getFullYear(); // Año
-                return `${day}/${month}/${year}`;
+            function formatFechaHora(fechaHoraStr) {
+                const date = new Date(fechaHoraStr);
+                if (isNaN(date)) return fechaHoraStr; // por si algo sale mal
+                const options = {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                };
+                return date.toLocaleString('es-MX', options);
             }
 
-            // Formatear la hora en formato de 12 horas (hh:mm AM/PM)
-            function formatTime(date) {
-                let hours = date.getHours();
-                let minutes = ("0" + date.getMinutes()).slice(-2);
-                let ampm = hours >= 12 ? "PM" : "AM";
-                hours = hours % 12;
-                hours = hours ? hours : 12; // La hora 0 es 12 AM
-                return `${hours}:${minutes} ${ampm}`;
-            }
-
-            // Evento para capturar la fecha y hora seleccionadas
             submitButton.addEventListener("click", function() {
-                // Obtener los datos del formulario
-                const vehiculo = document.getElementById("vehiculo").options[document.getElementById(
-                    "vehiculo").selectedIndex].text;
+                const vehiculoSelect = document.getElementById("vehiculo");
+                const vehiculo = vehiculoSelect.options[vehiculoSelect.selectedIndex]?.text || '';
                 const motivo = document.getElementById("motivo").value;
                 const lugar = document.getElementById("lugar").value;
-                const fechaSalida = document.getElementById("fecha_salida").value;
-                const horaSalida = document.getElementById("hora_salida").value;
+                const fechaHora = document.getElementById("fecha_hora").value;
 
-                // Convertir la fecha seleccionada a un formato adecuado
-                let formattedDate = formatDate(fechaSalida);
-                let formattedTime = formatTime(new Date(`1970-01-01T${horaSalida}:00`));
+                if (!vehiculo || !motivo || !lugar || !fechaHora) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Campos incompletos',
+                        text: 'Por favor, completa todos los campos antes de continuar.',
+                        confirmButtonText: 'Aceptar',
+                        confirmButtonColor: '#FF5733', 
+                        background: '#FFFF', 
+                        iconColor: '#FF5733', 
+                        showCloseButton: true, 
+                        allowOutsideClick: false 
+                    });
+                    return;
+                }
 
-                // Actualizar el contenido del modal con toda la información formateada
                 confirmSummary.innerHTML = `
-                    <strong>Vehículo:</strong> ${vehiculo} <br>
-                    <strong>Motivo:</strong> ${motivo} <br>
-                    <strong>Lugar:</strong> ${lugar} <br>
-                    <strong>Fecha y Hora de Salida:</strong> ${formattedDate} ${formattedTime} <br>
-                `;
+                <strong>Vehículo:</strong> ${vehiculo}<br>
+                <strong>Motivo:</strong> ${motivo}<br>
+                <strong>Lugar:</strong> ${lugar}<br>
+                <strong>Fecha y Hora:</strong> ${formatFechaHora(fechaHora)}<br>
+            `;
                 confirmModal.classList.remove('hidden');
             });
 
-            // Confirmar y enviar el formulario
             window.confirmAndSubmit = function() {
                 form.submit();
             };
 
-            // Fuera del DOMContentLoaded
             window.closeConfirmModal = function() {
                 document.getElementById('confirmModal').classList.add('hidden');
             };
 
             window.cancelarSolicitud = function() {
-                document.getElementById("solicitudForm").reset();
+                document.getElementById('confirmModal').classList.add('hidden');
 
-                // Ocultar el input del chofer si estaba visible
-                document.getElementById("choferInput").classList.add("hidden");
-
-                // También puedes limpiar los campos ocultos si es necesario
-                document.getElementById("fecha_salida").value = "";
-                document.getElementById("hora_salida").value = "";
-
-                const alertBox = document.getElementById('cancelAlert');
-                alertBox.classList.remove('hidden');
-
-                closeConfirmModal();
+                const alerta = document.getElementById('alertaCancelacion');
+                alerta.classList.remove('hidden');
 
                 setTimeout(() => {
-                    alertBox.classList.add('hidden');
-                }, 3000);
+                    window.location.href = "{{ route('user.dashboard') }}";
+                }, 2500);
             };
 
         });
     </script>
 
 
-    <!-- Scripts de FullCalendar -->
-    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet">
-    <style>
-        #calendar {
-            font-family: 'Inter', sans-serif;
-            background: white;
-            border-radius: 10px;
-            padding: 15px;
-            max-width: 100%;
-            height: 400px;
-            font-size: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .fc-toolbar-title {
-            font-weight: bold;
-            text-align: center;
-            color: #18177a;
-            font-size: 1.2rem !important;
-
-        }
-
-        .fc-toolbar-title {
-            text-transform: capitalize !important;
-        }
-
-        .fc-col-header-cell-cushion {
-            text-transform: capitalize !important;
-        }
-
-        .fc-daygrid-day-number {
-            font-size: 10px !important;
-        }
-
-
-        .fc-button {
-            background-color: #4f46e5 !important;
-            border: none !important;
-            color: white !important;
-            border-radius: 6px !important;
-            padding: 4px 8px !important;
-            font-size: 12px;
-            margin: 5px !important;
-
-        }
-
-        #confirmModal {
-            z-index: 1050 !important;
-            background-color: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(4px);
-        }
-
-        .fc-button:hover {
-            background-color: #6d28d9 !important;
-        }
-
-
-        .event-blue {
-            background-color: rgba(93, 115, 241, 0.63) !important;
-            color: #3f1cdb !important;
-            border-radius: 6px !important;
-            padding: 6px !important;
-            font-size: 12px;
-        }
-
-        .event-red {
-            background-color: rgba(238, 22, 22, 0.5) !important;
-            color: #ec1313 !important;
-            border: none !important;
-            border-radius: 6px !important;
-            padding: 6px !important;
-            font-size: 11px;
-        }
-
-        .event-red {
-            border-top: none !important;
-        }
-
-        .fc-timegrid-slot {
-            height: 50px !important;
-            background-color: #ffff !important;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
-        }
-
-        .fc-event {
-            font-size: 10px !important;
-            padding: 3px !important;
-        }
-
-        .fc-daygrid-day {
-            min-height: 50px !important;
-        }
-
-        .fc-daygrid-day.fc-day-today {
-            background-color: #ecf0f8 !important;
-        }
-
-        .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
-            color: #111827 !important;
-        }
-    </style>
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            let calendarEl = document.getElementById('calendar');
-            let vehiculoSelect = document.getElementById('vehiculo');
-            let fechaSalida = document.getElementById('fecha_salida');
-            let horaSalida = document.getElementById('hora_salida');
+        let flatpickrInstance = null;
 
-            let calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'timeGridWeek',
-                locale: 'es',
-                slotMinTime: "06:00:00",
-                slotMaxTime: "23:00:00",
-                slotLabelFormat: {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    meridiem: 'short'
-                },
-                eventTimeFormat: {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    meridiem: 'short'
-                },
-                selectable: true,
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                },
-                columnHeaderFormat: {
-                    weekday: 'long'
-                },
-                titleFormat: {
-                    year: 'numeric',
-                    month: 'long'
-                },
-                buttonText: {
-                    today: 'Hoy',
-                    month: 'Mes',
-                    week: 'Semana',
-                    day: 'Día',
-                    list: 'Lista'
-                },
-                select: function(info) {
-                    // Obtener fecha y hora seleccionadas
-                    const selectedDate = info.startStr.split("T")[0]; // Fecha
-                    const selectedTime = info.startStr.split("T")[1].substring(0, 5); // Hora (HH:mm)
+        function initFlatpickr(disabledRanges = []) {
+            if (flatpickrInstance) flatpickrInstance.destroy();
 
-                    // Asignar los valores a los campos ocultos
-                    fechaSalida.value = selectedDate;
-                    horaSalida.value = selectedTime;
-
-                    // Mostrar el valor en el modal (puedes ponerlo en el alert si es para depuración)
-                    alert(`Fecha: ${selectedDate}, Hora: ${selectedTime}`);
+            flatpickrInstance = flatpickr("#fecha_hora", {
+                locale: {
+                    firstDayOfWeek: 1,
+                    weekdays: {
+                        shorthand: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+                        longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                    },
+                    months: {
+                        shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov',
+                            'Dic'
+                        ],
+                        longhand: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto',
+                            'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+                        ],
+                    },
                 },
-                events: function(fetchInfo, successCallback, failureCallback) {
-                    let id_automovil = vehiculoSelect.value;
+                dateFormat: "Y-m-d H:i",
+                enableTime: true,
+                time_24hr: true,
+                minuteIncrement: 30,
+                minDate: new Date(),
+                disable: disabledRanges, // Deshabilitar fechas ocupadas
+                onChange: function(selectedDates, dateStr, instance) {
+                    const selectedDate = selectedDates[0];
 
-                    if (!id_automovil || id_automovil === "") {
-                        console.warn("No se ha seleccionado un vehículo.");
-                        return;
-                    }
+                    const isOccupied = disabledRanges.some(range => {
+                        const start = range.from.getTime();
+                        const end = range.to.getTime();
 
-                    fetch(`/api/reservaciones?id_automovil=${id_automovil}`)
-                        .then(response => response.json())
-                        .then(reservaciones => {
-                            let eventos = reservaciones.map(reservacion => ({
-                                title: `${reservacion.estatus.toUpperCase()} - ${reservacion.hora_salida}`,
-                                start: `${reservacion.fecha_salida}T${reservacion.hora_salida}`,
-                                end: `${reservacion.fecha_salida}T${reservacion.hora_salida}`,
-                                className: reservacion.estatus === "Autorizado" ?
-                                    "event-blue" : "event-red"
-                            }));
-                            successCallback(eventos);
-                        })
-                        .catch(error => {
-                            console.error("Error al cargar reservaciones:", error);
-                            failureCallback(error);
+                        return selectedDate.getTime() >= start && selectedDate.getTime() < end;
+                    });
+
+                    if (isOccupied) {
+                        instance.close();
+
+                        Swal.fire({
+                            icon: 'error',
+                            title: '¡Fecha y hora ocupadas!',
+                            text: 'La fecha y hora seleccionadas ya están ocupadas. Por favor, elige otra.',
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: 'Aceptar',
+                            background: '#FFFF',
+                            showCloseButton: true,
+                            position: 'center',
+                            customClass: {
+                                popup: 'swal-wide',
+                            }
+                        }).then(() => {
+                            instance.clear();
                         });
+                    }
                 }
             });
+        }
 
-            calendar.render();
+        document.addEventListener("DOMContentLoaded", function() {
+            initFlatpickr(); // Inicializamos el calendaro
 
-            vehiculoSelect.addEventListener('change', function() {
-                if (vehiculoSelect.value) {
-                    calendar.refetchEvents();
-                }
+            document.getElementById('vehiculo').addEventListener('change', function() {
+                const vehiculoId = this.value;
+
+                if (!vehiculoId) return;
+
+                fetch(`/api/vehiculos/${vehiculoId}/horarios`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error("Error en la respuesta del servidor.");
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.error) {
+                            alert(data.error);
+                            return;
+                        }
+
+                        console.log("Horarios ocupados:", data);
+
+                        const disabledRanges = data.map(h => ({
+                            from: new Date(Date.parse(h.from)),
+                            to: new Date(Date.parse(h.to))
+                        }));
+
+                        console.log("Horarios ocupados convertidos:", disabledRanges);
+
+                        // Re-inicializamos el calendario
+                        initFlatpickr(disabledRanges);
+                    })
+                    .catch(error => {
+                        console.error("Error cargando horarios ocupados:", error);
+                        alert(
+                            "No se pudieron cargar los horarios del vehículo. Por favor, intenta más tarde."
+                            );
+                    });
             });
         });
     </script>
+
+    <style>
+        .swal-wide {
+            width: 400px !important;
+            padding: 30px;
+        }
+    </style>
+
     <script>
         function toggleChoferInput() {
             const choferInput = document.getElementById('choferInput');
