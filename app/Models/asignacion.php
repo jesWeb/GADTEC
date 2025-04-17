@@ -61,8 +61,8 @@ class asignacion extends Model
         return $this->belongsTo(Usuarios::class, 'id_usuario');
     }
 
-    public function checkIns()
-{
-    return $this->hasMany(CheckIn::class, 'id_asignacion', 'id_asignacion');
-}
+        public function checkIns()
+    {
+        return $this->hasMany(CheckIn::class, 'id_asignacion', 'id_asignacion');
+    }
 }

@@ -40,62 +40,88 @@ class SolicitudesController extends Controller
     
      public function store(Request $request)
      {
-            if (!Auth::check()) {
-                return redirect()->route('login')->with('error', 'Debes iniciar sesión para solicitar un vehículo.');
-            }
-        
-            $usuario = Auth::user(); 
-        
-            // Validar datos
-            $request->validate([
-                'id_automovil' => 'required|exists:automoviles,id_automovil',
-                'motivo' => 'required|string|max:255',
-                'lugar' => 'required|string|max:255',
-                'fecha_salida' => 'required|date',
-                'hora_salida' => 'required',
-                'requierechofer' => 'nullable|boolean',
-                'nombre_chofer' => 'nullable|string|max:255',
-            ]);
-     
-            // Verificar si el usuario tiene licencia cuando no requiere chofer
-            if ($request->input('requierechofer') == 0 && empty($usuario->num_licencia)) {
-                return redirect()->back()->with('error', "Para solicitar un vehículo sin chofer, debes registrar tu licencia.\nSi ya cuentas con una, por favor agrégala a tu perfil.");
-            }
-     
-            // Crear la asignación
-            $asignacion = asignacion::create([
-                'id_automovil' => $request->id_automovil,
-                'id_usuario' => Auth::user()->id_usuario, 
-                'motivo' => $request->motivo,
-                'lugar' => $request->lugar,
-                'fecha_salida' => $request->fecha_salida,
-                'hora_salida' => $request->hora_salida,
-                'requierechofer' => $request->has('requierechofer') ? 1 : 0,
-                'nombre_chofer' => $request->requierechofer ? $request->nombre_chofer : null,
-                'no_licencia' => $usuario->num_licencia, 
-                'estatus' => 'Reservado',
-            ]);
-        
+         // Verificar si el usuario está autenticado
+         if (!Auth::check()) {
+             return redirect()->route('login')->with('error', 'Debes iniciar sesión para solicitar un vehículo.');
+         }
          
-            $admin = Usuarios::where('rol', 'Administrador')->first();
-
-            if ($admin) {
-                $asignacion->load(['usuarios', 'automovil']); 
-                Mail::to($admin->email)->send(new SolicitudVehiculoMailable($asignacion));
-            }
-
+         $usuario = Auth::user(); 
+     
+         // Validar los datos de la solicitud
+         $request->validate([
+             'id_automovil' => 'required|exists:automoviles,id_automovil',
+             'motivo' => 'required|string|max:255',
+             'lugar' => 'required|string|max:255',
+             'fecha_hora' => 'required|date', 
+             'requierechofer' => 'nullable|boolean',
+             'nombre_chofer' => 'nullable|string|max:255',
+         ]);
+     
+        
+         // Obtener la fecha y hora de la solicitud
+         $fechaHora = explode(' ', $request->fecha_hora);
+         $fecha_salida = $fechaHora[0]; 
+         $hora_salida = $fechaHora[1];
+     
+         // Verificar si el vehículo ya está reservado para la fecha y hora solicitada
+         $existingAssignment = asignacion::where('id_automovil', $request->id_automovil)
+             ->where('fecha_salida', $fecha_salida)
+             ->where('hora_salida', $hora_salida)
+             ->whereIn('estatus', ['Reservado', 'Autorizado'])
+             ->first();
+     
+         if ($existingAssignment) {
+             return redirect()->back()->with('error', 'El vehículo ya está reservado para esta fecha y hora.');
+         }
+     
+         if ($request->input('requierechofer') == 0 && empty($usuario->num_licencia)) {
+             return redirect()->back()->with('error', "Para solicitar un vehículo sin chofer, debes registrar tu licencia.");
+         }
+     
+         // Crear la asignación
+         $asignacion = asignacion::create([
+             'id_automovil' => $request->id_automovil,
+             'id_usuario' => $usuario->id_usuario, 
+             'motivo' => $request->motivo,
+             'lugar' => $request->lugar,
+             'fecha_salida' => $fecha_salida,
+             'hora_salida' => $hora_salida,
+             'requierechofer' => $request->has('requierechofer') ? 1 : 0,
+             'nombre_chofer' => $request->requierechofer ? $request->nombre_chofer : null,
+             'no_licencia' => $usuario->num_licencia, 
+             'estatus' => 'Reservado',
+         ]);
      
          return redirect()->route('user.dashboard')->with('mensaje', 'Solicitud registrada correctamente');
      }
      
-    
+ 
+     
+     public function horariosOcupados($id)
+     {
+        $ocupadas = Solicitud::where('id_automovil', $id)
+             ->whereIn('estado', ['Autorizado', 'Reservado', 'Ocupado'])
+             ->pluck('fecha_hora')
+             ->map(function ($fecha) {
+                 return [
+                     'from' => $fecha->format('Y-m-d H:i'),
+                     'to' => $fecha->addHours(1)->format('Y-m-d H:i') 
+                 ];
+             });
+     
+        return response()->json($ocupadas);
+     }
+     
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        //
+        $asignacion = asignacion::with('automovil', 'checkIns')->findOrFail($id);
+    
+        return view('usuario.solicitudes-show', compact('asignacion'));
     }
+    
 
     /**
      * Show the form for editing the specified resource.
