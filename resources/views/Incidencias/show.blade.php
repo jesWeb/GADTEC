@@ -47,7 +47,20 @@
                 Detalles de la Incidencia
             </h2>
 
-            <div class="mb-6 flex justify-end">
+            <div class="mb-6 flex justify-between items-start w-full">
+                <!-- Generada por -->
+                <div>
+                    <p class="text-sm text-gray-500 uppercase">Usuario responsble</p>
+                    <p class="text-sm text-gray-800 font-medium mt-1">
+                        @if ($incidencia->id_usuario == auth()->user()->id_usuario)
+                            Tú
+                        @else
+                            {{ $incidencia->usuario->nombre }}
+                        @endif
+                    </p>
+                </div>
+            
+                <!-- Fecha y Hora -->
                 <div class="text-right">
                     <p class="text-sm text-gray-500 uppercase">Fecha y Hora de Registro</p>
                     <p class="text-sm text-gray-800 font-medium">

@@ -153,8 +153,8 @@
         {{-- Moderador --}}
         @if (Auth::user()->rol === 'Moderador')
             {{-- link Gestion --}}
-            <div class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100 dark:text-gray-500"
-                href="{{ route('Gestion') }}" title="Ir a la gestión general">
+            <div
+                class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100 dark:text-gray-500">
                 <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -163,7 +163,9 @@
                         d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
                 </svg>
 
-                <span class="mx-3">Gestion</span>
+                <x-nav-link :href="route('moderator.dashboard')" :active="request()->routeIs('moderator.dashboard')" title="Ver todas las solicitudes">
+                    <span class="mx-4 text-base"> {{ __('Gestión') }}</span>
+                </x-nav-link>
             </div>
 
             {{-- Enlace de Vigilante --}}

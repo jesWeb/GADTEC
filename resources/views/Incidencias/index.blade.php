@@ -41,7 +41,8 @@
             @endif
 
             <div class="mb-2">
-                <form action="{{ route('incidencias.index') }}" method="GET" class="flex flex-col items-center justify-between space-y-2 md:flex-row md:space-y-0">
+                <form action="{{ route('incidencias.index') }}" method="GET"
+                    class="flex flex-col items-center justify-between space-y-2 md:flex-row md:space-y-0">
                     <!-- Campo de búsqueda por fecha -->
                     <div class="flex items-center w-full md:w-auto">
                         <input type="date" name="search" placeholder="Buscar por fecha de incidencia"
@@ -54,7 +55,7 @@
                         </button>
                     </div>
                 </form>
-                
+
                 <div class="mb-2 text-right">
                     <a href="{{ route('incidencias.create') }}" title="Generar nueva incidencia"
                         class="inline-block px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Registrar nueva
@@ -67,6 +68,7 @@
                     <thead class="bg-gray-100">
                         <tr>
                             <th class="px-4 py-2 text-left text-gray-600">#</th>
+                            <th class="px-4 py-2 text-left text-gray-600">Usuario responsable</th>
                             <th class="px-4 py-2 text-left text-gray-600">Fecha y Hora de Registro</th>
                             <th class="px-4 py-2 text-left text-gray-600">Acciones</th>
                         </tr>
@@ -76,6 +78,17 @@
                             <tr class="hover:bg-gray-50">
                                 <td class="px-4 py-2 border">
                                     <strong>{{ $incidencia->id_incidencia }}</strong>
+                                </td>
+                                <td class="px-4 py-2 border">
+                                    @if ($incidencia->id_usuario == auth()->id())
+                                        <strong class="text-indigo-600">
+                                            Tú
+                                        </strong>
+                                    @else
+                                        <strong class="text-blue-800">
+                                            {{ $incidencia->usuario->nombre }} {{ $incidencia->usuario->app }} {{ $incidencia->usuario->apm }}
+                                        </strong>
+                                    @endif
                                 </td>
                                 <td class="px-4 py-2 border">
                                     <strong>{{ $incidencia->created_at->format('d/m/Y g:i A') }}</strong>
@@ -113,7 +126,7 @@
                 if (alerta) {
                     alerta.style.display = 'none';
                 }
-            }, 3000); 
+            }, 3000);
         </script>
     @endif
 @endsection
