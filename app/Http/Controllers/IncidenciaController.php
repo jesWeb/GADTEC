@@ -21,7 +21,7 @@ class IncidenciaController extends Controller
     
         $incidencias = $query->paginate(10);
     
-        return view('incidencias.index', compact('incidencias'));
+        return view('Incidencias.index', compact('incidencias'));
     }
     
 
@@ -44,22 +44,15 @@ class IncidenciaController extends Controller
 
         return redirect()->route('incidencias.index')->with('success', 'Incidencia registrada exitosamente.');
     }
-
+    
     public function show($id_incidencia)
     {
         $incidencia = Incidencia::findOrFail($id_incidencia);
     
-        // Verifica que el usuario tenga acceso a esta incidencia
-        if (
-            auth()->user()->role !== 'Administrador' && 
-            auth()->user()->role !== 'Moderador' && 
-            $incidencia->id_usuario !== auth()->user()->id_usuario
-        ) {
-            abort(403, 'No tienes permiso para ver esta incidencia');
-        }
-    
+        // Aquí ya no hay restricción por rol ni verificación de usuario
         return view('incidencias.show', compact('incidencia'));
-    }
+    }    
+
     
     
 
