@@ -105,7 +105,7 @@
                                                     @foreach ($dispo->asignaciones as $asignacion)
                                                         @if ($asignacion->estatus == 'Reservado' && $asignacion->fecha_salida == date('Y-m-d'))
                                                             <option value="{{ $asignacion->id_asignacion }}">
-                                                                {{ date('d-m-Y', strtotime($asignacion->fecha_salida)) }} - {{ $asignacion->hora_salida }}
+                                                                {{ date('d-m-Y', strtotime($asignacion->fecha_salida)) }} - {{ $asignacion->hora_salida }} | {{ $asignacion->nombre }} {{ $asignacion->app }}
                                                             </option>
                                                         @endif
                                                     @endforeach

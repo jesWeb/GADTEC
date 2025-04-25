@@ -138,8 +138,8 @@
                                 </option>
                                 <option value="DYDETEC" {{ $usuario->empresa == 'DYDETEC' ? 'selected' : '' }}>DYDETEC
                                 </option>
-                                <option value="Empresa 3" {{ $usuario->empresa == 'Empresa 3' ? 'selected' : '' }}>Empresa
-                                    3</option>
+                                <option value="TAE" {{ $usuario->empresa == 'TAE' ? 'selected' : '' }}>TAE</option>
+                                <option value="DENSO" {{ $usuario->empresa == 'DENSO' ? 'selected' : '' }}>DENSO</option>
                             </select>
                         </div>
 

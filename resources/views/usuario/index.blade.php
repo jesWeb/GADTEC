@@ -57,7 +57,7 @@
                             <tbody class="divide-y divide-gray-100">
                                 @foreach ($solicitudes as $key => $solicitud)
                                     <tr class="hover:bg-gray-50">
-                                        <td class="px-4 py-2 border text-center">{{ $key + 1 }}</td>
+                                        <td class="px-4 py-2 border text-center">{{ $loop->iteration }}</td>
                                         <td class="px-4 py-2 border text-center">{{ $solicitud->marca }}
                                             {{ $solicitud->submarca }} {{ $solicitud->modelo }}</td>
                                         <td class="px-4 py-2 border text-center">{{ $solicitud->motivo }}</td>

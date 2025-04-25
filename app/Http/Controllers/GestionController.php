@@ -96,17 +96,18 @@ class GestionController extends Controller
             ORDER BY aut.marca
         ");
 
-        // Obtener las reservaciones
+       // Obtener las reservaciones
         foreach ($disponibilidad as $dispo) {
             $dispo->asignaciones = DB::select("
-                SELECT id_asignacion, hora_salida, estatus, fecha_salida 
-                FROM asignacions
-                WHERE id_automovil = {$dispo->id_automovil}
-                AND deleted_at IS NULL
-                ORDER BY hora_salida
+                SELECT asi.id_asignacion, asi.hora_salida, asi.estatus, asi.fecha_salida, u.nombre, u.app, u.apm
+                FROM asignacions AS asi
+                LEFT JOIN usuarios AS u ON asi.id_usuario = u.id_usuario 
+                WHERE asi.id_automovil = {$dispo->id_automovil}
+                AND asi.deleted_at IS NULL
+                ORDER BY asi.hora_salida
             ");
 
-            // Contar las reservas al dia
+            // Contar las reservas al día
             $reservas_dia = DB::select("
                 SELECT COUNT(*) AS reservas_dia
                 FROM asignacions AS asi
