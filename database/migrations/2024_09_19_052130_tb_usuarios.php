@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('nombre', 50);
             $table->string('app', 70);
             $table->string('apm', 70)->nullable();
-            $table->set('empresa', ['GÄTSIMED', 'DYDETEC', 'Empresa 3'])->default('GÄTSIMED');    // no recomiendo tenerlo aqui por si hay mas empresas tabla aparte
+            $table->set('empresa', ['GÄTSIMED', 'DYDETEC', 'Empresa 3'])->default('GÄTSIMED');   
             $table->date('fn');
             $table->set('sex', ['Femenino', 'Masculino'])->default('Femenino');
             $table->enum('rol', ['Administrador', 'Moderador'])->default('Administrador');
@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('usuario', 255)->unique();
             $table->text('pass');
-            $table->enum('estatus', ['Activo', 'Inactivo'])->default('Activo');    // registro => activo|inactivo
+            $table->enum('estatus', ['Activo', 'Inactivo'])->default('Activo');    
             $table->boolean('activo')->default(1);  // borrado logico del sistema
             $table->timestamps();
             $table->softDeletes();

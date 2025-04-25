@@ -21,7 +21,7 @@ class IncidenciaController extends Controller
     
         $incidencias = $query->paginate(10);
     
-        return view('Incidencias.index', compact('incidencias'));
+        return view('incidencias.index', compact('incidencias'));
     }
     
 

@@ -82,7 +82,7 @@
                                 <td class="px-4 py-2 border">
                                     @if ($incidencia->id_usuario == auth()->id())
                                         <strong class="text-indigo-600">
-                                            Tú
+                                            {{ $incidencia->usuario->nombre }} {{ $incidencia->usuario->app }} {{ $incidencia->usuario->apm }}
                                         </strong>
                                     @else
                                         <strong class="text-blue-800">

@@ -120,7 +120,8 @@
                                     <option disabled selected>Selecciona una opción</option>
                                     <option value="GÄTSIMED">GÄTSIMED</option>
                                     <option value="DYDETEC">DYDETEC</option>
-                                    <option value="Empresa 3">Empresa 3</option>
+                                    <option value="TAE">TAE</option>
+                                    <option value="DENSO">DENSO</option>
                                 </select>
                                 @error('empresa')
                                     <span class="text-sm text-red-600">{{ $message }}</span>
