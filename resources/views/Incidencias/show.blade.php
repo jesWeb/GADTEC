@@ -2,8 +2,8 @@
 
 @section('body')
     <div class="px-6 py-2">
-          <!-- Mapa de sitio -->
-          <div class="flex justify-end mt-2 mb-4">
+        <!-- Mapa de sitio -->
+        <div class="flex justify-end mt-2 mb-4">
             <nav class="text-sm text-gray-600">
                 <ul class="flex items-center space-x-4">
                     <li class="flex items-center">
@@ -59,7 +59,7 @@
                         @endif
                     </p>
                 </div>
-            
+
                 <!-- Fecha y Hora -->
                 <div class="text-right">
                     <p class="text-sm text-gray-500 uppercase">Fecha y Hora de Registro</p>
@@ -68,7 +68,7 @@
                     </p>
                 </div>
             </div>
-            
+
             <div class="mb-6">
                 <p class="text-sm text-gray-500 uppercase">Descripción de la Incidencia</p>
                 <div class="p-4 mt-2 bg-gray-50 border border-gray-200 rounded-md text-gray-700 leading-relaxed">
@@ -77,11 +77,21 @@
             </div>
 
             <div class="flex justify-end gap-4 mt-4">
-                <a href="{{ route('incidencias.index') }}"
-                    class="inline-flex items-center px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700 transition">
+                @if (auth()->user()->hasRole('Administrador'))
+                    <a href="{{ route('incidencias.table') }}"
+                        class="inline-flex items-center px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700 transition">
 
-                    Volver al historial
-                </a>
+                        Volver al historial
+                    </a>
+                @elseif(auth()->user()->hasRole('Moderador'))
+                    <a href="{{ route('moderador.index') }}"
+                        class="inline-flex items-center px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700 transition">
+
+                        Volver al historial
+                    </a>
+                @endif
+
+
             </div>
 
         </div>

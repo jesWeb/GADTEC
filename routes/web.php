@@ -74,6 +74,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/administrador/vigilante/edit2/{id}/', [VigilanteController::class, 'edit2'])->name('admin.edit2');
         Route::put('/admin/vigilante/update2/{id_asignacion}', [VigilanteController::class, 'update2'])->name('admin.update2');
         Route::get('/admin/vigilante/{id}', [VigilanteController::class, 'show'])->name('vigilante.admin');
+        Route::get('/historial-incidencias', [IncidenciaController::class, 'index'])->name('incidencias.table');
+        Route::get('/incidencias-vigilante/create', [IncidenciaController::class, 'create'])->name('incidenciasAdmin.create');
+        Route::post('/incidencias-vigilante', [IncidenciaController::class, 'store'])->name('incidenciasAdmin.store');
+        Route::get('/incidencias-vigilante/{id_incidencia}', [IncidenciaController::class, 'show'])->name('incidenciasAdmin.show');
 
         // Rutas para la gestión de autorizantes
         Route::resource('/administrador/autorizante', AutorizanteController::class);
@@ -107,10 +111,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/vigilante/edit2/{id}/', [VigilanteController::class, 'edit2'])->name('moderador.edit2');
         Route::put('/vigilante/update2/{id_asignacion}', [VigilanteController::class, 'update2'])->name('moderador.update2');
         Route::get('/vigilante/{id}', [VigilanteController::class, 'show'])->name('vigilante.show');
-        Route::get('/incidencias', [IncidenciaController::class, 'index'])->name('incidencias.index');
-        Route::get('/incidencias/create', [IncidenciaController::class, 'create'])->name('incidencias.create');
-        Route::post('/incidencias', [IncidenciaController::class, 'store'])->name('incidencias.store');
-        Route::get('/incidencias/{id_incidencia}', [IncidenciaController::class, 'show'])->name('incidencias.show');
+        Route::get('/incidencias-his', [IncidenciaController::class, 'index'])->name('moderador.index');
+        Route::get('/incidencias-his/create', [IncidenciaController::class, 'create'])->name('moderador.create');
+        Route::post('/incidencias-his', [IncidenciaController::class, 'store'])->name('moderador.store');
+        Route::get('/incidencias-his/{id_incidencia}', [IncidenciaController::class, 'show'])->name('moderador.show');
 
 
     });
@@ -132,14 +136,14 @@ Route::middleware('auth')->group(function () {
     // Rutas comunes para Administrador y Moderador
     Route::middleware('role:Administrador|Moderador')->group(function () {
         Route::get('/gestion', [GestionController::class, 'index'])->name('Gestion');
+        Route::get('/incidencias', [IncidenciaController::class, 'index'])->name('incidencias.index');
+        Route::get('/incidencias/create', [IncidenciaController::class, 'create'])->name('incidencias.create');
+        Route::post('/incidencias', [IncidenciaController::class, 'store'])->name('incidencias.store');
+        Route::get('/incidencias/{id_incidencia}', [IncidenciaController::class, 'show'])->name('incidencias.show');
 
     });
 
-    // Rutas comunes para Administrador y Moderador
-    Route::middleware('role:Administrador|Moderador')->group(function () {
-        Route::get('/gestion', [GestionController::class, 'index'])->name('Gestion');
-
-    });
+  
 
    
 

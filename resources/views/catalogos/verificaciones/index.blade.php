@@ -158,10 +158,11 @@
                         @endforeach
                     </tbody>
                 </table>
+
             </div>
 
             <!-- Navegación de paginación -->
-            {{-- {{ $cars->links() }} --}}
+            {{ $verificacion->links() }}
         </div>
     </div>
 @endsection
