@@ -28,6 +28,7 @@ class IncidenciaController extends Controller
 
     public function create()
     {
+
         return view('incidencias.create');
     }
 
@@ -41,8 +42,12 @@ class IncidenciaController extends Controller
             'id_usuario' => Auth::user()->id_usuario, 
             'descripcion' => $request->descripcion
         ]);
+        if (auth()->user()->hasRole('Administrador')) {
+            return redirect()->route('incidencias.table')->with('success', 'Incidencia registrada exitosamente.');
+        } else {
+            return redirect()->route('moderador.index')->with('success', 'Incidencia registrada exitosamente.');
 
-        return redirect()->route('incidencias.index')->with('success', 'Incidencia registrada exitosamente.');
+        }
     }
     
     public function show($id_incidencia)

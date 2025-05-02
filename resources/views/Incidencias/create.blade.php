@@ -42,24 +42,38 @@
 
             <h2 class="text-2xl font-semibold text-gray-800 mb-6">Registrar Nueva Incidencia</h2>
 
+            @if (auth()->user()->hasRole('Administrador'))
+                <form method="POST" action="{{ route('incidenciasAdmin.store') }}">
+            @elseif(auth()->user()->hasRole('Moderador'))
+                <form method="POST" action="{{ route('moderador.store') }}">
+            @endif
+            @csrf
+            <div class="mb-6">
+                <label for="descripcion" class="block text-gray-700 font-medium mb-2">Descripción de la
+                    incidencia</label>
+                <textarea name="descripcion" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+                    rows="6" required></textarea>
+            </div>
 
-            <form method="POST" action="{{ route('incidencias.store') }}">
-                @csrf
-                <div class="mb-6">
-                    <label for="descripcion" class="block text-gray-700 font-medium mb-2">Descripción de la
-                        incidencia</label>
-                    <textarea name="descripcion" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
-                        rows="6" required></textarea>
-                </div>
+            <div class="flex justify-end gap-4 mt-4">
+                @if (auth()->user()->hasRole('Administrador'))
+                         
+                <a href="{{ route('incidencias.table') }}"
+                class="px-4 py-2 text-gray-700 bg-gray-200 rounded-md shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                Volver al listado</a>
+                @elseif(auth()->user()->hasRole('Moderador'))
 
-                <div class="flex justify-end gap-4 mt-4">
-                    <a href="{{ route('incidencias.index') }}"
-                        class="px-4 py-2 text-gray-700 bg-gray-200 rounded-md shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">
-                        Volver al listado</a>
-                    <button type="submit"
-                        class="px-4 py-2 text-white bg-indigo-600 rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                        Registrar Incidencia</button>
-                </div>
+                <a href="{{ route('moderador.index') }}"
+                class="px-4 py-2 text-gray-700 bg-gray-200 rounded-md shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                Volver al listado</a>
+                @endif
+
+                <button type="submit"
+                class="px-4 py-2 text-white bg-indigo-600 rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                Registrar Incidencia</button>            
+            
+               
+            </div>
             </form>
         </div>
     </div>

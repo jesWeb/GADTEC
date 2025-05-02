@@ -6,28 +6,26 @@ use App\Models\Automoviles;
 use App\Models\verificacion;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 class VerificacionesController extends Controller
 {
     public function index(Request $request)
     {
-
         $sql = "SELECT
-        ver.id_verificacion,
-        ver.fecha_verificacion,
-        ver.proxima_verificacion,
-        CONCAT(aut.marca, ' ', aut.submarca, ' ', aut.modelo) AS automovil
-        FROM
-             verificacions as ver
-        JOIN
-            automoviles AS aut ON ver.id_automovil = aut.id_automovil
-        WHERE
-         ver.deleted_at IS NULL";
-
+            ver.id_verificacion,
+            ver.fecha_verificacion,
+            ver.proxima_verificacion,
+            CONCAT(aut.marca, ' ', aut.submarca, ' ', aut.modelo) AS automovil
+            FROM verificacions as ver
+            JOIN automoviles AS aut ON ver.id_automovil = aut.id_automovil
+            WHERE ver.deleted_at IS NULL";
+    
         // Condiciones dinámicas para búsqueda
         $conditions = [];
         $parameters = [];
-
+    
         if ($request->has('search') && $request->input('search') != '') {
             $search = $request->input('search');
             $conditions[] = "(ver.id_verificacion LIKE :search1 OR
@@ -45,13 +43,27 @@ class VerificacionesController extends Controller
                 'search6' => "%{$search}%"
             ];
         }
-
-        // Si hay condiciones de búsqueda, agregar al WHERE
+    
         if (!empty($conditions)) {
             $sql .= " AND " . implode(' AND ', $conditions);
         }
-        // Ejecutar la consulta SQL
-        $verificacion = \DB::select($sql, $parameters);
+    
+        // Ejecutar consulta
+        $result = \DB::select($sql, $parameters);
+    
+        // Convertir a colección y paginar
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        $perPage = 10;
+        $collection = collect($result);
+        $currentPageItems = $collection->slice(($currentPage - 1) * $perPage, $perPage)->values();
+        $verificacion = new LengthAwarePaginator(
+            $currentPageItems,
+            $collection->count(),
+            $perPage,
+            $currentPage,
+            ['path' => $request->url(), 'query' => $request->query()]
+        );
+    
         return view('catalogos.verificaciones.index', compact('verificacion'));
     }
 

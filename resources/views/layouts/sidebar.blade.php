@@ -119,6 +119,22 @@
                 </x-nav-link>
             </div>
 
+            {{-- Enlace de Incidencias --}}
+            <div
+                class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" width="64" height="64"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 4a2 2 0 0 1 2-2h3l1 2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                    <line x1="12" y1="11" x2="12" y2="17" />
+                    <line x1="12" y1="7" x2="12" y2="7" />
+                </svg>
+
+                <x-nav-link :href="route('incidencias.table')" :active="request()->routeIs('incidencias.index')" title="Registrar y consultar incidencias">
+                    <span class="mx-4">{{ __('Incidencias') }}</span>
+                </x-nav-link>
+            </div>
+
             <!-- {{-- Enlace de Autorizante --}}
             <div class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -197,7 +213,7 @@
                     <line x1="12" y1="7" x2="12" y2="7" />
                 </svg>
 
-                <x-nav-link :href="route('incidencias.index')" :active="request()->routeIs('incidencias.index')" title="Registrar y consultar incidencias">
+                <x-nav-link :href="route('moderador.index')" :active="request()->routeIs('moderador.index')" title="Registrar y consultar incidencias">
                     <span class="mx-4">{{ __('Incidencias') }}</span>
                 </x-nav-link>
             </div>
